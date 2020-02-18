@@ -59,8 +59,8 @@ function createPayment(order) {
       ],
       note_to_payer: 'Contact us for any questions on your order.',
       redirect_urls: {
-        return_url: 'http://localhost:3090/paypal/return',
-        cancel_url: 'http://localhost:3090/paypal/cancel',
+        return_url: 'http://138.197.4.93/paypal/return',
+        cancel_url: 'http://138.197.4.93/paypal/cancel',
       },
     };
 
@@ -133,7 +133,10 @@ async function returnPayment(req, res) {
   }
 
   orderId = response.transactions[0].invoice_number;
-  let order = await Order.findOneAndUpdate({ _id: orderId }, { status: 'SUCCESSFUL' }).exec();
+  let order = await Order.findOneAndUpdate(
+    { _id: orderId },
+    { status: 'SUCCESSFUL' },
+  ).exec();
   let user = await User.findById(order.userId).exec();
 
   let coins = 0;
@@ -152,7 +155,9 @@ async function returnPayment(req, res) {
   for (const item of order.cart.items) {
     let found = item.product_id.match(/ET/g);
     if (!!found) {
-      let hasAlbum = user.albumCollection.filter((album) => album.product_id === item.product_id);
+      let hasAlbum = user.albumCollection.filter(
+        (album) => album.product_id === item.product_id,
+      );
 
       if (hasAlbum.length == 0) {
         albumArray.push(item);
