@@ -9,7 +9,7 @@ function getDate() {
 
 const _getUser = (token) => {
   return axios({
-    url: `${process.env.REACT_APP_API_URL}/user/`,
+    url: '/user',
     method: 'GET',
     headers: { Authorization: token },
   });
@@ -25,7 +25,7 @@ const _signin = (credentials) => {
 
 const _addToCart = (product_id, token) => {
   return axios({
-    url: `${process.env.REACT_APP_API_URL}/user/cart/add/${product_id}`,
+    url: `/user/cart/add/${product_id}`,
     method: 'POST',
     headers: { Authorization: token },
   });
@@ -33,7 +33,7 @@ const _addToCart = (product_id, token) => {
 
 const _removeFromCart = (product_id, token) => {
   return axios({
-    url: `${process.env.REACT_APP_API_URL}/user/cart/remove/${product_id}`,
+    url: `/user/cart/remove/${product_id}`,
     method: 'POST',
     headers: { Authorization: token },
   });
@@ -64,7 +64,7 @@ const _checkout = (token) => {
 
 const _getCoins = (token) => {
   return axios({
-    url: `${process.env.REACT_APP_API_URL}/user/coins/`,
+    url: `/user/coins`,
     method: 'GET',
     headers: { Authorization: token },
   });
@@ -72,7 +72,7 @@ const _getCoins = (token) => {
 
 const _exchangeCoins = (token, type, amount) => {
   return axios({
-    url: `${process.env.REACT_APP_API_URL}/user/coins/exchange`,
+    url: `/user/coins/exchange`,
     method: 'POST',
     data: {
       type: type,

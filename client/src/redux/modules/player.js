@@ -21,7 +21,7 @@ function getDate() {
 
 const _addAlbumToPlaylist = (token, albumId) => {
   return axios({
-    url: `${process.env.REACT_APP_API_URL}/albums/album/${albumId}`,
+    url: `/albums/album/${albumId}`,
     method: 'GET',
     headers: { Authorization: token },
   });

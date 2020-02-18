@@ -9,14 +9,14 @@ function getDate() {
 
 const _getAlbums = (page) => {
   return axios({
-    url: `${process.env.REACT_APP_API_URL}/albums/${page ? page : '1'}`,
+    url: `/albums/${page ? page : '1'}`,
     method: 'GET',
   });
 };
 
 const _getAlbumById = (albumId) => {
   return axios({
-    url: `${process.env.REACT_APP_API_URL}/albums/album/${albumId}`,
+    url: `/albums/album/${albumId}`,
     method: 'GET',
   });
 };
