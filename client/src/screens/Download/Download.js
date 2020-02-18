@@ -11,7 +11,7 @@ class Download extends Component {
 
   loadOrder = () => {
     axios({
-      url: `${process.env.REACT_APP_API_URL}/order/${this.props.match.params.orderId}`,
+      url: `/order/${this.props.match.params.orderId}`,
       method: 'GET',
       headers: { Authorization: this.props.auth },
     }).then(({ data }) =>
@@ -28,7 +28,7 @@ class Download extends Component {
   handleSubmit = (e, product_id) => {
     e.preventDefault();
     axios({
-      url: `${process.env.REACT_APP_API_URL}/download/${this.props.match.params.orderId}/${product_id}`,
+      url: `/download/${this.props.match.params.orderId}/${product_id}`,
       method: 'GET',
       responseType: 'blob',
       headers: { Authorization: this.props.auth },
