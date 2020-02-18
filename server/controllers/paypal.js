@@ -59,8 +59,8 @@ function createPayment(order) {
       ],
       note_to_payer: 'Contact us for any questions on your order.',
       redirect_urls: {
-        return_url: 'http://138.197.4.93/paypal/return',
-        cancel_url: 'http://138.197.4.93/paypal/cancel',
+        return_url: 'https://electrictooth.app/paypal/return',
+        cancel_url: 'https://electrictooth.app/paypal/cancel',
       },
     };
 
@@ -170,7 +170,7 @@ async function returnPayment(req, res) {
 
   user.save();
 
-  return res.redirect(`http://138.197.4.93/download/${orderId}`);
+  return res.redirect(`https://electrictooth.app/download/${orderId}`);
 }
 
 function getResponse(paymentId, PayerID) {
