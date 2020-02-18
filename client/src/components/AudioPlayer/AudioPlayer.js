@@ -104,12 +104,13 @@ const AudioPlayer = ({ playlist, UserActions, auth, PlayerActions, coins }) => {
       });
 
       let blob = new Blob([response.data], { type: 'audio/mpeg' });
+      let url;
 
       try {
-        url = webkitURL.createObjectURL(blob);
+        url = window.webkitURL.createObjectURL(blob);
       } catch (err) {
         // Firefox
-        url = URL.createObjectURL(blob);
+        url = window.URL.createObjectURL(blob);
       }
 
       audio.current.src = url;
