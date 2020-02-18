@@ -43,10 +43,10 @@ const Cart = ({ UserActions, auth, cart }) => {
                     <Image src={`/uploads/${art_url}`} maxWidth='96px' px={2} />
                   </Box>
                   <Box>
-                    <Heading as='h6' size='md'>
+                    <Heading as='h6' size='sm'>
                       {album_name ? album_name : `${amount} coins`}
                     </Heading>
-                    <Text fontSize='sm' mb={4} color='grey'>
+                    <Text fontSize='xs' mb={4} color='grey'>
                       {artist_name ? album_name : `@ $0.01`}
                     </Text>
                   </Box>
