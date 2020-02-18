@@ -56,7 +56,7 @@ const DesktopPlaylistPanel = ({
                 <PlaylistCard w='100%' key={song.id} p={2}>
                   <Box>
                     <Image
-                      src={song.art_url}
+                      src={`/uploads/${song.art_url}`}
                       maxWidth='80px'
                       px={2}
                       borderRadius='50%'

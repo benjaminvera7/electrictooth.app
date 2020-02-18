@@ -70,7 +70,7 @@ const MobilePlayer = ({
         <Image
           src={
             song.length > 0
-              ? `${song[0].art_url}`
+              ? `/uploads/${song[0].art_url}`
               : `https://via.placeholder.com/80`
           }
           w='100%'
