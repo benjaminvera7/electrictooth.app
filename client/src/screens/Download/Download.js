@@ -71,7 +71,11 @@ class Download extends Component {
                   key={album.product_id}
                 >
                   <Box>
-                    <Image src={`${album.art_url}`} maxWidth='96px' px={2} />
+                    <Image
+                      src={`${process.env.REACT_APP_BASE_URL}/uploads/${album.art_url}`}
+                      maxWidth='96px'
+                      px={2}
+                    />
                   </Box>
                   <Box>
                     <Heading as='h6' size='md'>

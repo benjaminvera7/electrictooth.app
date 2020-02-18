@@ -7,7 +7,9 @@ const db = mongoose.connection.openUri(config.dbUri, {
   useNewUrlParser: true,
   useCreateIndex: true,
 });
-db.on('error', () => console.error.bind(console, '# MongoDB - connection error: '));
+db.on('error', () =>
+  console.error.bind(console, '# MongoDB - connection error: '),
+);
 db.once('open', () => console.log('ET3-Database Connection ok!'));
 
 const Artist = require('./models/artist');
@@ -20,7 +22,7 @@ async function seed() {
     _id: new mongoose.Types.ObjectId(),
     product_id: 'coin100',
     amount: 100,
-    art_url: 'http://localhost:3090/uploads/coins.gif',
+    art_url: 'coins.gif',
     price: 1,
   };
 
@@ -28,7 +30,7 @@ async function seed() {
     _id: new mongoose.Types.ObjectId(),
     product_id: 'coin200',
     amount: 200,
-    art_url: 'http://localhost:3090/uploads/coins.gif',
+    art_url: 'coins.gif',
     price: 2,
   };
 
@@ -36,7 +38,7 @@ async function seed() {
     _id: new mongoose.Types.ObjectId(),
     product_id: 'coin300',
     amount: 300,
-    art_url: 'http://localhost:3090/uploads/coins.gif',
+    art_url: 'coins.gif',
     price: 3,
   };
 
@@ -65,7 +67,7 @@ async function seed() {
     artist_name: 'Shiro Schwarz',
     album_name: 'Under The Moonlight EP',
     description: "Let's spend the night together.",
-    art_url: 'http://localhost:3090/uploads/UnderTheMoonlight.jpg',
+    art_url: 'UnderTheMoonlight.jpg',
     download_price: 1,
     songs: [],
   };
@@ -84,7 +86,7 @@ async function seed() {
       song_name: 'Under The Moonlight',
       position: 1,
       stream_url: 'Shiro Schwarz - Under the Moonlight.mp3',
-      art_url: 'http://localhost:3090/uploads/UnderTheMoonlight.jpg',
+      art_url: 'UnderTheMoonlight.jpg',
       download_price: 1,
       coin_price: 1,
     },
@@ -97,7 +99,7 @@ async function seed() {
       song_name: 'Power of Love',
       position: 2,
       stream_url: 'Shiro Schwarz - Power of Love.mp3',
-      art_url: 'http://localhost:3090/uploads/UnderTheMoonlight.jpg',
+      art_url: 'UnderTheMoonlight.jpg',
       download_price: 1,
       coin_price: 1,
     },
@@ -129,7 +131,7 @@ async function seed() {
     artist_name: 'Crystal Bats',
     album_name: 'Killing Me EP',
     description: '',
-    art_url: 'http://localhost:3090/uploads/crystalbats.jpg',
+    art_url: 'crystalbats.jpg',
     download_price: 1,
     songs: [],
   };
@@ -148,7 +150,7 @@ async function seed() {
       song_name: 'Killing Me',
       position: 1,
       stream_url: 'Killing Me.mp3',
-      art_url: 'http://localhost:3090/uploads/crystalbats.jpg',
+      art_url: 'crystalbats.jpg',
       download_price: 1,
       coin_price: 1,
     },
@@ -181,7 +183,7 @@ async function seed() {
     artist_name: 'Free Love',
     album_name: 'Synchronicity EP',
     description: '',
-    art_url: 'http://localhost:3090/uploads/freelove.jpg',
+    art_url: 'freelove.jpg',
     download_price: 1,
     songs: [],
   };
@@ -200,7 +202,7 @@ async function seed() {
       song_name: 'Synchronicity',
       position: 1,
       stream_url: 'Synchronicity.mp3',
-      art_url: 'http://localhost:3090/uploads/freelove.jpg',
+      art_url: 'freelove.jpg',
       download_price: 1,
       coin_price: 1,
     },
@@ -233,7 +235,7 @@ async function seed() {
     artist_name: 'FM Attack',
     album_name: 'New World LP',
     description: '',
-    art_url: 'http://localhost:3090/uploads/newworld.jpg',
+    art_url: 'newworld.jpg',
     download_price: 1,
     songs: [],
   };
@@ -252,7 +254,7 @@ async function seed() {
       song_name: 'New World',
       position: 1,
       stream_url: 'New World.mp3',
-      art_url: 'http://localhost:3090/uploads/newworld.jpg',
+      art_url: 'newworld.jpg',
       download_price: 1,
       coin_price: 1,
     },
@@ -285,7 +287,7 @@ async function seed() {
     artist_name: 'HiRO JP',
     album_name: 'Last Month EP',
     description: '',
-    art_url: 'http://localhost:3090/uploads/lastmonth.jpg',
+    art_url: 'lastmonth.jpg',
     download_price: 1,
     songs: [],
   };
@@ -304,7 +306,7 @@ async function seed() {
       song_song: 'Last Month',
       position: 1,
       stream_url: 'Last Month.mp3',
-      art_url: 'http://localhost:3090/uploads/lastmonth.jpg',
+      art_url: 'lastmonth.jpg',
       download_price: 1,
       coin_price: 1,
     },
@@ -337,7 +339,7 @@ async function seed() {
     artist_name: 'Wet Baes',
     album_name: 'Midnight Caller EP',
     description: '',
-    art_url: 'http://localhost:3090/uploads/midnightcaller.jpg',
+    art_url: 'midnightcaller.jpg',
     download_price: 1,
     songs: [],
   };
@@ -356,7 +358,7 @@ async function seed() {
       song_name: 'Midnight Caller',
       position: 1,
       stream_url: 'Midnight Caller.mp3',
-      art_url: 'http://localhost:3090/uploads/midnightcaller.jpg',
+      art_url: 'midnightcaller.jpg',
       download_price: 1,
       coin_price: 1,
     },
@@ -386,7 +388,7 @@ async function seed() {
   //     title: "Under The Moonlight",
   //     position: 1,
   //     stream_url: "Shiro Schwarz - Under the Moonlight.mp3",
-  //     art_url: "http://localhost:3090/uploads/UnderTheMoonlight.jpg",
+  //     art_url: "UnderTheMoonlight.jpg",
   //     download_price: 1,
   //     coin_price: 1
   //   },
@@ -396,7 +398,7 @@ async function seed() {
   //     title: "Power of Love",
   //     position: 2,
   //     stream_url: "Shiro Schwarz - Power of Love.mp3",
-  //     art_url: "http://localhost:3090/uploads/UnderTheMoonlight.jpg",
+  //     art_url: "UnderTheMoonlight.jpg",
   //     download_price: 1,
   //     coin_price: 1
   //   }
