@@ -37,6 +37,16 @@ app.use(
   }),
 );
 
+function passHTML(req, res) {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'), function(
+    err,
+  ) {
+    if (err) {
+      res.status(500).send(err);
+    }
+  });
+}
+
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -52,6 +62,7 @@ app.use('/user', userRoutes);
 app.use('/song', songRoutes);
 app.use('/stream', streamRoutes);
 app.use('/order', orderRoutes);
+app.get('/*', passHTML);
 
 app.use((error, req, res, next) => {
   console.log(error);
