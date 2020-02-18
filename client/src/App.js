@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { CSSReset } from '@chakra-ui/core';
 import { Box } from '@chakra-ui/core';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Home from 'screens/Home';
 import Download from 'screens/Download';
@@ -53,6 +53,7 @@ function App({ AlbumActions, UserActions, auth }) {
           <Route path='/download/:orderId' component={Download} />
           <Route path='/coins' component={Coins} />
           <Route exact path='/' component={Home} />
+          <Redirect to='/' />
         </Switch>
       </Box>
 
