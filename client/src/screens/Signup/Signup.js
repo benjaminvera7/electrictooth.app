@@ -1,0 +1,74 @@
+import React from 'react';
+import { Box, Flex, Stack, Input, Button, Image } from '@chakra-ui/core';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as userActions from 'redux/modules/user';
+
+import { FADE_IN } from 'style/animations';
+import styled from '@emotion/styled';
+
+const SignupContainer = styled(Flex)`
+  ${FADE_IN}
+`;
+
+const Signup = ({ UserActions, history }) => {
+  let form;
+
+  return (
+    <SignupContainer w='100%' p={4} justify='center'>
+      <Box w='300px'>
+        <Flex direction='column' align='center'>
+          <Image src='./favicon.ico' w='36px' />
+        </Flex>
+
+        <form
+          ref={(r) => (form = r)}
+          method='POST'
+          onSubmit={(e) => {
+            e.preventDefault();
+            UserActions.signUp({
+              username: form.username.value,
+              email: form.email.value,
+              password: form.password.value,
+            }).then(() => history.push('/profile'));
+          }}
+        >
+          <Stack spacing={4} my={4}>
+            <Input
+              placeholder='Username'
+              size='lg'
+              name='username'
+              type='text'
+            />
+            <Input
+              placeholder='Email address'
+              size='lg'
+              name='email'
+              type='email'
+            />
+            <Input
+              placeholder='Password'
+              size='lg'
+              name='password'
+              type='password'
+            />
+
+            <Button bg='#6eacdd' variant='solid' w='100%' type='submit'>
+              Sign up
+            </Button>
+          </Stack>
+        </form>
+      </Box>
+    </SignupContainer>
+  );
+};
+
+export default connect(
+  (state) => ({
+    auth: state.user.authenticated,
+    errorMessage: state.user.errorMessage,
+  }),
+  (dispatch) => ({
+    UserActions: bindActionCreators(userActions, dispatch),
+  }),
+)(Signup);
