@@ -68,7 +68,11 @@ const MiniPlayer = ({
           <ArrowUp />
         </Button>
 
-        <Flex direction='column' align='center'>
+        <Flex
+          direction='column'
+          align='center'
+          onClick={() => setVisibility(!visible)}
+        >
           <Text fontSize='sm'>
             {song.length > 0 ? `${song[0].artist_name}` : `~`}
           </Text>
