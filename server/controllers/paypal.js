@@ -170,7 +170,7 @@ async function returnPayment(req, res) {
 
   user.save();
 
-  res.redirect(`http://138.197.4.93/download/${orderId}`);
+  return res.redirect(`http://138.197.4.93/download/${orderId}`);
 }
 
 function getResponse(paymentId, PayerID) {
