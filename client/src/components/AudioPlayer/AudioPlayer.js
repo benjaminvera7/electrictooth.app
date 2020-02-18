@@ -103,7 +103,15 @@ const AudioPlayer = ({ playlist, UserActions, auth, PlayerActions, coins }) => {
         headers: { Authorization: auth },
       });
 
-      const url = window.URL.createObjectURL(new Blob([response.data]));
+      let blob = new Blob([response.data], { type: 'audio/mpeg' });
+
+      try {
+        url = webkitURL.createObjectURL(blob);
+      } catch (err) {
+        // Firefox
+        url = URL.createObjectURL(blob);
+      }
+
       audio.current.src = url;
       audio.current.play();
 
