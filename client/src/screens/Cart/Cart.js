@@ -40,7 +40,7 @@ const Cart = ({ UserActions, auth, cart }) => {
               }) => (
                 <Flex py={2} borderWidth='1px' rounded='lg' key={id}>
                   <Box>
-                    <Image src={`${art_url}`} maxWidth='96px' px={2} />
+                    <Image src={`/uploads/${art_url}`} maxWidth='96px' px={2} />
                   </Box>
                   <Box>
                     <Heading as='h6' size='md'>

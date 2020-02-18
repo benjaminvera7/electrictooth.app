@@ -147,7 +147,7 @@ class Album extends Component {
                         >
                           <Box>
                             <Image
-                              src={`${song.art_url}`}
+                              src={`/uploads/${song.art_url}`}
                               maxWidth='96px'
                               px={2}
                             />
