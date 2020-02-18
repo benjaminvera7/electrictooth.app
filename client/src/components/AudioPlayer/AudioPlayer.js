@@ -32,7 +32,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, PlayerActions, coins }) => {
     audio.current.addEventListener('ended', next);
     audio.current.addEventListener('timeupdate', timeUpdate, false);
 
-    if (!isMobile && isSafari()) {
+    if (isMobile && isSafari()) {
       bindSafariAutoPlayEvents();
     }
 
