@@ -32,6 +32,10 @@ const AudioPlayer = ({ playlist, UserActions, auth, PlayerActions, coins }) => {
     audio.current.addEventListener('ended', next);
     audio.current.addEventListener('timeupdate', timeUpdate, false);
 
+    if (!isMobile && isSafari()) {
+      bindSafariAutoPlayEvents();
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentSongId]);
 
@@ -40,6 +44,29 @@ const AudioPlayer = ({ playlist, UserActions, auth, PlayerActions, coins }) => {
       100 * (audio.current.currentTime / audio.current.duration);
 
     setTimelineDot(playPercent);
+  };
+  const bindSafariAutoPlayEvents = () => {
+    document.addEventListener(
+      'click',
+      () => {
+        mockAutoPlayForMobile();
+      },
+      { once: true },
+    );
+  };
+
+  const mockAutoPlayForMobile = () => {
+    if (!playing) {
+      audio.current.load();
+      audio.current.pause();
+      audio.current.play();
+    }
+  };
+
+  const isSafari = () => {
+    return (
+      /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent)
+    );
   };
 
   const onHandleProgress = (value) => {
