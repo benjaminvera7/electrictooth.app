@@ -78,10 +78,7 @@ const AlbumCard = ({
     >
       <Box className='card_image'>
         <Link to={`/catalog/${album._id}`}>
-          <Image
-            src={`${process.env.REACT_APP_BASE_URL}/uploads/${album.art_url}`}
-            rounded='lg'
-          />
+          <Image src={`/uploads/${album.art_url}`} rounded='lg' />
         </Link>
       </Box>
 

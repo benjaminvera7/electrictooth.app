@@ -72,7 +72,7 @@ class Download extends Component {
                 >
                   <Box>
                     <Image
-                      src={`${process.env.REACT_APP_BASE_URL}/uploads/${album.art_url}`}
+                      src={`/uploads/${album.art_url}`}
                       maxWidth='96px'
                       px={2}
                     />

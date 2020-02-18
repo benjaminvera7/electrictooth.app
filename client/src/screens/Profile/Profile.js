@@ -60,7 +60,7 @@ const Profile = ({ UserActions, user, history, albumCollection }) => {
                     <Box>
                       <Link to={`/catalog/${album.id}`}>
                         <Image
-                          src={`${process.env.REACT_APP_BASE_URL}/uploads/${album.art_url}`}
+                          src={`/uploads/${album.art_url}`}
                           maxWidth='108px'
                           px={2}
                         />

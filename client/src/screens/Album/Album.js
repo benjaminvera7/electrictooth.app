@@ -51,9 +51,7 @@ class Album extends Component {
                 my={2}
               >
                 <Box className='card_image'>
-                  <Image
-                    src={`${process.env.REACT_APP_BASE_URL}/uploads/${currentAlbum.art_url}`}
-                  />
+                  <Image src={`/uploads/${currentAlbum.art_url}`} />
                 </Box>
 
                 <Box className='card_description'>
