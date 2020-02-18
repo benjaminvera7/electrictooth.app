@@ -45,6 +45,8 @@ const AlbumCard = ({
         duration: 3000,
         isClosable: true,
       });
+    } else {
+      router.push('/signup');
     }
   };
 
@@ -60,6 +62,8 @@ const AlbumCard = ({
         duration: 3000,
         isClosable: true,
       });
+    } else {
+      router.push('/signup');
     }
   };
 

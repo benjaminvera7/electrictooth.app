@@ -3,6 +3,7 @@ import { Text, Button, Flex } from '@chakra-ui/core';
 import { Play, ArrowUp, Pause } from 'components/Icons';
 import { CSSTransition } from 'react-transition-group';
 import MobilePlayer from '../MobilePlayer';
+import MobileNavigation from 'components/MobileNavigation';
 
 const slideHOC = (InputComponent) => {
   return (props) => (
@@ -72,6 +73,7 @@ const MiniPlayer = ({
           direction='column'
           align='center'
           onClick={() => setVisibility(!visible)}
+          w='100%'
         >
           <Text fontSize='sm'>
             {song.length > 0 ? `${song[0].artist_name}` : `~`}
@@ -89,6 +91,8 @@ const MiniPlayer = ({
           {playing ? <Pause /> : <Play />}
         </Button>
       </div>
+
+      <MobileNavigation />
 
       <MobilePlayerPanel
         in={visible}

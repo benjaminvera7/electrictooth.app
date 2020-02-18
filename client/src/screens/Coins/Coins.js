@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
 import { useToast } from '@chakra-ui/core';
+import useRouter from 'hooks/useRouter';
 
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
@@ -15,6 +16,7 @@ const CoinContainer = styled(Flex)`
 
 const Coins = ({ UserActions, auth }) => {
   const toast = useToast();
+  const router = useRouter();
 
   const addToCart = (coins) => {
     if (auth) {
@@ -28,6 +30,8 @@ const Coins = ({ UserActions, auth }) => {
         duration: 3000,
         isClosable: true,
       });
+    } else {
+      router.push('/signup');
     }
   };
 

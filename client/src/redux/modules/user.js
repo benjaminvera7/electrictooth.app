@@ -239,10 +239,12 @@ export default handleActions(
       },
     }),
     [SIGN_OUT]: (state) => {
-      const newState = { ...initialState, updatedAt: getDate(), error: null };
       localStorage.removeItem('token');
       localStorage.removeItem('userId');
       localStorage.removeItem('username');
+
+      const newState = { ...initialState, updatedAt: getDate(), error: null };
+
       return newState;
     },
   },

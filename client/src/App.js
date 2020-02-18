@@ -13,12 +13,8 @@ import Coins from 'screens/Coins';
 import Signin from 'screens/Signin';
 import Signup from 'screens/Signup';
 import Album from 'screens/Album';
-
 import Navigation from 'components/Navigation';
-import MobileNavigation from 'components/MobileNavigation';
 import AudioPlayer from 'components/AudioPlayer';
-
-import useWindowSize from 'hooks/useWindowSize';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -26,8 +22,6 @@ import * as albumActions from 'redux/modules/album';
 import * as userActions from 'redux/modules/user';
 
 function App({ AlbumActions, UserActions, auth }) {
-  const isMobile = useWindowSize();
-
   //def need to refactor into hook or something
   useEffect(() => {
     AlbumActions.getAlbums();
@@ -56,8 +50,6 @@ function App({ AlbumActions, UserActions, auth }) {
           <Redirect to='/' />
         </Switch>
       </Box>
-
-      {isMobile && <MobileNavigation />}
 
       <AudioPlayer />
     </main>
