@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "build": "cd ../client && yarn build",
-    "dev": "concurrently --kill-others-on-fail \"npm run start\" \"cd ../client && yarn start\""
+    "dev": "concurrently --kill-others-on-fail \"NODE_ENV=development npm run start\" \"cd ../client && yarn start\""
   },
   "author": "",
   "license": "ISC",

@@ -11,6 +11,16 @@ paypal.configure({
   client_secret: config.PAYPAL_CLIENT_SECRET,
 });
 
+var APP_URL;
+var SERVER_URL;
+
+if (process.env.NODE_ENV === 'development') {
+  APP_URL = 'http://localhost:3000';
+  SERVER_URL = 'http://localhost:3090';
+} else {
+  APP_URL = SERVER_URL = 'https://electrictooth.app';
+}
+
 async function requestPayment(req, res) {
   let user = await User.findById(req.body.userId).exec();
 
@@ -59,8 +69,8 @@ function createPayment(order) {
       ],
       note_to_payer: 'Contact us for any questions on your order.',
       redirect_urls: {
-        return_url: 'https://electrictooth.app/paypal/return',
-        cancel_url: 'https://electrictooth.app/paypal/cancel',
+        return_url: `${SERVER_URL}/paypal/return`,
+        cancel_url: `${SERVER_URL}/paypal/cancel`,
       },
     };
 
@@ -170,7 +180,7 @@ async function returnPayment(req, res) {
 
   user.save();
 
-  return res.redirect(`https://electrictooth.app/download/${orderId}`);
+  return res.redirect(`${APP_URL}/download/${orderId}`);
 }
 
 function getResponse(paymentId, PayerID) {
