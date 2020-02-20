@@ -73,15 +73,15 @@ const DesktopPlaylistPanel = ({
 
                   <Flex align='center' minWidth='100px' justify='space-evenly'>
                     {currentlyPlaying === song.id ? (
-                      <Button variant='link' onClick={handlePlay}>
+                      <Button
+                        variant='link'
+                        onClick={handlePlay}
+                        isLoading={loading}
+                      >
                         {playing ? <Pause /> : <Play />}
                       </Button>
                     ) : (
-                      <Button
-                        variant='link'
-                        onClick={() => fetch(song.id)}
-                        isLoading={loading}
-                      >
+                      <Button variant='link' onClick={() => fetch(song.id)}>
                         <Play />
                       </Button>
                     )}

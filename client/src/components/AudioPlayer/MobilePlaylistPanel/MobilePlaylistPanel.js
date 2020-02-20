@@ -70,14 +70,17 @@ const MobilePlaylistPanel = (props) => {
 
                   <Flex align='center' minWidth='100px' justify='space-evenly'>
                     {props.currentlyPlaying === song.id ? (
-                      <Button variant='link' onClick={props.handlePlay}>
+                      <Button
+                        variant='link'
+                        onClick={props.handlePlay}
+                        isLoading={props.loading}
+                      >
                         {props.playing ? <Pause /> : <Play />}
                       </Button>
                     ) : (
                       <Button
                         variant='link'
                         onClick={() => props.fetch(song.id)}
-                        isLoading={props.loading}
                       >
                         <Play />
                       </Button>
