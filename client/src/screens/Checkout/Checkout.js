@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Box, Flex, Text, Heading, Button } from '@chakra-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
 
 const Checkout = ({ user }) => {
-  const form = document.getElementById('paypalForm');
+  //const form = document.getElementById('paypalForm');
   const [loading, setPending] = useState(false);
+  const form = useRef(null);
 
-  if (form) {
-    form.addEventListener('submit', () => {
+  if (form.current) {
+    form.current.addEventListener('submit', () => {
       setPending(true);
     });
   }
@@ -26,7 +27,7 @@ const Checkout = ({ user }) => {
         </Text>
 
         <Flex justify='center' py={2} px={4}>
-          <Heading as='h3' size='xl' color='#6eacdd'>
+          <Heading as='h3' fontSize={['lg', 'xl']} color='#6eacdd'>
             100% of this purchase goes to the artist(s)
           </Heading>
         </Flex>
@@ -46,6 +47,7 @@ const Checkout = ({ user }) => {
         </Heading>
 
         <form
+          ref={form}
           id='paypalForm'
           method='post'
           action={`${process.env.REACT_APP_API_URL}/paypal/request`}
