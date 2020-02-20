@@ -80,7 +80,7 @@ const DesktopPlaylistPanel = ({
                       <Button
                         variant='link'
                         onClick={() => fetch(song.id)}
-                        isLoading={props.loading}
+                        isLoading={loading}
                       >
                         <Play />
                       </Button>
