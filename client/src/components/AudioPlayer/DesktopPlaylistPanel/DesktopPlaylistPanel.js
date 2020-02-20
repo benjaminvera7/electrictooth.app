@@ -26,6 +26,7 @@ const DesktopPlaylistPanel = ({
   currentlyPlaying,
   handlePlay,
   fetch,
+  loading,
 }) => {
   return (
     <Fragment>
@@ -76,7 +77,11 @@ const DesktopPlaylistPanel = ({
                         {playing ? <Pause /> : <Play />}
                       </Button>
                     ) : (
-                      <Button variant='link' onClick={() => fetch(song.id)}>
+                      <Button
+                        variant='link'
+                        onClick={() => fetch(song.id)}
+                        isLoading={props.loading}
+                      >
                         <Play />
                       </Button>
                     )}

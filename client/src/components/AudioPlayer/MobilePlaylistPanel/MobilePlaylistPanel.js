@@ -77,6 +77,7 @@ const MobilePlaylistPanel = (props) => {
                       <Button
                         variant='link'
                         onClick={() => props.fetch(song.id)}
+                        isLoading={props.loading}
                       >
                         <Play />
                       </Button>

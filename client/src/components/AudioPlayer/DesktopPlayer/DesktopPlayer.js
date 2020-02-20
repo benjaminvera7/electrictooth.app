@@ -23,6 +23,7 @@ const Panel = (props) => (
       fetch={props.fetch}
       currentlyPlaying={props.currentlyplaying}
       handlePlay={props.handleplay}
+      loading={props.loading}
     />
   </div>
 );
@@ -134,6 +135,7 @@ const DesktopPlayer = ({
         fetch={fetch}
         currentlyplaying={currentlyPlaying}
         handleplay={handlePlay}
+        loading={loading}
       />
     </Fragment>
   );

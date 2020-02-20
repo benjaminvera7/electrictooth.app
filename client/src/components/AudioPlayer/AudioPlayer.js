@@ -32,6 +32,7 @@ const Panel = (props) => (
       fetch={props.fetch}
       remove={props.remove}
       currentlyPlaying={props.currentlyPlaying}
+      loading={props.loading}
     />
   </div>
 );
@@ -268,6 +269,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, PlayerActions, coins }) => {
         playing={playing}
         fetch={fetch}
         remove={remove}
+        loading={loading}
       />
     </Fragment>
   );
