@@ -1,10 +1,16 @@
 import React from 'react';
-import { Home, Bolt } from 'components/Icons';
+import { Home, Playlist, Toll } from 'components/Icons';
 import { Link } from 'react-router-dom';
-import { Box, Button } from '@chakra-ui/core';
+import { Flex, Box, Button } from '@chakra-ui/core';
 import useRouter from 'hooks/useRouter';
+import { connect } from 'react-redux';
 
-const MobileNavigation = () => {
+const MobileNavigation = ({
+  playlistVisible,
+  setPaylistVisibility,
+  playlist,
+  coins,
+}) => {
   const router = useRouter();
 
   return (
@@ -17,15 +23,39 @@ const MobileNavigation = () => {
         </Box>
       </Link>
 
-      <Link to='/catalog'>
+      <Flex align='center'>
         <Box px={2}>
-          <Button variant='link' style={{ minHeight: '44px' }}>
-            <Bolt active={router.pathname === '/catalog'} />
-          </Button>
+          <Toll height='26px' width='26px' />
         </Box>
-      </Link>
+        {coins}
+      </Flex>
+
+      <Box
+        px={2}
+        onClick={() => setPaylistVisibility(!playlistVisible)}
+        style={{ position: 'relative' }}
+      >
+        <Button variant='link' style={{ minHeight: '44px' }}>
+          <Playlist />
+          <Box
+            style={{
+              position: 'absolute',
+              color: 'yellow',
+              top: '1px',
+              right: '1px',
+              fontSize: '14px',
+              fontWeight: 'bold',
+            }}
+          >
+            {playlist.length === 0 ? '' : '•'}
+          </Box>
+        </Button>
+      </Box>
     </div>
   );
 };
-
-export default MobileNavigation;
+export default connect((state) => ({
+  playlist: state.player.playlist,
+  updatedAt: state.player.updatedAt,
+  coins: state.user.coins,
+}))(MobileNavigation);

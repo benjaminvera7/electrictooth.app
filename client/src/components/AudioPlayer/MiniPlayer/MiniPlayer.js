@@ -3,7 +3,6 @@ import { Text, Button, Flex } from '@chakra-ui/core';
 import { Play, ArrowUp, Pause } from 'components/Icons';
 import { CSSTransition } from 'react-transition-group';
 import MobilePlayer from '../MobilePlayer';
-import MobileNavigation from 'components/MobileNavigation';
 
 const slideHOC = (InputComponent) => {
   return (props) => (
@@ -16,7 +15,6 @@ const slideHOC = (InputComponent) => {
 const Panel = (props) => (
   <div {...props}>
     <MobilePlayer
-      toggle={props.toggle}
       playing={props.playing}
       handlePlay={props.handlePlay}
       handleNext={props.handleNext}
@@ -27,6 +25,10 @@ const Panel = (props) => (
       fetch={props.fetch}
       remove={props.remove}
       coins={props.coins}
+      playlistVisible={props.playlistVisible}
+      setPlaylistVisibility={props.setPlaylistVisibility}
+      playerVisible={props.playerVisible}
+      setPlayerVisibility={props.setPlayerVisibility}
     />
   </div>
 );
@@ -55,15 +57,17 @@ const MiniPlayer = ({
   fetch,
   remove,
   coins,
+  playlistVisible,
+  setPlaylistVisibility,
 }) => {
-  const [visible, setVisibility] = useState(false);
+  const [playerVisible, setPlayerVisibility] = useState(false);
 
   return (
     <Fragment>
       <div className='mini-player'>
         <Button
           variant='link'
-          onClick={() => setVisibility(!visible)}
+          onClick={() => setPlayerVisibility(!playerVisible)}
           style={{ minHeight: '44px' }}
         >
           <ArrowUp />
@@ -72,7 +76,7 @@ const MiniPlayer = ({
         <Flex
           direction='column'
           align='center'
-          onClick={() => setVisibility(!visible)}
+          onClick={() => setPlayerVisibility(!playerVisible)}
           w='100%'
         >
           <Text fontSize='sm'>
@@ -92,12 +96,9 @@ const MiniPlayer = ({
         </Button>
       </div>
 
-      <MobileNavigation />
-
       <MobilePlayerPanel
-        in={visible}
+        in={playerVisible}
         {...transProps}
-        toggle={setVisibility}
         playing={playing}
         handlePlay={handlePlay}
         handleNext={handleNext}
@@ -108,6 +109,10 @@ const MiniPlayer = ({
         fetch={fetch}
         remove={remove}
         coins={coins}
+        playlistVisible={playlistVisible}
+        setPlaylistVisibility={setPlaylistVisibility}
+        playerVisible={playerVisible}
+        setPlayerVisibility={setPlayerVisibility}
       />
     </Fragment>
   );

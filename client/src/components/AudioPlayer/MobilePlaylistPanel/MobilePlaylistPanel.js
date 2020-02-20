@@ -36,7 +36,7 @@ const MobilePlaylistPanel = (props) => {
       >
         <Button
           variant='link'
-          onClick={() => props.toggle(false)}
+          onClick={() => props.setPlaylistVisibility(!props.playlistVisible)}
           style={{ minHeight: '44px' }}
         >
           <Close />

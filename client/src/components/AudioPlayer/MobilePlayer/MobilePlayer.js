@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import {
   Playlist,
   ArrowDown,
@@ -9,48 +9,10 @@ import {
   Toll,
 } from 'components/Icons';
 import { Box, Flex, Image, Text, Button } from '@chakra-ui/core';
-import { CSSTransition } from 'react-transition-group';
 
-import MobilePlaylistPanel from '../MobilePlaylistPanel';
 import { connect } from 'react-redux';
 
-const slideHOC = (InputComponent) => {
-  return (props) => (
-    <CSSTransition {...props}>
-      <InputComponent className='panel2' />
-    </CSSTransition>
-  );
-};
-
-const Panel = (props) => (
-  <div {...props}>
-    <MobilePlaylistPanel
-      toggle={props.toggle}
-      playlist={props.playlist}
-      handlePlay={props.handlePlay}
-      playing={props.playing}
-      fetch={props.fetch}
-      remove={props.remove}
-      currentlyPlaying={props.currentlyPlaying}
-    />
-  </div>
-);
-
-const transProps = {
-  appear: true,
-  mountOnEnter: true,
-  unmountOnExit: true,
-  timeout: {
-    enter: 350,
-    exit: 500,
-  },
-  classNames: 'panel2',
-};
-
-const PlaylistPanel = slideHOC(Panel);
-
 const MobilePlayer = ({
-  toggle,
   playing,
   handlePlay,
   handleNext,
@@ -58,12 +20,12 @@ const MobilePlayer = ({
   progressBar,
   song,
   playlist,
-  currentlyPlaying,
-  fetch,
-  remove,
   coins,
+  playlistVisible,
+  setPlaylistVisibility,
+  playerVisible,
+  setPlayerVisibility,
 }) => {
-  const [visible, setVisibility] = useState(false);
   return (
     <Fragment>
       <Box mt={-1}>
@@ -121,7 +83,7 @@ const MobilePlayer = ({
       >
         <Button
           variant='link'
-          onClick={() => toggle(false)}
+          onClick={() => setPlayerVisibility(!playerVisible)}
           style={{ minHeight: '44px' }}
         >
           <ArrowDown />
@@ -140,7 +102,7 @@ const MobilePlayer = ({
 
         <Button
           variant='link'
-          onClick={() => setVisibility(!visible)}
+          onClick={() => setPlaylistVisibility(!playlistVisible)}
           style={{ minHeight: '44px' }}
         >
           <Box style={{ position: 'relative' }}>
@@ -148,7 +110,7 @@ const MobilePlayer = ({
             <Box
               style={{
                 position: 'absolute',
-                color: '#3182ce',
+                color: 'yellow',
                 top: '-9px',
                 right: '-6px',
                 fontSize: '14px',
@@ -160,18 +122,6 @@ const MobilePlayer = ({
           </Box>
         </Button>
       </Flex>
-
-      <PlaylistPanel
-        in={visible}
-        {...transProps}
-        toggle={setVisibility}
-        playlist={playlist}
-        currentlyPlaying={currentlyPlaying}
-        handlePlay={handlePlay}
-        playing={playing}
-        fetch={fetch}
-        remove={remove}
-      />
     </Fragment>
   );
 };

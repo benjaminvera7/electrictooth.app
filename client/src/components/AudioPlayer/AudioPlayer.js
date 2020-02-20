@@ -8,10 +8,50 @@ import DesktopPlayer from './DesktopPlayer';
 import axios from 'axios';
 import Slider from 'rc-slider/lib/Slider';
 import 'rc-slider/assets/index.css';
-
+import { CSSTransition } from 'react-transition-group';
+import MobileNavigation from 'components/MobileNavigation';
+import MobilePlaylistPanel from './MobilePlaylistPanel';
 import useWindowSize from 'hooks/useWindowSize';
 
+const slideHOC = (InputComponent) => {
+  return (props) => (
+    <CSSTransition {...props}>
+      <InputComponent className='panel2' />
+    </CSSTransition>
+  );
+};
+
+const Panel = (props) => (
+  <div {...props}>
+    <MobilePlaylistPanel
+      setPlaylistVisibility={props.setPlaylistVisibility}
+      playlistVisible={props.playlistVisible}
+      playlist={props.playlist}
+      handlePlay={props.handlePlay}
+      playing={props.playing}
+      fetch={props.fetch}
+      remove={props.remove}
+      currentlyPlaying={props.currentlyPlaying}
+    />
+  </div>
+);
+
+const transProps = {
+  appear: true,
+  mountOnEnter: true,
+  unmountOnExit: true,
+  timeout: {
+    enter: 350,
+    exit: 500,
+  },
+  classNames: 'panel2',
+};
+
+const PlaylistPanel = slideHOC(Panel);
+
 const AudioPlayer = ({ playlist, UserActions, auth, PlayerActions, coins }) => {
+  const [playlistVisible, setPlaylistVisibility] = useState(false);
+
   const isMobile = useWindowSize();
   const audio = useRef(null);
 
@@ -175,18 +215,27 @@ const AudioPlayer = ({ playlist, UserActions, auth, PlayerActions, coins }) => {
       <audio key='audio' ref={audio} type='audio/mpeg' />
 
       {isMobile ? (
-        <MiniPlayer
-          playing={playing}
-          handlePlay={play}
-          handleNext={next}
-          handlePrevious={previous}
-          song={song}
-          progressBar={ProgressBar}
-          remove={remove}
-          fetch={fetch}
-          currentlyPlaying={currentSongId}
-          coins={coins}
-        />
+        <>
+          <MiniPlayer
+            playing={playing}
+            handlePlay={play}
+            handleNext={next}
+            handlePrevious={previous}
+            song={song}
+            progressBar={ProgressBar}
+            remove={remove}
+            fetch={fetch}
+            currentlyPlaying={currentSongId}
+            coins={coins}
+            playlistVisible={playlistVisible}
+            setPlaylistVisibility={setPlaylistVisibility}
+          />
+
+          <MobileNavigation
+            playlistVisible={playlistVisible}
+            setPaylistVisibility={setPlaylistVisibility}
+          />
+        </>
       ) : (
         <DesktopPlayer
           playing={playing}
@@ -201,6 +250,19 @@ const AudioPlayer = ({ playlist, UserActions, auth, PlayerActions, coins }) => {
           coins={coins}
         />
       )}
+
+      <PlaylistPanel
+        in={playlistVisible}
+        {...transProps}
+        playlistVisible={playlistVisible}
+        setPlaylistVisibility={setPlaylistVisibility}
+        playlist={playlist}
+        currentlyPlaying={currentSongId}
+        handlePlay={play}
+        playing={playing}
+        fetch={fetch}
+        remove={remove}
+      />
     </Fragment>
   );
 };
