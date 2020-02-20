@@ -58,7 +58,7 @@ class Album extends Component {
                   <Heading
                     mb={1}
                     display='block'
-                    fontSize='xl'
+                    fontSize={['sm', 'md', 'lg', 'xl']}
                     as='h6'
                     size='md'
                     lineHeight='normal'
