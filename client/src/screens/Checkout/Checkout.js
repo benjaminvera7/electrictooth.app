@@ -1,10 +1,19 @@
-import React from 'react';
-import { Box, Flex, Text, Heading } from '@chakra-ui/core';
+import React, { useState } from 'react';
+import { Box, Flex, Text, Heading, Button } from '@chakra-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
 
 const Checkout = ({ user }) => {
+  const form = document.getElementById('paypalForm');
+  const [loading, setPending] = useState(false);
+
+  if (form) {
+    form.addEventListener('submit', () => {
+      setPending(true);
+    });
+  }
+
   return (
     <Flex justify='center'>
       <Box color='white' maxW='1100px' flex='1'>
@@ -36,11 +45,25 @@ const Checkout = ({ user }) => {
           PayPal
         </Heading>
 
-        <form id='paypalForm' method='post' action={`${process.env.REACT_APP_API_URL}/paypal/request`}>
+        <form
+          id='paypalForm'
+          method='post'
+          action={`${process.env.REACT_APP_API_URL}/paypal/request`}
+        >
           <input type='hidden' name='userId' value={user.userId} />
-          <Box as='button' rounded='md' bg='#ffc439' color='black' px={4} h={8} my={2} mx={4} type='submit'>
+          <Button
+            rounded='md'
+            bg='#ffc439'
+            color='black'
+            px={4}
+            h={8}
+            my={2}
+            mx={4}
+            type='submit'
+            isLoading={loading}
+          >
             PayPal
-          </Box>
+          </Button>
         </form>
       </Box>
     </Flex>
