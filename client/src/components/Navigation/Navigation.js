@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
 import { Account, Cart, Home, Toll } from 'components/Icons';
-import { Box, Button, Flex } from '@chakra-ui/core';
+import { Box, Button, Flex, Text } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
 import useWindowSize from 'hooks/useWindowSize';
 import useRouter from 'hooks/useRouter';
 
-const Navigation = ({ auth, cart }) => {
+const Navigation = ({ auth, cart, username }) => {
   const isMobile = useWindowSize();
   const router = useRouter();
 
@@ -81,11 +81,23 @@ const Navigation = ({ auth, cart }) => {
         </Link>
 
         <Link to='/profile'>
-          <Box px={2}>
-            <Button variant='link'>
-              <Account active={router.pathname === '/profile'} />
-            </Button>
-          </Box>
+          <Button variant='link' mx={1}>
+            {auth ? (
+              <Flex
+                h='24px'
+                w='24px'
+                align='center'
+                justify='center'
+                bg='#0FF4C6'
+                color='#0e0e10'
+                borderRadius='50%'
+              >
+                {username[0]}
+              </Flex>
+            ) : (
+              <Account />
+            )}
+          </Button>
         </Link>
       </Flex>
     </div>
@@ -96,6 +108,7 @@ export default connect(
   (state) => ({
     auth: state.user.authenticated,
     cart: state.user.cart,
+    username: state.user.username,
     errorMessage: state.user.errorMessage,
     updatedAt: state.user.updatedAt,
   }),

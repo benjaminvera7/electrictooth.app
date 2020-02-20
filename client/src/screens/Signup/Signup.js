@@ -30,7 +30,7 @@ const Signup = ({ UserActions, history }) => {
               username: form.username.value,
               email: form.email.value,
               password: form.password.value,
-            }).then(() => history.push('/profile'));
+            }).then(() => history.push('/'));
           }}
         >
           <Stack spacing={4} my={4}>
