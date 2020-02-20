@@ -243,7 +243,12 @@ export default handleActions(
       localStorage.removeItem('userId');
       localStorage.removeItem('username');
 
-      const newState = { ...initialState, updatedAt: getDate(), error: null };
+      const newState = {
+        ...initialState,
+        authenticated: undefined,
+        updatedAt: getDate(),
+        error: null,
+      };
 
       return newState;
     },

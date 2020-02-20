@@ -110,6 +110,7 @@ export default connect(
     cart: state.user.cart,
     username: state.user.username,
     errorMessage: state.user.errorMessage,
+    user: state.user,
     updatedAt: state.user.updatedAt,
   }),
   (dispatch) => ({
