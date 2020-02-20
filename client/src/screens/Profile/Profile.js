@@ -67,10 +67,14 @@ const Profile = ({ UserActions, user, history, albumCollection }) => {
                       </Link>
                     </Box>
                     <Box>
-                      <Heading as='h6' size='md'>
+                      <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']}>
                         {album.album_name}
                       </Heading>
-                      <Text fontSize='sm' mb={4} color='grey'>
+                      <Text
+                        fontSize={['xs', 'sm', 'md', 'lg']}
+                        mb={4}
+                        color='grey'
+                      >
                         {album.artist_name}
                       </Text>
                     </Box>

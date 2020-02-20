@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
-import { Box, Flex, Text, Image, Heading, Stack } from '@chakra-ui/core';
+import {
+  Box,
+  Flex,
+  Text,
+  Image,
+  Heading,
+  Stack,
+  IconButton,
+} from '@chakra-ui/core';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import requireAuth from 'components/AuthHOC/requireAuth';
+import { PlaylistAdd, Download as DownloadIcon } from 'components/Icons';
 
 class Download extends Component {
   state = {
@@ -109,30 +118,23 @@ class Download extends Component {
                       direction='column'
                       justify='center'
                     >
-                      <Box
-                        as='button'
-                        rounded='md'
-                        bg='#2d7bb8'
-                        color='white'
-                        px={2}
+                      <IconButton
+                        variant='solid'
+                        variantColor='teal'
+                        aria-label='Call Sage'
+                        fontSize='20px'
+                        icon={DownloadIcon}
                         mb={2}
-                        h={8}
-                        width='130px'
                         onClick={(e) => this.handleSubmit(e, album.product_id)}
-                      >
-                        download
-                      </Box>
-                      <Box
-                        as='button'
-                        rounded='md'
-                        bg='#2d7bb8'
-                        color='white'
-                        px={2}
-                        h={8}
-                        width='130px'
-                      >
-                        add to playlist
-                      </Box>
+                      />
+                      <IconButton
+                        variant='solid'
+                        variantColor='teal'
+                        aria-label='Call Sage'
+                        fontSize='20px'
+                        icon={PlaylistAdd}
+                        onClick={(e) => console.log('add to playlist')}
+                      />
                     </Flex>
                   )}
                 </Flex>

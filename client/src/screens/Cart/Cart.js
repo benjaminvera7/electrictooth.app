@@ -42,6 +42,7 @@ const Cart = ({ UserActions, auth, cart }) => {
                   <Box>
                     <Image src={`/uploads/${art_url}`} maxWidth='96px' px={2} />
                   </Box>
+
                   <Box>
                     <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']}>
                       {album_name ? album_name : `${amount} coins`}
@@ -54,11 +55,13 @@ const Cart = ({ UserActions, auth, cart }) => {
                       {artist_name ? artist_name : `@ $0.01`}
                     </Text>
                   </Box>
+
                   <Box mx='auto' />
+
                   <Flex px={2}>
-                    <Box px={2}>
-                      $ {download_price ? download_price : price}.00
-                    </Box>
+                    <Text px={2}>
+                      ${download_price ? download_price : price}.00
+                    </Text>
                     <Box
                       onClick={() =>
                         UserActions.removeFromCart(product_id, auth)
