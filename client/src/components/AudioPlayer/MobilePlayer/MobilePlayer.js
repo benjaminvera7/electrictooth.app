@@ -25,6 +25,7 @@ const MobilePlayer = ({
   setPlaylistVisibility,
   playerVisible,
   setPlayerVisibility,
+  loading,
 }) => {
   return (
     <Fragment>
@@ -62,7 +63,7 @@ const MobilePlayer = ({
             <Previous />
           </Button>
 
-          <Button variant='link' onClick={handlePlay}>
+          <Button variant='link' onClick={handlePlay} isLoading={loading}>
             {playing ? <Pause /> : <Play />}
           </Button>
 

@@ -51,6 +51,7 @@ const PlaylistPanel = slideHOC(Panel);
 
 const AudioPlayer = ({ playlist, UserActions, auth, PlayerActions, coins }) => {
   const [playlistVisible, setPlaylistVisibility] = useState(false);
+  const [loading, setPending] = useState(false);
 
   const isMobile = useWindowSize();
   const audio = useRef(null);
@@ -154,6 +155,8 @@ const AudioPlayer = ({ playlist, UserActions, auth, PlayerActions, coins }) => {
   };
 
   const fetch = async (id) => {
+    setPending(true);
+
     if (playing && currentSongId === id) {
       setPlaying(false);
       audio.current.pause();
@@ -185,6 +188,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, PlayerActions, coins }) => {
 
       UserActions.getCoins(auth);
       setPlaying(true);
+      setPending(false);
     } catch (e) {
       console.log('song change', e);
     }
@@ -229,6 +233,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, PlayerActions, coins }) => {
             coins={coins}
             playlistVisible={playlistVisible}
             setPlaylistVisibility={setPlaylistVisibility}
+            loading={loading}
           />
 
           <MobileNavigation
@@ -248,6 +253,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, PlayerActions, coins }) => {
           fetch={fetch}
           currentlyPlaying={currentSongId}
           coins={coins}
+          loading={loading}
         />
       )}
 

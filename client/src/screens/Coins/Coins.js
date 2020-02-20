@@ -22,14 +22,14 @@ const Coins = ({ UserActions, auth }) => {
     if (auth) {
       UserActions.addToCart(coins, auth);
 
-      toast({
-        position: 'top',
-        title: 'Cart updated.',
-        description: `${coins.substring(4, 7)} coins added.`,
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-      });
+      // toast({
+      //   position: 'top',
+      //   title: 'Cart updated.',
+      //   description: `${coins.substring(4, 7)} coins added.`,
+      //   status: 'success',
+      //   duration: 3000,
+      //   isClosable: true,
+      // });
     } else {
       router.push('/signup');
     }

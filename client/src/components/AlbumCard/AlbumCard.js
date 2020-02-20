@@ -37,14 +37,14 @@ const AlbumCard = ({
     if (auth) {
       PlayerActions.addAlbumToPlaylist(auth, albumId);
 
-      toast({
-        position: 'top',
-        title: 'Playlist updated.',
-        description: `Album ${album.album_name} added.`,
-        status: 'info',
-        duration: 3000,
-        isClosable: true,
-      });
+      // toast({
+      //   position: 'top',
+      //   title: 'Playlist updated.',
+      //   description: `Album ${album.album_name} added.`,
+      //   status: 'info',
+      //   duration: 3000,
+      //   isClosable: true,
+      // });
     } else {
       router.push('/signup');
     }
@@ -54,14 +54,14 @@ const AlbumCard = ({
     if (auth) {
       UserActions.addToCart(productId, auth);
 
-      toast({
-        position: 'top',
-        title: 'Cart updated.',
-        description: `Album ${album.album_name} added.`,
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-      });
+      // toast({
+      //   position: 'top',
+      //   title: 'Cart updated.',
+      //   description: `Album ${album.album_name} added.`,
+      //   status: 'success',
+      //   duration: 3000,
+      //   isClosable: true,
+      // });
     } else {
       router.push('/signup');
     }

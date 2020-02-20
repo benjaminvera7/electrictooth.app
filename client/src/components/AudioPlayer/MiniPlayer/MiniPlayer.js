@@ -29,6 +29,7 @@ const Panel = (props) => (
       setPlaylistVisibility={props.setPlaylistVisibility}
       playerVisible={props.playerVisible}
       setPlayerVisibility={props.setPlayerVisibility}
+      loading={props.loading}
     />
   </div>
 );
@@ -59,6 +60,7 @@ const MiniPlayer = ({
   coins,
   playlistVisible,
   setPlaylistVisibility,
+  loading,
 }) => {
   const [playerVisible, setPlayerVisibility] = useState(false);
 
@@ -91,6 +93,7 @@ const MiniPlayer = ({
           variant='link'
           style={{ minHeight: '44px' }}
           onClick={handlePlay}
+          isLoading={loading}
         >
           {playing ? <Pause /> : <Play />}
         </Button>
@@ -113,6 +116,7 @@ const MiniPlayer = ({
         setPlaylistVisibility={setPlaylistVisibility}
         playerVisible={playerVisible}
         setPlayerVisibility={setPlayerVisibility}
+        loading={loading}
       />
     </Fragment>
   );

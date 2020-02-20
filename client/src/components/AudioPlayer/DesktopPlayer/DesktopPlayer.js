@@ -52,6 +52,7 @@ const DesktopPlayer = ({
   currentlyPlaying,
   coins,
   playlist,
+  loading,
 }) => {
   const [visible, setVisibility] = useState(false);
 
@@ -85,7 +86,7 @@ const DesktopPlayer = ({
               <Button variant='link' onClick={handlePrevious}>
                 <Previous />
               </Button>
-              <Button variant='link' onClick={handlePlay}>
+              <Button variant='link' onClick={handlePlay} isLoading={loading}>
                 {playing ? <Pause /> : <Play />}
               </Button>
               <Button variant='link' onClick={handleNext}>
