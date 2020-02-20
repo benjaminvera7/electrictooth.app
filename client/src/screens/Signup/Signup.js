@@ -39,6 +39,7 @@ const Signup = ({ UserActions, history }) => {
               size='lg'
               name='username'
               type='text'
+              maxlength='15'
             />
             <Input
               placeholder='Email address'
