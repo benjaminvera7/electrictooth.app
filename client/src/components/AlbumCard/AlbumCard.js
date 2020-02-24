@@ -28,7 +28,6 @@ const AlbumCard = ({
   UserActions,
   PlayerActions,
   albumCollection,
-  history,
 }) => {
   const toast = useToast();
   const router = useRouter();

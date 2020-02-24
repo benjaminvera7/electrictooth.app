@@ -14,11 +14,18 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as albumActions from 'redux/modules/album';
 import * as userActions from 'redux/modules/user';
+import * as playerActions from 'redux/modules/player';
 
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
 
-const Card = styled(Flex)`
+const AlbumCardContainer = styled(Box)``;
+
+const AlbumSongList = styled(Box)``;
+
+const AlbumCard = styled(Flex)``;
+
+const CardAnimation = styled(Flex)`
   ${FADE_IN}
 `;
 
@@ -30,8 +37,31 @@ class Album extends Component {
 
   componentDidMount() {
     this.loadAlbum();
-    this.setState(this.props.currentAlbum);
+    console.log(this.props.history);
   }
+
+  addAlbumToCart = () => {
+    this.props.UserActions.addToCart(
+      this.props.currentAlbum.product_id,
+      this.props.auth,
+    );
+  };
+
+  addSongToCart = () => {};
+
+  addAlbumToPlaylist = () => {
+    if (this.props.auth) {
+      this.props.PlayerActions.addAlbumToPlaylist(
+        this.props.auth,
+        this.props.currentAlbum._id,
+      );
+    } else {
+      // router.push('/signup');
+      console.log(this.props.history.push());
+    }
+  };
+
+  addSongToPlaylist = () => {};
 
   render() {
     let { pending, currentAlbum } = this.props;
@@ -39,9 +69,9 @@ class Album extends Component {
     return (
       <Fragment>
         {!pending && (
-          <Card justify='center'>
-            <Box color='white' maxW='1100px' flex='1'>
-              <Flex
+          <CardAnimation justify='center'>
+            <AlbumCardContainer color='white' maxW='1100px' flex='1'>
+              <AlbumCard
                 className='card'
                 width='100%'
                 wrap='wrap'
@@ -91,7 +121,7 @@ class Album extends Component {
                     $ {currentAlbum.download_price}
                   </Text>
 
-                  <Badge fontSize='0.6em' variantColor='teal' ml={2} mr={1}>
+                  <Badge fontSize='0.6em' variantColor='teal' ml={1} mr={1}>
                     NuDisco
                   </Badge>
                   <Badge fontSize='0.6em' variantColor='teal' mr={1}>
@@ -109,9 +139,7 @@ class Album extends Component {
                     lineHeight='normal'
                     fontWeight='light'
                   >
-                    Mundi facilisis vituperata eam ea, tacimates convenire
-                    definitiones cum at. His possit aeterno singulis ex, noster
-                    debitis sea et.
+                    yeet
                   </Text>
                 </Box>
 
@@ -119,22 +147,22 @@ class Album extends Component {
                   mt={1}
                   width='100%'
                   bg='#2d7bb8'
-                  onClick={() =>
-                    this.props.UserActions.addToCart(
-                      this.props.currentAlbum.product_id,
-                      this.props.auth,
-                    )
-                  }
+                  onClick={this.addAlbumToCart}
                 >
                   Buy Digital Album
                 </Button>
 
-                <Button mt={1} width='100%' bg='#134468'>
+                <Button
+                  mt={1}
+                  width='100%'
+                  bg='#134468'
+                  onClick={this.addAlbumToPlaylist}
+                >
                   Add Album to Player
                 </Button>
-              </Flex>
+              </AlbumCard>
 
-              <Box mt='24px'>
+              <AlbumSongList mt='24px'>
                 <Stack spacing={4} mb={4}>
                   {currentAlbum.songs
                     ? currentAlbum.songs.map((song, i) => (
@@ -149,13 +177,20 @@ class Album extends Component {
                             <Image
                               src={`/uploads/${song.art_url}`}
                               maxWidth='96px'
-                              px={2}
                             />
                           </Box>
 
                           <Flex direction='column' pl={1}>
-                            <Text color='white'>{song.song_name}</Text>
-                            <Text color='gray.600'>
+                            <Text
+                              color='white'
+                              fontSize={['sm', 'md', 'lg', 'xl']}
+                            >
+                              {song.song_name}
+                            </Text>
+                            <Text
+                              color='gray.600'
+                              fontSize={['sm', 'md', 'lg', 'xl']}
+                            >
                               {currentAlbum.artist
                                 ? currentAlbum.artist.name
                                 : undefined}
@@ -176,9 +211,9 @@ class Album extends Component {
                       ))
                     : undefined}
                 </Stack>
-              </Box>
-            </Box>
-          </Card>
+              </AlbumSongList>
+            </AlbumCardContainer>
+          </CardAnimation>
         )}
       </Fragment>
     );
@@ -187,6 +222,7 @@ class Album extends Component {
 
 export default connect(
   (state) => ({
+    albumCollection: state.user.albumCollection,
     currentAlbum: state.album.currentAlbum,
     auth: state.user.authenticated,
     updatedAt: state.album.updatedAt,
@@ -195,5 +231,6 @@ export default connect(
   (dispatch) => ({
     AlbumActions: bindActionCreators(albumActions, dispatch),
     UserActions: bindActionCreators(userActions, dispatch),
+    PlayerActions: bindActionCreators(playerActions, dispatch),
   }),
 )(Album);
