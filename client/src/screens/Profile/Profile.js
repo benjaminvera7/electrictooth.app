@@ -21,6 +21,7 @@ import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
 import * as playerActions from 'redux/modules/player';
 import requireAuth from 'components/AuthHOC/requireAuth';
+import axios from 'axios';
 
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
@@ -43,6 +44,23 @@ const Profile = ({
     } else {
       console.warn('something went wrong');
     }
+  };
+
+  const handleSubmit = (e, product_id) => {
+    e.preventDefault();
+    axios({
+      url: `/download/${product_id}`,
+      method: 'GET',
+      responseType: 'blob',
+      headers: { Authorization: auth },
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `${product_id}.zip`);
+      document.body.appendChild(link);
+      link.click();
+    });
   };
 
   return (
@@ -104,15 +122,16 @@ const Profile = ({
                       <IconButton
                         variant='solid'
                         variantColor='teal'
-                        aria-label='Call Sage'
+                        aria-label='Download album'
                         fontSize='20px'
                         icon={Download}
+                        onClick={(e) => handleSubmit(e, album.product_id)}
                         mb={2}
                       />
                       <IconButton
                         variant='solid'
                         variantColor='teal'
-                        aria-label='Call Sage'
+                        aria-label='Add to playlist'
                         fontSize='20px'
                         icon={PlaylistAdd}
                         onClick={() => addAlbum(album.id)}
@@ -148,7 +167,7 @@ const Profile = ({
 export default connect(
   (state) => ({
     user: state.user,
-    auth: state.user.auth,
+    auth: state.user.authenticated,
     albumCollection: state.user.albumCollection,
   }),
   (dispatch) => ({

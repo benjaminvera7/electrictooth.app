@@ -39,7 +39,7 @@ class Download extends Component {
   handleSubmit = (e, product_id) => {
     e.preventDefault();
     axios({
-      url: `/download/${this.props.match.params.orderId}/${product_id}`,
+      url: `/download/order/${this.props.match.params.orderId}/${product_id}`,
       method: 'GET',
       responseType: 'blob',
       headers: { Authorization: this.props.auth },
@@ -61,7 +61,6 @@ class Download extends Component {
     }
   };
 
-  //5e1e664d795d337ad8c25ffb
   render() {
     return (
       <Flex justify='center'>
