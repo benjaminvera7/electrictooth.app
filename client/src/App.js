@@ -30,7 +30,7 @@ function App({ AlbumActions, UserActions, auth }) {
   }, []);
 
   return (
-    <main>
+    <>
       <CSSReset />
 
       <Navigation />
@@ -52,7 +52,7 @@ function App({ AlbumActions, UserActions, auth }) {
       </Box>
 
       <AudioPlayer />
-    </main>
+    </>
   );
 }
 

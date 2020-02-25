@@ -19,6 +19,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
+import * as playerActions from 'redux/modules/player';
 import requireAuth from 'components/AuthHOC/requireAuth';
 
 import { FADE_IN } from 'style/animations';
@@ -28,7 +29,31 @@ const ProfileCard = styled(Box)`
   ${FADE_IN}
 `;
 
-const Profile = ({ UserActions, user, history, albumCollection }) => {
+const Profile = ({
+  UserActions,
+  PlayerActions,
+  user,
+  auth,
+  history,
+  albumCollection,
+}) => {
+  const addAlbum = (albumId) => {
+    if (auth) {
+      PlayerActions.addAlbumToPlaylist(auth, albumId);
+
+      // toast({
+      //   position: 'top',
+      //   title: 'Playlist updated.',
+      //   description: `Album ${album.album_name} added.`,
+      //   status: 'info',
+      //   duration: 3000,
+      //   isClosable: true,
+      // });
+    } else {
+      console.warn('something went wrong');
+    }
+  };
+
   return (
     <Flex justify='center'>
       <ProfileCard color='white' maxW='1100px' flex='1'>
@@ -99,6 +124,7 @@ const Profile = ({ UserActions, user, history, albumCollection }) => {
                         aria-label='Call Sage'
                         fontSize='20px'
                         icon={PlaylistAdd}
+                        onClick={() => addAlbum(album.id)}
                       />
                     </Flex>
                   </Flex>
@@ -131,9 +157,11 @@ const Profile = ({ UserActions, user, history, albumCollection }) => {
 export default connect(
   (state) => ({
     user: state.user,
+    auth: state.user.auth,
     albumCollection: state.user.albumCollection,
   }),
   (dispatch) => ({
     UserActions: bindActionCreators(userActions, dispatch),
+    PlayerActions: bindActionCreators(playerActions, dispatch),
   }),
 )(requireAuth(Profile));

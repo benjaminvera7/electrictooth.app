@@ -303,7 +303,7 @@ async function seed() {
       album: album5._id,
       artist_name: 'HiRO JP',
       album_name: 'Last Month EP',
-      song_song: 'Last Month',
+      song_name: 'Last Month',
       position: 1,
       stream_url: 'Last Month.mp3',
       art_url: 'lastmonth.jpg',
