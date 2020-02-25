@@ -40,15 +40,6 @@ const Profile = ({
   const addAlbum = (albumId) => {
     if (auth) {
       PlayerActions.addAlbumToPlaylist(auth, albumId);
-
-      // toast({
-      //   position: 'top',
-      //   title: 'Playlist updated.',
-      //   description: `Album ${album.album_name} added.`,
-      //   status: 'info',
-      //   duration: 3000,
-      //   isClosable: true,
-      // });
     } else {
       console.warn('something went wrong');
     }
