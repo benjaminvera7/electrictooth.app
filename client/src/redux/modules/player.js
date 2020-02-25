@@ -8,16 +8,19 @@ function getDate() {
   return utcDate.toUTCString();
 }
 
-// const _getSong = (token, songId) => {
-//   return axios({
-//     url: `${process.env.REACT_APP_API_URL}/song/${songId}`,
-//     method: "GET",
-//     headers: { Authorization: token }
-//   });
-// };
+const _addSongToPlaylist = (token, songId) => {
+  return axios({
+    url: `${process.env.REACT_APP_API_URL}/song/${songId}`,
+    method: 'GET',
+    headers: { Authorization: token },
+  });
+};
 
-// export const GET_SONG = "player/GET_SONG";
-// export const getSong = createAction(GET_SONG, _getSong);
+export const ADD_SONG_TO_PLAYLIST = 'player/ADD_SONG_TO_PLAYLIST';
+export const addSongToPlaylist = createAction(
+  ADD_SONG_TO_PLAYLIST,
+  _addSongToPlaylist,
+);
 
 const _addAlbumToPlaylist = (token, albumId) => {
   return axios({
@@ -74,6 +77,42 @@ export default handleActions(
 
           return newState.playlist.push(newSong);
         });
+
+        return newState;
+      },
+      onFailure: (state, { payload }) => {
+        return { ...state, error: payload };
+      },
+    }),
+    ...pender({
+      type: ADD_SONG_TO_PLAYLIST,
+      onSuccess: (state, { payload }) => {
+        const newState = {
+          ...state,
+          updatedAt: getDate(),
+          error: null,
+        };
+
+        let song = payload.data.song;
+
+        let newSong = {
+          id: song._id,
+          song_name: song.song_name,
+          artist_name: song.artist_name,
+          art_url: song.art_url,
+        };
+
+        //checks and sees if songs are already in playlist...should probably move this somewhere else
+        //to prevent api call.
+
+        let exists = _.find(state.playlist, { id: newSong.id });
+        console.log(exists);
+
+        if (exists) {
+          return state;
+        }
+
+        newState.playlist.push(newSong);
 
         return newState;
       },

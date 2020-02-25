@@ -37,14 +37,17 @@ class Album extends Component {
 
   componentDidMount() {
     this.loadAlbum();
-    console.log(this.props.history);
   }
 
   addAlbumToCart = () => {
-    this.props.UserActions.addToCart(
-      this.props.currentAlbum.product_id,
-      this.props.auth,
-    );
+    if (this.props.auth) {
+      this.props.UserActions.addToCart(
+        this.props.currentAlbum.product_id,
+        this.props.auth,
+      );
+    } else {
+      this.props.history.push('/signup');
+    }
   };
 
   addSongToCart = () => {};
@@ -56,15 +59,26 @@ class Album extends Component {
         this.props.currentAlbum._id,
       );
     } else {
-      // router.push('/signup');
-      console.log(this.props.history.push());
+      this.props.history.push('/signup');
     }
   };
 
-  addSongToPlaylist = () => {};
+  addSongToPlaylist = (songId) => {
+    if (this.props.auth) {
+      this.props.PlayerActions.addSongToPlaylist(this.props.auth, songId);
+    } else {
+      this.props.history.push('/signup');
+    }
+  };
 
   render() {
     let { pending, currentAlbum } = this.props;
+
+    let exists;
+
+    exists = this.props.albumCollection.filter(
+      (ac) => ac.id === currentAlbum._id,
+    );
 
     return (
       <Fragment>
@@ -81,7 +95,10 @@ class Album extends Component {
                 my={2}
               >
                 <Box className='card_image'>
-                  <Image src={`/uploads/${currentAlbum.art_url}`} />
+                  <Image
+                    src={`/uploads/${currentAlbum.art_url}`}
+                    rounded='lg'
+                  />
                 </Box>
 
                 <Box className='card_description'>
@@ -143,14 +160,25 @@ class Album extends Component {
                   </Text>
                 </Box>
 
-                <Button
-                  mt={1}
-                  width='100%'
-                  bg='#2d7bb8'
-                  onClick={this.addAlbumToCart}
-                >
-                  Buy Digital Album
-                </Button>
+                {exists.length === 0 ? (
+                  <Button
+                    mt={1}
+                    width='100%'
+                    bg='#2d7bb8'
+                    onClick={this.addAlbumToCart}
+                  >
+                    Buy Digital Album
+                  </Button>
+                ) : (
+                  <Button
+                    mt={1}
+                    width='100%'
+                    bg='#2d7bb8'
+                    onClick={() => this.props.history.push('/profile')}
+                  >
+                    View in Collection
+                  </Button>
+                )}
 
                 <Button
                   mt={1}
@@ -180,7 +208,7 @@ class Album extends Component {
                             />
                           </Box>
 
-                          <Flex direction='column' pl={1}>
+                          <Flex direction='column' pl={1} w='100%'>
                             <Text
                               color='white'
                               fontSize={['sm', 'md', 'lg', 'xl']}
@@ -197,15 +225,10 @@ class Album extends Component {
                             </Text>
                           </Flex>
 
-                          <Box mx='auto' />
-
-                          <Flex
-                            align='center'
-                            minWidth='100px'
-                            justify='space-evenly'
-                          >
-                            <Play />
-                            <PlaylistAdd />
+                          <Flex align='center' pr={2}>
+                            <PlaylistAdd
+                              onClick={() => this.addSongToPlaylist(song._id)}
+                            />
                           </Flex>
                         </Flex>
                       ))
@@ -224,6 +247,7 @@ export default connect(
   (state) => ({
     albumCollection: state.user.albumCollection,
     currentAlbum: state.album.currentAlbum,
+    playlist: state.player.playlist,
     auth: state.user.authenticated,
     updatedAt: state.album.updatedAt,
     pending: state.pender.pending['album/GET_ALBUM_BY_ID'],
