@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Stack, Input, Button, Image } from '@chakra-ui/core';
+import { Box, Flex, Stack, Input, Button, Image, Link } from '@chakra-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
@@ -59,6 +59,27 @@ const Signup = ({ UserActions, history }) => {
             </Button>
           </Stack>
         </form>
+
+        <Box
+          w='100%'
+          type='submit'
+          mt={4}
+          textAlign='center'
+          border='1px solid #d8dee2'
+          borderRadius='md'
+        >
+          <Box fontSize='xs' py={2} color='white'>
+            <span>
+              Already have an account?{' '}
+              <Link
+                onClick={() => history.push('/signin')}
+                style={{ color: '#6eacdd' }}
+              >
+                Log in.
+              </Link>
+            </span>
+          </Box>
+        </Box>
       </Box>
     </SignupContainer>
   );

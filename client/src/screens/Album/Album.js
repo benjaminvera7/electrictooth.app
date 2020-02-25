@@ -9,7 +9,7 @@ import {
   Badge,
   Button,
 } from '@chakra-ui/core';
-import { Play, PlaylistAdd } from 'components/Icons';
+import { PlaylistAdd } from 'components/Icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as albumActions from 'redux/modules/album';

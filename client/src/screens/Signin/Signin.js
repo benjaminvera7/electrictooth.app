@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
-import { Box, Flex, Image, Stack, Input, Button } from '@chakra-ui/core';
+import { Box, Flex, Image, Stack, Input, Button, Link } from '@chakra-ui/core';
 
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
@@ -46,6 +46,27 @@ const Signin = ({ UserActions, history }) => {
             </Button>
           </Stack>
         </form>
+
+        <Box
+          w='100%'
+          type='submit'
+          mt={4}
+          textAlign='center'
+          border='1px solid #d8dee2'
+          borderRadius='md'
+        >
+          <Box fontSize='xs' py={2} color='white'>
+            <span>
+              New to Electric Tooth?{' '}
+              <Link
+                onClick={() => history.push('/signup')}
+                style={{ color: '#6eacdd' }}
+              >
+                Create an account.
+              </Link>
+            </span>
+          </Box>
+        </Box>
       </Box>
     </SigninContainer>
   );
