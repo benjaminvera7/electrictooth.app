@@ -13,6 +13,6 @@ router.get(
   requireAuth,
   downloadController.downloadFromOrder,
 );
-router.get('/:product_id', requireAuth, downloadController.downloadFromProfile);
+//router.get('/:product_id', requireAuth, downloadController.downloadFromProfile);
 
 module.exports = router;
