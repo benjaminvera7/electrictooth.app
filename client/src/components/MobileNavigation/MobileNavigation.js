@@ -55,7 +55,7 @@ const MobileNavigation = ({
   );
 };
 export default connect((state) => ({
-  playlist: state.player.playlist,
-  updatedAt: state.player.updatedAt,
+  playlist: state.user.playlist,
+  updatedAt: state.user.updatedAt,
   coins: state.user.coins,
 }))(MobileNavigation);

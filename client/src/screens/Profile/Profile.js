@@ -19,7 +19,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
-import * as playerActions from 'redux/modules/player';
 import requireAuth from 'components/AuthHOC/requireAuth';
 import axios from 'axios';
 
@@ -30,17 +29,10 @@ const ProfileCard = styled(Box)`
   ${FADE_IN}
 `;
 
-const Profile = ({
-  UserActions,
-  PlayerActions,
-  user,
-  auth,
-  history,
-  albumCollection,
-}) => {
+const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
   const addAlbum = (albumId) => {
     if (auth) {
-      PlayerActions.addAlbumToPlaylist(auth, albumId);
+      UserActions.addAlbumToPlaylist(auth, albumId);
     } else {
       console.warn('something went wrong');
     }
@@ -172,6 +164,5 @@ export default connect(
   }),
   (dispatch) => ({
     UserActions: bindActionCreators(userActions, dispatch),
-    PlayerActions: bindActionCreators(playerActions, dispatch),
   }),
 )(requireAuth(Profile));

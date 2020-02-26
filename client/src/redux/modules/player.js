@@ -8,6 +8,17 @@ function getDate() {
   return utcDate.toUTCString();
 }
 
+const _addToPlaylist = (token, productId) => {
+  return axios({
+    url: `${process.env.REACT_APP_API_URL}/user/playlist/add/${productId}`,
+    method: 'POST',
+    headers: { Authorization: token },
+  });
+};
+
+export const ADD_TO_PLAYLIST = 'player/ADD_TO_PLAYLIST';
+export const addToPlaylist = createAction(ADD_TO_PLAYLIST, _addToPlaylist);
+
 const _addSongToPlaylist = (token, songId) => {
   return axios({
     url: `${process.env.REACT_APP_API_URL}/song/${songId}`,
@@ -47,6 +58,25 @@ const initialState = {
 
 export default handleActions(
   {
+    ...pender({
+      type: ADD_TO_PLAYLIST,
+      onSuccess: (state, { payload }) => {
+        const newState = {
+          ...state,
+          updatedAt: getDate(),
+          error: null,
+        };
+
+        let newPlaylist = payload.data.playlist;
+
+        newState.playlist = newPlaylist;
+
+        return newState;
+      },
+      onFailure: (state, { payload }) => {
+        return { ...state, error: payload };
+      },
+    }),
     ...pender({
       type: ADD_ALBUM_TO_PLAYLIST,
       onSuccess: (state, { payload }) => {

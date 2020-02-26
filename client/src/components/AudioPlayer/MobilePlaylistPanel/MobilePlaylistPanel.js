@@ -105,6 +105,7 @@ const MobilePlaylistPanel = (props) => {
 };
 
 export default connect((state) => ({
-  playlist: state.player.playlist,
-  updatedAt: state.player.updatedAt,
+  playlist: state.user.playlist,
+  user: state.user,
+  updatedAt: state.user.updatedAt,
 }))(MobilePlaylistPanel);

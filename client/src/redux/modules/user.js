@@ -39,29 +39,6 @@ const _removeFromCart = (product_id, token) => {
   });
 };
 
-const _checkout = (token) => {
-  return axios({
-    url: `/paypal/request`,
-    method: 'POST',
-    headers: {
-      Authorization: token,
-    },
-  });
-};
-
-// const _checkout = (token) => {
-//   return fetch(`${process.env.REACT_APP_API_URL}/paypal/request`, {
-//     method: 'POST',
-//     headers: new Headers({
-//       Authorization: token,
-//     }),
-//     Accept: 'application/json',
-//     'Content-Type': 'application/json',
-//     Origin: '',
-//     Host: `${process.env.REACT_APP_API_URL}`,
-//   });
-// };
-
 const _getCoins = (token) => {
   return axios({
     url: `/user/coins`,
@@ -82,6 +59,17 @@ const _exchangeCoins = (token, type, amount) => {
   });
 };
 
+const _addToPlaylist = (token, productId) => {
+  return axios({
+    url: `${process.env.REACT_APP_API_URL}/user/playlist/add/${productId}`,
+    method: 'POST',
+    headers: { Authorization: token },
+  });
+};
+
+export const ADD_TO_PLAYLIST = 'player/ADD_TO_PLAYLIST';
+export const addToPlaylist = createAction(ADD_TO_PLAYLIST, _addToPlaylist);
+
 export const GET_COINS = 'user/GET_COINS';
 export const getCoins = createAction(GET_COINS, _getCoins);
 
@@ -100,22 +88,18 @@ export const signIn = createAction(SIGN_IN, _signin);
 export const ADD_TO_CART = 'user/ADD_TO_CART';
 export const addToCart = createAction(ADD_TO_CART, _addToCart);
 
-export const USER_CHECKOUT = 'user/USER_CHECKOUT';
-export const checkout = createAction(USER_CHECKOUT, _checkout);
-
 export const REMOVE_FROM_CART = 'user/REMOVE_FROM_CART';
 export const removeFromCart = createAction(REMOVE_FROM_CART, _removeFromCart);
 
 export const SIGN_OUT = 'user/SIGN_OUT';
 export const signOut = createAction(SIGN_OUT);
 
-//TODO SEND USER_ID SET IN STORAGE
-
 const initialState = {
   userId: localStorage.getItem('userId'),
   authenticated: localStorage.getItem('token'),
   username: localStorage.getItem('username'),
   albumCollection: [],
+  playlist: [],
   cart: {
     items: [],
     total: 0,
@@ -129,6 +113,25 @@ const initialState = {
 export default handleActions(
   {
     ...pender({
+      type: ADD_TO_PLAYLIST,
+      onSuccess: (state, { payload }) => {
+        const newState = {
+          ...state,
+          updatedAt: getDate(),
+          error: null,
+        };
+
+        let newPlaylist = payload.data.playlist;
+
+        newState.playlist = newPlaylist;
+
+        return newState;
+      },
+      onFailure: (state, { payload }) => {
+        return { ...state, error: payload };
+      },
+    }),
+    ...pender({
       type: GET_USER,
       onSuccess: (state, { payload }) => {
         const newState = { ...state, updatedAt: getDate(), error: null };
@@ -136,6 +139,7 @@ export default handleActions(
         newState.coins = payload.data.user.coins;
         newState.username = payload.data.user.username;
         newState.cart = payload.data.user.cart;
+        newState.playlist = payload.data.user.playlist;
         return newState;
       },
       onFailure: (state, { payload }) => {
@@ -201,18 +205,6 @@ export default handleActions(
       },
       onFailure: (state, { payload }) => {
         return { ...state, error: payload.response.data.error };
-      },
-    }),
-    ...pender({
-      type: USER_CHECKOUT,
-      onSuccess: (state, { payload }) => {
-        const newState = { ...state, updatedAt: getDate(), error: null };
-        console.log(payload);
-        //newState.cart = payload.data.user.cart;
-        return newState;
-      },
-      onFailure: (state, res) => {
-        return { ...state, error: res };
       },
     }),
     ...pender({

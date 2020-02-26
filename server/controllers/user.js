@@ -1,6 +1,9 @@
 const Album = require('../models/album');
 const Coin = require('../models/coin');
-const Order = require('../models/order');
+
+//this is needed to use populate()
+require('../models/song');
+require('../models/artist');
 
 async function addToCart(req, res, next) {
   let product_id = req.params.product_id;
@@ -170,6 +173,51 @@ async function removeFromCart(req, res, next) {
   }
 }
 
+async function addToPlaylist(req, res, next) {
+  let product_id = req.params.product_id;
+  let found = product_id.match(/-/g);
+
+  if (!!found) {
+    let song;
+  } else {
+    let album;
+    let currentPlaylist = req.user.getPlaylist();
+    let newPlaylist = [];
+    album = await Album.findOne({ product_id: product_id })
+      .populate('songs')
+      .populate('artist')
+      .exec();
+
+    album.songs.forEach((song) => {
+      let exists = currentPlaylist.filter((s) => s.id.toString() === song.id);
+
+      if (!exists) {
+        let newSong = {
+          product_id: song.product_id,
+          id: song._id,
+          song_name: song.song_name,
+          artist_name: song.artist_name,
+          art_url: song.art_url,
+        };
+
+        newPlaylist.push(newSong);
+      }
+    });
+
+    newPlaylist = [...newPlaylist, ...currentPlaylist];
+
+    req.user.updatePlaylist(newPlaylist);
+    req.user.save();
+
+    res.status(200).json({
+      message: 'Fetched user playlist success',
+      playlist: newPlaylist,
+    });
+  }
+}
+
+async function removeFromPlaylist() {}
+
 function getUser(req, res, next) {
   res.status(200).json({ message: 'Fetched user success', user: req.user });
 }
@@ -196,4 +244,6 @@ module.exports = {
   getUser,
   getCoins,
   exchangeCoins,
+  addToPlaylist,
+  removeFromPlaylist,
 };

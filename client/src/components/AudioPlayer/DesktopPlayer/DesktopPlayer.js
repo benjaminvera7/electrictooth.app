@@ -142,6 +142,6 @@ const DesktopPlayer = ({
 };
 
 export default connect((state) => ({
-  playlist: state.player.playlist,
+  playlist: state.user.playlist,
   updatedAt: state.player.updatedAt,
 }))(DesktopPlayer);

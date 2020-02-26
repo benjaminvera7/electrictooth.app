@@ -11,6 +11,7 @@ function signin(req, res, next) {
   res.json({
     userId: req.user._id,
     albumCollection: req.user.albumCollection,
+    playlist: req.user.playlist,
     cart: req.user.cart,
     coins: req.user.coins,
     username: req.user.username,
@@ -24,7 +25,9 @@ function signup(req, res, next) {
   const password = req.body.password;
 
   if (!email || !password) {
-    return res.status(422).send({ error: 'You must provide email and password' });
+    return res
+      .status(422)
+      .send({ error: 'You must provide email and password' });
   }
 
   // See if a user with the given email exists
@@ -45,6 +48,7 @@ function signup(req, res, next) {
       email: email,
       password: password,
       albumCollection: [],
+      playlist: [],
       cart: { items: [], total: 0 },
       coins: 100,
     });
@@ -59,6 +63,7 @@ function signup(req, res, next) {
           userId: user._id,
           username: username,
           albumCollection: [],
+          playlist: [],
           cart: user.cart,
           coins: user.coins,
           token: tokenForUser(user),

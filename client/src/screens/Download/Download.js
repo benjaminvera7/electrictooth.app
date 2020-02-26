@@ -10,8 +10,8 @@ import {
 } from '@chakra-ui/core';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import * as playerActions from 'redux/modules/player';
 import requireAuth from 'components/AuthHOC/requireAuth';
+import * as userActions from 'redux/modules/user';
 import { PlaylistAdd, Download as DownloadIcon } from 'components/Icons';
 import { bindActionCreators } from 'redux';
 
@@ -55,7 +55,7 @@ class Download extends Component {
 
   addAlbum = (albumId) => {
     if (this.props.auth) {
-      this.props.PlayerActions.addAlbumToPlaylist(this.props.auth, albumId);
+      this.props.UserActions.addPlaylist(this.props.auth, albumId);
     } else {
       console.warn('something went wrong');
     }
@@ -160,6 +160,6 @@ export default connect(
     auth: state.user.authenticated,
   }),
   (dispatch) => ({
-    PlayerActions: bindActionCreators(playerActions, dispatch),
+    UserActions: bindActionCreators(userActions, dispatch),
   }),
 )(requireAuth(Download));

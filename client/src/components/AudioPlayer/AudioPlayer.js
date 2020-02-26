@@ -2,7 +2,6 @@ import React, { Fragment, useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
-import * as playerActions from 'redux/modules/player';
 import MiniPlayer from './MiniPlayer';
 import DesktopPlayer from './DesktopPlayer';
 import axios from 'axios';
@@ -50,7 +49,7 @@ const transProps = {
 
 const PlaylistPanel = slideHOC(Panel);
 
-const AudioPlayer = ({ playlist, UserActions, auth, PlayerActions, coins }) => {
+const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   const [playlistVisible, setPlaylistVisibility] = useState(false);
   const [loading, setPending] = useState(false);
 
@@ -212,7 +211,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, PlayerActions, coins }) => {
   };
 
   const remove = (id) => {
-    PlayerActions.removeSong(id);
+    //PlayerActions.removeSong(id);
   };
 
   return (
@@ -278,11 +277,10 @@ const AudioPlayer = ({ playlist, UserActions, auth, PlayerActions, coins }) => {
 export default connect(
   (state) => ({
     auth: state.user.authenticated,
-    playlist: state.player.playlist,
+    playlist: state.user.playlist,
     coins: state.user.coins,
   }),
   (dispatch) => ({
     UserActions: bindActionCreators(userActions, dispatch),
-    PlayerActions: bindActionCreators(playerActions, dispatch),
   }),
 )(AudioPlayer);

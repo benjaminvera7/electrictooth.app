@@ -14,7 +14,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as albumActions from 'redux/modules/album';
 import * as userActions from 'redux/modules/user';
-import * as playerActions from 'redux/modules/player';
 
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
@@ -54,7 +53,7 @@ class Album extends Component {
 
   addAlbumToPlaylist = () => {
     if (this.props.auth) {
-      this.props.PlayerActions.addAlbumToPlaylist(
+      this.props.UserActions.addToPlaylist(
         this.props.auth,
         this.props.currentAlbum._id,
       );
@@ -65,7 +64,7 @@ class Album extends Component {
 
   addSongToPlaylist = (songId) => {
     if (this.props.auth) {
-      this.props.PlayerActions.addSongToPlaylist(this.props.auth, songId);
+      this.props.UserActions.addPlaylist(this.props.auth, songId);
     } else {
       this.props.history.push('/signup');
     }
@@ -247,7 +246,7 @@ export default connect(
   (state) => ({
     albumCollection: state.user.albumCollection,
     currentAlbum: state.album.currentAlbum,
-    playlist: state.player.playlist,
+    playlist: state.user.playlist,
     auth: state.user.authenticated,
     updatedAt: state.album.updatedAt,
     pending: state.pender.pending['album/GET_ALBUM_BY_ID'],
@@ -255,6 +254,5 @@ export default connect(
   (dispatch) => ({
     AlbumActions: bindActionCreators(albumActions, dispatch),
     UserActions: bindActionCreators(userActions, dispatch),
-    PlayerActions: bindActionCreators(playerActions, dispatch),
   }),
 )(Album);

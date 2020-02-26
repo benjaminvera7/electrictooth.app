@@ -27,6 +27,7 @@ const DesktopPlaylistPanel = ({
   handlePlay,
   fetch,
   loading,
+  user,
 }) => {
   return (
     <Fragment>
@@ -102,6 +103,7 @@ const DesktopPlaylistPanel = ({
 };
 
 export default connect((state) => ({
-  playlist: state.player.playlist,
-  updatedAt: state.player.updatedAt,
+  playlist: state.user.playlist,
+  user: state.user,
+  updatedAt: state.user.updatedAt,
 }))(DesktopPlaylistPanel);

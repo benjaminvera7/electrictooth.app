@@ -11,12 +11,22 @@ const UserSchema = new Schema({
   password: String,
   username: String,
   albumCollection: Array,
+  playlist: [],
   cart: Object,
   coins: Number,
 });
 
 UserSchema.methods.getCart = function() {
   return this.cart;
+};
+
+UserSchema.methods.getPlaylist = function() {
+  return this.playlist;
+};
+
+UserSchema.methods.updatePlaylist = function(playlist) {
+  this.playlist = playlist;
+  return this.playlist;
 };
 
 UserSchema.methods.updateCart = function(cart) {

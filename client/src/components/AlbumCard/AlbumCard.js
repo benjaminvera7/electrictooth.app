@@ -12,7 +12,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
-import * as playerActions from 'redux/modules/player';
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
 import useRouter from 'hooks/useRouter';
@@ -22,18 +21,12 @@ const Card = styled(Flex)`
   ${FADE_IN}
 `;
 
-const AlbumCard = ({
-  auth,
-  album,
-  UserActions,
-  PlayerActions,
-  albumCollection,
-}) => {
+const AlbumCard = ({ auth, album, UserActions, albumCollection, playlist }) => {
   const router = useRouter();
 
-  const addAlbum = (albumId) => {
+  const addAlbum = (productId) => {
     if (auth) {
-      PlayerActions.addAlbumToPlaylist(auth, albumId);
+      UserActions.addToPlaylist(auth, productId);
 
       toast(`Saved to your Playlist`);
     } else {
@@ -153,7 +146,7 @@ const AlbumCard = ({
         mt={1}
         width='100%'
         bg='#134468'
-        onClick={() => addAlbum(album._id)}
+        onClick={() => addAlbum(album.product_id)}
       >
         Add Album to Player
       </Button>
@@ -165,9 +158,9 @@ export default connect(
   (state) => ({
     auth: state.user.authenticated,
     albumCollection: state.user.albumCollection,
+    playlist: state.user.playlist,
   }),
   (dispatch) => ({
     UserActions: bindActionCreators(userActions, dispatch),
-    PlayerActions: bindActionCreators(playerActions, dispatch),
   }),
 )(AlbumCard);
