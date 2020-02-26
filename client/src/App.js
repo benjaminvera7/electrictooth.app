@@ -8,7 +8,7 @@ import Download from 'screens/Download';
 import Checkout from 'screens/Checkout';
 import Cart from 'screens/Cart';
 import Profile from 'screens/Profile';
-import Catalog from 'screens/Catalog';
+import Help from 'screens/Help';
 import Coins from 'screens/Coins';
 import Signin from 'screens/Signin';
 import Signup from 'screens/Signup';
@@ -39,8 +39,8 @@ function App({ AlbumActions, UserActions, auth }) {
         <Switch>
           <Route path='/signup' component={Signup} />
           <Route path='/signin' component={Signin} />
+          <Route path='/help' component={Help} />
           <Route path='/catalog/:id' component={Album} />
-          <Route path='/catalog' component={Catalog} />
           <Route path='/profile' component={Profile} />
           <Route path='/cart' component={Cart} />
           <Route path='/checkout' component={Checkout} />

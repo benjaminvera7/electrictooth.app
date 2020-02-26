@@ -83,56 +83,72 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
           <TabPanels mx={1}>
             <TabPanel>
               <Stack m={2}>
-                {albumCollection.map((album, i) => (
-                  <Flex py={2} borderWidth='1px' rounded='lg' key={i}>
-                    <Box>
-                      <Link to={`/catalog/${album.id}`}>
-                        <Image
-                          src={`/uploads/${album.art_url}`}
-                          maxWidth='108px'
-                          px={2}
-                        />
-                      </Link>
-                    </Box>
-                    <Box>
-                      <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']}>
-                        {album.album_name}
-                      </Heading>
-                      <Text
-                        fontSize={['xs', 'sm', 'md', 'lg']}
-                        mb={4}
-                        color='grey'
+                {albumCollection.length > 0 ? (
+                  albumCollection.map((album, i) => (
+                    <Flex py={2} borderWidth='1px' rounded='lg' key={i}>
+                      <Box>
+                        <Link to={`/catalog/${album.id}`}>
+                          <Image
+                            src={`/uploads/${album.art_url}`}
+                            maxWidth='108px'
+                            px={2}
+                          />
+                        </Link>
+                      </Box>
+                      <Box>
+                        <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']}>
+                          {album.album_name}
+                        </Heading>
+                        <Text
+                          fontSize={['xs', 'sm', 'md', 'lg']}
+                          mb={4}
+                          color='grey'
+                        >
+                          {album.artist_name}
+                        </Text>
+                      </Box>
+                      <Box mx='auto' />
+                      <Flex
+                        align='center'
+                        px={2}
+                        direction='column'
+                        justify='center'
                       >
-                        {album.artist_name}
-                      </Text>
-                    </Box>
-                    <Box mx='auto' />
-                    <Flex
-                      align='center'
-                      px={2}
-                      direction='column'
-                      justify='center'
-                    >
-                      <IconButton
-                        variant='solid'
-                        variantColor='teal'
-                        aria-label='Download album'
-                        fontSize='20px'
-                        icon={Download}
-                        onClick={(e) => handleSubmit(e, album.product_id)}
-                        mb={2}
-                      />
-                      <IconButton
-                        variant='solid'
-                        variantColor='teal'
-                        aria-label='Add to playlist'
-                        fontSize='20px'
-                        icon={PlaylistAdd}
-                        onClick={() => addAlbum(album.product_id)}
-                      />
+                        <IconButton
+                          variant='solid'
+                          variantColor='teal'
+                          aria-label='Download album'
+                          fontSize='20px'
+                          icon={Download}
+                          onClick={(e) => handleSubmit(e, album.product_id)}
+                          mb={2}
+                        />
+                        <IconButton
+                          variant='solid'
+                          variantColor='teal'
+                          aria-label='Add to playlist'
+                          fontSize='20px'
+                          icon={PlaylistAdd}
+                          onClick={() => addAlbum(album.product_id)}
+                        />
+                      </Flex>
                     </Flex>
+                  ))
+                ) : (
+                  <Flex justify='center' color='grey'>
+                    <Box fontSize='sm' py={2} color='grey'>
+                      <span>
+                        your collection is empty.{' '}
+                        <Link
+                          onClick={() => history.push('/')}
+                          style={{ color: '#6eacdd' }}
+                        >
+                          check out our catalog!
+                        </Link>
+                      </span>
+                    </Box>
                   </Flex>
-                ))}
+                )}
               </Stack>
             </TabPanel>
             <TabPanel>
