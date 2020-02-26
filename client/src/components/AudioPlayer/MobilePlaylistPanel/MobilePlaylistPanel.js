@@ -87,7 +87,7 @@ const MobilePlaylistPanel = (props) => {
                     )}
                     <Button
                       variant='link'
-                      onClick={() => props.remove(song.id)}
+                      onClick={() => props.remove(song.product_id)}
                     >
                       <Remove />
                     </Button>

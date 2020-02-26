@@ -53,9 +53,9 @@ class Download extends Component {
     });
   };
 
-  addAlbum = (albumId) => {
+  addAlbum = (productId) => {
     if (this.props.auth) {
-      this.props.UserActions.addPlaylist(this.props.auth, albumId);
+      this.props.UserActions.addToPlaylist(this.props.auth, productId);
     } else {
       console.warn('something went wrong');
     }
@@ -142,7 +142,7 @@ class Download extends Component {
                         aria-label='Call Sage'
                         fontSize='20px'
                         icon={PlaylistAdd}
-                        onClick={(e) => this.addAlbum(album.id)}
+                        onClick={(e) => this.addAlbum(album.product_id)}
                       />
                     </Flex>
                   )}

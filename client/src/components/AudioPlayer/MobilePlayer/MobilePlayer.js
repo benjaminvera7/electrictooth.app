@@ -129,5 +129,5 @@ const MobilePlayer = ({
 
 export default connect((state) => ({
   playlist: state.user.playlist,
-  updatedAt: state.player.updatedAt,
+  updatedAt: state.user.updatedAt,
 }))(MobilePlayer);

@@ -210,8 +210,8 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
     }
   };
 
-  const remove = (id) => {
-    //PlayerActions.removeSong(id);
+  const remove = (productId) => {
+    UserActions.removeFromPlaylist(auth, productId);
   };
 
   return (

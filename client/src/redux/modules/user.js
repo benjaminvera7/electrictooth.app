@@ -67,6 +67,20 @@ const _addToPlaylist = (token, productId) => {
   });
 };
 
+const _removeFromPlaylist = (token, productId) => {
+  return axios({
+    url: `${process.env.REACT_APP_API_URL}/user/playlist/remove/${productId}`,
+    method: 'POST',
+    headers: { Authorization: token },
+  });
+};
+
+export const REMOVE_FROM_PLAYLIST = 'player/REMOVE_FROM_PLAYLIST';
+export const removeFromPlaylist = createAction(
+  REMOVE_FROM_PLAYLIST,
+  _removeFromPlaylist,
+);
+
 export const ADD_TO_PLAYLIST = 'player/ADD_TO_PLAYLIST';
 export const addToPlaylist = createAction(ADD_TO_PLAYLIST, _addToPlaylist);
 
@@ -114,6 +128,25 @@ export default handleActions(
   {
     ...pender({
       type: ADD_TO_PLAYLIST,
+      onSuccess: (state, { payload }) => {
+        const newState = {
+          ...state,
+          updatedAt: getDate(),
+          error: null,
+        };
+
+        let newPlaylist = payload.data.playlist;
+
+        newState.playlist = newPlaylist;
+
+        return newState;
+      },
+      onFailure: (state, { payload }) => {
+        return { ...state, error: payload };
+      },
+    }),
+    ...pender({
+      type: REMOVE_FROM_PLAYLIST,
       onSuccess: (state, { payload }) => {
         const newState = {
           ...state,

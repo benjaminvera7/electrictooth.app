@@ -1,5 +1,6 @@
 const Album = require('../models/album');
 const Coin = require('../models/coin');
+const Song = require('../models/song');
 
 //this is needed to use populate()
 require('../models/song');
@@ -178,7 +179,33 @@ async function addToPlaylist(req, res, next) {
   let found = product_id.match(/-/g);
 
   if (!!found) {
-    let song;
+    let currentPlaylist = req.user.getPlaylist();
+    let newPlaylist = [];
+    let exists = currentPlaylist.filter((s) => s.product_id === product_id);
+
+    if (exists.length === 0) {
+      const [song] = await Song.find({ product_id: product_id });
+
+      let newSong = {
+        product_id: song.product_id,
+        id: song._id,
+        song_name: song.song_name,
+        artist_name: song.artist_name,
+        art_url: song.art_url,
+      };
+
+      newPlaylist.push(newSong);
+    }
+
+    newPlaylist = [...newPlaylist, ...currentPlaylist];
+
+    req.user.updatePlaylist(newPlaylist);
+    req.user.save();
+
+    res.status(200).json({
+      message: 'Updated user playlist success',
+      playlist: newPlaylist,
+    });
   } else {
     let album;
     let currentPlaylist = req.user.getPlaylist();
@@ -191,7 +218,7 @@ async function addToPlaylist(req, res, next) {
     album.songs.forEach((song) => {
       let exists = currentPlaylist.filter((s) => s.id.toString() === song.id);
 
-      if (!exists) {
+      if (exists.length === 0) {
         let newSong = {
           product_id: song.product_id,
           id: song._id,
@@ -216,7 +243,20 @@ async function addToPlaylist(req, res, next) {
   }
 }
 
-async function removeFromPlaylist() {}
+async function removeFromPlaylist(req, res, next) {
+  let product_id = req.params.product_id;
+  let currentPlaylist = req.user.getPlaylist();
+
+  let newPlaylist = currentPlaylist.filter((s) => s.product_id !== product_id);
+
+  req.user.updatePlaylist(newPlaylist);
+  req.user.save();
+
+  res.status(200).json({
+    message: 'Updated user playlist success',
+    playlist: newPlaylist,
+  });
+}
 
 function getUser(req, res, next) {
   res.status(200).json({ message: 'Fetched user success', user: req.user });

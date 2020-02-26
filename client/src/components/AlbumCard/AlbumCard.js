@@ -59,7 +59,11 @@ const AlbumCard = ({ auth, album, UserActions, albumCollection, playlist }) => {
     >
       <Box className='card_image'>
         <Link to={`/catalog/${album._id}`}>
-          <Image src={`/uploads/${album.art_url}`} rounded='lg' />
+          <Image
+            src={`/uploads/${album.art_url}`}
+            rounded='lg'
+            className='zoom'
+          />
         </Link>
       </Box>
 

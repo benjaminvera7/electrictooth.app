@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as albumActions from 'redux/modules/album';
 import * as userActions from 'redux/modules/user';
-
+import toast from 'util/toast';
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
 
@@ -44,27 +44,16 @@ class Album extends Component {
         this.props.currentAlbum.product_id,
         this.props.auth,
       );
+      toast(`Added to your Cart`);
     } else {
       this.props.history.push('/signup');
     }
   };
 
-  addSongToCart = () => {};
-
-  addAlbumToPlaylist = () => {
+  addToPlaylist = (productId) => {
     if (this.props.auth) {
-      this.props.UserActions.addToPlaylist(
-        this.props.auth,
-        this.props.currentAlbum._id,
-      );
-    } else {
-      this.props.history.push('/signup');
-    }
-  };
-
-  addSongToPlaylist = (songId) => {
-    if (this.props.auth) {
-      this.props.UserActions.addPlaylist(this.props.auth, songId);
+      this.props.UserActions.addToPlaylist(this.props.auth, productId);
+      toast(`Saved to your Playlist`);
     } else {
       this.props.history.push('/signup');
     }
@@ -183,7 +172,7 @@ class Album extends Component {
                   mt={1}
                   width='100%'
                   bg='#134468'
-                  onClick={this.addAlbumToPlaylist}
+                  onClick={() => this.addToPlaylist(currentAlbum.product_id)}
                 >
                   Add Album to Player
                 </Button>
@@ -226,7 +215,9 @@ class Album extends Component {
 
                           <Flex align='center' pr={2}>
                             <PlaylistAdd
-                              onClick={() => this.addSongToPlaylist(song._id)}
+                              onClick={() =>
+                                this.addToPlaylist(song.product_id)
+                              }
                             />
                           </Flex>
                         </Flex>

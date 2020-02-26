@@ -86,7 +86,10 @@ const DesktopPlaylistPanel = ({
                         <Play />
                       </Button>
                     )}
-                    <Button variant='link' onClick={() => remove(song.id)}>
+                    <Button
+                      variant='link'
+                      onClick={() => remove(song.product_id)}
+                    >
                       <Remove />
                     </Button>
                   </Flex>

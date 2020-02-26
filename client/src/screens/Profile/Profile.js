@@ -21,6 +21,7 @@ import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
 import requireAuth from 'components/AuthHOC/requireAuth';
 import axios from 'axios';
+import toast from 'util/toast';
 
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
@@ -30,9 +31,10 @@ const ProfileCard = styled(Box)`
 `;
 
 const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
-  const addAlbum = (albumId) => {
+  const addAlbum = (productId) => {
     if (auth) {
-      UserActions.addAlbumToPlaylist(auth, albumId);
+      UserActions.addToPlaylist(auth, productId);
+      toast(`Saved to your Playlist`);
     } else {
       console.warn('something went wrong');
     }
@@ -126,7 +128,7 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
                         aria-label='Add to playlist'
                         fontSize='20px'
                         icon={PlaylistAdd}
-                        onClick={() => addAlbum(album.id)}
+                        onClick={() => addAlbum(album.product_id)}
                       />
                     </Flex>
                   </Flex>
