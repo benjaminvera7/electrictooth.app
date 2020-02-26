@@ -13,10 +13,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
 import * as playerActions from 'redux/modules/player';
-import { useToast } from '@chakra-ui/core';
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
 import useRouter from 'hooks/useRouter';
+import toast from 'util/toast';
 
 const Card = styled(Flex)`
   ${FADE_IN}
@@ -29,21 +29,13 @@ const AlbumCard = ({
   PlayerActions,
   albumCollection,
 }) => {
-  const toast = useToast();
   const router = useRouter();
 
   const addAlbum = (albumId) => {
     if (auth) {
       PlayerActions.addAlbumToPlaylist(auth, albumId);
 
-      // toast({
-      //   position: 'top',
-      //   title: 'Playlist updated.',
-      //   description: `Album ${album.album_name} added.`,
-      //   status: 'info',
-      //   duration: 3000,
-      //   isClosable: true,
-      // });
+      toast(`Saved to your Playlist`);
     } else {
       router.push('/signup');
     }
@@ -53,14 +45,7 @@ const AlbumCard = ({
     if (auth) {
       UserActions.addToCart(productId, auth);
 
-      // toast({
-      //   position: 'top',
-      //   title: 'Cart updated.',
-      //   description: `Album ${album.album_name} added.`,
-      //   status: 'success',
-      //   duration: 3000,
-      //   isClosable: true,
-      // });
+      toast(`Added to your Cart`);
     } else {
       router.push('/signup');
     }

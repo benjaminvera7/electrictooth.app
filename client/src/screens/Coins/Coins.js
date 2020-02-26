@@ -4,32 +4,22 @@ import { Toll } from 'components/Icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
-import { useToast } from '@chakra-ui/core';
 import useRouter from 'hooks/useRouter';
-
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
+import toast from 'util/toast';
 
 const CoinContainer = styled(Flex)`
   ${FADE_IN}
 `;
 
 const Coins = ({ UserActions, auth }) => {
-  const toast = useToast();
   const router = useRouter();
 
   const addToCart = (coins) => {
     if (auth) {
       UserActions.addToCart(coins, auth);
-
-      // toast({
-      //   position: 'top',
-      //   title: 'Cart updated.',
-      //   description: `${coins.substring(4, 7)} coins added.`,
-      //   status: 'success',
-      //   duration: 3000,
-      //   isClosable: true,
-      // });
+      toast(`Added to your Cart`);
     } else {
       router.push('/signup');
     }

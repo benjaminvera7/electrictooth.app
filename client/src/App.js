@@ -51,6 +51,8 @@ function App({ AlbumActions, UserActions, auth }) {
         </Switch>
       </Box>
 
+      <div id='snackbar'></div>
+
       <AudioPlayer />
     </>
   );
