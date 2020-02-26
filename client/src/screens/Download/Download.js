@@ -10,7 +10,6 @@ import {
 } from '@chakra-ui/core';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import requireAuth from 'components/AuthHOC/requireAuth';
 import * as userActions from 'redux/modules/user';
 import { PlaylistAdd, Download as DownloadIcon } from 'components/Icons';
 import { bindActionCreators } from 'redux';
@@ -162,4 +161,4 @@ export default connect(
   (dispatch) => ({
     UserActions: bindActionCreators(userActions, dispatch),
   }),
-)(requireAuth(Download));
+)(Download);
