@@ -43,7 +43,7 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
   const handleSubmit = (e, product_id) => {
     e.preventDefault();
     axios({
-      url: `/download/${product_id}`,
+      url: `/download/product/${product_id}`,
       method: 'GET',
       responseType: 'blob',
       headers: { Authorization: auth },
