@@ -14,6 +14,7 @@ import requireAuth from 'components/AuthHOC/requireAuth';
 import * as userActions from 'redux/modules/user';
 import { PlaylistAdd, Download as DownloadIcon } from 'components/Icons';
 import { bindActionCreators } from 'redux';
+import toast from 'util/toast';
 
 class Download extends Component {
   state = {
@@ -56,6 +57,7 @@ class Download extends Component {
   addAlbum = (productId) => {
     if (this.props.auth) {
       this.props.UserActions.addToPlaylist(this.props.auth, productId);
+      toast(`Saved to your Playlist`);
     } else {
       console.warn('something went wrong');
     }
