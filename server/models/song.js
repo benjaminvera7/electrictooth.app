@@ -13,7 +13,19 @@ const songSchema = new Schema({
   art_url: String,
   download_price: Number,
   coin_price: Number,
+  income: Number,
+  plays: Number,
 });
+
+songSchema.methods.addIncome = function() {
+  this.income = this.income + 1;
+  return this.income;
+};
+
+songSchema.methods.addPlay = function() {
+  this.plays = this.plays + 1;
+  return this.plays;
+};
 
 const Song = mongoose.model('Song', songSchema);
 module.exports = Song;

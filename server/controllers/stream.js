@@ -2,31 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const Song = require('../models/song');
 
-function checkCollection(collection, songId) {
-  return new Promise(function(resolve, reject) {
-    let exists = false;
-    try {
-      collection.map((album) => {
-        album.songs.map((song) => {
-          if (song._id.toString() == songId) {
-            exists = true;
-          }
-        });
-      });
-      resolve(exists);
-    } catch (error) {
-      console.error(error);
-      reject(null);
-    }
-  });
-}
-
 async function stream(req, res, next) {
-  //req.user
-  //check to see if song is in user album collection
-  //if true send stream
-  //else subtract 1 coin from user.coins then send stream
-
   const songId = req.params.songId;
   const song = await Song.findById({ _id: songId });
   const productId = song.product_id.substring(0, 4);
@@ -37,11 +13,12 @@ async function stream(req, res, next) {
     (album) => album.product_id === productId,
   );
 
-  //let exists = await checkCollection(albumCollection, songId);
-
   if (exists.length === 0) {
     const coins = req.user.getCoins();
     if (coins >= 1) {
+      song.addIncome();
+      song.save();
+
       req.user.exchangeCoins('SUBTRACT', 1);
       req.user.save();
     } else {
@@ -89,6 +66,9 @@ async function stream(req, res, next) {
 
     readStream = fs.createReadStream(music);
   }
+
+  song.addPlay();
+  song.save();
 
   readStream.on('open', function() {
     // This just pipes the read stream to the response object (which goes to the client)

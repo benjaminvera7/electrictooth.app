@@ -89,6 +89,8 @@ async function seed() {
       art_url: 'UnderTheMoonlight.jpg',
       download_price: 1,
       coin_price: 1,
+      income: 0,
+      plays: 0,
     },
     {
       _id: new mongoose.Types.ObjectId(),
@@ -102,6 +104,8 @@ async function seed() {
       art_url: 'UnderTheMoonlight.jpg',
       download_price: 1,
       coin_price: 1,
+      income: 0,
+      plays: 0,
     },
   ];
 
@@ -153,6 +157,8 @@ async function seed() {
       art_url: 'crystalbats.jpg',
       download_price: 1,
       coin_price: 1,
+      income: 0,
+      plays: 0,
     },
   ];
 
@@ -205,6 +211,8 @@ async function seed() {
       art_url: 'freelove.jpg',
       download_price: 1,
       coin_price: 1,
+      income: 0,
+      plays: 0,
     },
   ];
 
@@ -257,6 +265,8 @@ async function seed() {
       art_url: 'newworld.jpg',
       download_price: 1,
       coin_price: 1,
+      income: 0,
+      plays: 0,
     },
   ];
 
@@ -309,6 +319,8 @@ async function seed() {
       art_url: 'lastmonth.jpg',
       download_price: 1,
       coin_price: 1,
+      income: 0,
+      plays: 0,
     },
   ];
 
@@ -361,6 +373,8 @@ async function seed() {
       art_url: 'midnightcaller.jpg',
       download_price: 1,
       coin_price: 1,
+      income: 0,
+      plays: 0,
     },
   ];
 
