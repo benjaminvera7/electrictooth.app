@@ -1,8 +1,8 @@
-const Album = require("../models/album");
+const Album = require('../models/album');
 
 //this is needed to use populate()
-require("../models/song");
-require("../models/artist");
+require('../models/song');
+require('../models/artist');
 
 async function getAlbums(req, res, next) {
   const currentPage = req.query.page || 1;
@@ -10,16 +10,16 @@ async function getAlbums(req, res, next) {
   try {
     const totalAlbums = await Album.find().countDocuments();
     const albums = await Album.find()
-      .populate("songs")
-      .populate("artist")
+      .populate('songs')
+      .populate('artist')
       .sort({ createdAt: -1 })
       .skip((currentPage - 1) * perPage)
       .limit(perPage);
 
     res.status(200).json({
-      message: "Fetched Albums successfully.",
+      message: 'Fetched Albums successfully.',
       albums: albums,
-      totalAlbums: totalAlbums
+      totalAlbums: totalAlbums,
     });
   } catch (err) {
     if (!err.statusCode) {
@@ -30,17 +30,17 @@ async function getAlbums(req, res, next) {
 }
 
 async function getAlbum(req, res, next) {
-  const albumId = req.params.albumId;
+  const productId = req.params.productId;
   try {
-    const album = await Album.findById(albumId)
-      .populate("songs")
-      .populate("artist");
+    const [album] = await Album.find({ product_id: productId })
+      .populate('songs')
+      .populate('artist');
     if (!album) {
-      const error = new Error("Could not find album.");
+      const error = new Error('Could not find album.');
       error.statusCode = 404;
       throw error;
     }
-    res.status(200).json({ message: "Album fetched.", album: album });
+    res.status(200).json({ message: 'Album fetched.', album: album });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -51,5 +51,5 @@ async function getAlbum(req, res, next) {
 
 module.exports = {
   getAlbums,
-  getAlbum
+  getAlbum,
 };

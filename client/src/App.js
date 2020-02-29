@@ -40,7 +40,7 @@ function App({ AlbumActions, UserActions, auth }) {
           <Route path='/signup' component={Signup} />
           <Route path='/signin' component={Signin} />
           <Route path='/help' component={Help} />
-          <Route path='/catalog/:id' component={Album} />
+          <Route path='/catalog/:productId' component={Album} />
           <Route path='/profile' component={Profile} />
           <Route path='/cart' component={Cart} />
           <Route path='/checkout' component={Checkout} />

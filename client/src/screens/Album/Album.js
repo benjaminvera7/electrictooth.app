@@ -31,7 +31,7 @@ const CardAnimation = styled(Flex)`
 class Album extends Component {
   loadAlbum = async () => {
     const { AlbumActions, match } = this.props;
-    await AlbumActions.getAlbumById(match.params.id);
+    await AlbumActions.getAlbumById(match.params.productId);
   };
 
   componentDidMount() {
@@ -61,6 +61,8 @@ class Album extends Component {
 
   render() {
     let { pending, currentAlbum } = this.props;
+
+    console.log(currentAlbum);
 
     let exists;
 

@@ -87,7 +87,7 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
                   albumCollection.map((album, i) => (
                     <Flex py={2} borderWidth='1px' rounded='lg' key={i}>
                       <Box>
-                        <Link to={`/catalog/${album.id}`}>
+                        <Link to={`/catalog/${album.product_id}`}>
                           <Image
                             src={`/uploads/${album.art_url}`}
                             maxWidth='108px'

@@ -14,9 +14,9 @@ const _getAlbums = (page) => {
   });
 };
 
-const _getAlbumById = (albumId) => {
+const _getAlbumById = (productId) => {
   return axios({
-    url: `/albums/album/${albumId}`,
+    url: `/albums/album/${productId}`,
     method: 'GET',
   });
 };
