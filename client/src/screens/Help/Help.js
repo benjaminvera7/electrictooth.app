@@ -58,12 +58,13 @@ const Help = () => {
             </ListItem>
             <ListItem fontSize={['xs', 'sm', 'md', 'lg']}>
               <ListIcon icon='download' color='purple.300' />
-              If you purchase an album, you can view and download it in your
-              Profile.
+              If you purchase an album or song, you can view and download it in
+              your Profile.
             </ListItem>
             <ListItem fontSize={['xs', 'sm', 'md', 'lg']}>
               <ListIcon icon='check-circle' color='green.300' />
-              If you purchase an album, streaming it no longer uses a coin.
+              If you purchase an album or song, streaming it no longer uses a
+              coin.
             </ListItem>
           </List>
         </Box>
