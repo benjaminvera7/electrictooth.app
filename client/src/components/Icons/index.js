@@ -22,3 +22,4 @@ export { default as Bolt } from './Bolt';
 export { default as VolumeUp } from './VolumeUp';
 export { default as Download } from './Download';
 export { default as Help } from './Help';
+export { default as CartAdd } from './CartAdd';

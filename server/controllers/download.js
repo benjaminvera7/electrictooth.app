@@ -28,60 +28,120 @@ async function downloadFromOrder(req, res, next) {
     return res.status(422).send({ error: 'Unauthorized' });
   }
 
-  try {
-    let [owned] = req.user.albumCollection.filter(
-      (album) => album.product_id === product_id,
-    );
+  let songFound = product_id.match(/-/g);
 
-    let zip = owned.album_name + '.zip';
-    const filePath = path.join(__dirname, `../music/${zip}`);
+  if (!!songFound) {
+    try {
+      let [owned] = req.user.albumCollection.filter(
+        (item) => item.product_id === product_id,
+      );
 
-    fs.exists(filePath, function(exists) {
-      if (exists) {
-        // Content-type is very interesting part that guarantee that
-        // Web browser will handle response in an appropriate manner.
-        res.writeHead(200, {
-          'Content-Type': 'application/zip',
-          'Content-Disposition': 'attachment; filename=' + zip,
-        });
-        fs.createReadStream(filePath).pipe(res);
-      } else {
-        res.writeHead(400, { 'Content-Type': 'text/plain' });
-        res.end('ERROR File does not exist');
-      }
-    });
-  } catch (error) {
-    console.log(error);
+      let mp3 = owned.song_name + '.mp3';
+      const filePath = path.join(__dirname, `../music/${mp3}`);
+
+      fs.exists(filePath, function(exists) {
+        if (exists) {
+          // Content-type is very interesting part that guarantee that
+          // Web browser will handle response in an appropriate manner.
+          res.writeHead(200, {
+            'Content-Type': '	audio/mpeg',
+            'Content-Disposition': 'attachment; filename=' + mp3,
+          });
+          fs.createReadStream(filePath).pipe(res);
+        } else {
+          res.writeHead(400, { 'Content-Type': 'text/plain' });
+          res.end('ERROR File does not exist');
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    try {
+      let [owned] = req.user.albumCollection.filter(
+        (album) => album.product_id === product_id,
+      );
+
+      let zip = owned.album_name + '.zip';
+      const filePath = path.join(__dirname, `../music/${zip}`);
+
+      fs.exists(filePath, function(exists) {
+        if (exists) {
+          // Content-type is very interesting part that guarantee that
+          // Web browser will handle response in an appropriate manner.
+          res.writeHead(200, {
+            'Content-Type': 'application/zip',
+            'Content-Disposition': 'attachment; filename=' + zip,
+          });
+          fs.createReadStream(filePath).pipe(res);
+        } else {
+          res.writeHead(400, { 'Content-Type': 'text/plain' });
+          res.end('ERROR File does not exist');
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
 async function downloadFromProfile(req, res, next) {
   let product_id = req.params.product_id;
 
-  try {
-    let [owned] = req.user.albumCollection.filter(
-      (album) => album.product_id === product_id,
-    );
+  let songFound = product_id.match(/-/g);
 
-    let zip = owned.album_name + '.zip';
-    const filePath = path.join(__dirname, `../music/${zip}`);
+  if (!!songFound) {
+    try {
+      let [owned] = req.user.albumCollection.filter(
+        (item) => item.product_id === product_id,
+      );
 
-    fs.exists(filePath, function(exists) {
-      if (exists) {
-        // Content-type is very interesting part that guarantee that
-        // Web browser will handle response in an appropriate manner.
-        res.writeHead(200, {
-          'Content-Type': 'application/zip',
-          'Content-Disposition': 'attachment; filename=' + zip,
-        });
-        fs.createReadStream(filePath).pipe(res);
-      } else {
-        res.writeHead(400, { 'Content-Type': 'text/plain' });
-        res.end('ERROR File does not exist');
-      }
-    });
-  } catch (error) {
-    console.log(error);
+      let mp3 = owned.song_name + '.mp3';
+      const filePath = path.join(__dirname, `../music/${mp3}`);
+
+      fs.exists(filePath, function(exists) {
+        if (exists) {
+          // Content-type is very interesting part that guarantee that
+          // Web browser will handle response in an appropriate manner.
+          res.writeHead(200, {
+            'Content-Type': '	audio/mpeg',
+            'Content-Disposition': 'attachment; filename=' + mp3,
+          });
+          fs.createReadStream(filePath).pipe(res);
+        } else {
+          res.writeHead(400, { 'Content-Type': 'text/plain' });
+          res.end('ERROR File does not exist');
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    try {
+      let [owned] = req.user.albumCollection.filter(
+        (album) => album.product_id === product_id,
+      );
+
+      let zip = owned.album_name + '.zip';
+      const filePath = path.join(__dirname, `../music/${zip}`);
+
+      fs.exists(filePath, function(exists) {
+        if (exists) {
+          // Content-type is very interesting part that guarantee that
+          // Web browser will handle response in an appropriate manner.
+          res.writeHead(200, {
+            'Content-Type': 'application/zip',
+            'Content-Disposition': 'attachment; filename=' + zip,
+          });
+          fs.createReadStream(filePath).pipe(res);
+        } else {
+          res.writeHead(400, { 'Content-Type': 'text/plain' });
+          res.end('ERROR File does not exist');
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

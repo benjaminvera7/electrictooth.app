@@ -59,52 +59,114 @@ async function addToCart(req, res, next) {
       res.status(200).json({ message: 'Album added to cart', user: req.user });
     }
   } else {
-    let album;
-    try {
-      album = await Album.findOne({ product_id: req.params.product_id }).exec();
-      if (!album) {
-        const error = new Error('Could not find album.');
-        error.statusCode = 404;
-        throw error;
+    let songFound = product_id.match(/-/g);
+    let song;
+    if (!!songFound) {
+      try {
+        song = await Song.findOne({
+          product_id: req.params.product_id,
+        }).exec();
+
+        if (!song) {
+          const error = new Error('Could not find song.');
+          error.statusCode = 404;
+          throw error;
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
-    }
 
-    let newCart = { items: [], total: 0 };
+      let newCart = { items: [], total: 0 };
 
-    let currentCart = req.user.getCart();
+      let currentCart = req.user.getCart();
 
-    if (currentCart.length === 0) {
-      currentCart = newCart;
-    }
-    let inCart;
+      if (currentCart.length === 0) {
+        currentCart = newCart;
+      }
 
-    for (let i = 0; i < currentCart.items.length; i++) {
-      if (currentCart.items[i].product_id === album.product_id) {
-        inCart = true;
-        break;
+      let inCart;
+
+      for (let i = 0; i < currentCart.items.length; i++) {
+        if (
+          currentCart.items[i].id.toString() == song.album.toString() ||
+          currentCart.items[i].product_id == song.product_id
+        ) {
+          inCart = true;
+          break;
+        }
+      }
+
+      if (!inCart) {
+        newCart.items.push(...currentCart.items);
+
+        newCart.items.push({
+          id: song._id,
+          artist_name: song.artist_name,
+          product_id: song.product_id,
+          song_name: song.song_name,
+          download_price: song.download_price,
+          art_url: song.art_url,
+          quantity: 1,
+        });
+
+        newCart.total = currentCart.total + song.download_price;
+
+        req.user.updateCart(newCart);
+        req.user.save();
+      }
+    } else {
+      let album;
+
+      try {
+        album = await Album.findOne({
+          product_id: req.params.product_id,
+        }).exec();
+
+        if (!album) {
+          const error = new Error('Could not find album.');
+          error.statusCode = 404;
+          throw error;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+
+      let newCart = { items: [], total: 0 };
+
+      let currentCart = req.user.getCart();
+
+      if (currentCart.length === 0) {
+        currentCart = newCart;
+      }
+      let inCart;
+
+      for (let i = 0; i < currentCart.items.length; i++) {
+        if (currentCart.items[i].product_id === album.product_id) {
+          inCart = true;
+          break;
+        }
+      }
+
+      if (!inCart) {
+        newCart.items.push(...currentCart.items);
+
+        newCart.items.push({
+          id: album._id,
+          artist_name: album.artist_name,
+          product_id: album.product_id,
+          album_name: album.album_name,
+          download_price: album.download_price,
+          art_url: album.art_url,
+          quantity: 1,
+        });
+
+        newCart.total = currentCart.total + album.download_price;
+
+        req.user.updateCart(newCart);
+        req.user.save();
       }
     }
 
-    if (!inCart) {
-      newCart.items.push(...currentCart.items);
-
-      newCart.items.push({
-        id: album._id,
-        artist_name: album.artist_name,
-        product_id: album.product_id,
-        album_name: album.album_name,
-        download_price: album.download_price,
-        art_url: album.art_url,
-        quantity: 1,
-      });
-
-      newCart.total = currentCart.total + album.download_price;
-
-      req.user.updateCart(newCart);
-      req.user.save();
-    }
     res.status(200).json({ message: 'Album added to cart', user: req.user });
   }
 }
@@ -142,35 +204,73 @@ async function removeFromCart(req, res, next) {
 
     res.status(200).json({ message: 'Coin removed from cart', user: req.user });
   } else {
-    let album;
-    try {
-      album = await Album.findOne({ product_id: req.params.product_id }).exec();
-      if (!album) {
-        const error = new Error('Could not find album.');
-        error.statusCode = 404;
-        throw error;
+    let songFound = product_id.match(/-/g);
+    let song;
+
+    if (!!songFound) {
+      try {
+        song = await Song.findOne({
+          product_id: req.params.product_id,
+        }).exec();
+        if (!song) {
+          const error = new Error('Could not find song.');
+          error.statusCode = 404;
+          throw error;
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
+
+      let newCart = { items: [], total: 0 };
+      let currentCart = req.user.getCart();
+      let items = currentCart.items.filter(
+        ({ product_id }) => product_id !== song.product_id,
+      );
+
+      newCart.items = items;
+
+      newCart.total =
+        currentCart.total > 0 ? currentCart.total - song.download_price : 0;
+
+      req.user.updateCart(newCart);
+      req.user.save();
+
+      res
+        .status(200)
+        .json({ message: 'song removed from cart', user: req.user });
+    } else {
+      let album;
+      try {
+        album = await Album.findOne({
+          product_id: req.params.product_id,
+        }).exec();
+        if (!album) {
+          const error = new Error('Could not find album.');
+          error.statusCode = 404;
+          throw error;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+
+      let newCart = { items: [], total: 0 };
+      let currentCart = req.user.getCart();
+      let items = currentCart.items.filter(
+        ({ product_id }) => product_id !== album.product_id,
+      );
+
+      newCart.items = items;
+
+      newCart.total =
+        currentCart.total > 0 ? currentCart.total - album.download_price : 0;
+
+      req.user.updateCart(newCart);
+      req.user.save();
+
+      res
+        .status(200)
+        .json({ message: 'Album removed from cart', user: req.user });
     }
-
-    let newCart = { items: [], total: 0 };
-    let currentCart = req.user.getCart();
-    let items = currentCart.items.filter(
-      ({ product_id }) => product_id !== album.product_id,
-    );
-
-    newCart.items = items;
-
-    newCart.total =
-      currentCart.total > 0 ? currentCart.total - album.download_price : 0;
-
-    req.user.updateCart(newCart);
-    req.user.save();
-
-    res
-      .status(200)
-      .json({ message: 'Album removed from cart', user: req.user });
   }
 }
 

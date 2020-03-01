@@ -68,7 +68,7 @@ async function seed() {
     album_name: 'Under The Moonlight EP',
     description: "Let's spend the night together.",
     art_url: 'UnderTheMoonlight.jpg',
-    download_price: 1,
+    download_price: 2,
     songs: [],
   };
 
@@ -85,7 +85,7 @@ async function seed() {
       album_name: 'Under The Moonlight EP',
       song_name: 'Under The Moonlight',
       position: 1,
-      stream_url: 'Shiro Schwarz - Under the Moonlight.mp3',
+      stream_url: 'Under the Moonlight.mp3',
       art_url: 'UnderTheMoonlight.jpg',
       download_price: 1,
       coin_price: 1,
@@ -100,7 +100,7 @@ async function seed() {
       album_name: 'Under The Moonlight EP',
       song_name: 'Power of Love',
       position: 2,
-      stream_url: 'Shiro Schwarz - Power of Love.mp3',
+      stream_url: 'Power of Love.mp3',
       art_url: 'UnderTheMoonlight.jpg',
       download_price: 1,
       coin_price: 1,
@@ -148,7 +148,7 @@ async function seed() {
     {
       _id: new mongoose.Types.ObjectId(),
       product_id: 'ET02-1',
-      album: album1._id,
+      album: album2._id,
       artist_name: 'Crystal Bats',
       album_name: 'Killing Me EP',
       song_name: 'Killing Me',

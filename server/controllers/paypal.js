@@ -3,7 +3,6 @@ const Album = require('../models/album');
 const Order = require('../models/order');
 const User = require('../models/user');
 const config = require('../config');
-const { promisify } = require('util');
 
 paypal.configure({
   mode: 'sandbox', //sandbox or live
@@ -97,7 +96,9 @@ function createPayment(order) {
       } else {
         myItems.push({
           name: item.product_id,
-          description: item.album_name,
+          description: () => {
+            item.album_name ? item.album_name : item.song_name;
+          },
           quantity: item.quantity,
           price: item.download_price,
           sku: item.product_id,

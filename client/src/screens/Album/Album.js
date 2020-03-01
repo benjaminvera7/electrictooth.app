@@ -9,7 +9,7 @@ import {
   Badge,
   Button,
 } from '@chakra-ui/core';
-import { PlaylistAdd } from 'components/Icons';
+import { PlaylistAdd, CartAdd } from 'components/Icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as albumActions from 'redux/modules/album';
@@ -38,12 +38,9 @@ class Album extends Component {
     this.loadAlbum();
   }
 
-  addAlbumToCart = () => {
+  addToCart = (productId) => {
     if (this.props.auth) {
-      this.props.UserActions.addToCart(
-        this.props.currentAlbum.product_id,
-        this.props.auth,
-      );
+      this.props.UserActions.addToCart(productId, this.props.auth);
       toast(`Added to your Cart`);
     } else {
       this.props.history.push('/signup');
@@ -61,14 +58,6 @@ class Album extends Component {
 
   render() {
     let { pending, currentAlbum } = this.props;
-
-    console.log(currentAlbum);
-
-    let exists;
-
-    exists = this.props.albumCollection.filter(
-      (ac) => ac.id === currentAlbum._id,
-    );
 
     return (
       <Fragment>
@@ -150,25 +139,14 @@ class Album extends Component {
                   </Text>
                 </Box>
 
-                {exists.length === 0 ? (
-                  <Button
-                    mt={1}
-                    width='100%'
-                    bg='#2d7bb8'
-                    onClick={this.addAlbumToCart}
-                  >
-                    Buy Digital Album
-                  </Button>
-                ) : (
-                  <Button
-                    mt={1}
-                    width='100%'
-                    bg='#2d7bb8'
-                    onClick={() => this.props.history.push('/profile')}
-                  >
-                    View in Collection
-                  </Button>
-                )}
+                <Button
+                  mt={1}
+                  width='100%'
+                  bg='#2d7bb8'
+                  onClick={() => this.addToCart(currentAlbum.product_id)}
+                >
+                  Buy Digital Album
+                </Button>
 
                 <Button
                   mt={1}
@@ -191,7 +169,7 @@ class Album extends Component {
                           p={2}
                           key={i}
                         >
-                          <Box>
+                          <Box pr={2}>
                             <Image
                               src={`/uploads/${song.art_url}`}
                               maxWidth='96px'
@@ -215,7 +193,13 @@ class Album extends Component {
                             </Text>
                           </Flex>
 
-                          <Flex align='center' pr={2}>
+                          <Flex align='center' pr={4}>
+                            <CartAdd
+                              onClick={() => this.addToCart(song.product_id)}
+                            />
+                          </Flex>
+
+                          <Flex align='center' pr={4}>
                             <PlaylistAdd
                               onClick={() =>
                                 this.addToPlaylist(song.product_id)

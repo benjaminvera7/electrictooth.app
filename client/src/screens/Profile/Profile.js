@@ -31,7 +31,7 @@ const ProfileCard = styled(Box)`
 `;
 
 const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
-  const addAlbum = (productId) => {
+  const addToPlaylist = (productId) => {
     if (auth) {
       UserActions.addToPlaylist(auth, productId);
       toast(`Saved to your Playlist`);
@@ -40,7 +40,7 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
     }
   };
 
-  const handleSubmit = (e, product_id) => {
+  const handleSubmit = (e, product_id, albumName, songName) => {
     e.preventDefault();
     axios({
       url: `/download/product/${product_id}`,
@@ -51,7 +51,13 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `${product_id}.zip`);
+
+      let songFound = product_id.match(/-/g);
+      if (!!songFound) {
+        link.setAttribute('download', `${songName}.mp3`);
+      } else {
+        link.setAttribute('download', `${albumName}.zip`);
+      }
       document.body.appendChild(link);
       link.click();
     });
@@ -87,7 +93,11 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
                   albumCollection.map((album, i) => (
                     <Flex py={2} borderWidth='1px' rounded='lg' key={i}>
                       <Box>
-                        <Link to={`/catalog/${album.product_id}`}>
+                        <Link
+                          to={`/catalog/${album.product_id.match(
+                            /([A-Z])\w+/g,
+                          )}`}
+                        >
                           <Image
                             src={`/uploads/${album.art_url}`}
                             maxWidth='108px'
@@ -97,7 +107,8 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
                       </Box>
                       <Box>
                         <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']}>
-                          {album.album_name}
+                          {album.album_name && album.album_name}
+                          {album.song_name && `${album.song_name} (MP3)`}
                         </Heading>
                         <Text
                           fontSize={['xs', 'sm', 'md', 'lg']}
@@ -120,7 +131,14 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
                           aria-label='Download album'
                           fontSize='20px'
                           icon={Download}
-                          onClick={(e) => handleSubmit(e, album.product_id)}
+                          onClick={(e) =>
+                            handleSubmit(
+                              e,
+                              album.product_id,
+                              album.album_name,
+                              album.song_name,
+                            )
+                          }
                           mb={2}
                         />
                         <IconButton
@@ -129,7 +147,7 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
                           aria-label='Add to playlist'
                           fontSize='20px'
                           icon={PlaylistAdd}
-                          onClick={() => addAlbum(album.product_id)}
+                          onClick={() => addToPlaylist(album.product_id)}
                         />
                       </Flex>
                     </Flex>

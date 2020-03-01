@@ -37,7 +37,7 @@ class Download extends Component {
     this.loadOrder();
   }
 
-  handleSubmit = (e, product_id) => {
+  handleSubmit = (e, product_id, albumName, songName) => {
     e.preventDefault();
     axios({
       url: `/download/order/${this.props.match.params.orderId}/${product_id}`,
@@ -48,13 +48,19 @@ class Download extends Component {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `${product_id}.zip`);
+
+      let songFound = product_id.match(/-/g);
+      if (!!songFound) {
+        link.setAttribute('download', `${songName}.mp3`);
+      } else {
+        link.setAttribute('download', `${albumName}.zip`);
+      }
       document.body.appendChild(link);
       link.click();
     });
   };
 
-  addAlbum = (productId) => {
+  addToPlaylist = (productId) => {
     if (this.props.auth) {
       this.props.UserActions.addToPlaylist(this.props.auth, productId);
       toast(`Saved to your Playlist`);
@@ -99,7 +105,8 @@ class Download extends Component {
                   </Box>
                   <Box>
                     <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']}>
-                      {album.album_name}
+                      {album.album_name && album.album_name}
+                      {album.song_name && `${album.song_name} (MP3)`}
                     </Heading>
                     <Text
                       fontSize={['xs', 'sm', 'md', 'lg']}
@@ -136,7 +143,14 @@ class Download extends Component {
                         fontSize='20px'
                         icon={DownloadIcon}
                         mb={2}
-                        onClick={(e) => this.handleSubmit(e, album.product_id)}
+                        onClick={(e) =>
+                          this.handleSubmit(
+                            e,
+                            album.product_id,
+                            album.album_name,
+                            album.song_name,
+                          )
+                        }
                       />
                       <IconButton
                         variant='solid'
@@ -144,7 +158,7 @@ class Download extends Component {
                         aria-label='Call Sage'
                         fontSize='20px'
                         icon={PlaylistAdd}
-                        onClick={(e) => this.addAlbum(album.product_id)}
+                        onClick={(e) => this.addToPlaylist(album.product_id)}
                       />
                     </Flex>
                   )}

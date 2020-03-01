@@ -31,6 +31,7 @@ const Cart = ({ UserActions, auth, cart }) => {
               ({
                 id,
                 artist_name,
+                song_name,
                 album_name,
                 art_url,
                 download_price,
@@ -45,7 +46,9 @@ const Cart = ({ UserActions, auth, cart }) => {
 
                   <Box>
                     <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']}>
-                      {album_name ? album_name : `${amount} coins`}
+                      {amount && `${amount} coins`}
+                      {album_name && album_name}
+                      {song_name && `${song_name} (MP3)`}
                     </Heading>
                     <Text
                       fontSize={['xs', 'sm', 'md', 'lg']}

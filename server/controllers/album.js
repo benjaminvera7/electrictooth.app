@@ -32,7 +32,7 @@ async function getAlbums(req, res, next) {
 async function getAlbum(req, res, next) {
   const productId = req.params.productId;
   try {
-    const [album] = await Album.find({ product_id: productId })
+    const album = await Album.findOne({ product_id: productId })
       .populate('songs')
       .populate('artist');
     if (!album) {

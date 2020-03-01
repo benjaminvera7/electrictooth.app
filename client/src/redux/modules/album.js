@@ -29,7 +29,9 @@ export const getAlbumById = createAction(GET_ALBUM_BY_ID, _getAlbumById);
 
 const initialState = {
   albums: [],
-  currentAlbum: {},
+  currentAlbum: {
+    songs: [],
+  },
   updatedAt: getDate(),
 };
 

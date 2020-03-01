@@ -21,10 +21,10 @@ const Card = styled(Flex)`
   ${FADE_IN}
 `;
 
-const AlbumCard = ({ auth, album, UserActions, albumCollection, playlist }) => {
+const AlbumCard = ({ auth, album, UserActions, collection }) => {
   const router = useRouter();
 
-  const addAlbum = (productId) => {
+  const addToPlaylist = (productId) => {
     if (auth) {
       UserActions.addToPlaylist(auth, productId);
 
@@ -43,10 +43,6 @@ const AlbumCard = ({ auth, album, UserActions, albumCollection, playlist }) => {
       router.push('/signup');
     }
   };
-
-  let exists;
-
-  exists = albumCollection.filter((ac) => ac.id === album._id);
 
   return (
     <Card
@@ -126,31 +122,20 @@ const AlbumCard = ({ auth, album, UserActions, albumCollection, playlist }) => {
         </Text>
       </Box>
 
-      {exists.length === 0 ? (
-        <Button
-          mt={1}
-          width='100%'
-          bg='#2d7bb8'
-          onClick={() => addToCart(album.product_id)}
-        >
-          Buy Digital Album
-        </Button>
-      ) : (
-        <Button
-          mt={1}
-          width='100%'
-          bg='#2d7bb8'
-          onClick={() => router.push('/profile')}
-        >
-          View in Collection
-        </Button>
-      )}
+      <Button
+        mt={1}
+        width='100%'
+        bg='#2d7bb8'
+        onClick={() => addToCart(album.product_id)}
+      >
+        Buy Digital Album
+      </Button>
 
       <Button
         mt={1}
         width='100%'
         bg='#134468'
-        onClick={() => addAlbum(album.product_id)}
+        onClick={() => addToPlaylist(album.product_id)}
       >
         Add Album to Player
       </Button>
@@ -161,7 +146,7 @@ const AlbumCard = ({ auth, album, UserActions, albumCollection, playlist }) => {
 export default connect(
   (state) => ({
     auth: state.user.authenticated,
-    albumCollection: state.user.albumCollection,
+    collection: state.user.albumCollection,
     playlist: state.user.playlist,
   }),
   (dispatch) => ({
