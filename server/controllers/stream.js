@@ -5,15 +5,18 @@ const Song = require('../models/song');
 async function stream(req, res, next) {
   const songId = req.params.songId;
   const song = await Song.findById({ _id: songId });
-  const productId = song.product_id.substring(0, 4);
 
   const albumCollection = await req.user.getAlbumCollection();
 
-  let exists = albumCollection.filter(
-    (album) => album.product_id === productId,
+  let songExists = albumCollection.filter(
+    (item) => item.product_id === song.product_id,
   );
 
-  if (exists.length === 0) {
+  let albumExists = albumCollection.filter(
+    (item) => item.id.toString() === song.album.toString(),
+  );
+
+  if (songExists.length === 0 && albumExists.length === 0) {
     const coins = req.user.getCoins();
     if (coins >= 1) {
       song.addIncome();
