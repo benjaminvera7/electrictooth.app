@@ -1,16 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Box,
-  Flex,
-  Text,
-  Heading,
-  Button,
-  Stat,
-  StatLabel,
-  StatNumber,
-  StatHelpText,
-  Progress,
-} from '@chakra-ui/core';
+import { Box, Flex, Text, Heading, Button, Progress } from '@chakra-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
@@ -200,10 +189,6 @@ class Checkout extends Component {
             <Box>${`${user.cart.total}`}.00</Box>
           </Flex>
 
-          <Heading px={4} mb={2}>
-            PayPal
-          </Heading>
-
           <form
             id='paypalForm'
             method='post'
@@ -225,14 +210,12 @@ class Checkout extends Component {
             </Button>
           </form>
 
-          <Heading px={4} mb={2} py={4} pb={0}>
-            Ethereum
-          </Heading>
-
-          {this.state.active ? (
+          {this.state.active && window.innerWidth < 1100 ? (
             <Button
               rounded='md'
-              backgroundColor='rgb(198, 246, 213)'
+              style={{
+                background: 'linear-gradient(-90deg, #A3278F 0%, #E52F50 100%)',
+              }}
               color='black'
               px={4}
               h={8}
@@ -242,12 +225,14 @@ class Checkout extends Component {
               w='300px'
               onClick={this.sendTransaction}
             >
-              Checkout
+              Checkout with web3
             </Button>
           ) : (
             <Button
               rounded='md'
-              bg='#E0897F'
+              style={{
+                background: 'linear-gradient(-90deg, #A3278F 0%, #E52F50 100%)',
+              }}
               color='black'
               px={4}
               h={8}
@@ -257,17 +242,9 @@ class Checkout extends Component {
               w='300px'
               onClick={this.initConnect}
             >
-              Connect
+              Connect to web3
             </Button>
           )}
-
-          <Box p={4}>
-            <Stat>
-              <StatLabel>{`${this.props.address}`}</StatLabel>
-              <StatNumber>{`${this.state.balance}`} ETH</StatNumber>
-              <StatHelpText>{`$ ${this.state.usd}`} USD</StatHelpText>
-            </Stat>
-          </Box>
 
           <Box px={4}>
             {this.state.pending && (

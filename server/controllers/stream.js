@@ -20,7 +20,7 @@ async function stream(req, res, next) {
     const coins = req.user.getCoins();
     if (coins >= 1) {
       song.addIncome();
-      song.save();
+      //song.save();
 
       req.user.exchangeCoins('SUBTRACT', 1);
       req.user.save();
