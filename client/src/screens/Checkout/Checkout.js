@@ -210,7 +210,7 @@ class Checkout extends Component {
             </Button>
           </form>
 
-          {this.state.active && window.innerWidth < 1100 ? (
+          {this.state.active && window.innerWidth > 1100 ? (
             <Button
               rounded='md'
               style={{
