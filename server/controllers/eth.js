@@ -41,10 +41,8 @@ async function returnPayment(req, res) {
   ).exec();
 
   let user = req.user;
-
+  let cart = req.user.cart;
   let coins = 0;
-
-  let cart = req.user.getCart();
 
   for (const item of cart.items) {
     let found = item.product_id.match(/coin/g);
@@ -75,7 +73,9 @@ async function returnPayment(req, res) {
 
   user.save();
 
-  res.status(200).json({ message: 'SUCCESSFUL', order: order, error: false });
+  return res
+    .status(200)
+    .json({ message: 'SUCCESSFUL', order: order, error: false });
 }
 
 module.exports = {

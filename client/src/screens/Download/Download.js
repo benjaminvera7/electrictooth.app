@@ -35,6 +35,7 @@ class Download extends Component {
 
   componentDidMount() {
     this.loadOrder();
+    this.props.auth && this.props.UserActions.getUser(this.props.auth);
   }
 
   handleSubmit = (e, product_id, albumName, songName) => {

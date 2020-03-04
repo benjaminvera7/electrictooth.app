@@ -1,8 +1,4 @@
-const path = require('path');
-const User = require('../models/user');
-const Album = require('../models/album');
 const Order = require('../models/order');
-const fs = require('fs');
 
 async function getOrder(req, res, next) {
   let orderId = req.params.orderId;

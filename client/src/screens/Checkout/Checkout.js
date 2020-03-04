@@ -9,8 +9,6 @@ import {
   StatLabel,
   StatNumber,
   StatHelpText,
-  StatArrow,
-  StatGroup,
   Progress,
 } from '@chakra-ui/core';
 import { connect } from 'react-redux';
@@ -29,6 +27,7 @@ class Checkout extends Component {
       tipAmount: null,
       active: false,
       totalEth: null,
+      status: 'disconnected',
     };
   }
 
@@ -76,7 +75,7 @@ class Checkout extends Component {
     service.eth.getBalance(address).then(async (wei) => {
       let balance = await service.utils.fromWei(wei.toString(), 'ether');
 
-      let balance_num = Number.parseFloat(balance).toFixed(4); // 0.0014 ETH
+      let balance_num = Number.parseFloat(balance).toFixed(4);
       let usd = Number.parseFloat(balance_num * rate).toFixed(2);
 
       this.setState({
@@ -104,13 +103,19 @@ class Checkout extends Component {
   };
 
   sendTransaction = async () => {
-    const { service, address, user } = this.props;
+    const { service, address, user, history } = this.props;
 
-    this.setState({ pending: true, part: 100 / 6 });
+    this.setState({
+      pending: true,
+      part: 100 / 5,
+      status: 'initializing transaction',
+    });
 
     let { data } = await this.requestPayment(user.authenticated);
 
-    this.setState({ part: (this.state.part += 100 / 6) });
+    this.setState({
+      part: (this.state.part += 100 / 5),
+    });
 
     let orderId = data.order._id;
 
@@ -118,7 +123,9 @@ class Checkout extends Component {
       try {
         let gasPrice = await service.eth.getGasPrice();
 
-        this.setState({ part: (this.state.part += 100 / 6) });
+        this.setState({
+          part: (this.state.part += 100 / 5),
+        });
 
         const TRANSACTION = await service.eth.sendTransaction({
           from: address, //metamask
@@ -128,7 +135,9 @@ class Checkout extends Component {
           gasPrice: gasPrice,
         });
 
-        this.setState({ part: (this.state.part += 100 / 6) });
+        this.setState({
+          part: (this.state.part += 100 / 5),
+        });
 
         if (TRANSACTION.status === true) {
           let { data } = await this.returnPayment(
@@ -137,13 +146,18 @@ class Checkout extends Component {
             orderId,
           );
 
-          this.setState({ part: (this.state.part += 100 / 6) });
+          this.setState({
+            part: (this.state.part += 100 / 5),
+          });
 
-          console.log(data.order.id);
-
-          this.props.history.push(`/download/${data.order.id}`);
+          history.push(`/download/${data.order._id}`);
         } else {
           //report to ET server of failure, update order, update page with failure noticeß
+
+          this.setState({
+            part: 0,
+          });
+
           throw new Error('Transaction failed');
         }
       } catch (error) {
@@ -255,9 +269,11 @@ class Checkout extends Component {
             </Stat>
           </Box>
 
-          {this.state.pending && (
-            <Progress hasStripe isAnimated value={this.state.part} />
-          )}
+          <Box px={4}>
+            {this.state.pending && (
+              <Progress hasStripe isAnimated value={this.state.part} />
+            )}
+          </Box>
         </Box>
       </Flex>
     );
