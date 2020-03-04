@@ -31,6 +31,7 @@ async function requestPayment(req, res) {
     userId: userId,
     status: 'PENDING',
     cart: cart,
+    type: 'USD',
   });
 
   let newOrder = await order.save();
