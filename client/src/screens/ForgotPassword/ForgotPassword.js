@@ -19,18 +19,29 @@ const ForgotContainer = styled(Flex)`
 `;
 
 class ForgotPassword extends Component {
+  state = {
+    message: '',
+    error: '',
+    email: '',
+  };
+
   reset = () => {
     return axios.post(
       '/reset',
       {
-        email: 'ben@gmail.com',
+        email: this.state.email,
       },
       { headers: { Accept: 'application/json' } },
     );
   };
 
-  submit = () => {
-    this.reset();
+  submit = async () => {
+    let { data } = await this.reset();
+    let { message, error } = data;
+    this.setState({
+      error: error,
+      message: message,
+    });
   };
 
   render() {
@@ -52,6 +63,13 @@ class ForgotPassword extends Component {
               size='lg'
               name='email'
               type='text'
+              onChange={(e) => {
+                this.setState({
+                  error: false,
+                  message: '',
+                  email: e.target.value,
+                });
+              }}
             />
 
             <Button
@@ -64,6 +82,10 @@ class ForgotPassword extends Component {
               Send password reset email
             </Button>
           </Stack>
+
+          <Box color={this.state.error ? '#FF0000' : '#00FF00'}>
+            {this.state.message}
+          </Box>
         </Box>
       </ForgotContainer>
     );
