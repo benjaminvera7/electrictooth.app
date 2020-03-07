@@ -67,6 +67,19 @@ const Signin = ({ UserActions, history }) => {
             </span>
           </Box>
         </Box>
+
+        <Box w='100%' type='submit' mt={4} textAlign='center' borderRadius='md'>
+          <Box fontSize='xs' py={2} color='white'>
+            <span>
+              <Link
+                onClick={() => history.push('/forgot')}
+                style={{ color: '#6eacdd' }}
+              >
+                Forgot Password?
+              </Link>
+            </span>
+          </Box>
+        </Box>
       </Box>
     </SigninContainer>
   );

@@ -13,6 +13,8 @@ import Coins from 'screens/Coins';
 import Signin from 'screens/Signin';
 import Signup from 'screens/Signup';
 import Album from 'screens/Album';
+import ForgotPassword from 'screens/ForgotPassword';
+import NewPassword from 'screens/NewPassword';
 import Navigation from 'components/Navigation';
 import AudioPlayer from 'components/AudioPlayer';
 
@@ -40,6 +42,8 @@ function App({ AlbumActions, UserActions, auth }) {
           <Route path='/signup' component={Signup} />
           <Route path='/signin' component={Signin} />
           <Route path='/help' component={Help} />
+          <Route path='/forgot' component={ForgotPassword} />
+          <Route path='/reset/:userId/:token' component={NewPassword} />
           <Route path='/catalog/:productId' component={Album} />
           <Route path='/profile' component={Profile} />
           <Route path='/cart' component={Cart} />
