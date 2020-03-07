@@ -14,6 +14,7 @@ const UserSchema = new Schema({
   playlist: [],
   cart: Object,
   coins: Number,
+  reset_password_token: String,
 });
 
 UserSchema.methods.getCart = function() {

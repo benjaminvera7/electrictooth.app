@@ -50,6 +50,7 @@ function signup(req, res, next) {
       albumCollection: [],
       playlist: [],
       cart: { items: [], total: 0 },
+      reset_password_token: '',
       coins: 100,
     });
 

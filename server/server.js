@@ -6,7 +6,6 @@ const morgan = require('morgan');
 mongoose.Promise = require('bluebird');
 const cors = require('cors');
 const config = require('./config');
-const fs = require('fs');
 
 const authRoutes = require('./routes/auth');
 const albumRoutes = require('./routes/album');
@@ -17,6 +16,7 @@ const userRoutes = require('./routes/user');
 const songRoutes = require('./routes/song');
 const streamRoutes = require('./routes/stream');
 const orderRoutes = require('./routes/order');
+const resetRoutes = require('./routes/reset');
 
 const db = mongoose.connection.openUri(config.dbUri, {
   useNewUrlParser: true,
@@ -55,6 +55,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../client/build')));
 app.use('/uploads', express.static(path.join(__dirname, './uploads')));
 
+app.use('/reset', resetRoutes);
 app.use('/auth', authRoutes);
 app.use('/albums', albumRoutes);
 app.use('/paypal', paypalRoutes);
