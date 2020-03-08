@@ -69,7 +69,7 @@ export default handleActions(
         const newState = { ...state, updatedAt: getDate(), error: null };
 
         if (payload === undefined) {
-          newState.error = 'Got Ether? Download Metamask!';
+          newState.error = true;
         } else {
           newState.web3 = payload;
         }
@@ -86,7 +86,7 @@ export default handleActions(
         const newState = { ...state, updatedAt: getDate(), error: null };
 
         if (state.web3 === null) {
-          newState.error = 'Got Ether? Download Metamask!';
+          newState.error = true;
         }
 
         if (payload === undefined) {

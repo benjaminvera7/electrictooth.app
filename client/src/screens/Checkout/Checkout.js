@@ -170,7 +170,7 @@ class Checkout extends Component {
           </Heading>
 
           <Text px={4} fontSize='sm' mb={4} color='grey'>
-            Electric Tooth currently only accepts PayPal payments
+            Electric Tooth currently only accepts PayPal & Ethereum payments
           </Text>
 
           <Flex justify='center' py={2} px={4}>
@@ -204,17 +204,17 @@ class Checkout extends Component {
               my={2}
               mx={4}
               type='submit'
-              w='300px'
+              w='200px'
             >
               Checkout with PayPal
             </Button>
           </form>
 
-          {this.state.active && window.innerWidth > 1100 ? (
+          {this.state.active ? (
             <Button
               rounded='md'
               style={{
-                background: 'linear-gradient(-90deg, #A3278F 0%, #E52F50 100%)',
+                background: 'linear-gradient(-90deg, #E52F50 0%, #A3278F 100%)',
               }}
               color='black'
               px={4}
@@ -222,7 +222,7 @@ class Checkout extends Component {
               my={2}
               mx={4}
               type='submit'
-              w='300px'
+              w='200px'
               onClick={this.sendTransaction}
             >
               Checkout with web3
@@ -239,16 +239,23 @@ class Checkout extends Component {
               my={2}
               mx={4}
               type='submit'
-              w='300px'
+              w='200px'
               onClick={this.initConnect}
+              disabled={this.props.error}
             >
               Connect to web3
             </Button>
           )}
 
-          <Box px={4}>
+          <Box px={4} mt={4}>
             {this.state.pending && (
-              <Progress hasStripe isAnimated value={this.state.part} />
+              <>
+                <Progress hasStripe isAnimated value={this.state.part} />
+                <Text>
+                  Please wait as your transaction is being processed. You will
+                  be redirected after its been confirmed
+                </Text>
+              </>
             )}
           </Box>
         </Box>
