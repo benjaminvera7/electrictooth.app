@@ -122,6 +122,7 @@ const initialState = {
   showModal: false,
   updatedAt: getDate(),
   error: '',
+  message: '',
 };
 
 export default handleActions(
@@ -195,7 +196,11 @@ export default handleActions(
         return newState;
       },
       onFailure: (state, { payload }) => {
-        return { ...state, error: payload.response.data.error };
+        return {
+          ...state,
+          error: payload.response.data.error,
+          message: payload.response.data.message,
+        };
       },
     }),
     ...pender({
@@ -215,7 +220,11 @@ export default handleActions(
         return newState;
       },
       onFailure: (state, { payload }) => {
-        return { ...state, error: payload.response.data.error };
+        return {
+          ...state,
+          error: payload.response.data.error,
+          message: payload.response.data.message,
+        };
       },
     }),
     ...pender({

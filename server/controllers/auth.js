@@ -8,15 +8,46 @@ function tokenForUser(user) {
 }
 
 function signin(req, res, next) {
-  res.json({
-    userId: req.user._id,
-    albumCollection: req.user.albumCollection,
-    playlist: req.user.playlist,
-    cart: req.user.cart,
-    coins: req.user.coins,
-    username: req.user.username,
-    token: tokenForUser(req.user),
-  });
+  if (!req.body.password || !req.body.email) {
+    return res.status(422).send({ error: true, message: 'Unable to log in' });
+  } else {
+    User.findOne({ email: req.body.email }, function(err, user) {
+      if (err) {
+        return res
+          .status(422)
+          .send({ error: true, message: 'Unable to log in' });
+      }
+      if (!user) {
+        return res
+          .status(422)
+          .send({ error: true, message: 'Unable to log in' });
+      }
+
+      // compare passwords - is `password` equal to user.password?
+      user.comparePassword(req.body.password, function(err, isMatch) {
+        if (err) {
+          return res
+            .status(422)
+            .send({ error: true, message: 'Unable to log in' });
+        }
+        if (!isMatch) {
+          return res
+            .status(422)
+            .send({ error: true, message: 'Unable to log in' });
+        }
+
+        return res.json({
+          userId: user._id,
+          albumCollection: user.albumCollection,
+          playlist: user.playlist,
+          cart: user.cart,
+          coins: user.coins,
+          username: user.username,
+          token: tokenForUser(user),
+        });
+      });
+    });
+  }
 }
 
 function signup(req, res, next) {
@@ -27,7 +58,7 @@ function signup(req, res, next) {
   if (!email || !password) {
     return res
       .status(422)
-      .send({ error: true, message: 'You must provide email and password' });
+      .send({ error: true, message: 'You must provide an email and password' });
   }
 
   // See if a user with the given email exists

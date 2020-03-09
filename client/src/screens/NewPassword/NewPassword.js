@@ -108,7 +108,9 @@ class NewPassword extends Component {
               Reset Password
             </Button>
 
-            <Box color='#DC143C'>{this.state.message}</Box>
+            <Flex justify='center'>
+              <Box color='#DC143C'>{this.state.message}</Box>
+            </Flex>
           </Stack>
         </Box>
       </ForgotContainer>

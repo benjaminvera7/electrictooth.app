@@ -11,6 +11,7 @@ import { CSSTransition } from 'react-transition-group';
 import MobileNavigation from 'components/MobileNavigation';
 import MobilePlaylistPanel from './MobilePlaylistPanel';
 import useWindowSize from 'hooks/useWindowSize';
+import toast from 'util/toast';
 
 const slideHOC = (InputComponent) => {
   return (props) => (
@@ -155,42 +156,48 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   };
 
   const fetch = async (id) => {
-    setPending(true);
+    if (coins >= 1) {
+      setPending(true);
 
-    if (playing && currentSongId === id) {
-      setPlaying(false);
-      audio.current.pause();
-      return;
-    }
-
-    setCurrentSongId(id);
-
-    try {
-      let response = await axios({
-        url: `${process.env.REACT_APP_API_URL}/stream/${id}`,
-        method: 'GET',
-        responseType: 'blob',
-        headers: { Authorization: auth },
-      });
-
-      let blob = new Blob([response.data], { type: 'audio/mpeg' });
-      let url;
-
-      try {
-        url = window.webkitURL.createObjectURL(blob);
-      } catch (err) {
-        // Firefox
-        url = window.URL.createObjectURL(blob);
+      if (playing && currentSongId === id) {
+        setPlaying(false);
+        audio.current.pause();
+        return;
       }
 
-      audio.current.src = url;
-      audio.current.play();
+      setCurrentSongId(id);
 
-      UserActions.getCoins(auth);
-      setPlaying(true);
-      setPending(false);
-    } catch (e) {
-      console.log('song change', e);
+      try {
+        let response = await axios({
+          url: `${process.env.REACT_APP_API_URL}/stream/${id}`,
+          method: 'GET',
+          responseType: 'blob',
+          headers: { Authorization: auth },
+        });
+
+        console.log(response.data);
+
+        let blob = new Blob([response.data], { type: 'audio/mpeg' });
+        let url;
+
+        try {
+          url = window.webkitURL.createObjectURL(blob);
+        } catch (err) {
+          // Firefox
+          url = window.URL.createObjectURL(blob);
+        }
+
+        audio.current.src = url;
+        audio.current.play();
+
+        UserActions.getCoins(auth);
+        setPlaying(true);
+        setPending(false);
+      } catch (e) {
+        console.log('song change', e);
+      }
+    } else {
+      toast('Not enough coins');
     }
   };
 

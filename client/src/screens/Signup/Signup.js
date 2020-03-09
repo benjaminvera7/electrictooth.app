@@ -1,5 +1,14 @@
 import React from 'react';
-import { Box, Flex, Stack, Input, Button, Image, Link } from '@chakra-ui/core';
+import {
+  Box,
+  Flex,
+  Stack,
+  Input,
+  Button,
+  Image,
+  Link,
+  Text,
+} from '@chakra-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
@@ -11,7 +20,7 @@ const SignupContainer = styled(Flex)`
   ${FADE_IN}
 `;
 
-const Signup = ({ UserActions, history }) => {
+const Signup = ({ UserActions, history, error, message }) => {
   let form;
 
   return (
@@ -80,6 +89,12 @@ const Signup = ({ UserActions, history }) => {
             </span>
           </Box>
         </Box>
+
+        {error && (
+          <Flex justify='center' py={4}>
+            <Text color='#ff0000'>{message}</Text>
+          </Flex>
+        )}
       </Box>
     </SignupContainer>
   );
@@ -88,7 +103,8 @@ const Signup = ({ UserActions, history }) => {
 export default connect(
   (state) => ({
     auth: state.user.authenticated,
-    errorMessage: state.user.errorMessage,
+    message: state.user.message,
+    error: state.user.error,
   }),
   (dispatch) => ({
     UserActions: bindActionCreators(userActions, dispatch),
