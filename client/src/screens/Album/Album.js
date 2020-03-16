@@ -65,25 +65,6 @@ class Album extends Component {
         <Helmet>
           <title>{currentAlbum.album_name}</title>
           <meta name='description' content='amazing' />
-          <meta
-            name='og:url'
-            content={`https://electrictooth.app/catalog/${currentAlbum.product_id}`}
-          />
-          <meta name='og:title' content={currentAlbum.album_name} />
-          <meta name='og:description' content='amazing' />
-          <meta
-            name='og:image'
-            content={`https://electrictooth.app/uploads/${currentAlbum.art_url}`}
-          />
-          <meta name='og:type' content='website' />
-          <meta name='twitter:title' content={currentAlbum.album_name} />
-          <meta name='twitter:description' content='amazing' />
-          <meta
-            name='twitter:image'
-            content={`https://electrictooth.app/uploads/${currentAlbum.art_url}`}
-          />
-          <meta name='twitter:card' content='summary' />
-          <meta name='twitter:creator' content='@princebiomass' />
         </Helmet>
 
         {!pending && (
