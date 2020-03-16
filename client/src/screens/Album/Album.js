@@ -62,12 +62,11 @@ class Album extends Component {
 
     return (
       <Fragment>
-
         <Helmet>
-          <meta name="twitter:title" content={`${currentAlbum.album_name}`}>
-          <meta name="twitter:description" content=" Amazing album">
-          <meta name="twitter:image" content={`${currentAlbum.art_url}`}>
-          <meta name="twitter:card" content="summary_large_image">
+          <meta name='twitter:title' content={`${currentAlbum.album_name}`} />
+          <meta name='twitter:description' content=' Amazing album' />
+          <meta name='twitter:image' content={`${currentAlbum.art_url}`} />
+          <meta name='twitter:card' content='summary_large_image' />
         </Helmet>
 
         {!pending && (
