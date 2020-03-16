@@ -17,7 +17,7 @@ import * as userActions from 'redux/modules/user';
 import toast from 'util/toast';
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
-import { Helmet } from 'react-helmet';
+import Helmet from 'react-helmet';
 
 const AlbumCardContainer = styled(Box)``;
 
@@ -63,19 +63,27 @@ class Album extends Component {
     return (
       <Fragment>
         <Helmet>
-          <meta name='twitter:card' content='summary' />
-          <meta name='twitter:site' content='@princebiomass' />
-          <meta name='twitter:creator' content='@princebiomass' />
+          <title>{currentAlbum.album_name}</title>
+          <meta name='description' content='amazing' />
           <meta
-            property='og:url'
+            name='og:url'
             content={`https://electrictooth.app/catalog/${currentAlbum.product_id}`}
           />
-          <meta property='og:title' content={`${currentAlbum.album_name}`} />
-          <meta property='og:description' content='Amazaing album' />
+          <meta name='og:title' content={currentAlbum.album_name} />
+          <meta name='og:description' content='amazing' />
           <meta
-            property='og:image'
+            name='og:image'
             content={`https://electrictooth.app/uploads/${currentAlbum.art_url}`}
           />
+          <meta name='og:type' content='website' />
+          <meta name='twitter:title' content={currentAlbum.album_name} />
+          <meta name='twitter:description' content='amazing' />
+          <meta
+            name='twitter:image'
+            content={`https://electrictooth.app/uploads/${currentAlbum.art_url}`}
+          />
+          <meta name='twitter:card' content='summary' />
+          <meta name='twitter:creator' content='@princebiomass' />
         </Helmet>
 
         {!pending && (
