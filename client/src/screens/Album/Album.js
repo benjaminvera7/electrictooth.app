@@ -63,13 +63,19 @@ class Album extends Component {
     return (
       <Fragment>
         <Helmet>
-          <meta name='twitter:title' content={`${currentAlbum.album_name}`} />
-          <meta name='twitter:description' content=' Amazing album' />
+          <meta name='twitter:card' content='summary' />
+          <meta name='twitter:site' content='@princebiomass' />
+          <meta name='twitter:creator' content='@princebiomass' />
           <meta
-            name='twitter:image'
-            content={`/uploads/${currentAlbum.art_url}`}
+            property='og:url'
+            content={`https://electrictooth.app/catalog/${currentAlbum.product_id}`}
           />
-          <meta name='twitter:card' content='summary_large_image' />
+          <meta property='og:title' content={`${currentAlbum.album_name}`} />
+          <meta property='og:description' content='Amazaing album' />
+          <meta
+            property='og:image'
+            content={`https://electrictooth.app/uploads/${currentAlbum.art_url}`}
+          />
         </Helmet>
 
         {!pending && (
