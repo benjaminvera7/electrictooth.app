@@ -65,7 +65,10 @@ class Album extends Component {
         <Helmet>
           <meta name='twitter:title' content={`${currentAlbum.album_name}`} />
           <meta name='twitter:description' content=' Amazing album' />
-          <meta name='twitter:image' content={`${currentAlbum.art_url}`} />
+          <meta
+            name='twitter:image'
+            content={`/uploads/${currentAlbum.art_url}`}
+          />
           <meta name='twitter:card' content='summary_large_image' />
         </Helmet>
 
