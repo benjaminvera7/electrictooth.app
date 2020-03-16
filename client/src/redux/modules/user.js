@@ -61,7 +61,7 @@ const _exchangeCoins = (token, type, amount) => {
 
 const _addToPlaylist = (token, productId) => {
   return axios({
-    url: `${process.env.REACT_APP_API_URL}/user/playlist/add/${productId}`,
+    url: `user/playlist/add/${productId}`,
     method: 'POST',
     headers: { Authorization: token },
   });
@@ -69,7 +69,7 @@ const _addToPlaylist = (token, productId) => {
 
 const _removeFromPlaylist = (token, productId) => {
   return axios({
-    url: `${process.env.REACT_APP_API_URL}/user/playlist/remove/${productId}`,
+    url: `/user/playlist/remove/${productId}`,
     method: 'POST',
     headers: { Authorization: token },
   });

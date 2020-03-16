@@ -17,6 +17,7 @@ import * as userActions from 'redux/modules/user';
 import toast from 'util/toast';
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
+import { Helmet } from 'react-helmet';
 
 const AlbumCardContainer = styled(Box)``;
 
@@ -61,6 +62,14 @@ class Album extends Component {
 
     return (
       <Fragment>
+
+        <Helmet>
+          <meta name="twitter:title" content={`${currentAlbum.album_name}`}>
+          <meta name="twitter:description" content=" Amazing album">
+          <meta name="twitter:image" content={`${currentAlbum.art_url}`}>
+          <meta name="twitter:card" content="summary_large_image">
+        </Helmet>
+
         {!pending && (
           <CardAnimation justify='center'>
             <AlbumCardContainer color='white' maxW='1100px' flex='1'>
