@@ -95,11 +95,16 @@ function createPayment(order) {
           currency: 'USD',
         });
       } else {
+        let description;
+        if (item.song_name) {
+          description = `${item.song_name} (MP3)`;
+        } else {
+          description = item.album_name;
+        }
+
         myItems.push({
           name: item.product_id,
-          description: () => {
-            item.album_name ? item.album_name : item.song_name;
-          },
+          description: description,
           quantity: item.quantity,
           price: item.download_price,
           sku: item.product_id,

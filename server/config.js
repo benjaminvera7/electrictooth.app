@@ -12,7 +12,7 @@ module.exports = {
   dbUri: dbUri,
   port: 3090,
   PAYPAL_CLIENT_ID:
-    'AakM4NG8lS-m62tcOiex6PvYOqTeZ3aogMQAwPsA8wvHZ315fDyTxremwedbssYSai1hWyTayKlFOatL',
+    'AReCIFKo4ImyQTlrRjMEuHpmmcVGXyciNf-Dne81-84WWejTmwJ5NtB65z-AV_jMU4zJIUQwql3VtzMM',
   PAYPAL_CLIENT_SECRET:
-    'EDEq95TXcPGNYGFwMlPTF3bK_LZKSDjBIsmI5XJFMLczM7ajG51TqPQNUbACQHDYYnlRjOY02J2oKtsD',
+    'EF6531tqIPafbNi4-4-47Qn_EBp8ERX3ant6Z6JN3ZIiM05TiGkfPuRl8zPSepgGsdGlZTf_I46t6X-b',
 };
