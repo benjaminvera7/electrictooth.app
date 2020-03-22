@@ -12,6 +12,7 @@ import MobileNavigation from 'components/MobileNavigation';
 import MobilePlaylistPanel from './MobilePlaylistPanel';
 import useWindowSize from 'hooks/useWindowSize';
 import toast from 'util/toast';
+import debounce from 'util/debounce';
 
 const slideHOC = (InputComponent) => {
   return (props) => (
@@ -71,7 +72,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   }
 
   useEffect(() => {
-    audio.current.addEventListener('ended', next);
+    audio.current.addEventListener('ended', debounce(next, 3000));
     audio.current.addEventListener('timeupdate', timeUpdate, false);
 
     if (isMobile && isSafari()) {
@@ -182,8 +183,6 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
           headers: { Authorization: auth },
         });
 
-        console.log(response.data);
-
         let blob = new Blob([response.data], { type: 'audio/mpeg' });
         let url;
 
@@ -195,11 +194,26 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
         }
 
         audio.current.src = url;
-        audio.current.play();
 
-        UserActions.getCoins(auth);
-        setPlaying(true);
-        setPending(false);
+        var playPromise = audio.current.play();
+
+        if (playPromise !== undefined) {
+          playPromise
+            .then((_) => {
+              // Automatic playback started!
+              // Show playing UI.
+              UserActions.getCoins(auth);
+              setPlaying(true);
+              setPending(false);
+            })
+            .catch((error) => {
+              // Auto-play was prevented
+              // Show paused UI.
+              console.log(error);
+              setPlaying(false);
+              setPending(false);
+            });
+        }
       } catch (e) {
         console.log('song change', e);
       }
