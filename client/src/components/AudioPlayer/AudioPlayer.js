@@ -164,61 +164,62 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   };
 
   const fetch = async (id) => {
-    if (coins >= 1) {
-      setPending(true);
 
-      if (playing && currentSongId === id) {
-        setPlaying(false);
-        audio.current.pause();
-        return;
-      }
+    setPending(true);
 
-      setCurrentSongId(id);
+    if (playing && currentSongId === id) {
+      setPlaying(false);
+      setPending(false);
+      audio.current.pause();
+      return;
+    }
+
+    setCurrentSongId(id);
+
+    try {
+      let response = await axios({
+        url: `${process.env.REACT_APP_API_URL}/stream/${id}`,
+        method: 'GET',
+        responseType: 'blob',
+        headers: { Authorization: auth },
+      });
+
+      let blob = new Blob([response.data], { type: 'audio/mpeg' });
+      let url;
 
       try {
-        let response = await axios({
-          url: `${process.env.REACT_APP_API_URL}/stream/${id}`,
-          method: 'GET',
-          responseType: 'blob',
-          headers: { Authorization: auth },
-        });
-
-        let blob = new Blob([response.data], { type: 'audio/mpeg' });
-        let url;
-
-        try {
-          url = window.webkitURL.createObjectURL(blob);
-        } catch (err) {
-          // Firefox
-          url = window.URL.createObjectURL(blob);
-        }
-
-        audio.current.src = url;
-
-        var playPromise = audio.current.play();
-
-        if (playPromise !== undefined) {
-          playPromise
-            .then((_) => {
-              // Automatic playback started!
-              // Show playing UI.
-              UserActions.getCoins(auth);
-              setPlaying(true);
-              setPending(false);
-            })
-            .catch((error) => {
-              // Auto-play was prevented
-              // Show paused UI.
-              console.log(error);
-              setPlaying(false);
-              setPending(false);
-            });
-        }
-      } catch (e) {
-        console.log('song change', e);
+        url = window.webkitURL.createObjectURL(blob);
+      } catch (err) {
+        // Firefox
+        url = window.URL.createObjectURL(blob);
       }
-    } else {
+
+      audio.current.src = url;
+
+      var playPromise = audio.current.play();
+
+      if (playPromise !== undefined) {
+        playPromise
+          .then((_) => {
+            // Automatic playback started!
+            // Show playing UI.
+            UserActions.getCoins(auth);
+            setPlaying(true);
+            setPending(false);
+          })
+          .catch((error) => {
+            // Auto-play was prevented
+            // Show paused UI.
+            console.log(error);
+            setPlaying(false);
+            setPending(false);
+          });
+      }
+    } catch (e) {
+      setPending(false);
+      setPlaying(false);
       toast('Not enough coins');
+      console.log('something went wrong', e);
     }
   };
 

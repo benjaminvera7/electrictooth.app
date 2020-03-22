@@ -25,7 +25,7 @@ async function stream(req, res, next) {
       req.user.exchangeCoins('SUBTRACT', 1);
       req.user.save();
     } else {
-      return res.status(401).send({ error: true, message: 'Not enough coins' });
+      return res.status(402).send({ error: true, message: 'Not enough coins' });
     }
   }
 
