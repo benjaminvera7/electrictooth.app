@@ -130,28 +130,35 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   );
 
   const next = () => {
-    let song = playlist.filter((song) => song.id === currentSongId);
-    let currentSongIndex = playlist.indexOf(song[0]);
-    let newSongIndex = currentSongIndex + 1;
-    let playlistLength = playlist.length - 1;
-    if (newSongIndex > playlistLength) {
-      return fetch(playlist[0].id);
-    } else {
-      return fetch(playlist[newSongIndex].id);
+    let [song] = playlist.filter((song) => song.id === currentSongId);
+
+    if (playlist.length > 1 && song) {
+      let current = playlist.indexOf(song);
+      let last = playlist.length - 1;
+
+      if (current === last) {
+        let start = 0;
+        return fetch(playlist[start].id);
+      } else {
+        let next = current + 1;
+        return fetch(playlist[next].id);
+      }
     }
   };
 
   const previous = () => {
-    let song = playlist.filter((song) => song.id === currentSongId);
+    let [song] = playlist.filter((song) => song.id === currentSongId);
 
-    let currentSongIndex = playlist.indexOf(song[0]);
-    let newSongIndex = currentSongIndex - 1;
-    let playlistLength = playlist.length - 1;
+    if (playlist.length > 1 && song) {
+      let current = playlist.indexOf(song);
 
-    if (newSongIndex < 0) {
-      return fetch(playlist[playlistLength].id);
-    } else {
-      return fetch(playlist[newSongIndex].id);
+      if (current === 0) {
+        let last = playlist.length - 1;
+        return fetch(playlist[last].id);
+      } else {
+        let prev = current - 1;
+        return fetch(playlist[prev].id);
+      }
     }
   };
 
