@@ -12,7 +12,7 @@ import MobileNavigation from 'components/MobileNavigation';
 import MobilePlaylistPanel from './MobilePlaylistPanel';
 import useWindowSize from 'hooks/useWindowSize';
 import toast from 'util/toast';
-import debounce from 'util/debounce';
+//import debounce from 'util/debounce';
 
 const slideHOC = (InputComponent) => {
   return (props) => (
@@ -72,7 +72,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   }
 
   useEffect(() => {
-    audio.current.addEventListener('ended', debounce(next, 3000));
+    audio.current.addEventListener('ended', next);
     audio.current.addEventListener('timeupdate', timeUpdate, false);
 
     if (isMobile && isSafari()) {
@@ -164,7 +164,6 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   };
 
   const fetch = async (id) => {
-
     setPending(true);
 
     if (playing && currentSongId === id) {
