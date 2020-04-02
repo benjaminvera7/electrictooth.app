@@ -8,6 +8,7 @@ import useRouter from 'hooks/useRouter';
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
 import toast from 'util/toast';
+import theme from 'theme.js';
 
 const CoinContainer = styled(Flex)`
   ${FADE_IN}
@@ -28,7 +29,13 @@ const Coins = ({ UserActions, auth }) => {
   return (
     <CoinContainer justify='center'>
       <Box color='white' maxW='1100px' flex='1'>
-        <Heading px={4} pt={2} as='h2' size='2xl'>
+        <Heading
+          px={4}
+          pt={2}
+          as='h2'
+          size='2xl'
+          color={`${theme.colors.etGreen}`}
+        >
           coins
         </Heading>
 
@@ -36,27 +43,35 @@ const Coins = ({ UserActions, auth }) => {
           $0.01 USD = 1 coin = 1 stream. 100% goes to the artists!
         </Text>
 
+        <Flex direction='column' align='center'>
+          <Flex h='170px' w='600px' bg='white'>
+            <Box flex='1' color='black'>
+              1
+            </Box>
+            <Box flex='3' color='black'>
+              2
+            </Box>
+          </Flex>
+        </Flex>
+      </Box>
+    </CoinContainer>
+  );
+};
+
+/*
         <Stack>
-          <Flex
-            py={2}
-            px={4}
-            mx={2}
-            justify='space-between'
-            align='center'
-            borderWidth='1px'
-            rounded='lg'
-          >
+          <Flex py={2} px={4} mx={2} justify='space-between' align='center'>
             <Flex align='center'>
               <Box px={2}>
                 <Toll />
               </Box>
-              100
+              <Text color={`${theme.colors.etGreen}`}>100</Text>
             </Flex>
 
             <Box
               as='button'
               rounded='md'
-              bg='#2d7bb8'
+              bg={`${theme.colors.etGreen}`}
               color='white'
               px={4}
               h={8}
@@ -66,26 +81,18 @@ const Coins = ({ UserActions, auth }) => {
             </Box>
           </Flex>
 
-          <Flex
-            py={2}
-            px={4}
-            mx={2}
-            justify='space-between'
-            align='center'
-            borderWidth='1px'
-            rounded='lg'
-          >
+          <Flex py={2} px={4} mx={2} justify='space-between' align='center'>
             <Flex align='center'>
               <Box px={2}>
                 <Toll />
               </Box>
-              200
+              <Text color={`${theme.colors.etGreen}`}>200</Text>
             </Flex>
 
             <Box
               as='button'
               rounded='md'
-              bg='#2d7bb8'
+              bg={`${theme.colors.etGreen}`}
               color='white'
               px={4}
               h={8}
@@ -95,26 +102,18 @@ const Coins = ({ UserActions, auth }) => {
             </Box>
           </Flex>
 
-          <Flex
-            py={2}
-            px={4}
-            mx={2}
-            justify='space-between'
-            align='center'
-            borderWidth='1px'
-            rounded='lg'
-          >
+          <Flex py={2} px={4} mx={2} justify='space-between' align='center'>
             <Flex align='center'>
               <Box px={2}>
                 <Toll />
               </Box>
-              300
+              <Text color={`${theme.colors.etGreen}`}>300</Text>
             </Flex>
 
             <Box
               as='button'
               rounded='md'
-              bg='#2d7bb8'
+              bg={`${theme.colors.etGreen}`}
               color='white'
               px={4}
               h={8}
@@ -124,10 +123,7 @@ const Coins = ({ UserActions, auth }) => {
             </Box>
           </Flex>
         </Stack>
-      </Box>
-    </CoinContainer>
-  );
-};
+*/
 
 export default connect(
   (state) => ({

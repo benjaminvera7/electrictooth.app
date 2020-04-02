@@ -3,8 +3,8 @@ import { Box, Text, Flex, Image, Button } from '@chakra-ui/core';
 import { Playlist, Previous, Next, Play, Pause, Toll } from 'components/Icons';
 import { CSSTransition } from 'react-transition-group';
 import DesktopPlaylistPanel from '../DesktopPlaylistPanel';
-
 import { connect } from 'react-redux';
+import theme from 'theme.js';
 
 const slideHOC = (InputComponent) => {
   return (props) => (
@@ -60,26 +60,32 @@ const DesktopPlayer = ({
   return (
     <Fragment>
       <div className='large-player'>
-        <Flex maxW='1100px' flex='1' height='60px'>
-          <Flex flex='1' align='center'>
-            {song.length > 0}
+        <Flex maxW='1440px' flex='1' height='60px'>
+          <Flex flex='1' align='center' minWidth='275px'>
             <Image
               src={
-                song.length > 0
-                  ? `/uploads/${song[0].art_url}`
-                  : `https://via.placeholder.com/80`
+                song.length > 0 ? `/uploads/${song[0].art_url}` : `./mascot.jpg`
               }
-              maxWidth='80px'
-              px={2}
+              h='48px'
+              w='48px'
               borderRadius='50%'
+              border='1px'
+              borderColor={`${theme.colors.etGreen}`}
             />
-            <Flex direction='column' pl={2}>
-              <Text>
-                {song.length > 0 ? `${song[0].artist_name}` : `Add an album!`}
-              </Text>
-              <Text color='gray.500'>
-                {song.length > 0 ? `${song[0].song_name}` : `press play`}
-              </Text>
+            )
+            <Flex direction='column' pl={4}>
+              {song.length > 0 ? (
+                <>
+                  <Text color='gray.600' fontSize='sm'>
+                    {song[0].artist_name}
+                  </Text>
+                  <Text color='gray.500' fontSize='sm'>
+                    {song[0].song_name}
+                  </Text>
+                </>
+              ) : (
+                undefined
+              )}
             </Flex>
           </Flex>
           <Flex flex='2' direction='column' justify='center' align='center'>
@@ -98,20 +104,22 @@ const DesktopPlayer = ({
             <Flex justify='center'>{progressBar}</Flex>
           </Flex>
           <Flex flex='1' justify='space-evenly'>
-            <Flex align='center'>
-              <Box px={2}>
+            <Flex align='center' color={`${theme.colors.etGreen}`}>
+              <Box>
                 <Toll height='26px' width='26px' />
               </Box>
-              {coins}
+              <Box minWidth='50px' px={2}>
+                {coins}
+              </Box>
             </Flex>
 
             <Button variant='link' onClick={() => setVisibility(!visible)}>
               <Box style={{ position: 'relative' }}>
-                <Playlist />
+                <Playlist active={visible} />
                 <Box
                   style={{
                     position: 'absolute',
-                    color: 'yellow',
+                    color: `${theme.colors.etGreen}`,
                     top: '-9px',
                     right: '-6px',
                     fontSize: '14px',

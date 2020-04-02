@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/core';
 import { Play, Close, Remove, Pause } from 'components/Icons';
 import { connect } from 'react-redux';
-
+import theme from 'theme.js';
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
 
@@ -33,10 +33,10 @@ const DesktopPlaylistPanel = ({
     <Fragment>
       <Flex
         p={2}
-        bg='#18181b'
+        bg='#fff'
         style={{
           position: 'fixed',
-          borderBottom: '1px solid var(--color-600)',
+          borderBottom: `1px solid ${theme.colors.etGreen}`,
         }}
         w='500px'
         align='center'
@@ -45,29 +45,46 @@ const DesktopPlaylistPanel = ({
         <Box onClick={() => toggle(false)} px={2}>
           <Close />
         </Box>
+
+        <Heading
+          px={2}
+          as='h2'
+          size='sm'
+          color={`${theme.colors.etGreen}`}
+          style={{
+            position: 'absolute',
+            right: '8px',
+            opacity: '0.5',
+          }}
+        >
+          playlist
+        </Heading>
       </Flex>
 
       <Box mt='48px' mb='16px'>
         <Stack spacing={2}>
-          <Heading px={2} pb={2} as='h2' size='xl' color='#e2f4ff'>
-            playlist
-          </Heading>
           {playlist ? (
             <Fragment>
               {playlist.map((song) => (
                 <PlaylistCard w='100%' key={song.id} p={2}>
-                  <Box>
+                  <Box px={2}>
                     <Image
                       src={`/uploads/${song.art_url}`}
-                      maxWidth='80px'
-                      px={2}
+                      h='48px'
+                      w='48px'
                       borderRadius='50%'
+                      border='1px'
+                      borderColor={`${theme.colors.etGreen}`}
                     />
                   </Box>
 
-                  <Flex direction='column' pl={2}>
-                    <Text color='white'>{song.artist_name}</Text>
-                    <Text color='gray.500'>{song.song_name}</Text>
+                  <Flex direction='column' pl={2} justify='center'>
+                    <Text color='gray.600' fontSize='sm'>
+                      {song.artist_name}
+                    </Text>
+                    <Text color='gray.500' fontSize='sm'>
+                      {song.song_name}
+                    </Text>
                   </Flex>
 
                   <Box mx='auto' />

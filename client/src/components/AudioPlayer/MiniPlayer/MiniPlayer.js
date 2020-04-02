@@ -81,7 +81,7 @@ const MiniPlayer = ({
           onClick={() => setPlayerVisibility(!playerVisible)}
           w='100%'
         >
-          <Text fontSize='sm'>
+          <Text color='gray.600' fontSize='sm'>
             {song.length > 0 ? `${song[0].artist_name}` : `~`}
           </Text>
           <Text color='gray.500' fontSize='sm'>

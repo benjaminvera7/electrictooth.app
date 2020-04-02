@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/core';
 import { Play, Close, Remove, Pause } from 'components/Icons';
 import { connect } from 'react-redux';
+import theme from 'theme.js';
 
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
@@ -22,11 +23,11 @@ const MobilePlaylistPanel = (props) => {
   return (
     <Fragment>
       <Flex
-        bg='#18181b'
+        bg='#fff'
         style={{
           position: 'fixed',
           bottom: 0,
-          borderTop: '1px solid var(--color-600)',
+          borderTop: `1px solid ${theme.colors.etGreen}`,
         }}
         w='100%'
         h='50px'
@@ -45,25 +46,42 @@ const MobilePlaylistPanel = (props) => {
 
       <Box>
         <Stack pt={2}>
-          <Heading px={2} py={2} as='h2' size='2xl' color='#e2f4ff'>
+          <Heading
+            px={2}
+            py={2}
+            as='h2'
+            size='md'
+            color={`${theme.colors.etGreen}`}
+            style={{
+              position: 'absolute',
+              right: '8px',
+              opacity: '0.5',
+            }}
+          >
             playlist
           </Heading>
           {props.playlist ? (
-            <Fragment>
+            <Box pt='50px'>
               {props.playlist.map((song) => (
-                <PlaylistCard w='100%' key={song.id} p={2}>
-                  <Box>
+                <PlaylistCard w='100%' key={song.id} p={2} borderRadius='6px'>
+                  <Box px={2}>
                     <Image
                       src={`/uploads/${song.art_url}`}
-                      maxWidth='80px'
-                      px={2}
+                      h='48px'
+                      w='48px'
                       borderRadius='50%'
+                      border='1px'
+                      borderColor={`${theme.colors.etGreen}`}
                     />
                   </Box>
 
-                  <Flex direction='column' pl={2}>
-                    <Text color='white'>{song.artist_name}</Text>
-                    <Text color='gray.500'>{song.song_name}</Text>
+                  <Flex direction='column' justify='center'>
+                    <Text color='gray.600' fontSize='sm'>
+                      {song.artist_name}
+                    </Text>
+                    <Text color='gray.500' fontSize='sm'>
+                      {song.song_name}
+                    </Text>
                   </Flex>
 
                   <Box mx='auto' />
@@ -94,7 +112,7 @@ const MobilePlaylistPanel = (props) => {
                   </Flex>
                 </PlaylistCard>
               ))}
-            </Fragment>
+            </Box>
           ) : (
             undefined
           )}

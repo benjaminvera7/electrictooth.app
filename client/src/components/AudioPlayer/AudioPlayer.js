@@ -13,6 +13,7 @@ import MobilePlaylistPanel from './MobilePlaylistPanel';
 import useWindowSize from 'hooks/useWindowSize';
 import toast from 'util/toast';
 //import debounce from 'util/debounce';
+import theme from 'theme.js';
 
 const slideHOC = (InputComponent) => {
   return (props) => (
@@ -126,6 +127,10 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
         defaultValue={0}
         value={playing ? Math.ceil(audio.current.currentTime) : 0}
         onChange={onHandleProgress}
+        trackStyle={{ backgroundColor: `${theme.colors.etGreen}` }}
+        handleStyle={{
+          borderColor: `${theme.colors.etGreen}`,
+        }}
       />
     </div>
   );

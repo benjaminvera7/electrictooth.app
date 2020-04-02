@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Flex, Box, Button } from '@chakra-ui/core';
 import useRouter from 'hooks/useRouter';
 import { connect } from 'react-redux';
+import theme from 'theme.js';
 
 const MobileNavigation = ({
   playlistVisible,
@@ -27,7 +28,9 @@ const MobileNavigation = ({
         <Box px={2}>
           <Toll height='26px' width='26px' />
         </Box>
-        {coins}
+        <Box minWidth='25px' color={`${theme.colors.etGreen}`}>
+          {coins}
+        </Box>
       </Flex>
 
       <Box
@@ -40,7 +43,7 @@ const MobileNavigation = ({
           <Box
             style={{
               position: 'absolute',
-              color: 'yellow',
+              color: `${theme.colors.etGreen}`,
               top: '1px',
               right: '1px',
               fontSize: '14px',

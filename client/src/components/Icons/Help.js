@@ -1,5 +1,6 @@
 import React from 'react';
 import Icon from '../Icon';
+import theme from 'theme.js';
 
 const Help = (props) => (
   <Icon {...props}>
@@ -7,7 +8,7 @@ const Help = (props) => (
       xmlns='http://www.w3.org/2000/svg'
       width='24'
       height='24'
-      fill={props.active ? '#2a69ac' : '#b3b3b3'}
+      fill={props.active ? theme.colors.etGreen : '#b3b3b3'}
       viewBox='0 0 24 24'
       id='help'
     >

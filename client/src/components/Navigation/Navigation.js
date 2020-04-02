@@ -7,6 +7,7 @@ import { Box, Button, Flex } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
 import useWindowSize from 'hooks/useWindowSize';
 import useRouter from 'hooks/useRouter';
+import theme from 'theme.js';
 
 const Navigation = ({ auth, cart, username }) => {
   const isMobile = useWindowSize();
@@ -14,7 +15,7 @@ const Navigation = ({ auth, cart, username }) => {
 
   return (
     <div className='navigation'>
-      <Flex maxW='1100px' flex='1'>
+      <Flex maxW='1440px' flex='1'>
         {!isMobile && (
           <Fragment>
             <Link to='/'>
@@ -35,23 +36,6 @@ const Navigation = ({ auth, cart, username }) => {
           </Box>
         </Link>
 
-        <Link to='/coins'>
-          <Box>
-            <Button
-              leftIcon={Toll}
-              variantColor='teal'
-              variant='outline'
-              size='xs'
-              color='white'
-              _hover={{ bg: '#2d7bb8' }}
-              mx={2}
-              mt='1px'
-            >
-              Get coins
-            </Button>
-          </Box>
-        </Link>
-
         <Box mx='auto' />
 
         {!auth && (
@@ -67,6 +51,23 @@ const Navigation = ({ auth, cart, username }) => {
           </Link>
         )}
 
+        <Link to='/coins'>
+          <Button
+            leftIcon={Toll}
+            bg={`${theme.colors.etGreen}`}
+            variant='solid'
+            size='xs'
+            color='white'
+            _hover={{
+              bg: `${theme.colors.etGreen}`,
+            }}
+            mx={2}
+            mt='1px'
+          >
+            Get coins
+          </Button>
+        </Link>
+
         <Link to='/cart'>
           <Box style={{ position: 'relative' }}>
             <Button variant='link'>
@@ -76,7 +77,7 @@ const Navigation = ({ auth, cart, username }) => {
             <Box
               style={{
                 position: 'absolute',
-                color: 'yellow',
+                color: `${theme.colors.etGreen}`,
                 top: '-4px',
                 right: 0,
                 fontSize: '14px',
@@ -87,17 +88,16 @@ const Navigation = ({ auth, cart, username }) => {
             </Box>
           </Box>
         </Link>
-
         <Link to='/profile'>
           <Button variant='link' mx={1}>
             {auth ? (
               <Flex
                 h='24px'
                 w='24px'
-                align='center'
-                justify='center'
-                bg='#0FF4C6'
-                color='#0e0e10'
+                px='7px'
+                //bg='#0FF4C6'
+                color={`${theme.colors.etGreen}`}
+                border='1px'
                 borderRadius='50%'
               >
                 {username[0]}

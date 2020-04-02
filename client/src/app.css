@@ -9,7 +9,12 @@
   --color-700: #134468;
   --color-800: #042941;
   --color-900: #000f1b;
-  background-color: #0e0e10;
+
+  --et-green: #05aea5;
+  --et-grey: #94999e;
+  --et-whiteblue: #f0f7f7;
+
+  background-color: var(--et-whiteblue);
 }
 
 .navigation {
@@ -19,7 +24,7 @@
   top: 0px;
   position: sticky;
   z-index: 2;
-  background-color: #18181b;
+  background-color: #fff;
   height: 40px;
   width: 100%;
 }
@@ -29,7 +34,7 @@
   display: flex;
   bottom: 0px;
   z-index: 2;
-  background-color: #18181b;
+  background-color: #fff;
   color: var(--color-50);
   height: 50px;
   align-items: center;
@@ -42,14 +47,14 @@
   display: flex;
   bottom: 0px;
   z-index: 2;
-  background-color: #18181b;
+  background-color: #fff;
   color: var(--color-50);
   height: 90px;
   align-items: center;
   justify-content: center;
   width: 100%;
   padding: 0 16px 0 16px;
-  border-top: 1px solid #2a69ac;
+  border-top: 1px solid var(--et-green);
 }
 
 .mini-player {
@@ -57,21 +62,21 @@
   display: flex;
   bottom: 50px;
   z-index: 3;
-  background-color: #18181b;
+  background-color: #fff;
   color: var(--color-50);
   height: 50px;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   padding: 0 8px 0 8px;
-  border-bottom: 1px solid var(--color-600);
+  border-bottom: 1px solid var(--et-green);
 }
 
 .panel {
   position: fixed;
   display: flex;
   z-index: 4;
-  background-color: #18181b;
+  background-color: #fff;
   color: var(--color-50);
   width: 100%;
   left: 0;
@@ -85,7 +90,7 @@
   position: fixed;
   display: flex;
   z-index: 5;
-  background-color: #18181b;
+  background-color: #fff;
   height: 100vh;
   width: 100%;
   left: 0;
@@ -97,11 +102,11 @@
   padding-bottom: 55px;
 }
 
-.panel3 {
+.panel3,
+.desktop-panel {
   position: fixed;
   display: flex;
-
-  background-color: #18181b;
+  background-color: #fff;
   height: 500px;
   width: 500px;
   right: 8px;
@@ -228,8 +233,8 @@
   visibility: hidden;
   min-width: 250px;
   margin-left: -125px;
-  background-color: gold;
-  color: black;
+  background-color: var(--et-green);
+  color: white;
   text-align: center;
   border-radius: 2px;
   padding: 8px;

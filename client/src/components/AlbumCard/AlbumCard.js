@@ -50,7 +50,7 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
       wrap='wrap'
       p={2}
       borderWidth='1px'
-      rounded='lg'
+      rounded='sm'
       mb={2}
     >
       <Box className='card_image'>

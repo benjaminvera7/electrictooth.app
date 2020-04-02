@@ -11,15 +11,16 @@ const Header = styled(Box)`
   ${FADE_IN}
 `;
 
-const Home = ({ AlbumActions, albums }) => {
+const Home = ({ AlbumActions, albums, theme }) => {
+  console.log(theme);
   return (
     <Flex justify='center'>
-      <Box color='white' maxW='1100px' flex='1' mt={2}>
+      <Box color='white' maxW='1440px' flex='1' mt={2}>
         <Header mb={2}>
-          <Image src='./scale.jpeg' objectFit='cover' />
+          <Image src='./water.gif' objectFit='cover' h='300px' w='100%' />
         </Header>
 
-        <Flex wrap='wrap' width='100%'>
+        <Flex wrap='wrap'>
           {albums.map((album, i) => (
             <AlbumCard album={album} key={i} />
           ))}

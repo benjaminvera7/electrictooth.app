@@ -9,8 +9,8 @@ import {
   Toll,
 } from 'components/Icons';
 import { Box, Flex, Image, Text, Button } from '@chakra-ui/core';
-
 import { connect } from 'react-redux';
+import theme from 'theme.js';
 
 const MobilePlayer = ({
   playing,
@@ -31,19 +31,17 @@ const MobilePlayer = ({
     <Fragment>
       <Box mt={-1}>
         <Image
-          src={
-            song.length > 0
-              ? `/uploads/${song[0].art_url}`
-              : `https://via.placeholder.com/80`
-          }
+          src={song.length > 0 ? `/uploads/${song[0].art_url}` : `./mascot.jpg`}
           w='100%'
         />
       </Box>
 
       <Flex direction='column' flex={2} align='center' p={2}>
         <Flex direction='column' align='center' pb={2}>
-          <Text>{song.length > 0 ? `${song[0].artist_name}` : `~`}</Text>
-          <Text color='gray.500'>
+          <Text color='gray.600' fontSize='sm'>
+            {song.length > 0 ? `${song[0].artist_name}` : `~`}
+          </Text>
+          <Text color='gray.500' fontSize='sm'>
             {song.length > 0 ? `${song[0].song_name}` : undefined}
           </Text>
         </Flex>
@@ -75,9 +73,9 @@ const MobilePlayer = ({
 
       <Flex
         h='50px'
-        bg='#18181b'
+        bg='#fff'
         style={{
-          borderTop: '1px solid var(--color-600)',
+          borderTop: `1px solid ${theme.colors.etGreen}`,
           padding: '0 8px 0 6px',
         }}
         w='100%'
@@ -92,7 +90,7 @@ const MobilePlayer = ({
 
         <Box mx='auto' />
 
-        <Flex align='center'>
+        <Flex align='center' color={`${theme.colors.etGreen}`}>
           <Box px={2}>
             <Toll height='26px' width='26px' />
           </Box>
@@ -111,7 +109,7 @@ const MobilePlayer = ({
             <Box
               style={{
                 position: 'absolute',
-                color: 'yellow',
+                color: `${theme.colors.etGreen}`,
                 top: '-9px',
                 right: '-6px',
                 fontSize: '14px',

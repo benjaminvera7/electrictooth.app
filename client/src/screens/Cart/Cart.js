@@ -17,7 +17,7 @@ const Cart = ({ UserActions, auth, cart }) => {
   return (
     <CartItem justify='center'>
       <Box color='white' maxW='1100px' flex='1'>
-        <Heading px={4} pt={2} as='h2' size='2xl'>
+        <Heading px={4} pt={2} as='h2' size='2xl' color='#05aea5'>
           cart
         </Heading>
 
@@ -45,7 +45,11 @@ const Cart = ({ UserActions, auth, cart }) => {
                   </Box>
 
                   <Box>
-                    <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']}>
+                    <Heading
+                      as='h6'
+                      fontSize={['sm', 'md', 'lg', 'xl']}
+                      color='#000'
+                    >
                       {amount && `${amount} coins`}
                       {album_name && album_name}
                       {song_name && `${song_name} (MP3)`}
