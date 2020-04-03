@@ -1,5 +1,13 @@
 import React from 'react';
-import { Box, Flex, Heading, Image, Text, Stack } from '@chakra-ui/core';
+import {
+  Box,
+  Flex,
+  Heading,
+  Image,
+  Text,
+  Stack,
+  Button,
+} from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
 import { Remove } from 'components/Icons';
 import { connect } from 'react-redux';
@@ -42,7 +50,10 @@ const Cart = ({ UserActions, auth, cart }) => {
               }) => (
                 <Flex borderWidth='1px' key={id} bg='white'>
                   <Box>
-                    <Image src={`/uploads/${art_url}`} maxWidth='125px' />
+                    <Image
+                      src={`/uploads/${art_url}`}
+                      maxWidth={['75px', '75px', '165px', '165px']}
+                    />
                   </Box>
 
                   <Box p={2}>
@@ -67,17 +78,27 @@ const Cart = ({ UserActions, auth, cart }) => {
 
                   <Box mx='auto' />
 
-                  <Flex p={2}>
+                  <Flex
+                    p={2}
+                    direction='column'
+                    justify='center'
+                    align='center'
+                  >
                     <Text px={2} color='#222'>
                       ${download_price ? download_price : price}.00
                     </Text>
-                    <Box
+                  </Flex>
+
+                  <Flex p={2}>
+                    <Button
                       onClick={() =>
                         UserActions.removeFromCart(product_id, auth)
                       }
+                      color='black'
+                      variant='link'
                     >
-                      <Remove />
-                    </Box>
+                      remove
+                    </Button>
                   </Flex>
                 </Flex>
               ),

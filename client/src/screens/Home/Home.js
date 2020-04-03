@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as albumActions from 'redux/modules/album';
 import AlbumCard from 'components/AlbumCard';
+import Card from 'components/Card';
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
 
@@ -22,7 +23,7 @@ const Home = ({ AlbumActions, albums, theme }) => {
 
         <Flex wrap='wrap'>
           {albums.map((album, i) => (
-            <AlbumCard album={album} key={i} />
+            <Card album={album} key={i} />
           ))}
         </Flex>
       </Box>
