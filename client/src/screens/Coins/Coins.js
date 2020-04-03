@@ -57,7 +57,10 @@ const Coins = ({ UserActions, auth }) => {
           mt={8}
           bg='white'
         >
-          <Image src='./coin100.png' maxWidth={{ xs: '0px', sm: '175px' }} />
+          <Image
+            src={`/uploads/coin100.png`}
+            maxWidth={{ xs: '0px', sm: '175px' }}
+          />
 
           <Box display={{ md: 'flex' }} width='100%' px={2}>
             <Flex align='center' justify='center'>
@@ -110,7 +113,10 @@ const Coins = ({ UserActions, auth }) => {
           mb={4}
           bg='white'
         >
-          <Image src='./coin200.png' maxWidth={{ xs: '0px', sm: '175px' }} />
+          <Image
+            src={`/uploads/coin200.png`}
+            maxWidth={{ xs: '0px', sm: '175px' }}
+          />
 
           <Box display={{ md: 'flex' }} width='100%' px={2}>
             <Flex align='center' justify='center'>
@@ -163,7 +169,10 @@ const Coins = ({ UserActions, auth }) => {
           mb={4}
           bg='white'
         >
-          <Image src='./coin300.png' maxWidth={{ xs: '0px', sm: '175px' }} />
+          <Image
+            src={`/uploads/coin300.png`}
+            maxWidth={{ xs: '0px', sm: '175px' }}
+          />
 
           <Box display={{ md: 'flex' }} width='100%' px={2}>
             <Flex align='center' justify='center'>
