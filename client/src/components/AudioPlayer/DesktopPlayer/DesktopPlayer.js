@@ -60,7 +60,7 @@ const DesktopPlayer = ({
   return (
     <Fragment>
       <div className='large-player'>
-        <Flex maxW='1440px' flex='1' height='60px'>
+        <Flex maxW='1100px' flex='1' height='60px'>
           <Flex flex='1' align='center' minWidth='275px'>
             <Image
               src={

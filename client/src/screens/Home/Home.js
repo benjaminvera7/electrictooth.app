@@ -15,7 +15,7 @@ const Home = ({ AlbumActions, albums, theme }) => {
   console.log(theme);
   return (
     <Flex justify='center'>
-      <Box color='white' maxW='1440px' flex='1' mt={2}>
+      <Box color='white' maxW='1100px' flex='1' mt={2}>
         <Header mb={2}>
           <Image src='./water.gif' objectFit='cover' h='300px' w='100%' />
         </Header>

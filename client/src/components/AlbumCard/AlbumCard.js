@@ -52,6 +52,7 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
       borderWidth='1px'
       rounded='sm'
       mb={2}
+      bg='white'
     >
       <Box className='card_image'>
         <Link to={`/catalog/${album.product_id}`}>

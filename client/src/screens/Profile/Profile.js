@@ -22,6 +22,7 @@ import * as userActions from 'redux/modules/user';
 import requireAuth from 'components/AuthHOC/requireAuth';
 import axios from 'axios';
 import toast from 'util/toast';
+import theme from 'theme.js';
 
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
@@ -65,13 +66,25 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
 
   return (
     <Flex justify='center'>
-      <ProfileCard color='white' maxW='1100px' flex='1'>
+      <ProfileCard color='white' maxW='1100px' flex='1' mb={4}>
         <Flex justify='space-between'>
-          <Heading px={4} py={2} as='h2' size='2xl' color='#0FF4C6'>
+          <Heading
+            px={4}
+            py={2}
+            as='h2'
+            size='2xl'
+            color={`${theme.colors.etGreen}`}
+          >
             {user.username}
           </Heading>
 
-          <Heading px={4} py={5} as='h2' size='md' color='#0FF4C6'>
+          <Heading
+            px={4}
+            py={5}
+            as='h2'
+            size='md'
+            color={`${theme.colors.etGreen}`}
+          >
             <Flex align='center'>
               <Box px={2}>
                 <Toll height='26px' width='26px' />
@@ -81,17 +94,21 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
           </Heading>
         </Flex>
 
-        <Tabs isFitted color='white' mx={1}>
+        <Tabs
+          isFitted
+          color={`${theme.colors.etGreen}`}
+          variantColor={`${theme.colors.etGreen}`}
+        >
           <TabList mb='1em'>
             <Tab>Collection</Tab>
             <Tab>Settings</Tab>
           </TabList>
-          <TabPanels mx={1}>
+          <TabPanels>
             <TabPanel>
-              <Stack m={2}>
+              <Stack px={{ xs: 2, lg: 0 }}>
                 {albumCollection.length > 0 ? (
                   albumCollection.map((album, i) => (
-                    <Flex py={2} borderWidth='1px' rounded='lg' key={i}>
+                    <Flex borderWidth='1px' key={i} bg='white'>
                       <Box>
                         <Link
                           to={`/catalog/${album.product_id.match(
@@ -100,37 +117,45 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
                         >
                           <Image
                             src={`/uploads/${album.art_url}`}
-                            maxWidth='108px'
-                            px={2}
+                            maxWidth='165px'
                           />
                         </Link>
                       </Box>
-                      <Box>
-                        <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']}>
+                      <Box p={2}>
+                        <Heading
+                          as='h6'
+                          fontSize={['sm', 'md', 'lg', 'xl']}
+                          color='gray.600'
+                        >
                           {album.album_name && album.album_name}
                           {album.song_name && `${album.song_name} (MP3)`}
                         </Heading>
                         <Text
                           fontSize={['xs', 'sm', 'md', 'lg']}
                           mb={4}
-                          color='grey'
+                          color='gray.500'
                         >
                           {album.artist_name}
                         </Text>
                       </Box>
                       <Box mx='auto' />
-                      <Flex
-                        align='center'
-                        px={2}
-                        direction='column'
-                        justify='center'
-                      >
+                      <Flex direction='column'>
                         <IconButton
-                          variant='solid'
+                          flex='1'
+                          variant='ghost'
                           variantColor='teal'
                           aria-label='Download album'
                           fontSize='20px'
-                          icon={Download}
+                          style={{
+                            borderLeft: '1px',
+                            borderBottom: '1px',
+                            borderStyle: 'solid',
+                            borderColor: 'rgba(5, 174, 165, 0.3)',
+                          }}
+                          rounded='0px'
+                          icon={() => (
+                            <Download color={`${theme.colors.etGreen}`} />
+                          )}
                           onClick={(e) =>
                             handleSubmit(
                               e,
@@ -139,14 +164,22 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
                               album.song_name,
                             )
                           }
-                          mb={2}
                         />
                         <IconButton
-                          variant='solid'
+                          flex='1'
+                          variant='ghost'
                           variantColor='teal'
                           aria-label='Add to playlist'
                           fontSize='20px'
-                          icon={PlaylistAdd}
+                          rounded='0px'
+                          style={{
+                            borderLeft: '1px',
+                            borderStyle: 'solid',
+                            borderColor: 'rgba(5, 174, 165, 0.3)',
+                          }}
+                          icon={() => (
+                            <PlaylistAdd color={`${theme.colors.etGreen}`} />
+                          )}
                           onClick={() => addToPlaylist(album.product_id)}
                         />
                       </Flex>
@@ -174,7 +207,7 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
                 <Button
                   size='sm'
                   variant='solid'
-                  bg='#4794d2'
+                  bg='#E63946'
                   color='white'
                   onClick={() => {
                     UserActions.signOut();

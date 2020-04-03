@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
 import * as web3Actions from 'redux/modules/web3';
 import axios from 'axios';
+import theme from 'theme.js';
 
 class Checkout extends Component {
   constructor() {
@@ -165,7 +166,13 @@ class Checkout extends Component {
     return (
       <Flex justify='center'>
         <Box color='white' maxW='1100px' flex='1'>
-          <Heading px={4} pt={2} as='h2' size='2xl'>
+          <Heading
+            px={4}
+            pt={2}
+            as='h2'
+            size='2xl'
+            color={`${theme.colors.etGreen}`}
+          >
             payment
           </Heading>
 
@@ -174,19 +181,29 @@ class Checkout extends Component {
           </Text>
 
           <Flex justify='center' py={2} px={4}>
-            <Heading as='h3' fontSize={['lg', 'xl']} color='#6eacdd'>
+            <Heading
+              as='h3'
+              fontSize={['lg', 'xl']}
+              color={`${theme.colors.etGreen}`}
+            >
               100% of this purchase goes to the artist(s)
             </Heading>
           </Flex>
 
           <Flex justify='flex-end' py={2} px={4}>
-            <Box px={2}>Subtotal ({`${user.cart.items.length}`} items):</Box>
-            <Box>${`${user.cart.total}`}.00</Box>
+            <Box px={2} color='black'>
+              Subtotal ({`${user.cart.items.length}`} items):
+            </Box>
+            <Box color='black'>${`${user.cart.total}`}.00</Box>
           </Flex>
 
-          <Flex justify='flex-end' pb={2} pt={0} px={4}>
-            <Box px={2}>total:</Box>
-            <Box>${`${user.cart.total}`}.00</Box>
+          <Flex justify='flex-end' pb={2} pt={0} px={4} color='black'>
+            <Box color='black' px={2}>
+              Total:
+            </Box>
+            <Box>
+              <b>${`${user.cart.total}`}.00</b>
+            </Box>
           </Flex>
 
           <form

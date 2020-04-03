@@ -5,6 +5,7 @@ import { Remove } from 'components/Icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
+import theme from 'theme.js';
 
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
@@ -16,16 +17,16 @@ const CartItem = styled(Flex)`
 const Cart = ({ UserActions, auth, cart }) => {
   return (
     <CartItem justify='center'>
-      <Box color='white' maxW='1100px' flex='1'>
-        <Heading px={4} pt={2} as='h2' size='2xl' color='#05aea5'>
+      <Box color='white' maxW='1100px' flex='1' px={{ xs: 2, lg: 0 }}>
+        <Heading pt={2} as='h2' size='2xl' color='#05aea5'>
           cart
         </Heading>
 
-        <Text px={4} fontSize='sm' mb={4} color='grey'>
+        <Text fontSize='sm' mb={4} color='grey'>
           Review your order
         </Text>
 
-        <Stack mx={2}>
+        <Stack>
           {cart.items.length > 0 ? (
             cart.items.map(
               ({
@@ -39,16 +40,17 @@ const Cart = ({ UserActions, auth, cart }) => {
                 amount,
                 product_id,
               }) => (
-                <Flex py={2} borderWidth='1px' rounded='lg' key={id}>
+                <Flex borderWidth='1px' key={id} bg='white'>
                   <Box>
-                    <Image src={`/uploads/${art_url}`} maxWidth='96px' px={2} />
+                    <Image src={`/uploads/${art_url}`} maxWidth='125px' />
                   </Box>
 
-                  <Box>
+                  <Box p={2}>
                     <Heading
                       as='h6'
                       fontSize={['sm', 'md', 'lg', 'xl']}
                       color='#000'
+                      color='gray.600'
                     >
                       {amount && `${amount} coins`}
                       {album_name && album_name}
@@ -57,7 +59,7 @@ const Cart = ({ UserActions, auth, cart }) => {
                     <Text
                       fontSize={['xs', 'sm', 'md', 'lg']}
                       mb={4}
-                      color='grey'
+                      color='gray.500'
                     >
                       {artist_name ? artist_name : `@ $0.01`}
                     </Text>
@@ -65,8 +67,8 @@ const Cart = ({ UserActions, auth, cart }) => {
 
                   <Box mx='auto' />
 
-                  <Flex px={2}>
-                    <Text px={2}>
+                  <Flex p={2}>
+                    <Text px={2} color='#222'>
                       ${download_price ? download_price : price}.00
                     </Text>
                     <Box
@@ -89,10 +91,12 @@ const Cart = ({ UserActions, auth, cart }) => {
           {cart.items.length > 0 ? (
             <>
               <Flex justify='flex-end' pt={4}>
-                <Box px={2}>
+                <Box px={2} color='black'>
                   Subtotal ({cart.items !== undefined ? cart.items.length : 0}):
                 </Box>
-                <Box>$ {cart.items !== undefined ? cart.total : 0}.00</Box>
+                <Box color='black'>
+                  <b>${cart.items !== undefined ? cart.total : 0}.00</b>
+                </Box>
               </Flex>
 
               <Flex justify='flex-end' py={2}>
@@ -100,7 +104,7 @@ const Cart = ({ UserActions, auth, cart }) => {
                   <Box
                     as='button'
                     rounded='md'
-                    bg='#4794d2'
+                    bg={`${theme.colors.etGreen}`}
                     color='white'
                     px={4}
                     h={8}
