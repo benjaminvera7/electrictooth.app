@@ -70,108 +70,140 @@ class Album extends Component {
         </Helmet>
 
         {!pending && (
-          <CardAnimation justify='center'>
+          <CardAnimation justify='center' py={4}>
             <AlbumCardContainer
               color='white'
               maxW='1100px'
               flex='1'
               px={{ xs: 2, lg: 0 }}
             >
-              <AlbumCard
-                className='card'
-                width='100%'
-                wrap='wrap'
-                p={2}
-                borderWidth='1px'
-                rounded='lg'
-                my={2}
-                bg='white'
-              >
-                <Box className='card_image'>
-                  <Image
-                    src={`/uploads/${currentAlbum.art_url}`}
-                    rounded='lg'
-                  />
+              <Box display={{ md: 'flex' }} direction='column' bg='white'>
+                <Box color='black' width='100%'>
+                  <Image src={`/uploads/${currentAlbum.art_url}`} />
                 </Box>
-
-                <Box className='card_description'>
-                  <Heading
-                    mb={1}
-                    display='block'
-                    color='gray.600'
-                    fontSize={['sm', 'md', 'lg', 'xl']}
-                    as='h6'
-                    size='md'
-                    lineHeight='normal'
-                    fontWeight='semibold'
-                    textAlign='right'
-                  >
-                    {currentAlbum.album_name}
-                  </Heading>
-
-                  <Text
-                    fontWeight='light'
-                    textTransform='uppercase'
-                    fontSize='xs'
-                    letterSpacing='wide'
-                    textAlign='right'
-                    color='gray.500'
-                    fontSize={['xs', 'sm', 'md', 'lg']}
-                  >
-                    {currentAlbum.artist ? currentAlbum.artist.name : undefined}
-                  </Text>
-
-                  <Text
-                    display='block'
-                    fontSize='md'
-                    mb={1}
-                    lineHeight='normal'
-                    textAlign='right'
-                    color='#e2f4ff'
-                  >
-                    $ {currentAlbum.download_price}
-                  </Text>
-
-                  <Badge fontSize='0.6em' variantColor='teal' ml={1} mr={1}>
-                    NuDisco
-                  </Badge>
-                  <Badge fontSize='0.6em' variantColor='teal' mr={1}>
-                    House
-                  </Badge>
-                  <Badge fontSize='0.6em' variantColor='teal' mr={1}>
-                    Indie
-                  </Badge>
-
-                  <Text
-                    my={2}
-                    mb={2}
-                    px={2}
-                    fontSize='sm'
-                    lineHeight='normal'
-                    fontWeight='light'
-                  >
-                    yeet
-                  </Text>
-                </Box>
-
-                <Button
-                  mt={1}
+                <Flex
+                  color='black'
                   width='100%'
-                  bg='#2d7bb8'
-                  onClick={() => this.addToCart(currentAlbum.product_id)}
+                  justify='space-between'
+                  style={{ position: 'relative' }}
+                  pb={16}
                 >
-                  Buy Digital Album
-                </Button>
+                  <Box
+                    color='black'
+                    width='100%'
+                    px={{ xs: 2, sm: 4 }}
+                    py={{ xs: 4, sm: 4 }}
+                  >
+                    <Box d='flex' alignItems='baseline' mb={2} color='white'>
+                      <Badge
+                        px='2'
+                        bg={`${theme.colors.etGreen}`}
+                        variantColor='white'
+                        mr={1}
+                      >
+                        Disco
+                      </Badge>
+                      <Badge
+                        px='2'
+                        bg={`${theme.colors.etGreen}`}
+                        variantColor='white'
+                        mr={1}
+                      >
+                        House
+                      </Badge>
+                      <Badge
+                        px='2'
+                        bg={`${theme.colors.etGreen}`}
+                        variantColor='white'
+                        mr={1}
+                      >
+                        Indie
+                      </Badge>
+                    </Box>
 
-                <Button
-                  mt={1}
-                  width='100%'
-                  bg='#134468'
-                  onClick={() => this.addToPlaylist(currentAlbum.product_id)}
-                >
-                  Add Album to Player
-                </Button>
-              </AlbumCard>
+                    <Heading
+                      mb={1}
+                      display='block'
+                      color='gray.600'
+                      fontSize={['sm', 'md', 'lg', 'xl']}
+                      as='h6'
+                      size='md'
+                      lineHeight='normal'
+                      fontWeight='semibold'
+                      textAlign='left'
+                    >
+                      {currentAlbum.album_name}
+                    </Heading>
+
+                    <Text
+                      fontWeight='light'
+                      textTransform='uppercase'
+                      fontSize='xs'
+                      letterSpacing='wide'
+                      textAlign='left'
+                      color='gray.500'
+                      fontSize={['xs', 'sm', 'md', 'lg']}
+                    >
+                      {currentAlbum.artist
+                        ? currentAlbum.artist.name
+                        : undefined}
+                    </Text>
+                  </Box>
+
+                  <Box
+                    color='black'
+                    px={{ xs: 2, sm: 4 }}
+                    py={{ xs: 2, sm: 4 }}
+                    textAlign='right'
+                  >
+                    ${currentAlbum.download_price}.00
+                  </Box>
+
+                  <Flex
+                    style={{ position: 'absolute', bottom: 0, left: 0 }}
+                    width='100%'
+                  >
+                    <IconButton
+                      flex='1'
+                      variant='ghost'
+                      variantColor='teal'
+                      aria-label='Download album'
+                      fontSize='20px'
+                      style={{
+                        borderTop: '1px',
+                        borderRight: '1px',
+                        borderStyle: 'solid',
+                        borderColor: 'rgba(5, 174, 165, 0.3)',
+                      }}
+                      rounded='0px'
+                      //icon={() => <CartAdd color={`${theme.colors.etGreen}`} />}
+                      icon={() => <p>add to cart</p>}
+                      onClick={() => this.addToCart(currentAlbum.product_id)}
+                    />
+                    <IconButton
+                      flex='1'
+                      variant='ghost'
+                      variantColor='teal'
+                      aria-label='Download album'
+                      fontSize='20px'
+                      style={{
+                        borderTop: '1px',
+                        borderRight: '1px',
+                        borderStyle: 'solid',
+                        borderColor: 'rgba(5, 174, 165, 0.3)',
+                      }}
+                      rounded='0px'
+                      // icon={() => (
+                      //   <PlaylistAdd color={`${theme.colors.etGreen}`} />
+                      // )}
+                      icon={() => <p>add to playlist</p>}
+                      onClick={() =>
+                        this.addToPlaylist(currentAlbum.product_id)
+                      }
+                    />
+                  </Flex>
+                </Flex>
+              </Box>
 
               <AlbumSongList mt='24px'>
                 <Stack spacing={4} mb={4}>
@@ -202,6 +234,17 @@ class Album extends Component {
                             </Text>
                           </Flex>
 
+                          <Flex
+                            p={2}
+                            direction='column'
+                            justify='center'
+                            align='center'
+                          >
+                            <Text px={2} color='#222'>
+                              ${song.download_price}.00
+                            </Text>
+                          </Flex>
+
                           <Flex direction='column'>
                             <IconButton
                               flex='1'
@@ -219,7 +262,6 @@ class Album extends Component {
                               icon={() => (
                                 <Play color={`${theme.colors.etGreen}`} />
                               )}
-                              //onClick={() => this.addToCart(song.product_id)}
                             />
                             <IconButton
                               flex='1'
@@ -261,22 +303,6 @@ class Album extends Component {
                               }
                             />
                           </Flex>
-
-                          {/* <Flex align='center' pr={4}>
-                            <CartAdd
-                              color={`${theme.colors.etGreen}`}
-                              onClick={() => this.addToCart(song.product_id)}
-                            />
-                          </Flex>
-
-                          <Flex align='center' pr={4}>
-                            <PlaylistAdd
-                              color={`${theme.colors.etGreen}`}
-                              onClick={() =>
-                                this.addToPlaylist(song.product_id)
-                              }
-                            />
-                          </Flex> */}
                         </Flex>
                       ))
                     : undefined}
