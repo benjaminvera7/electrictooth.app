@@ -192,7 +192,7 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
                         your collection is empty.{' '}
                         <Link
                           onClick={() => history.push('/')}
-                          style={{ color: '#6eacdd' }}
+                          style={{ color: theme.colors.etGreen }}
                         >
                           check out our catalog!
                         </Link>

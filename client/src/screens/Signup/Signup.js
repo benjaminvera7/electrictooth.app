@@ -12,7 +12,7 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
-
+import theme from 'theme.js';
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
 
@@ -63,7 +63,16 @@ const Signup = ({ UserActions, history, error, message }) => {
               type='password'
             />
 
-            <Button bg='#6eacdd' variant='solid' w='100%' type='submit'>
+            <Button
+              bg={`${theme.colors.etGreen}`}
+              color='white'
+              variant='solid'
+              w='100%'
+              type='submit'
+              _hover={{
+                bg: `${theme.colors.etGreen}`,
+              }}
+            >
               Sign up
             </Button>
           </Stack>
@@ -77,12 +86,12 @@ const Signup = ({ UserActions, history, error, message }) => {
           border='1px solid #d8dee2'
           borderRadius='md'
         >
-          <Box fontSize='xs' py={2} color='white'>
+          <Box fontSize='xs' py={2} color='black'>
             <span>
               Already have an account?{' '}
               <Link
                 onClick={() => history.push('/signin')}
-                style={{ color: '#6eacdd' }}
+                style={{ color: theme.colors.etGreen }}
               >
                 Log in.
               </Link>

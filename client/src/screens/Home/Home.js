@@ -15,10 +15,15 @@ const Header = styled(Box)`
 const Home = ({ AlbumActions, albums, theme }) => {
   console.log(theme);
   return (
-    <Flex justify='center'>
+    <Flex justify='center' px={{ xs: 2, lg: 0 }}>
       <Box color='white' maxW='1100px' flex='1' mt={2}>
         <Header mb={2}>
-          <Image src='./water.gif' objectFit='cover' h='300px' w='100%' />
+          <Image
+            src='./water.gif'
+            objectFit='cover'
+            h={{ xs: '200px', sm: '200px', md: '300px' }}
+            w='100%'
+          />
         </Header>
 
         <Flex wrap='wrap'>

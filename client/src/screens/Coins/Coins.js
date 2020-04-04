@@ -47,7 +47,7 @@ const Coins = ({ UserActions, auth }) => {
         </Text>
 
         {/* 100 */}
-        <Flex
+        <Box
           maxWidth='768px'
           m='auto'
           align='center'
@@ -56,15 +56,14 @@ const Coins = ({ UserActions, auth }) => {
           mb={4}
           mt={8}
           bg='white'
+          display={{ md: 'flex' }}
         >
-          <Image
-            src={`/uploads/coin100.png`}
-            maxWidth={{ xs: '0px', sm: '175px' }}
-          />
-
+          <Box>
+            <Image src={`/uploads/coin100.png`} width='100%' />
+          </Box>
           <Box display={{ md: 'flex' }} width='100%' px={2}>
             <Flex align='center' justify='center'>
-              <Box px={2}>
+              <Box px={{ xs: 0, sm: 2 }}>
                 <Toll width='40px' height='40px' />
               </Box>
 
@@ -101,7 +100,7 @@ const Coins = ({ UserActions, auth }) => {
               </Button>
             </Flex>
           </Box>
-        </Flex>
+        </Box>
 
         {/* 200 */}
         <Flex
@@ -112,11 +111,11 @@ const Coins = ({ UserActions, auth }) => {
           borderWidth='1px'
           mb={4}
           bg='white'
+          display={{ md: 'flex' }}
         >
-          <Image
-            src={`/uploads/coin200.png`}
-            maxWidth={{ xs: '0px', sm: '175px' }}
-          />
+          <Box>
+            <Image src={`/uploads/coin200.png`} width='100%' />
+          </Box>
 
           <Box display={{ md: 'flex' }} width='100%' px={2}>
             <Flex align='center' justify='center'>
@@ -168,11 +167,11 @@ const Coins = ({ UserActions, auth }) => {
           borderWidth='1px'
           mb={4}
           bg='white'
+          display={{ md: 'flex' }}
         >
-          <Image
-            src={`/uploads/coin300.png`}
-            maxWidth={{ xs: '0px', sm: '175px' }}
-          />
+          <Box>
+            <Image src={`/uploads/coin300.png`} width='100%' />
+          </Box>
 
           <Box display={{ md: 'flex' }} width='100%' px={2}>
             <Flex align='center' justify='center'>

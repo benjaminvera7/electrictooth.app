@@ -59,7 +59,7 @@ const Card = ({ auth, album, UserActions, collection }) => {
       <Link to={`/catalog/${album.product_id}`}>
         <Image src={`/uploads/${album.art_url}`} width='100%' />
       </Link>
-      <Box p='6'>
+      <Box p='4'>
         <Box d='flex' alignItems='baseline'>
           <Badge
             px='2'
@@ -132,6 +132,7 @@ const Card = ({ auth, album, UserActions, collection }) => {
             }}
             rounded='0px'
             icon={() => <CartAdd color={`${theme.colors.etGreen}`} />}
+            onClick={() => addToCart(album.product_id)}
           />
           <IconButton
             flex='1'
@@ -146,6 +147,7 @@ const Card = ({ auth, album, UserActions, collection }) => {
             }}
             rounded='0px'
             icon={() => <PlaylistAdd color={`${theme.colors.etGreen}`} />}
+            onClick={() => addToPlaylist(album.product_id)}
           />
         </Flex>
       </Box>

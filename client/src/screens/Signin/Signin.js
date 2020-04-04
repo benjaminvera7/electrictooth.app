@@ -12,6 +12,7 @@ import {
   Link,
   Text,
 } from '@chakra-ui/core';
+import theme from 'theme.js';
 
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
@@ -50,7 +51,16 @@ const Signin = ({ UserActions, history, error, message }) => {
               type='password'
             />
 
-            <Button bg='#6eacdd' variant='solid' w='100%' type='submit'>
+            <Button
+              bg={`${theme.colors.etGreen}`}
+              color='white'
+              variant='solid'
+              w='100%'
+              type='submit'
+              _hover={{
+                bg: `${theme.colors.etGreen}`,
+              }}
+            >
               Log in
             </Button>
           </Stack>
@@ -64,12 +74,12 @@ const Signin = ({ UserActions, history, error, message }) => {
           border='1px solid #d8dee2'
           borderRadius='md'
         >
-          <Box fontSize='xs' py={2} color='white'>
+          <Box fontSize='xs' py={2} color='black'>
             <span>
               New to Electric Tooth?{' '}
               <Link
                 onClick={() => history.push('/signup')}
-                style={{ color: '#6eacdd' }}
+                style={{ color: theme.colors.etGreen }}
               >
                 Create an account.
               </Link>
@@ -82,7 +92,7 @@ const Signin = ({ UserActions, history, error, message }) => {
             <span>
               <Link
                 onClick={() => history.push('/forgot')}
-                style={{ color: '#6eacdd' }}
+                style={{ color: theme.colors.etGreen }}
               >
                 Forgot Password?
               </Link>

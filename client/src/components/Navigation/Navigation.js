@@ -19,7 +19,7 @@ const Navigation = ({ auth, cart, username }) => {
         {!isMobile && (
           <Fragment>
             <Link to='/'>
-              <Box px={1}>
+              <Box>
                 <Button variant='link'>
                   <Home active={router.pathname === '/'} />
                 </Button>
@@ -29,84 +29,90 @@ const Navigation = ({ auth, cart, username }) => {
         )}
 
         <Link to='/help'>
-          <Box px={1}>
+          <Box>
             <Button variant='link'>
               <Help active={router.pathname === '/help'} />
             </Button>
           </Box>
         </Link>
 
-        <Box mx='auto' />
-
-        {!auth && (
+        {!auth ? (
           <Link to='/signup'>
-            <Box px={3}>
+            <Box px={2}>
               <Button
                 variant='link'
-                color={router.pathname === '/signup' ? '#2a69ac' : '#b3b3b3'}
+                color={
+                  router.pathname === '/signup'
+                    ? theme.colors.etGreen
+                    : '#b3b3b3'
+                }
               >
                 sign up
               </Button>
             </Box>
           </Link>
-        )}
-
-        <Link to='/coins'>
-          <Button
-            leftIcon={Toll}
-            bg={`${theme.colors.etGreen}`}
-            variant='solid'
-            size='xs'
-            color='white'
-            _hover={{
-              bg: `${theme.colors.etGreen}`,
-            }}
-            mx={2}
-            mt='1px'
-          >
-            Get coins
-          </Button>
-        </Link>
-
-        <Link to='/cart'>
-          <Box style={{ position: 'relative' }}>
-            <Button variant='link'>
-              <Cart active={router.pathname === '/cart'} />
-            </Button>
-
-            <Box
-              style={{
-                position: 'absolute',
-                color: `${theme.colors.etGreen}`,
-                top: '-4px',
-                right: 0,
-                fontSize: '14px',
-                fontWeight: 'bold',
-              }}
-            >
-              {cart.items.length === 0 ? '' : cart.items.length}
-            </Box>
-          </Box>
-        </Link>
-        <Link to='/profile'>
-          <Button variant='link' mx={1}>
-            {auth ? (
-              <Flex
-                h='24px'
-                w='24px'
-                px='7px'
-                //bg='#0FF4C6'
-                color={`${theme.colors.etGreen}`}
-                border='1px'
-                borderRadius='50%'
+        ) : (
+          <>
+            {' '}
+            <Box mx='auto' />
+            <Link to='/coins'>
+              <Button
+                leftIcon={Toll}
+                bg={`${theme.colors.etGreen}`}
+                variant='solid'
+                size='xs'
+                color='white'
+                _hover={{
+                  bg: `${theme.colors.etGreen}`,
+                }}
+                mx={1}
+                mt='1px'
               >
-                {username[0]}
-              </Flex>
-            ) : (
-              <Account />
-            )}
-          </Button>
-        </Link>
+                Get coins
+              </Button>
+            </Link>
+            <Link to='/cart'>
+              <Box style={{ position: 'relative' }} pl={2}>
+                <Button variant='link'>
+                  <Cart active={router.pathname === '/cart'} />
+                </Button>
+
+                <Box
+                  style={{
+                    position: 'absolute',
+                    color: `${theme.colors.etGreen}`,
+                    top: '-4px',
+                    right: 0,
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {cart.items.length === 0 ? '' : cart.items.length}
+                </Box>
+              </Box>
+            </Link>
+            <Link to='/profile'>
+              <Button variant='link' mx={1}>
+                {auth ? (
+                  <Flex
+                    h='24px'
+                    w='24px'
+                    align='center'
+                    justify='center'
+                    //bg='#0FF4C6'
+                    color={`${theme.colors.etGreen}`}
+                    border='1px'
+                    borderRadius='50%'
+                  >
+                    {username[0].toLowerCase()}
+                  </Flex>
+                ) : (
+                  <Account />
+                )}
+              </Button>
+            </Link>
+          </>
+        )}
       </Flex>
     </div>
   );
