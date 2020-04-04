@@ -3,7 +3,6 @@ import { Box, Flex, Image } from '@chakra-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as albumActions from 'redux/modules/album';
-import AlbumCard from 'components/AlbumCard';
 import Card from 'components/Card';
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
