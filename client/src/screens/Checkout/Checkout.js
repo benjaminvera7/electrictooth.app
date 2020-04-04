@@ -206,11 +206,7 @@ class Checkout extends Component {
             </Box>
           </Flex>
 
-          <form
-            id='paypalForm'
-            method='post'
-            action={`${process.env.REACT_APP_API_URL}/paypal/request`}
-          >
+          <form id='paypalForm' method='post' action={`/paypal/request`}>
             <input type='hidden' name='userId' value={user.userId} />
             <Button
               rounded='md'
