@@ -79,7 +79,10 @@ class Album extends Component {
             >
               <Box display={{ md: 'flex' }} direction='column' bg='white'>
                 <Box color='black' width='100%'>
-                  <Image src={`/uploads/${currentAlbum.art_url}`} />
+                  <Image
+                    src={`/uploads/${currentAlbum.art_url}`}
+                    width='100%'
+                  />
                 </Box>
                 <Flex
                   color='black'
