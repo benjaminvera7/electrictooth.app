@@ -25,7 +25,7 @@ const Home = ({ AlbumActions, albums, theme }) => {
           />
         </Header>
 
-        <Flex wrap='wrap'>
+        <Flex wrap='wrap' mx='-8px'>
           {albums.map((album, i) => (
             <Card album={album} key={i} />
           ))}

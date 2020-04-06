@@ -22,6 +22,11 @@ import theme from 'theme.js';
 
 const CardContainer = styled(Box)`
   ${FADE_IN}
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  &:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  }
 `;
 
 const Card = ({ auth, album, UserActions, collection }) => {
@@ -49,11 +54,12 @@ const Card = ({ auth, album, UserActions, collection }) => {
 
   return (
     <CardContainer
-      flex={{ xs: '100%', sm: '100%', md: '50%', lg: '33.333333%' }}
+      flex={{ xs: '100%', sm: '100%', md: '45%', lg: '25%' }}
       borderWidth='1px'
       bg='white'
       overflow='hidden'
-      mb={2}
+      mx='8px'
+      mb='8px'
       style={{ position: 'relative' }}
     >
       <Link to={`/catalog/${album.product_id}`}>
