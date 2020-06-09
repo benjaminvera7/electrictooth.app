@@ -16,7 +16,7 @@ const Navigation = ({ auth, cart, username }) => {
   return (
     <div className='navigation'>
       <Flex maxW='1440px' flex='1'>
-        {!isMobile && (
+        {(!isMobile || !auth)  && (
           <Fragment>
             <Link to='/'>
               <Box>
