@@ -13,9 +13,9 @@ const CartAdd = (props) => (
       <g
         id='Page-1'
         stroke='none'
-        stroke-width='1'
+        strokeWidth='1'
         fill='none'
-        fill-rule='evenodd'
+        fillRule='evenodd'
       >
         <g id='Action' transform='translate(-385.000000, -49.000000)'>
           <g

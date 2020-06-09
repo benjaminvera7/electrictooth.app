@@ -65,8 +65,8 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
   };
 
   return (
-    <Flex justify='center'>
-      <ProfileCard color='white' maxW='1100px' flex='1' mb={4}>
+    <Flex justify='center' mt='80px'>
+      <ProfileCard color='white' maxW='1440px' flex='1' mb={4}>
         <Flex justify='space-between'>
           <Heading
             px={4}

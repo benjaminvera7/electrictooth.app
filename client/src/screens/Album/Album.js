@@ -70,10 +70,10 @@ class Album extends Component {
         </Helmet>
 
         {!pending && (
-          <CardAnimation justify='center' py={4}>
+          <CardAnimation justify='center' py={4} mt='80px'>
             <AlbumCardContainer
               color='white'
-              maxW='1100px'
+              maxW='1440px'
               flex='1'
               px={{ xs: 2, lg: 0 }}
             >
@@ -170,7 +170,7 @@ class Album extends Component {
                       flex='1'
                       variant='ghost'
                       variantColor='teal'
-                      aria-label='Download album'
+                      aria-label='Add album to cart'
                       fontSize='20px'
                       style={{
                         borderTop: '1px',
@@ -187,11 +187,10 @@ class Album extends Component {
                       flex='1'
                       variant='ghost'
                       variantColor='teal'
-                      aria-label='Download album'
+                      aria-label='Add album to playlist'
                       fontSize='20px'
                       style={{
                         borderTop: '1px',
-                        borderRight: '1px',
                         borderStyle: 'solid',
                         borderColor: 'rgba(5, 174, 165, 0.3)',
                       }}
@@ -249,6 +248,9 @@ class Album extends Component {
                           </Flex>
 
                           <Flex direction='column'>
+                            {/*
+                            
+                            
                             <IconButton
                               flex='1'
                               variant='ghost'
@@ -266,6 +268,7 @@ class Album extends Component {
                                 <Play color={`${theme.colors.etGreen}`} />
                               )}
                             />
+                            */}
                             <IconButton
                               flex='1'
                               variant='ghost'

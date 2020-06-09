@@ -15,7 +15,7 @@ const Navigation = ({ auth, cart, username }) => {
 
   return (
     <div className='navigation'>
-      <Flex maxW='1100px' flex='1'>
+      <Flex maxW='1440px' flex='1'>
         {!isMobile && (
           <Fragment>
             <Link to='/'>
@@ -28,13 +28,15 @@ const Navigation = ({ auth, cart, username }) => {
           </Fragment>
         )}
 
-        <Link to='/help'>
+        <Box mx="auto" />
+
+        {/* <Link to='/help'>
           <Box>
             <Button variant='link'>
               <Help active={router.pathname === '/help'} />
             </Button>
           </Box>
-        </Link>
+        </Link> */}
 
         {!auth ? (
           <Link to='/signup'>

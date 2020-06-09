@@ -164,8 +164,8 @@ class Checkout extends Component {
     const { user } = this.props;
 
     return (
-      <Flex justify='center'>
-        <Box color='white' maxW='1100px' flex='1'>
+      <Flex justify='center' mt='80px'>
+        <Box color='white' maxW='1440px' flex='1'>
           <Heading
             px={4}
             pt={2}

@@ -22,7 +22,7 @@ const HelpContainer = styled(Flex)`
 const Help = () => {
   return (
     <HelpContainer justify='center'>
-      <Box color='white' maxW='1100px' flex='1'>
+      <Box color='white' maxW='1440px' flex='1'>
         <Heading px={4} pt={2} as='h2' size='2xl' color={theme.colors.etGreen}>
           help
         </Heading>

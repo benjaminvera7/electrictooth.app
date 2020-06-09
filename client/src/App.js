@@ -23,7 +23,7 @@ import { bindActionCreators } from 'redux';
 import * as albumActions from 'redux/modules/album';
 import * as userActions from 'redux/modules/user';
 
-function App({ AlbumActions, UserActions, auth }) {
+function App({ AlbumActions, UserActions, auth, playlist }) {
   //def need to refactor into hook or something
   useEffect(() => {
     AlbumActions.getAlbums();
@@ -66,6 +66,7 @@ export default connect(
   (state) => ({
     albums: state.album.albums,
     auth: state.user.authenticated,
+    playlist: state.user.playlist,
     updatedAt: state.album.updatedAt,
     error: state.pender.failure['album/GET_ALBUMS'],
   }),

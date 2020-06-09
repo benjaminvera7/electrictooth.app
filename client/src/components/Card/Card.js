@@ -108,22 +108,7 @@ const Card = ({ auth, album, UserActions, collection }) => {
             flex='1'
             variant='ghost'
             variantColor='teal'
-            aria-label='Download album'
-            fontSize='20px'
-            style={{
-              borderTop: '1px',
-              borderRight: '1px',
-              borderStyle: 'solid',
-              borderColor: 'rgba(5, 174, 165, 0.3)',
-            }}
-            rounded='0px'
-            icon={() => <Play color={`${theme.colors.etGreen}`} />}
-          />
-          <IconButton
-            flex='1'
-            variant='ghost'
-            variantColor='teal'
-            aria-label='Download album'
+            aria-label='Add album to cart'
             fontSize='20px'
             style={{
               borderTop: '1px',
@@ -139,7 +124,7 @@ const Card = ({ auth, album, UserActions, collection }) => {
             flex='1'
             variant='ghost'
             variantColor='teal'
-            aria-label='Download album'
+            aria-label='Add album to playlist'
             fontSize='20px'
             style={{
               borderTop: '1px',
@@ -155,6 +140,24 @@ const Card = ({ auth, album, UserActions, collection }) => {
     </CardContainer>
   );
 };
+
+/*
+          <IconButton
+            flex='1'
+            variant='ghost'
+            variantColor='teal'
+            aria-label='Download album'
+            fontSize='20px'
+            style={{
+              borderTop: '1px',
+              borderRight: '1px',
+              borderStyle: 'solid',
+              borderColor: 'rgba(5, 174, 165, 0.3)',
+            }}
+            rounded='0px'
+            icon={() => <Play color={`${theme.colors.etGreen}`} />}
+          />
+*/
 
 export default connect(
   (state) => ({
