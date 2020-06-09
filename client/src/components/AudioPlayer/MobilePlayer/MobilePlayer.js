@@ -31,7 +31,7 @@ const MobilePlayer = ({
     <Fragment>
       <Box mt={-1}>
         <Image
-          src={song.length > 0 ? `/uploads/${song[0].art_url}` : `./mascot.jpg`}
+          src={song.length > 0 ? `/uploads/${song[0].art_url}` : `./filler.jpg`}
           w='100%'
         />
       </Box>

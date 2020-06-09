@@ -24,7 +24,7 @@ const CartItem = styled(Flex)`
 
 const Cart = ({ UserActions, auth, cart }) => {
   return (
-    <CartItem justify='center' mt='80px'>
+    <CartItem justify='center' mt='40px'>
       <Box color='white' maxW='1440px' flex='1' px={{ xs: 2, lg: 0 }}>
         <Heading pt={2} as='h2' size='2xl' color='#05aea5'>
           cart

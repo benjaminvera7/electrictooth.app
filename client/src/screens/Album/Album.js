@@ -70,12 +70,12 @@ class Album extends Component {
         </Helmet>
 
         {!pending && (
-          <CardAnimation justify='center' py={4} mt='80px'>
+          <CardAnimation justify='center' py={4} mt='40px'>
             <AlbumCardContainer
               color='white'
               maxW='1440px'
               flex='1'
-              px={{ xs: 2, lg: 0 }}
+              px='2'
             >
               <Box display={{ md: 'flex' }} direction='column' bg='white'>
                 <Box color='black' width='100%'>

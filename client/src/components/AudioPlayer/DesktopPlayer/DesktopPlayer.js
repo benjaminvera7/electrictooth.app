@@ -64,7 +64,7 @@ const DesktopPlayer = ({
           <Flex flex='1' align='center' minWidth='275px'>
             <Image
               src={
-                song.length > 0 ? `/uploads/${song[0].art_url}` : `./mascot.jpg`
+                song.length > 0 ? `/uploads/${song[0].art_url}` : `./filler.jpg`
               }
               h='48px'
               w='48px'

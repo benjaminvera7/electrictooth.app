@@ -28,8 +28,6 @@ const Navigation = ({ auth, cart, username }) => {
           </Fragment>
         )}
 
-        <Box mx="auto" />
-
         {/* <Link to='/help'>
           <Box>
             <Button variant='link'>
@@ -56,7 +54,7 @@ const Navigation = ({ auth, cart, username }) => {
         ) : (
           <>
             {' '}
-            <Box mx='auto' />
+          
             <Link to='/coins'>
               <Button
                 leftIcon={Toll}
@@ -73,6 +71,7 @@ const Navigation = ({ auth, cart, username }) => {
                 Get coins
               </Button>
             </Link>
+            <Box mx='auto' />
             <Link to='/cart'>
               <Box style={{ position: 'relative' }} pl={2}>
                 <Button variant='link'>
