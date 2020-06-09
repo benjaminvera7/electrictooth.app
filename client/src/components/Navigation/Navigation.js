@@ -38,23 +38,23 @@ const Navigation = ({ auth, cart, username }) => {
 
         {!auth ? (
           <Link to='/signup'>
-            <Box px={2}>
-              <Button
-                variant='link'
-                color={
-                  router.pathname === '/signup'
-                    ? theme.colors.etGreen
-                    : '#b3b3b3'
-                }
-              >
-                sign up
-              </Button>
-            </Box>
+            <Button
+              bg={`${theme.colors.etGreen}`}
+              variant='solid'
+              size='xs'
+              color="white"
+              _hover={{
+                bg: `${theme.colors.etGreen}`,
+              }}
+              mx={1}
+              mt='1px'
+            >
+              sign up
+            </Button>
           </Link>
         ) : (
           <>
             {' '}
-          
             <Link to='/coins'>
               <Button
                 leftIcon={Toll}

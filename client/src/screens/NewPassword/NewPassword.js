@@ -63,7 +63,7 @@ class NewPassword extends Component {
 
   render() {
     return (
-      <ForgotContainer w='100%' p={4} justify='center'>
+      <ForgotContainer w='100%' p={4} justify='center' mt="40px">
         <Box w='300px'>
           <Flex direction='column' align='center'>
             <Image src='./favicon.ico' w='36px' />

@@ -24,7 +24,7 @@ const Signup = ({ UserActions, history, error, message }) => {
   let form;
 
   return (
-    <SignupContainer w='100%' p={4} justify='center'>
+    <SignupContainer w='100%' justify='center' mt="40px">
       <Box w='300px'>
         <Flex direction='column' align='center'>
           <Image src='./favicon.ico' w='36px' />

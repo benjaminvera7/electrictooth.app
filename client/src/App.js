@@ -57,7 +57,7 @@ function App({ AlbumActions, UserActions, auth, playlist }) {
 
       <div id='snackbar'></div>
 
-      <AudioPlayer />
+      {auth && <AudioPlayer />}
     </>
   );
 }
