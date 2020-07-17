@@ -8,15 +8,28 @@ import { Link } from 'react-router-dom';
 import useWindowSize from 'hooks/useWindowSize';
 import useRouter from 'hooks/useRouter';
 import theme from 'theme.js';
+import styled from '@emotion/styled';
+
+const NavigationContainer = styled(Flex)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0px;
+  position: fixed;
+  z-index: 2;
+  background-color: rgb(255,255,255, 0.2);
+  height: 40px;
+  width: 100%;
+`;
 
 const Navigation = ({ auth, cart, username }) => {
   const isMobile = useWindowSize();
   const router = useRouter();
-
+  
   return (
-    <div className='navigation'>
+    <NavigationContainer>
       <Flex maxW='1440px' flex='1'>
-        {(!isMobile || !auth)  && (
+        {(!isMobile || !auth) && (
           <Fragment>
             <Link to='/'>
               <Box>
@@ -42,7 +55,7 @@ const Navigation = ({ auth, cart, username }) => {
               bg={`${theme.colors.etGreen}`}
               variant='solid'
               size='xs'
-              color="white"
+              color='white'
               _hover={{
                 bg: `${theme.colors.etGreen}`,
               }}
@@ -115,7 +128,7 @@ const Navigation = ({ auth, cart, username }) => {
           </>
         )}
       </Flex>
-    </div>
+    </NavigationContainer>
   );
 };
 

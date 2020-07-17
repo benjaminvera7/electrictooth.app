@@ -37,18 +37,6 @@
 }
 
 
-.navigation {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 0px;
-  position: absolute;
-  z-index: 2;
-  background-color: transparent;
-  height: 40px;
-  width: 100%;
-}
-
 .mobile-navigation {
   position: fixed;
   display: flex;

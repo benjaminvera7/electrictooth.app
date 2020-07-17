@@ -49,7 +49,7 @@ function App({ AlbumActions, UserActions, auth, playlist }) {
           <Route path='/cart' component={Cart} />
           <Route path='/checkout' component={Checkout} />
           <Route path='/download/:orderId' component={Download} />
-          <Route path='/coins' component={Coins} />
+          <Route path='/coins' component={Coins} /> 
           <Route exact path='/' component={Home} />
           <Redirect to='/' />
         </Switch>

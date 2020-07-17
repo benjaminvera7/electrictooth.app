@@ -38,7 +38,7 @@ const Home = ({ AlbumActions, albums, theme, pending }) => {
               src='./water.gif'
               objectFit='cover'
               w='100%'
-              h={{ lg: '800px' }}
+              h="40vh"
             />
 
             <div className='centered'>
@@ -48,7 +48,7 @@ const Home = ({ AlbumActions, albums, theme, pending }) => {
           <AnimateBody
             justify='center'
             px={{ xs: 2, lg: 0 }}
-            my={{ sm: '0', md: '-100px', lg: '-200px', xl: '-200px' }}
+            my={{ sm: '0', md: '-100px', lg: '-100px', xl: '-100px' }}
           >
             <Box color='white' maxW='1440px' flex='1' mt='16px'>
               <Flex wrap='wrap' >

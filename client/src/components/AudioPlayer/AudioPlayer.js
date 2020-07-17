@@ -25,17 +25,7 @@ const slideHOC = (InputComponent) => {
 
 const Panel = (props) => (
   <div {...props}>
-    <MobilePlaylistPanel
-      setPlaylistVisibility={props.setPlaylistVisibility}
-      playlistVisible={props.playlistVisible}
-      playlist={props.playlist}
-      handlePlay={props.handlePlay}
-      playing={props.playing}
-      fetch={props.fetch}
-      remove={props.remove}
-      currentlyPlaying={props.currentlyPlaying}
-      loading={props.loading}
-    />
+    <MobilePlaylistPanel {...props} />
   </div>
 );
 
@@ -80,8 +70,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
       bindSafariAutoPlayEvents();
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentSongId]);
+  }, []);
 
   const timeUpdate = () => {
     let playPercent =
