@@ -6,6 +6,11 @@ const morgan = require('morgan');
 mongoose.Promise = require('bluebird');
 const cors = require('cors');
 const config = require('./config');
+const passport = require('passport');
+
+require('../server/services/passport');
+//protects routes by verifying user token
+const requireAuth = passport.authenticate('jwt', { session: false });
 
 const authRoutes = require('./routes/auth');
 const albumRoutes = require('./routes/album');
@@ -55,16 +60,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../client/build')));
 app.use('/uploads', express.static(path.join(__dirname, './uploads')));
 
+app.use('/user', requireAuth, userRoutes);
+app.use('/stream', requireAuth, streamRoutes);
+app.use('/order', requireAuth, orderRoutes);
+app.use('/download', requireAuth, downloadRoutes);
+app.use('/eth', requireAuth, ethRoutes);
+
+
 app.use('/reset', resetRoutes);
 app.use('/auth', authRoutes);
 app.use('/albums', albumRoutes);
 app.use('/paypal', paypalRoutes);
-app.use('/eth', ethRoutes);
-app.use('/download', downloadRoutes);
-app.use('/user', userRoutes);
 app.use('/song', songRoutes);
-app.use('/stream', streamRoutes);
-app.use('/order', orderRoutes);
 app.get('/*', passHTML);
 
 app.use((error, req, res, next) => {

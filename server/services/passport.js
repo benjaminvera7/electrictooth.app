@@ -6,7 +6,6 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 const LocalStrategy = require('passport-local');
 
 /* this kindly add the user object to all authorized requests */
-
 // Create local strategy
 const localOptions = { usernameField: 'email' };
 const localLogin = new LocalStrategy(localOptions, function(email, password, done) {
