@@ -4,24 +4,30 @@ const config = require('../config');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const LocalStrategy = require('passport-local');
+const dbConnection = require('../services/database');
 
-/* this kindly add the user object to all authorized requests */
-// Create local strategy
-const localOptions = { usernameField: 'email' };
-const localLogin = new LocalStrategy(localOptions, function(email, password, done) {
-  // Verify this email and password, call done with the user
-  // if it is the correct email and password
-  // otherwise, call done with false
-  User.findOne({ email: email }, function(err, user) {
-    if (err) {
-      return done(err);
-    }
-    if (!user) {
-      return done(null, false);
-    }
+class PassportService {
+  constructor() {
+    this.localOptions = {
+      usernameField: 'email',
+    };
+    this.jwtOptions = {
+      jwtFromRequest: ExtractJwt.fromHeader('authorization'),
+      secretOrKey: config.secret,
+    };
+  }
 
-    // compare passwords - is `password` equal to user.password?
-    user.comparePassword(password, function(err, isMatch) {
+  initLocalStrategy() {
+    /* this kindly add the user object to all authorized requests */
+    const localLogin = new LocalStrategy(this.localOptions, this.verifyLocalUser);
+    passport.use(localLogin);
+  }
+
+  async verifyLocalUser(email, password, done) {
+    const user = await dbConnection.getUserByEmail(email);
+
+    //create new service for encryption?
+    user.comparePassword(password, (err, isMatch) => {
       if (err) {
         return done(err);
       }
@@ -31,21 +37,17 @@ const localLogin = new LocalStrategy(localOptions, function(email, password, don
 
       return done(null, user);
     });
-  });
-});
+  }
 
-// Setup options for JWT Strategy
-const jwtOptions = {
-  jwtFromRequest: ExtractJwt.fromHeader('authorization'),
-  secretOrKey: config.secret,
-};
+  initJwtStrategy() {
+    const jwtLogin = new JwtStrategy(this.jwtOptions, this.verifyJwtUser);
+    passport.use(jwtLogin);
+  }
 
-// Create JWT strategy
-const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
-  // See if the user ID in the payload exists in our database
-  // If it does, call 'done' with that other
-  // otherwise, call done without a user object
-  User.findById(payload.sub, function(err, user) {
+  async verifyJwtUser(payload, done) {
+    const userId = payload.sub;
+    const user = await dbConnection.getUserById(userId);
+
     if (err) {
       return done(err, false);
     }
@@ -55,9 +57,10 @@ const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
     } else {
       done(null, false);
     }
-  });
-});
+  }
+}
 
-// Tell passport to use this strategy
-passport.use(jwtLogin);
-passport.use(localLogin);
+const Passport = new PassportService();
+
+Passport.initLocalStrategy();
+Passport.initJwtStrategy();

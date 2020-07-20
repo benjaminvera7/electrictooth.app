@@ -16,6 +16,7 @@ const dbConnection = require('./services/database')
 
 const albumRoutes = require('./routes/album');
 const songRoutes = require('./routes/song');
+const authRoutes = require('./routes/auth');
 
 const app = express();
 
@@ -53,6 +54,7 @@ app.use('/uploads', express.static(path.join(__dirname, './uploads')));
 
 app.use('/albums', albumRoutes);
 app.use('/song', songRoutes);
+app.use('/auth', authRoutes);
 app.get('/*', passHTML);
 
 app.use((error, req, res, next) => {
@@ -97,7 +99,7 @@ app.use('/eth', requireAuth, ethRoutes);
 
 
 app.use('/reset', resetRoutes);
-app.use('/auth', authRoutes);
+
 app.use('/paypal', paypalRoutes);
 
 

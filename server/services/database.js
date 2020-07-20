@@ -4,6 +4,7 @@ const config = require('../config');
 
 const Album = require('../models/album');
 const Song = require('../models/song');
+const User = require('../models/user');
 
 //this is needed to use populate()
 require('../models/song');
@@ -58,6 +59,16 @@ class DatabaseService {
   async getSongByProductId(productId) {
     const song = await Song.findOne({ product_id: productId });
     return song;
+  }
+
+  async getUserByEmail(email) {
+    const user =  User.findOne({ email: email });
+    return user;
+  }
+
+  async getUserById(userId) {
+    const user = await User.findById(userId);
+    return user;
   }
 }
 
