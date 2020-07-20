@@ -3,6 +3,7 @@ mongoose.Promise = require('bluebird');
 const config = require('../config');
 
 const Album = require('../models/album');
+const Song = require('../models/song');
 
 //this is needed to use populate()
 require('../models/song');
@@ -11,16 +12,20 @@ require('../models/artist');
 class DatabaseService {
   constructor() {
     this.db = null;
-    this.init();
+    this.configure();
+    this.connect();
   }
 
-  init() {
+  configure() {
     this.db = mongoose.connection.openUri(config.dbUri, {
       useNewUrlParser: true,
       useCreateIndex: true,
       useUnifiedTopology: true,
     });
     mongoose.set('useFindAndModify', false);
+  }
+
+  connect() {
     this.db.on('error', () => console.error.bind(console, 'db error'));
     this.db.once('open', () => console.log('ET3-Database Connection ok!'));
   }
@@ -48,6 +53,11 @@ class DatabaseService {
       .populate('artist');
 
     return album;
+  }
+
+  async getSongByProductId(productId) {
+    const song = await Song.findOne({ product_id: productId });
+    return song;
   }
 }
 

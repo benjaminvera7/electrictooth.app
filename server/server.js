@@ -15,6 +15,8 @@ const MongoStore = require('connect-mongo')(session);
 const dbConnection = require('./services/database')
 
 const albumRoutes = require('./routes/album');
+const songRoutes = require('./routes/song');
+
 const app = express();
 
 app.use(
@@ -50,6 +52,7 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 app.use('/uploads', express.static(path.join(__dirname, './uploads')));
 
 app.use('/albums', albumRoutes);
+app.use('/song', songRoutes);
 app.get('/*', passHTML);
 
 app.use((error, req, res, next) => {
@@ -76,7 +79,7 @@ const paypalRoutes = require('./routes/paypal');
 const ethRoutes = require('./routes/eth');
 const downloadRoutes = require('./routes/download');
 const userRoutes = require('./routes/user');
-const songRoutes = require('./routes/song');
+
 const streamRoutes = require('./routes/stream');
 const orderRoutes = require('./routes/order');
 const resetRoutes = require('./routes/reset');
@@ -96,7 +99,7 @@ app.use('/eth', requireAuth, ethRoutes);
 app.use('/reset', resetRoutes);
 app.use('/auth', authRoutes);
 app.use('/paypal', paypalRoutes);
-app.use('/song', songRoutes);
+
 
 
 

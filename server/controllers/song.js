@@ -1,9 +1,10 @@
-const Song = require("../models/song");
+const dbConnection = require('../services/database');
 
 async function getSong(req, res, next) {
-  const songId = req.params.songId;
+  const productId = req.params.productId;
+
   try {
-    const song = await Song.findById({_id: songId})
+    const song = await dbConnection.getSongByProductId(productId);
 
     if (!song) {
       const error = new Error("Could not find song.");
