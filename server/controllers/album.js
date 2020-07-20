@@ -1,26 +1,18 @@
-const Album = require('../models/album');
-
-//this is needed to use populate()
-require('../models/song');
-require('../models/artist');
+const dbConnection = require('../services/database');
 
 async function getAlbums(req, res, next) {
   const currentPage = req.query.page || 1;
-  const perPage = 6;
+  
   try {
-    const totalAlbums = await Album.find().countDocuments();
-    const albums = await Album.find()
-      .populate('songs')
-      .populate('artist')
-      .sort({ createdAt: -1 })
-      .skip((currentPage - 1) * perPage)
-      .limit(perPage);
+    const totalAlbums = await dbConnection.getAlbumCount();
+    const albums = await dbConnection.getAlbumsPaginationPage(currentPage)
 
     res.status(200).json({
       message: 'Fetched Albums successfully.',
       albums: albums,
       totalAlbums: totalAlbums,
     });
+
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -32,9 +24,7 @@ async function getAlbums(req, res, next) {
 async function getAlbum(req, res, next) {
   const productId = req.params.productId;
   try {
-    const album = await Album.findOne({ product_id: productId })
-      .populate('songs')
-      .populate('artist');
+    const album = await dbConnection.getAlbumByProductId(productId)
     if (!album) {
       const error = new Error('Could not find album.');
       error.statusCode = 404;
