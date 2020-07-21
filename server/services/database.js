@@ -62,13 +62,23 @@ class DatabaseService {
   }
 
   async getUserByEmail(email) {
-    const user =  User.findOne({ email: email });
+    const user = await User.findOne({ email: email });
+    return user;
+  }
+
+  async getUserByResetToken(resetToken) {
+    const user = await User.findOne({ reset_password_token: resetToken });
     return user;
   }
 
   async getUserById(userId) {
     const user = await User.findById(userId);
     return user;
+  }
+
+  async updateUserResetToken(id, token) {
+    await User.findOneAndUpdate({ _id: id }, { reset_password_token: token });
+    return
   }
 }
 

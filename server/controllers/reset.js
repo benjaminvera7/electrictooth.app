@@ -1,21 +1,9 @@
-const jwt = require('jwt-simple');
 const User = require('../models/user');
-const config = require('../config');
 const nodemailer = require('nodemailer');
 const key = require('../key');
-
-var APP_URL;
-
-if (process.env.NODE_ENV === 'development') {
-  APP_URL = 'http://localhost:3000/';
-} else {
-  APP_URL = SERVER_URL = 'https://electrictooth.app/';
-}
-
-function tokenForUser(user) {
-  const timestamp = new Date().getTime();
-  return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
-}
+const { APP_URL, SERVER_URL } = require('../util/url');
+const encrypt = require('../services/encryption');
+const dbConnection = require('../services/database');
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
@@ -29,10 +17,10 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-async function resetPassword(req, res, next) {
+async function resetPassword(req, res) {
   let email = req.body.email;
 
-  let user = await User.findOne({ email: email });
+  let user = await dbConnection.getUserByEmail(email);
 
   if (user === null) {
     res.status(200).json({
@@ -41,12 +29,9 @@ async function resetPassword(req, res, next) {
     });
   } else {
     try {
-      let token = tokenForUser(user);
+      let token = encrypt.tokenForUser(user);
 
-      await User.findOneAndUpdate(
-        { _id: user._id },
-        { reset_password_token: token },
-      ).exec();
+      await dbConnection.updateUserResetToken(user._id, token);
 
       await transporter.verify();
       await transporter.sendMail({
@@ -70,31 +55,24 @@ async function resetPassword(req, res, next) {
     });
   }
 }
-function storePassword(req, res, next) {
-  let userId = req.params.userId;
+async function storePassword(req, res) {
+  //let userId = req.params.userId;
   let token = req.params.token;
   let password = req.body.password;
   //let passwordConfirm = req.body.passwordConfirm;
 
-  User.findOne({ reset_password_token: token }).exec((err, user) => {
-    if (!err && user) {
-      user.password = password;
-      user.reset_password_token = '';
+  const user = await dbConnection.getUserByResetToken(token);
 
-      user.encrypt(() => {
-        user.save((err) => {
-          if (err) {
-            return console.log(err);
-          }
+  if (user) {
+    user.password = password;
+    user.reset_password_token = '';
+    await encrypt.encryptUserPassword(user);
 
-          res.status(200).json({
-            message: 'Password updated',
-            error: false,
-          });
-        });
-      });
-    }
-  });
+    res.status(200).json({
+      message: 'Password updated',
+      error: false,
+    });
+  }
 }
 
 module.exports = {
