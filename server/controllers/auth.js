@@ -3,7 +3,7 @@ const User = require('../models/user');
 const dbConnection = require('../services/database');
 const encrypt = require('../services/encryption');
 
-async function signin(req, res, next) {
+async function signin(req, res) {
   if (!req.body.password || !req.body.email) {
     return res.status(422).send({ error: true, message: 'Unable to log in' });
   } else {
@@ -33,15 +33,15 @@ async function signin(req, res, next) {
   }
 }
 
-async function signup(req, res, next) {
+async function signup(req, res) {
   const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
 
-  if (!email || !password) {
+  if (!email || !password || !username) {
     return res.status(422).send({
       error: true,
-      message: 'You must provide an email and password',
+      message: 'You must provide username, email and password',
     });
   }
 

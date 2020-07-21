@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const bcrypt = require('bcrypt-nodejs');
 
 const UserSchema = new Schema({
   email: {
@@ -66,55 +65,6 @@ UserSchema.methods.exchangeCoins = function(type, amount) {
   }
   return this.coins;
 };
-
-function encrypt(next) {
-  const user = this;
-  bcrypt.genSalt(10, (err, salt) => {
-    if (err) {
-      return next(err);
-    }
-
-    bcrypt.hash(user.password, salt, null, (err, hash) => {
-      if (err) {
-        return next(err);
-      }
-      user.password = hash;
-      next();
-    });
-  });
-}
-
-function encryptAsync(user2) {
-  return new Promise((resolve, reject) => {
-    const user = user2;
-    bcrypt.genSalt(10, (err, salt) => {
-      if (err) {
-        return reject(err);
-      }
-
-      bcrypt.hash(user.password, salt, null, (err, hash) => {
-        if (err) {
-          return reject(err);
-        }
-        user.password = hash;
-        resolve();
-      });
-    });
-  });
-}
-
-function comparePassword(candidatePassword, callback) {
-  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-    if (err) {
-      return callback(err);
-    }
-    callback(null, isMatch);
-  });
-}
-
-UserSchema.methods.encrypt = encrypt;
-UserSchema.methods.encryptAsync = encryptAsync;
-UserSchema.methods.comparePassword = comparePassword;
 
 const User = mongoose.model('User', UserSchema);
 
