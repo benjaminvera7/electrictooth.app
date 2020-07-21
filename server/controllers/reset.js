@@ -1,21 +1,6 @@
-const User = require('../models/user');
-const nodemailer = require('nodemailer');
-const key = require('../key');
-const { APP_URL, SERVER_URL } = require('../util/url');
 const encrypt = require('../services/encryption');
 const dbConnection = require('../services/database');
-
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
-  auth: {
-    type: 'OAuth2',
-    user: 'info@electrictooth.io',
-    serviceClient: key.client_id,
-    privateKey: key.private_key,
-  },
-});
+const mailer = require('../services/mailer');
 
 async function resetPassword(req, res) {
   let email = req.body.email;
@@ -29,22 +14,11 @@ async function resetPassword(req, res) {
     });
   } else {
     try {
-      let token = encrypt.tokenForUser(user);
+      let resetToken = encrypt.tokenForUser(user);
 
-      await dbConnection.updateUserResetToken(user._id, token);
+      await dbConnection.updateUserResetToken(user._id, resetToken);
+      await mailer.sendMail(user, resetToken);
 
-      await transporter.verify();
-      await transporter.sendMail({
-        from: 'info@electrictooth.io',
-        to: email,
-        subject: 'Reset your account password',
-        html:
-          '<h4><b>Reset Password</b></h4>' +
-          '<p>To reset your password, complete this form:</p>' +
-          `<a href='${APP_URL}reset/${user._id}/${token}'>${APP_URL}reset/${user._id}/${token}</a>` +
-          '<br><br>' +
-          '<p>--Team</p>',
-      });
     } catch (err) {
       console.log(err);
     }
@@ -56,10 +30,8 @@ async function resetPassword(req, res) {
   }
 }
 async function storePassword(req, res) {
-  //let userId = req.params.userId;
   let token = req.params.token;
   let password = req.body.password;
-  //let passwordConfirm = req.body.passwordConfirm;
 
   const user = await dbConnection.getUserByResetToken(token);
 
