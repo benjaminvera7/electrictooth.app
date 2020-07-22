@@ -1,42 +1,18 @@
-const paypal = require('paypal-rest-sdk');
-const Album = require('../models/album');
-const Order = require('../models/order');
-const User = require('../models/user');
-const config = require('../config');
-
-paypal.configure({
-  mode: 'sandbox', //sandbox or live
-  client_id: config.PAYPAL_CLIENT_ID,
-  client_secret: config.PAYPAL_CLIENT_SECRET,
-});
-
-var APP_URL;
-var SERVER_URL;
-
-if (process.env.NODE_ENV === 'development') {
-  APP_URL = 'http://localhost:3000';
-  SERVER_URL = 'http://localhost:3090';
-} else {
-  APP_URL = SERVER_URL = 'https://electrictooth.app';
-}
+const { APP_URL, SERVER_URL } = require('../util/url');
+const dbConnection = require('../services/database');
+const paypal = require('../services/paypal');
 
 async function requestPayment(req, res) {
-  let user = await User.findById(req.body.userId).exec();
 
-  const cart = user.cart;
-  const userId = user._id;
-  let order;
+  const userId = req.body.userId;
 
-  order = new Order({
-    userId: userId,
-    status: 'PENDING',
-    cart: cart,
-    type: 'USD',
-  });
+  const user = await dbConnection.getUserById(userId);
 
-  let newOrder = await order.save();
+  const order = await dbConnection.createOrder(user);
 
-  let { error, response } = await createPayment(newOrder);
+  const payment = createPaymentObject(order);
+
+  const { error, response } = await paypal.createPayment(payment);
 
   if (error) {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -46,129 +22,82 @@ async function requestPayment(req, res) {
   res.redirect(response.redirectUrl);
 }
 
-function createPayment(order) {
-  return new Promise((resolve, reject) => {
-    let response = {};
+function createPaymentObject(order) {
+  const payment = paypal.getPaymentTemplate();
 
-    let newPayPalOrder = {
-      intent: 'sale',
-      payer: {
-        payment_method: 'paypal',
-      },
-      transactions: [
-        {
-          invoice_number: '',
-          amount: {
-            total: 0,
-            currency: 'USD',
-          },
-          item_list: {
-            items: [],
-          },
-        },
-      ],
-      note_to_payer: 'Contact us for any questions on your order.',
-      redirect_urls: {
-        return_url: `${SERVER_URL}/paypal/return`,
-        cancel_url: `${SERVER_URL}/paypal/cancel`,
-      },
-    };
+  payment.transactions[0].invoice_number = order._id;
+  payment.transactions[0].amount.total = order.cart.total;
 
-    let transaction = newPayPalOrder.transactions[0];
+  const items = payment.transactions[0].item_list.items;
 
-    transaction.invoice_number = order._id;
-    transaction.amount.total = order.cart.total;
+  order.cart.items.forEach((item) => {
+    let product_id = item.product_id;
+    let found = product_id.match(/coin/g);
 
-    let myItems = transaction.item_list.items;
+    if (!!found) {
+      items.push({
+        name: item.product_id,
+        description: 'Coins for sustainable streaming',
+        quantity: item.quantity,
+        price: item.price,
+        sku: item.product_id,
+        currency: 'USD',
+      });
+    } else {
+      let description;
 
-    order.cart.items.forEach((item) => {
-      let product_id = item.product_id;
-      let found = product_id.match(/coin/g);
-
-      if (!!found) {
-        myItems.push({
-          name: item.product_id,
-          description: 'Coins for sustainable streaming',
-          quantity: item.quantity,
-          price: item.price,
-          sku: item.product_id,
-          currency: 'USD',
-        });
+      if (item.song_name) {
+        description = `${item.song_name} (MP3)`;
       } else {
-        let description;
-        if (item.song_name) {
-          description = `${item.song_name} (MP3)`;
-        } else {
-          description = item.album_name;
-        }
-
-        myItems.push({
-          name: item.product_id,
-          description: description,
-          quantity: item.quantity,
-          price: item.download_price,
-          sku: item.product_id,
-          currency: 'USD',
-        });
-      }
-    });
-
-    paypal.payment.create(newPayPalOrder, (error, payment) => {
-      if (error) {
-        reject({ error: true, response: 'could not create paypal payment' });
-      } else {
-        if (payment.payer.payment_method === 'paypal') {
-          let redirectUrl;
-
-          response.paymentId = payment.id;
-          response.payment = payment;
-
-          payment.links.forEach((link) => {
-            if (link.method === 'REDIRECT') {
-              redirectUrl = link.href;
-            }
-          });
-
-          response.redirectUrl = redirectUrl;
-        }
+        description = item.album_name;
       }
 
-      resolve({ error: false, response: response });
-    });
+      items.push({
+        name: item.product_id,
+        description: description,
+        quantity: item.quantity,
+        price: item.download_price,
+        sku: item.product_id,
+        currency: 'USD',
+      });
+    }
   });
+
+  return payment;
 }
+
 
 async function returnPayment(req, res) {
   const paymentId = req.query.paymentId;
   const PayerID = req.query.PayerID;
   let orderId;
 
-  let { error, response } = await getResponse(paymentId, PayerID);
+  let { error, response } = await paypal.getResponse(paymentId, PayerID);
+
+  orderId = response.transactions[0].invoice_number;
 
   if (error) {
+    await dbConnection.updateOrderStatusById(orderId, 'FAILED');
+    //TODO: redirect to error processing page
     res.end();
   }
 
-  orderId = response.transactions[0].invoice_number;
-  let order = await Order.findOneAndUpdate(
-    { _id: orderId },
-    { status: 'SUCCESSFUL' },
-  ).exec();
-  let user = await User.findById(order.userId).exec();
+  let order = await dbConnection.updateOrderStatusById(orderId, 'SUCCESSFUL');
+  let user = await dbConnection.getUserById(order.userId);
 
+
+  /* Add coins to user account */
   let coins = 0;
-
   for (const item of order.cart.items) {
     let found = item.product_id.match(/coin/g);
     if (!!found) {
       coins = coins + parseInt(item.product_id.substring(4, 7), 10);
     }
   }
-
   user.exchangeCoins('ADD', coins);
 
+  /* Add albums to user account */
   let albumArray = [];
-
   for (const item of order.cart.items) {
     let found = item.product_id.match(/ET/g);
     if (!!found) {
@@ -181,30 +110,16 @@ async function returnPayment(req, res) {
       }
     }
   }
-
   user.addToAlbumCollection(albumArray);
-  user.clearCart();
 
+  /* Clear cart & save */
+  user.clearCart();
   user.save();
 
   return res.redirect(`${APP_URL}/download/${orderId}`);
 }
 
-function getResponse(paymentId, PayerID) {
-  return new Promise((resolve, reject) => {
-    const details = {
-      payer_id: PayerID,
-    };
 
-    paypal.payment.execute(paymentId, details, (error, payment) => {
-      if (error) {
-        reject({ error: true, response: 'Payment Unsuccessful.' });
-      } else {
-        resolve({ error: false, response: payment });
-      }
-    });
-  });
-}
 
 module.exports = {
   requestPayment,

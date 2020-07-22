@@ -9,15 +9,20 @@ const config = require('./config');
 
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-//const passport = require('passport');
-//const requireAuth = passport.authenticate('jwt', { session: false });
+
+
 
 const dbConnection = require('./services/database')
+const passport = require('./services/passport');
+const requireAuth = passport.requireAuth();
 
 const albumRoutes = require('./routes/album');
 const songRoutes = require('./routes/song');
 const authRoutes = require('./routes/auth');
 const resetRoutes = require('./routes/reset');
+const paypalRoutes = require('./routes/paypal');
+const userRoutes = require('./routes/user');
+//const downloadRoutes = require('./routes/download');
 
 const app = express();
 
@@ -57,6 +62,9 @@ app.use('/albums', albumRoutes);
 app.use('/song', songRoutes);
 app.use('/auth', authRoutes);
 app.use('/reset', resetRoutes);
+app.use('/paypal', paypalRoutes);
+app.use('/user', requireAuth, userRoutes);
+//app.use('/download', requireAuth, downloadRoutes);
 
 app.get('/*', passHTML);
 
@@ -79,31 +87,20 @@ console.log(`ET3-Server is listening on http://localhost:${config.port}`);
 require('../server/services/passport');
 //protects routes by verifying user token
 
-const authRoutes = require('./routes/auth');
-const paypalRoutes = require('./routes/paypal');
-const ethRoutes = require('./routes/eth');
-const downloadRoutes = require('./routes/download');
-const userRoutes = require('./routes/user');
+
 
 const streamRoutes = require('./routes/stream');
 const orderRoutes = require('./routes/order');
+const ethRoutes = require('./routes/eth');
 
-
-
-
-
-
-
-app.use('/user', requireAuth, userRoutes);
 app.use('/stream', requireAuth, streamRoutes);
 app.use('/order', requireAuth, orderRoutes);
-app.use('/download', requireAuth, downloadRoutes);
 app.use('/eth', requireAuth, ethRoutes);
 
 
 
 
-app.use('/paypal', paypalRoutes);
+
 
 
 

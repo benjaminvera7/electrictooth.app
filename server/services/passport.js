@@ -53,9 +53,15 @@ class PassportService {
       done(null, false);
     }
   }
+
+  requireAuth() {
+    return passport.authenticate('jwt', { session: false });
+  }
 }
 
 const Passport = new PassportService();
 
 Passport.initLocalStrategy();
 Passport.initJwtStrategy();
+
+module.exports = Passport;

@@ -9,5 +9,5 @@ if (process.env.NODE_ENV === 'development') {
 
 module.exports = {
   APP_URL,
-  SERVER_URL,
+  SERVER_URL
 };

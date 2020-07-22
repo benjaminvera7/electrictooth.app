@@ -5,6 +5,7 @@ const config = require('../config');
 const Album = require('../models/album');
 const Song = require('../models/song');
 const User = require('../models/user');
+const Order = require('../models/order');
 
 //this is needed to use populate()
 require('../models/song');
@@ -78,7 +79,22 @@ class DatabaseService {
 
   async updateUserResetToken(id, token) {
     await User.findOneAndUpdate({ _id: id }, { reset_password_token: token });
-    return
+    return;
+  }
+
+  async createOrder(user) {
+    const order = new Order({
+      userId: user._id,
+      status: 'PENDING',
+      cart: user.cart,
+      type: 'USD',
+    });
+
+    return await order.save();
+  }
+
+  async updateOrderStatusById(orderId, status) {
+    return await Order.findOneAndUpdate({ _id: orderId }, { status: status });
   }
 }
 
