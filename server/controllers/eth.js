@@ -1,45 +1,27 @@
-const Album = require('../models/album');
+
 const Order = require('../models/order');
-const User = require('../models/user');
-
-var APP_URL;
-var SERVER_URL;
-
-if (process.env.NODE_ENV === 'development') {
-  APP_URL = 'http://localhost:3000';
-  SERVER_URL = 'http://localhost:3090';
-} else {
-  APP_URL = SERVER_URL = 'https://electrictooth.app';
-}
+const dbConnection = require('../services/database')
 
 async function requestPayment(req, res) {
-  let cart = await req.user.getCart();
-  let order;
+  const user = req.user;
 
-  order = new Order({
-    userId: req.user._id,
-    status: 'PENDING',
-    cart: cart,
-    type: 'ETH',
-  });
-
-  let newOrder = await order.save();
+  const order = await dbConnection.createOrder(user, 'ETH');
 
   res
     .status(200)
-    .json({ message: 'Order created', order: newOrder, error: false });
+    .json({ message: 'Order created', order: order, error: false });
 }
 
 async function returnPayment(req, res) {
   const txHash = req.params.hash;
   const orderId = req.params.orderId;
 
-  let order = await Order.findOneAndUpdate(
-    { _id: orderId },
-    { status: 'SUCCESSFUL' },
-    { hash: txHash },
-  ).exec();
-
+  const order = await dbConnection.updateOrderStatusById(
+    orderId,
+    'SUCCESSFUL',
+    txHash,
+  );
+  
   let user = req.user;
   let cart = req.user.cart;
   let coins = 0;

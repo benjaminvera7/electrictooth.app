@@ -1,13 +1,13 @@
-const Order = require('../models/order');
+const dbConnection = require('../services/database');
 
-async function getOrder(req, res, next) {
-  let orderId = req.params.orderId;
+async function getOrder(req, res) {
+  const orderId = req.params.orderId;
 
   if (!orderId) {
     return res.status(422).send({ error: 'No orderId found in query' });
   }
 
-  order = await Order.findById({ _id: orderId }).exec();
+  const order = await dbConnection.getOrderById(orderId);
 
   if (!order) {
     return res.status(422).send({ error: 'No Order found' });

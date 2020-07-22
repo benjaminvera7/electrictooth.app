@@ -82,19 +82,28 @@ class DatabaseService {
     return;
   }
 
-  async createOrder(user) {
+  async createOrder(user, type) {
     const order = new Order({
       userId: user._id,
       status: 'PENDING',
       cart: user.cart,
-      type: 'USD',
+      type: type,
     });
 
     return await order.save();
   }
 
-  async updateOrderStatusById(orderId, status) {
-    return await Order.findOneAndUpdate({ _id: orderId }, { status: status });
+  async getOrderById(orderId) {
+    const order = await Order.findById({ _id: orderId });
+    return order;
+  }
+
+  async updateOrderStatusById(orderId, status, txHash = '') {
+    return await Order.findOneAndUpdate(
+      { _id: orderId },
+      { status: status },
+      { hash: txHash },
+    );
   }
 }
 

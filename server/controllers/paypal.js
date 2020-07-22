@@ -8,7 +8,7 @@ async function requestPayment(req, res) {
 
   const user = await dbConnection.getUserById(userId);
 
-  const order = await dbConnection.createOrder(user);
+  const order = await dbConnection.createOrder(user, 'USD');
 
   const payment = createPaymentObject(order);
 
@@ -21,51 +21,6 @@ async function requestPayment(req, res) {
 
   res.redirect(response.redirectUrl);
 }
-
-function createPaymentObject(order) {
-  const payment = paypal.getPaymentTemplate();
-
-  payment.transactions[0].invoice_number = order._id;
-  payment.transactions[0].amount.total = order.cart.total;
-
-  const items = payment.transactions[0].item_list.items;
-
-  order.cart.items.forEach((item) => {
-    let product_id = item.product_id;
-    let found = product_id.match(/coin/g);
-
-    if (!!found) {
-      items.push({
-        name: item.product_id,
-        description: 'Coins for sustainable streaming',
-        quantity: item.quantity,
-        price: item.price,
-        sku: item.product_id,
-        currency: 'USD',
-      });
-    } else {
-      let description;
-
-      if (item.song_name) {
-        description = `${item.song_name} (MP3)`;
-      } else {
-        description = item.album_name;
-      }
-
-      items.push({
-        name: item.product_id,
-        description: description,
-        quantity: item.quantity,
-        price: item.download_price,
-        sku: item.product_id,
-        currency: 'USD',
-      });
-    }
-  });
-
-  return payment;
-}
-
 
 async function returnPayment(req, res) {
   const paymentId = req.query.paymentId;
@@ -119,7 +74,49 @@ async function returnPayment(req, res) {
   return res.redirect(`${APP_URL}/download/${orderId}`);
 }
 
+function createPaymentObject(order) {
+  const payment = paypal.getPaymentTemplate();
 
+  payment.transactions[0].invoice_number = order._id;
+  payment.transactions[0].amount.total = order.cart.total;
+
+  const items = payment.transactions[0].item_list.items;
+
+  order.cart.items.forEach((item) => {
+    let product_id = item.product_id;
+    let found = product_id.match(/coin/g);
+
+    if (!!found) {
+      items.push({
+        name: item.product_id,
+        description: 'Coins for sustainable streaming',
+        quantity: item.quantity,
+        price: item.price,
+        sku: item.product_id,
+        currency: 'USD',
+      });
+    } else {
+      let description;
+
+      if (item.song_name) {
+        description = `${item.song_name} (MP3)`;
+      } else {
+        description = item.album_name;
+      }
+
+      items.push({
+        name: item.product_id,
+        description: description,
+        quantity: item.quantity,
+        price: item.download_price,
+        sku: item.product_id,
+        currency: 'USD',
+      });
+    }
+  });
+
+  return payment;
+}
 
 module.exports = {
   requestPayment,

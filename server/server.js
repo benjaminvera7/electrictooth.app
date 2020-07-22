@@ -22,7 +22,8 @@ const authRoutes = require('./routes/auth');
 const resetRoutes = require('./routes/reset');
 const paypalRoutes = require('./routes/paypal');
 const userRoutes = require('./routes/user');
-//const downloadRoutes = require('./routes/download');
+const ethRoutes = require('./routes/eth');
+const downloadRoutes = require('./routes/download');
 
 const app = express();
 
@@ -64,7 +65,8 @@ app.use('/auth', authRoutes);
 app.use('/reset', resetRoutes);
 app.use('/paypal', paypalRoutes);
 app.use('/user', requireAuth, userRoutes);
-//app.use('/download', requireAuth, downloadRoutes);
+app.use('/eth', requireAuth, ethRoutes);
+app.use('/download', requireAuth, downloadRoutes);
 
 app.get('/*', passHTML);
 
@@ -91,11 +93,11 @@ require('../server/services/passport');
 
 const streamRoutes = require('./routes/stream');
 const orderRoutes = require('./routes/order');
-const ethRoutes = require('./routes/eth');
+
 
 app.use('/stream', requireAuth, streamRoutes);
 app.use('/order', requireAuth, orderRoutes);
-app.use('/eth', requireAuth, ethRoutes);
+
 
 
 
