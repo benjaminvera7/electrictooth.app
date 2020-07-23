@@ -62,6 +62,11 @@ class DatabaseService {
     return song;
   }
 
+  async getSongById(id) {
+    const song = await Song.findById(id);
+    return song;
+  }
+
   async getUserByEmail(email) {
     const user = await User.findOne({ email: email });
     return user;

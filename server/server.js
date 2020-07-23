@@ -24,6 +24,8 @@ const paypalRoutes = require('./routes/paypal');
 const userRoutes = require('./routes/user');
 const ethRoutes = require('./routes/eth');
 const downloadRoutes = require('./routes/download');
+const streamRoutes = require('./routes/stream');
+const orderRoutes = require('./routes/order');
 
 const app = express();
 
@@ -67,6 +69,8 @@ app.use('/paypal', paypalRoutes);
 app.use('/user', requireAuth, userRoutes);
 app.use('/eth', requireAuth, ethRoutes);
 app.use('/download', requireAuth, downloadRoutes);
+app.use('/stream', requireAuth, streamRoutes);
+app.use('/order', requireAuth, orderRoutes);
 
 app.get('/*', passHTML);
 
@@ -81,30 +85,3 @@ app.use((error, req, res, next) => {
 app.listen(config.port);
 
 console.log(`ET3-Server is listening on http://localhost:${config.port}`);
-
-
-/*
-
-
-require('../server/services/passport');
-//protects routes by verifying user token
-
-
-
-const streamRoutes = require('./routes/stream');
-const orderRoutes = require('./routes/order');
-
-
-app.use('/stream', requireAuth, streamRoutes);
-app.use('/order', requireAuth, orderRoutes);
-
-
-
-
-
-
-
-
-
-
-*/

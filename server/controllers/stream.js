@@ -1,7 +1,30 @@
 const path = require('path');
 const fs = require('fs');
-const Song = require('../models/song');
+const dbConnection = require('../services/database');
 
+async function stream(req, res) {
+  const id = req.params.songId;
+  const song = await dbConnection.getSongById(id);
+
+  const music = path.join(__dirname, `../music/${song.stream_url}`);
+  const stat = fs.statSync(music);
+  const readStream = fs.createReadStream(music);
+  
+
+  res.status(206).set({
+    'Content-Type': 'audio/mpeg',
+    'Content-Length': stat.size,
+  });
+
+  readStream.on('open', () => readStream.pipe(res));
+  readStream.on('error', (err) => res.end(err));
+}
+
+module.exports = {
+  stream,
+};
+
+/*
 async function stream(req, res, next) {
   const songId = req.params.songId;
   const song = await Song.findById({ _id: songId });
@@ -82,7 +105,4 @@ async function stream(req, res, next) {
     return res.end(err);
   });
 }
-
-module.exports = {
-  stream,
-};
+*/

@@ -73,6 +73,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   }, []);
 
   const timeUpdate = () => {
+    console.log(audio.current);
     let playPercent =
       100 * (audio.current.currentTime / audio.current.duration);
 
@@ -178,6 +179,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
       });
 
       let blob = new Blob([response.data], { type: 'audio/mpeg' });
+      console.log(response)
       let url;
 
       try {
