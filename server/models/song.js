@@ -12,6 +12,7 @@ const songSchema = new Schema({
   stream_url: String,
   art_url: String,
   download_price: Number,
+  download_url: String,
   coin_price: Number,
   income: Number,
   plays: Number,

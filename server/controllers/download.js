@@ -1,148 +1,92 @@
 const path = require('path');
-const User = require('../models/user');
-const Album = require('../models/album');
-const Order = require('../models/order');
 const fs = require('fs');
+const dbConnection = require('../services/database');
 
-async function downloadFromOrder(req, res, next) {
-  let orderId = req.params.orderId;
-  let product_id = req.params.product_id;
-  let userId = req.user.id;
+async function getDownloadDetails(productId) {
+  let download;
+  let downloadPath;
+  let fileName;
+  let contentType;
 
-  if (!orderId) {
-    return res.status(422).send({ error: 'No orderId found in query' });
+  if (productId.match(/-/g)) {
+    download = await dbConnection.getSongByProductId(productId);
+    fileName = download.song_name + '.mp3';
+    downloadPath = path.join(__dirname, `../music/${fileName}`);
+    contentType = 'audio/mpeg';
+  } else {
+    download = await dbConnection.getAlbumByProductId(productId);
+    fileName = download.album_name + '.zip';
+    downloadPath = path.join(__dirname, `../music/${fileName}`);
+    contentType = 'application/zip';
   }
 
-  if (!product_id) {
-    return res.status(422).send({ error: 'No product_id found in query' });
+  return { fileName, downloadPath, contentType };
+}
+
+function fileExists(path) {
+  return new Promise((resolve, reject) => {
+    fs.exists(path, (exists) => {
+      if (exists) {
+        resolve(true);
+      } else {
+        reject(false);
+      }
+    });
+  });
+}
+
+async function downloadFromOrder(req, res) {
+  const { orderId, product_id, userId } = req.params;
+
+  if (!orderId || !product_id || !userId) {
+    return res.status(422).send({ error: 'order data not found' });
   }
 
-  //find order
-  order = await Order.findById({ _id: orderId }).exec();
+  const order = await dbConnection.getOrderById(orderId);
 
-  if (!order) {
+  if (!order || order.userId.toString() !== userId) {
     return res.status(422).send({ error: 'No Order found' });
   }
 
-  if (order.userId.toString() !== userId) {
-    return res.status(422).send({ error: 'Unauthorized' });
-  }
+  const { fileName, downloadPath, contentType } = await getDownloadDetails(
+    product_id,
+  );
 
-  let songFound = product_id.match(/-/g);
+  const exists = await fileExists(downloadPath);
 
-  if (!!songFound) {
-    try {
-      let [owned] = req.user.albumCollection.filter(
-        (item) => item.product_id === product_id,
-      );
-
-      let mp3 = owned.song_name + '.mp3';
-      const filePath = path.join(__dirname, `../music/${mp3}`);
-
-      fs.exists(filePath, function(exists) {
-        if (exists) {
-          // Content-type is very interesting part that guarantee that
-          // Web browser will handle response in an appropriate manner.
-          res.writeHead(200, {
-            'Content-Type': '	audio/mpeg',
-            'Content-Disposition': 'attachment; filename=' + mp3,
-          });
-          fs.createReadStream(filePath).pipe(res);
-        } else {
-          res.writeHead(400, { 'Content-Type': 'text/plain' });
-          res.end('ERROR File does not exist');
-        }
-      });
-    } catch (error) {
-      console.log(error);
-    }
+  if (exists) {
+    res.writeHead(200, {
+      'Content-Type': contentType,
+      'Content-Disposition': 'attachment; filename=' + fileName,
+    });
   } else {
-    try {
-      let [owned] = req.user.albumCollection.filter(
-        (album) => album.product_id === product_id,
-      );
-
-      let zip = owned.album_name + '.zip';
-      const filePath = path.join(__dirname, `../music/${zip}`);
-
-      fs.exists(filePath, function(exists) {
-        if (exists) {
-          // Content-type is very interesting part that guarantee that
-          // Web browser will handle response in an appropriate manner.
-          res.writeHead(200, {
-            'Content-Type': 'application/zip',
-            'Content-Disposition': 'attachment; filename=' + zip,
-          });
-          fs.createReadStream(filePath).pipe(res);
-        } else {
-          res.writeHead(400, { 'Content-Type': 'text/plain' });
-          res.end('ERROR File does not exist');
-        }
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    res.writeHead(400, { 'Content-Type': 'text/plain' });
+    res.end('ERROR File does not exist');
   }
+
+  fs.createReadStream(downloadPath).pipe(res);
 }
 
-async function downloadFromProfile(req, res, next) {
-  let product_id = req.params.product_id;
+async function downloadFromProfile(req, res) {
+  const product_id = req.params.product_id;
 
-  let songFound = product_id.match(/-/g);
+  const { fileName, downloadPath, contentType } = await getDownloadDetails(
+    product_id,
+  );
 
-  if (!!songFound) {
-    try {
-      let [owned] = req.user.albumCollection.filter(
-        (item) => item.product_id === product_id,
-      );
+  const exists = await fileExists(downloadPath);
 
-      let mp3 = owned.song_name + '.mp3';
-      const filePath = path.join(__dirname, `../music/${mp3}`);
-
-      fs.exists(filePath, function(exists) {
-        if (exists) {
-          // Content-type is very interesting part that guarantee that
-          // Web browser will handle response in an appropriate manner.
-          res.writeHead(200, {
-            'Content-Type': '	audio/mpeg',
-            'Content-Disposition': 'attachment; filename=' + mp3,
-          });
-          fs.createReadStream(filePath).pipe(res);
-        } else {
-          res.writeHead(400, { 'Content-Type': 'text/plain' });
-          res.end('ERROR File does not exist');
-        }
-      });
-    } catch (error) {
-      console.log(error);
-    }
+  if (exists) {
+    res.writeHead(200, {
+      'Content-Type': contentType,
+      'Content-Disposition': 'attachment; filename=' + fileName,
+    });
   } else {
-    try {
-      let [owned] = req.user.albumCollection.filter(
-        (album) => album.product_id === product_id,
-      );
-
-      let zip = owned.album_name + '.zip';
-      const filePath = path.join(__dirname, `../music/${zip}`);
-
-      fs.exists(filePath, function(exists) {
-        if (exists) {
-          // Content-type is very interesting part that guarantee that
-          // Web browser will handle response in an appropriate manner.
-          res.writeHead(200, {
-            'Content-Type': 'application/zip',
-            'Content-Disposition': 'attachment; filename=' + zip,
-          });
-          fs.createReadStream(filePath).pipe(res);
-        } else {
-          res.writeHead(400, { 'Content-Type': 'text/plain' });
-          res.end('ERROR File does not exist');
-        }
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    res.writeHead(400, { 'Content-Type': 'text/plain' });
+    res.end('ERROR File does not exist');
   }
+
+  fs.createReadStream(downloadPath).pipe(res);
 }
 
 module.exports = {
