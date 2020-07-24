@@ -12,6 +12,7 @@ import '../src/app.css';
 import * as serviceWorker from './serviceWorker';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+axios.defaults.withCredentials = true;
 
 const { store } = configureStore();
 const history = createBrowserHistory();

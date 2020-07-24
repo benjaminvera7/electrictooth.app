@@ -6,10 +6,23 @@ async function stream(req, res) {
   const id = req.params.songId;
   const song = await dbConnection.getSongById(id);
 
+  // if (req.session.stream.id !== req.params.songId) {
+  //   await dbConnection.subtractCoin(req.user);
+
+  //   req.session.stream = {
+  //     id: req.params.songId,
+  //     expire: Date.now() + 60000, //1 minute permission
+  //     owned: true,
+  //   };
+  // }
+
+  // req.session.save((err) => {
+  //   console.log(err, 'save');
+  // });
+
   const music = path.join(__dirname, `../music/${song.stream_url}`);
   const stat = fs.statSync(music);
   const readStream = fs.createReadStream(music);
-  
 
   res.status(206).set({
     'Content-Type': 'audio/mpeg',

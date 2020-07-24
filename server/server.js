@@ -6,15 +6,12 @@ const path = require('path');
 const cors = require('cors');
 const config = require('./config');
 
+const dbConnection = require('./services/database');
+const passport = require('./services/passport');
+const requireAuth = passport.requireAuth();
 
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-
-
-
-const dbConnection = require('./services/database')
-const passport = require('./services/passport');
-const requireAuth = passport.requireAuth();
 
 const albumRoutes = require('./routes/album');
 const songRoutes = require('./routes/song');
@@ -29,6 +26,12 @@ const orderRoutes = require('./routes/order');
 
 const app = express();
 
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+app.use(morgan('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+
 app.use(
   session({
     secret: '172f0e7dfc3a4cda8ac48c0ab4d62887',
@@ -38,25 +41,9 @@ app.use(
       mongooseConnection: dbConnection.db,
       ttl: 2 * 24 * 60 * 60,
     }),
+    cookie: { secure: false }
   }),
 );
-
-app.use(cors({exposedHeaders: '*'}));
-
-function passHTML(req, res) {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'), function (
-    err,
-  ) {
-    if (err) {
-      res.status(500).send(err);
-    }
-  });
-}
-
-app.use(morgan('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 app.use('/uploads', express.static(path.join(__dirname, './uploads')));
@@ -72,7 +59,15 @@ app.use('/download', requireAuth, downloadRoutes);
 app.use('/stream', requireAuth, streamRoutes);
 app.use('/order', requireAuth, orderRoutes);
 
-app.get('/*', passHTML);
+app.get('/*', function passHTML(req, res) {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'), function (
+    err,
+  ) {
+    if (err) {
+      res.status(500).send(err);
+    }
+  });
+});
 
 app.use((error, req, res, next) => {
   console.log(error);

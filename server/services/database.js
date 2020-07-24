@@ -110,6 +110,11 @@ class DatabaseService {
       { hash: txHash },
     );
   }
+
+  async subtractCoin(user) {
+    user.coins = user.coins - 1;
+    return await user.save();
+  }
 }
 
 const dbConnection = new DatabaseService();
