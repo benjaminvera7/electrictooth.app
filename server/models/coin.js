@@ -6,6 +6,7 @@ const coinSchema = new Schema({
   amount: Number,
   art_url: String,
   price: Number,
+  type: String,
 });
 
 const Coin = mongoose.model('Coin', coinSchema);

@@ -140,9 +140,9 @@ const Card = ({ auth, album, UserActions, collection }) => {
     }
   };
 
-  const addToCart = (productId) => {
+  const addToCart = (productId, type) => {
     if (auth) {
-      UserActions.addToCart(productId, auth);
+      UserActions.addToCart(productId, type, auth);
 
       toast(`Added to your Cart`);
     } else {
@@ -224,7 +224,7 @@ const Card = ({ auth, album, UserActions, collection }) => {
               }}
               rounded='0px'
               icon={() => <CartAdd color={`${theme.colors.etGreen}`} />}
-              onClick={() => addToCart(album.product_id)}
+              onClick={() => addToCart(album.product_id, album.type)}
             />
             <IconButton
               flex='1'

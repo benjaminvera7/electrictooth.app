@@ -26,9 +26,9 @@ const CoinContainer = styled(Box)`
 const Coins = ({ UserActions, auth }) => {
   const router = useRouter();
 
-  const addToCart = (coins) => {
+  const addToCart = (coins, type) => {
     if (auth) {
-      UserActions.addToCart(coins, auth);
+      UserActions.addToCart(coins, type, auth);
       toast(`Added to your Cart`);
     } else {
       router.push('/signup');
@@ -91,7 +91,7 @@ const Coins = ({ UserActions, auth }) => {
                 width='80%'
                 bg={`${theme.colors.etGreen}`}
                 color='white'
-                onClick={() => addToCart('coin100')}
+                onClick={() => addToCart('coin100', 'coin')}
                 _hover={{
                   bg: `${theme.colors.etGreen}`,
                 }}
@@ -147,7 +147,7 @@ const Coins = ({ UserActions, auth }) => {
                 width='80%'
                 bg={`${theme.colors.etGreen}`}
                 color='white'
-                onClick={() => addToCart('coin200')}
+                onClick={() => addToCart('coin200', 'coin')}
                 _hover={{
                   bg: `${theme.colors.etGreen}`,
                 }}
@@ -203,7 +203,7 @@ const Coins = ({ UserActions, auth }) => {
                 width='80%'
                 bg={`${theme.colors.etGreen}`}
                 color='white'
-                onClick={() => addToCart('coin300')}
+                onClick={() => addToCart('coin300', 'coin')}
                 _hover={{
                   bg: `${theme.colors.etGreen}`,
                 }}

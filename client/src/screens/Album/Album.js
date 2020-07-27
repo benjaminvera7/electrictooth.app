@@ -41,9 +41,9 @@ class Album extends Component {
     this.loadAlbum();
   }
 
-  addToCart = (productId) => {
+  addToCart = (productId, type) => {
     if (this.props.auth) {
-      this.props.UserActions.addToCart(productId, this.props.auth);
+      this.props.UserActions.addToCart(productId, type, this.props.auth);
       toast(`Added to your Cart`);
     } else {
       this.props.history.push('/signup');
@@ -181,7 +181,7 @@ class Album extends Component {
                       rounded='0px'
                       //icon={() => <CartAdd color={`${theme.colors.etGreen}`} />}
                       icon={() => <p>add to cart</p>}
-                      onClick={() => this.addToCart(currentAlbum.product_id)}
+                      onClick={() => this.addToCart(currentAlbum.product_id, currentAlbum.type)}
                     />
                     <IconButton
                       flex='1'
@@ -285,7 +285,7 @@ class Album extends Component {
                               icon={() => (
                                 <CartAdd color={`${theme.colors.etGreen}`} />
                               )}
-                              onClick={() => this.addToCart(song.product_id)}
+                              onClick={() => this.addToCart(song.product_id, song.type)}
                             />
                             <IconButton
                               flex='1'

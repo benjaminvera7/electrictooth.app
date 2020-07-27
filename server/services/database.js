@@ -115,6 +115,11 @@ class DatabaseService {
     user.coins = user.coins - 1;
     return await user.save();
   }
+
+  async getCoinByProductId(productId) {
+    const coin = await Coin.findOne({ product_id: productId });
+    return coin;
+  }
 }
 
 const dbConnection = new DatabaseService();

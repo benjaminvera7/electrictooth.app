@@ -34,9 +34,9 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
     }
   };
 
-  const addToCart = (productId) => {
+  const addToCart = (productId, type) => {
     if (auth) {
-      UserActions.addToCart(productId, auth);
+      UserActions.addToCart(productId, type, auth);
 
       toast(`Added to your Cart`);
     } else {
@@ -127,7 +127,7 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
         mt={1}
         width='100%'
         bg='#2d7bb8'
-        onClick={() => addToCart(album.product_id)}
+        onClick={() => addToCart(album.product_id, album.type)}
       >
         Buy Digital Album
       </Button>

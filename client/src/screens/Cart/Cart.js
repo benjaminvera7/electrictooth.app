@@ -47,6 +47,7 @@ const Cart = ({ UserActions, auth, cart }) => {
                 price,
                 amount,
                 product_id,
+                type,
               }) => (
                 <Flex borderWidth='1px' key={id} bg='white'>
                   <Box>
@@ -92,7 +93,7 @@ const Cart = ({ UserActions, auth, cart }) => {
                   <Flex p={2}>
                     <Button
                       onClick={() =>
-                        UserActions.removeFromCart(product_id, auth)
+                        UserActions.removeFromCart(product_id, type, auth)
                       }
                       color='black'
                       variant='link'
