@@ -246,7 +246,7 @@ async function addToPlaylist(req, res) {
     let exists = currentPlaylist.filter((s) => s.product_id === product_id);
 
     if (exists.length === 0) {
-      const [song] = await Song.find({ product_id: product_id });
+      const [song] = await dbConnection.getSongByProductId(product_id);
 
       let newSong = {
         product_id: song.product_id,
@@ -272,11 +272,8 @@ async function addToPlaylist(req, res) {
     let album;
     let currentPlaylist = req.user.getPlaylist();
     let newPlaylist = [];
-    album = await Album.findOne({ product_id: product_id })
-      .populate('songs')
-      .populate('artist')
-      .exec();
-
+    album = await dbConnection.getAlbumByProductId(product_id);
+    
     album.songs.forEach((song) => {
       let exists = currentPlaylist.filter((s) => s.id.toString() === song.id);
 

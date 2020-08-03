@@ -5,7 +5,11 @@ const config = require('../config');
 class EncryptionService {
   tokenForUser(user) {
     const timestamp = new Date().getTime();
-    return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
+    return jwt.encode({ sub: user, iat: timestamp }, config.secret);
+  }
+
+  decode(token) {
+    return jwt.decode(token, config.secret);
   }
 
   comparePassword(user, candidatePassword) {

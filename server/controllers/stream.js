@@ -1,5 +1,6 @@
 const fs = require('fs');
 const dbConnection = require('../services/database');
+const encrypt = require('../services/encryption');
 
 async function userOwnsProduct(user, song) {
   const albumCollection = await user.getAlbumCollection();
@@ -17,6 +18,9 @@ async function userOwnsProduct(user, song) {
 
 async function stream(req, res) {
   const { user, params, session } = req;
+  const token = req.headers.authorization;
+
+  //const user2 = encrypt.decode(token);
 
   const id = params.songId;
   const song = await dbConnection.getSongById(id);
