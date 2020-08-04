@@ -1,6 +1,7 @@
 const { APP_URL, SERVER_URL } = require('../util/url');
 const dbConnection = require('../services/database');
 const paypal = require('../services/paypal');
+const config = require('../config');
 
 async function requestPayment(req, res) {
 
@@ -71,7 +72,7 @@ async function returnPayment(req, res) {
   user.clearCart();
   user.save();
 
-  return res.redirect(`${APP_URL}/download/${orderId}`);
+  return res.redirect(`${config.host}/download/${orderId}`);
 }
 
 function createPaymentObject(order) {

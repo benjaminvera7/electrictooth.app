@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 const key = require('../key');
-const { APP_URL, SERVER_URL } = require('../util/url');
+const config = require('../config');
 
 class MailerService {
   constructor() {
@@ -32,7 +32,7 @@ class MailerService {
       html:
         '<h4><b>Reset Password</b></h4>' +
         '<p>To reset your password, complete this form:</p>' +
-        `<a href='${APP_URL}reset/${user._id}/${resetToken}'>${APP_URL}reset/${user._id}/${resetToken}</a>` +
+        `<a href='${config.host}reset/${user._id}/${resetToken}'>${config.host}reset/${user._id}/${resetToken}</a>` +
         '<br><br>' +
         '<p>--Team</p>',
     });

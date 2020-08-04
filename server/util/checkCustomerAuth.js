@@ -16,7 +16,7 @@ async function checkCustomerAuth(req, res, next) {
         return;
       }
     } catch (err) {
-      customerId = null;
+      req.user = null;
     }
   }
 
