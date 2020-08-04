@@ -7,8 +7,7 @@ const cors = require('cors');
 const config = require('./config');
 
 const dbConnection = require('./services/database');
-const passport = require('./services/passport');
-const requireAuth = passport.requireAuth();
+const checkCustomerAuth = require('./util/checkCustomerAuth');
 
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
@@ -53,11 +52,12 @@ app.use('/song', songRoutes);
 app.use('/auth', authRoutes);
 app.use('/reset', resetRoutes);
 app.use('/paypal', paypalRoutes);
-app.use('/user', requireAuth, userRoutes);
-app.use('/eth', requireAuth, ethRoutes);
-app.use('/download', requireAuth, downloadRoutes);
-app.use('/stream', requireAuth, streamRoutes);
-app.use('/order', requireAuth, orderRoutes);
+
+app.use('/user', checkCustomerAuth, userRoutes);
+app.use('/eth', checkCustomerAuth, ethRoutes);
+app.use('/download', checkCustomerAuth, downloadRoutes);
+app.use('/stream', checkCustomerAuth, streamRoutes);
+app.use('/order', checkCustomerAuth, orderRoutes);
 
 app.get('/*', function passHTML(req, res) {
   res.sendFile(path.join(__dirname, '../client/build/index.html'), function (
