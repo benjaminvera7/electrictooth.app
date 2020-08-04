@@ -1,4 +1,3 @@
-const { APP_URL, SERVER_URL } = require('../util/url');
 const dbConnection = require('../services/database');
 const paypal = require('../services/paypal');
 const config = require('../config');
