@@ -6,11 +6,7 @@ const path = require('path');
 const cors = require('cors');
 const config = require('./config');
 
-const dbConnection = require('./services/database');
 const checkCustomerAuth = require('./util/checkCustomerAuth');
-
-const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
 
 const albumRoutes = require('./routes/album');
 const songRoutes = require('./routes/song');
@@ -25,24 +21,12 @@ const orderRoutes = require('./routes/order');
 
 const app = express();
 
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(morgan('dev'));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-app.use(
-  session({
-    secret: '172f0e7dfc3a4cda8ac48c0ab4d62887',
-    saveUninitialized: false,
-    resave: false,
-    store: new MongoStore({
-      mongooseConnection: dbConnection.db,
-      ttl: 2 * 24 * 60 * 60,
-    }),
-    cookie: { secure: false }
-  }),
-);
+app.use(cors());
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 app.use('/uploads', express.static(path.join(__dirname, './uploads')));

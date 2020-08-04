@@ -60,6 +60,7 @@ async function signup(req, res) {
     password: password,
     albumCollection: [],
     playlist: [],
+    stream: [],
     cart: { items: [], total: 0 },
     reset_password_token: '',
     coins: 100,

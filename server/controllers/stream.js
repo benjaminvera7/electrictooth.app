@@ -4,41 +4,47 @@ const dbConnection = require('../services/database');
 async function userOwnsProduct(user, song) {
   const albumCollection = await user.getAlbumCollection();
 
-  let songExists = albumCollection.filter(
+  let songExists = albumCollection.some(
     (item) => item.product_id === song.product_id,
   );
 
-  let albumExists = albumCollection.filter(
+  let albumExists = albumCollection.some(
     (item) => item.id.toString() === song.album.toString(),
   );
 
-  return !(songExists.length === 0 && albumExists.length === 0);
+  return songExists || albumExists;
 }
 
 async function stream(req, res) {
-  const { user, params, session } = req;
+  const { user, params } = req;
 
   const id = params.songId;
   const song = await dbConnection.getSongById(id);
   const owns = await userOwnsProduct(user, song);
 
+
   if (!owns) {
-    if (!session.stream) {
-      session.stream = {
+
+    let [ stream ] = user.stream.filter(s => s.id === id);
+
+    if (!stream) {
+      stream = {
         id: null,
         expire: null,
       };
     }
 
     if (
-      Date.now() > session.stream.expire ||
-      session.stream.expire === null ||
-      session.stream.id !== id
+      Date.now() > stream.expire ||
+      stream.expire === null ||
+      stream.id !== id
     ) {
       await dbConnection.subtractCoin(user);
-      session.stream.id = id;
-      session.stream.expire = Date.now() + 60000; 
-      session.save();
+      stream.id = id;
+      stream.expire = Date.now() + 60000;
+      const filtered = user.stream.filter(s => s.id !== id)
+      user.stream = [...filtered, stream];
+      user.save();
     }
   }
 
