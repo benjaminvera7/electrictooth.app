@@ -1,41 +1,26 @@
 const dbConnection = require('../services/database');
+const errorHandler = require('../util/errorHandler');
 
-async function getAlbums(req, res, next) {
+async function getAlbums(req, res) {
   const currentPage = req.query.page || 1;
-  
+
   try {
-    const totalAlbums = await dbConnection.getAlbumCount();
-    const albums = await dbConnection.getAlbumsPaginationPage(currentPage)
+    const albums = await dbConnection.getAlbumsPaginationPage(currentPage);
 
-    res.status(200).json({
-      message: 'Fetched Albums successfully.',
-      albums: albums,
-      totalAlbums: totalAlbums,
-    });
-
+    res.status(200).json(albums);
   } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
-    next(err);
+    errorHandler(err, req, res);
   }
 }
 
-async function getAlbum(req, res, next) {
-  const productId = req.params.productId;
+async function getAlbum(req, res) {
+  const productId = req.params.id;
   try {
-    const album = await dbConnection.getAlbumByProductId(productId)
-    if (!album) {
-      const error = new Error('Could not find album.');
-      error.statusCode = 404;
-      throw error;
-    }
-    res.status(200).json({ message: 'Album fetched.', album: album });
+    const album = await dbConnection.getAlbumByProductId(productId);
+
+    res.status(200).json(album);
   } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
-    next(err);
+    errorHandler(err, req, res);
   }
 }
 

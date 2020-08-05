@@ -1,25 +1,18 @@
 const dbConnection = require('../services/database');
+const errorHandler = require('../util/errorHandler');
 
-async function getSong(req, res, next) {
-  const productId = req.params.productId;
+async function getSong(req, res) {
+  const productId = req.params.id;
 
   try {
     const song = await dbConnection.getSongByProductId(productId);
 
-    if (!song) {
-      const error = new Error("Could not find song.");
-      error.statusCode = 404;
-      throw error;
-    }
-    res.status(200).json({ message: "Song fetched.", song: song });
+    res.status(200).json(song);
   } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
-    next(err);
+    errorHandler(err, req, res);
   }
 }
 
 module.exports = {
-  getSong
+  getSong,
 };

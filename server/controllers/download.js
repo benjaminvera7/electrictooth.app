@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const fileExists = require('../util/fileExists');
 const dbConnection = require('../services/database');
 
 async function getDownloadDetails(productId) {
@@ -21,18 +22,6 @@ async function getDownloadDetails(productId) {
   }
 
   return { fileName, downloadPath, contentType };
-}
-
-function fileExists(path) {
-  return new Promise((resolve, reject) => {
-    fs.exists(path, (exists) => {
-      if (exists) {
-        resolve(true);
-      } else {
-        reject(false);
-      }
-    });
-  });
 }
 
 async function downloadFromOrder(req, res) {
