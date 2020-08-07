@@ -2,7 +2,7 @@ const fs = require('fs');
 const dbConnection = require('../services/database');
 
 async function userOwnsProduct(user, song) {
-  const albumCollection = await user.getAlbumCollection();
+  const albumCollection = await user.albumCollection;
 
   let songExists = albumCollection.some(
     (item) => item.product_id === song.product_id,

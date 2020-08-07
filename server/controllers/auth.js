@@ -1,4 +1,3 @@
-
 const User = require('../models/user');
 const dbConnection = require('../services/database');
 const encrypt = require('../services/encryption');
@@ -20,7 +19,7 @@ async function signin(req, res) {
     }
 
     if (isMatch) {
-      return res.json({
+      return res.status(200).json({
         userId: user._id,
         albumCollection: user.albumCollection,
         playlist: user.playlist,
@@ -68,7 +67,7 @@ async function signup(req, res) {
 
   await encrypt.encryptUserPassword(user);
 
-  res.json({
+  return res.status(200).json({
     userId: user._id,
     username: username,
     albumCollection: [],

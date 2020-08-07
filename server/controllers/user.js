@@ -18,14 +18,13 @@ async function addToCart(req, res) {
       break;
   }
 
-  res.status(200).json({ message: 'cart updated', cart: cart });
+  res.status(200).json(cart);
 }
 
 async function addSongToCart(productId, user) {
   const song = await dbConnection.getSongByProductId(productId);
-
   let newCart = { items: [], total: 0 };
-  let currentCart = user.getCart();
+  let currentCart = user.cart;
 
   if (currentCart.length === 0) {
     currentCart = newCart;
@@ -54,25 +53,22 @@ async function addSongToCart(productId, user) {
       download_price: song.download_price,
       art_url: song.art_url,
       quantity: 1,
-      type: song.type
+      type: song.type,
     });
 
     newCart.total = currentCart.total + song.download_price;
-
-    user.updateCart(newCart);
-    user.save();
   }
 
-  const updatedCart = user.getCart();
-  return updatedCart;
+  const { cart } = await dbConnection.updateCart(req.user, newCart);
+
+  return cart;
 }
 
 async function addAlbumToCart(productId, user) {
+  let updatedCart;
   let album = await dbConnection.getAlbumByProductId(productId);
-
   let newCart = { items: [], total: 0 };
-
-  let currentCart = user.getCart();
+  let currentCart = user.cart;
 
   if (currentCart.length === 0) {
     currentCart = newCart;
@@ -98,24 +94,21 @@ async function addAlbumToCart(productId, user) {
       download_price: album.download_price,
       art_url: album.art_url,
       quantity: 1,
-      type: album.type
+      type: album.type,
     });
 
     newCart.total = currentCart.total + album.download_price;
-
-    user.updateCart(newCart);
-    user.save();
   }
 
-  const updatedCart = user.getCart();
-  return updatedCart;
+  const { cart } = await dbConnection.updateCart(user, newCart);
+
+  return cart;
 }
 
 async function addCoinToCart(productId, user) {
   let coin = await dbConnection.getCoinByProductId(productId);
-
   let newCart = { items: [], total: 0 };
-  let currentCart = user.getCart();
+  let currentCart = user.cart;
 
   if (currentCart.length === 0) {
     currentCart = newCart;
@@ -140,17 +133,14 @@ async function addCoinToCart(productId, user) {
       art_url: coin.art_url,
       price: coin.price,
       quantity: 1,
-      type: coin.type
+      type: coin.type,
     });
 
     newCart.total = currentCart.total + coin.price;
-
-    user.updateCart(newCart);
-    user.save();
   }
+  let { cart } = await dbConnection.updateCart(user, newCart);
 
-  const updatedCart = user.getCart();
-  return updatedCart;
+  return cart;
 }
 
 async function removeFromCart(req, res) {
@@ -171,14 +161,14 @@ async function removeFromCart(req, res) {
       break;
   }
 
-  res.status(200).json({ message: 'cart updated', cart: cart });
+  res.status(200).json(cart);
 }
 
 async function removeSongFromCart(productId, user) {
   const song = await dbConnection.getSongByProductId(productId);
 
   let newCart = { items: [], total: 0 };
-  let currentCart = user.getCart();
+  let currentCart = user.cart;
 
   let items = currentCart.items.filter(
     ({ product_id }) => product_id !== song.product_id,
@@ -189,17 +179,15 @@ async function removeSongFromCart(productId, user) {
   newCart.total =
     currentCart.total > 0 ? currentCart.total - song.download_price : 0;
 
-  user.updateCart(newCart);
-  user.save();
+  let { cart } = await dbConnection.updateCart(user, newCart);
 
-  return newCart;
+  return vart;
 }
 
 async function removeAlbumFromCart(productId, user) {
   const album = await dbConnection.getAlbumByProductId(productId);
-
   let newCart = { items: [], total: 0 };
-  let currentCart = user.getCart();
+  let currentCart = user.cart;
 
   let items = currentCart.items.filter(
     ({ product_id }) => product_id !== album.product_id,
@@ -210,17 +198,19 @@ async function removeAlbumFromCart(productId, user) {
   newCart.total =
     currentCart.total > 0 ? currentCart.total - album.download_price : 0;
 
-  user.updateCart(newCart);
-  user.save();
+  let { cart } = await dbConnection.updateCart(user, newCart);
 
-  return newCart;
+  return cart;
 }
 
 async function removeCoinFromCart(productId, user) {
   let coin = await dbConnection.getCoinByProductId(productId);
 
-  let newCart = { items: [], total: 0 };
-  let currentCart = user.getCart();
+  let newCart = {
+    items: [],
+    total: 0,
+  };
+  let currentCart = user.cart;
 
   let items = currentCart.items.filter(
     ({ product_id }) => product_id !== coin.product_id,
@@ -230,10 +220,8 @@ async function removeCoinFromCart(productId, user) {
 
   newCart.total = currentCart.total > 0 ? currentCart.total - coin.price : 0;
 
-  user.updateCart(newCart);
-  user.save();
-
-  return newCart;
+  let { cart } = await dbConnection.updateCart(user, newCart);
+  return cart;
 }
 
 async function addToPlaylist(req, res) {
@@ -241,11 +229,11 @@ async function addToPlaylist(req, res) {
   let found = product_id.match(/-/g);
 
   if (!!found) {
-    let currentPlaylist = req.user.getPlaylist();
+    let currentPlaylist = req.user.playlist;
     let newPlaylist = [];
-    let exists = currentPlaylist.filter((s) => s.product_id === product_id);
+    let exists = currentPlaylist.some((s) => s.product_id === product_id);
 
-    if (exists.length === 0) {
+    if (!exists) {
       const [song] = await dbConnection.getSongByProductId(product_id);
 
       let newSong = {
@@ -261,23 +249,19 @@ async function addToPlaylist(req, res) {
 
     newPlaylist = [...newPlaylist, ...currentPlaylist];
 
-    req.user.updatePlaylist(newPlaylist);
-    req.user.save();
+    let { playlist } = await dbConnection.updatePlaylist(req.user, newPlaylist);
 
-    res.status(200).json({
-      message: 'Updated user playlist success',
-      playlist: newPlaylist,
-    });
+    res.status(200).json(playlist);
   } else {
     let album;
-    let currentPlaylist = req.user.getPlaylist();
+    let currentPlaylist = req.user.playlist;
     let newPlaylist = [];
     album = await dbConnection.getAlbumByProductId(product_id);
-    
-    album.songs.forEach((song) => {
-      let exists = currentPlaylist.filter((s) => s.id.toString() === song.id);
 
-      if (exists.length === 0) {
+    album.songs.forEach((song) => {
+      let exists = currentPlaylist.some((s) => s.id.toString() === song.id);
+
+      if (!exists) {
         let newSong = {
           product_id: song.product_id,
           id: song._id,
@@ -292,49 +276,29 @@ async function addToPlaylist(req, res) {
 
     newPlaylist = [...newPlaylist, ...currentPlaylist];
 
-    req.user.updatePlaylist(newPlaylist);
-    req.user.save();
+    let { playlist } = await dbConnection.updatePlaylist(req.user, newPlaylist);
 
-    res.status(200).json({
-      message: 'Fetched user playlist success',
-      playlist: newPlaylist,
-    });
+    res.status(200).json(playlist);
   }
 }
 
 async function removeFromPlaylist(req, res) {
   let product_id = req.params.product_id;
-  let currentPlaylist = req.user.getPlaylist();
+  let currentPlaylist = req.user.playlist;
 
   let newPlaylist = currentPlaylist.filter((s) => s.product_id !== product_id);
 
-  req.user.updatePlaylist(newPlaylist);
-  req.user.save();
+  let { playlist } = await dbConnection.updatePlaylist(req.user, newPlaylist);
 
-  res.status(200).json({
-    message: 'Updated user playlist success',
-    playlist: newPlaylist,
-  });
+  res.status(200).json(playlist);
 }
 
 function getUser(req, res) {
-  res.status(200).json({ message: 'Fetched user success', user: req.user });
+  res.status(200).json(req.user);
 }
 
 function getCoins(req, res) {
-  res
-    .status(200)
-    .json({ message: 'Fetched user coins', coins: req.user.coins });
-}
-
-function exchangeCoins(req, res) {
-  const type = req.body.type;
-  const amount = req.body.amount;
-
-  req.user.exchangeCoins(type, amount);
-  let coins = req.user.getCoins();
-
-  res.status(200).json({ message: 'Fetched user coins', coins: coins });
+  res.status(200).json(req.user.coins);
 }
 
 module.exports = {
@@ -342,7 +306,6 @@ module.exports = {
   removeFromCart,
   getUser,
   getCoins,
-  exchangeCoins,
   addToPlaylist,
   removeFromPlaylist,
 };

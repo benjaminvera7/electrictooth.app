@@ -3,7 +3,6 @@ const paypal = require('../services/paypal');
 const config = require('../config');
 
 async function requestPayment(req, res) {
-
   const userId = req.body.userId;
 
   const user = await dbConnection.getUserById(userId);
@@ -40,7 +39,6 @@ async function returnPayment(req, res) {
   let order = await dbConnection.updateOrderStatusById(orderId, 'SUCCESSFUL');
   let user = await dbConnection.getUserById(order.userId);
 
-
   /* Add coins to user account */
   let coins = 0;
   for (const item of order.cart.items) {
@@ -49,7 +47,8 @@ async function returnPayment(req, res) {
       coins = coins + parseInt(item.product_id.substring(4, 7), 10);
     }
   }
-  user.exchangeCoins('ADD', coins);
+
+  await dbConnection.addCoin(user, coins);
 
   /* Add albums to user account */
   let albumArray = [];
@@ -65,11 +64,9 @@ async function returnPayment(req, res) {
       }
     }
   }
-  user.addToAlbumCollection(albumArray);
 
-  /* Clear cart & save */
-  user.clearCart();
-  user.save();
+  await dbConnection.addToAlbumCollection(user, albumArray);
+  await dbConnection.clearCart(user);
 
   return res.redirect(`${config.host}/download/${orderId}`);
 }

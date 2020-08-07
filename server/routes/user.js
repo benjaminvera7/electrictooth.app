@@ -8,6 +8,5 @@ router.delete('/cart/remove/:product_id', userController.removeFromCart);
 router.post('/playlist/add/:product_id', userController.addToPlaylist,);
 router.delete('/playlist/remove/:product_id', userController.removeFromPlaylist,);
 router.get('/coins', userController.getCoins);
-router.post('/coins/exchange', userController.exchangeCoins);
 
 module.exports = router;

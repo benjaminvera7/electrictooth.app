@@ -41,7 +41,7 @@ export default handleActions(
       type: GET_ALBUMS,
       onSuccess: (state, { payload }) => {
         const newState = { ...state, updatedAt: getDate(), error: null };
-        newState.albums = payload.data.albums;
+        newState.albums = payload.data;
         return newState;
       },
       onFailure: (state, { payload }) => {
@@ -52,7 +52,7 @@ export default handleActions(
       type: GET_ALBUM_BY_ID,
       onSuccess: (state, { payload }) => {
         const newState = { ...state, updatedAt: getDate(), error: null };
-        newState.currentAlbum = payload.data.album;
+        newState.currentAlbum = payload.data;
         return newState;
       },
       onFailure: (state, { payload }) => {

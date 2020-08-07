@@ -14,7 +14,7 @@ async function getAlbums(req, res) {
 }
 
 async function getAlbum(req, res) {
-  const productId = req.params.id;
+  const productId = req.params.productId;
   try {
     const album = await dbConnection.getAlbumByProductId(productId);
 

@@ -13,10 +13,7 @@ async function getOrder(req, res) {
     return res.status(422).send({ error: 'No Order found' });
   }
 
-  res.status(200).json({
-    message: 'Order fetched successfully.',
-    items: order.cart.items,
-  });
+  res.status(200).json(order);
 }
 
 module.exports = {

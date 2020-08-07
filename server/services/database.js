@@ -6,6 +6,7 @@ const Album = require('../models/album');
 const Song = require('../models/song');
 const User = require('../models/user');
 const Order = require('../models/order');
+const Coin = require('../models/coin');
 
 //this is needed to use populate()
 require('../models/song');
@@ -119,6 +120,46 @@ class DatabaseService {
   async getCoinByProductId(productId) {
     const coin = await Coin.findOne({ product_id: productId });
     return coin;
+  }
+
+  async addCoin(user, amount) {
+    user.coins = user.coins + amount;
+    return await user.save();
+  }
+
+  async subtractCoin(user, amount) {
+    user.coins = user.coins + amount;
+    return await user.save();
+  }
+
+  async addAlbumToCollection(user, albums) {
+    user.albumCollection = [...user.albumCollection, ...albums];
+    return await user.save();
+  }
+
+  async clearCart(user) {
+    user.cart = { items: [], total: 0 };
+    return await user.save();
+  }
+
+  async updateCart(user, cart) {
+    user.cart = cart;
+    return await user.save();
+  }
+
+  async updatePlaylist(user, playlist) {
+    user.playlist = playlist;
+    return await user.save();
+  }
+
+  async addIncome(song) {
+    song.income = song.income + 1;
+    return await song.save();
+  }
+
+  async addPlay(song) {
+    song.plays = song.plays + 1;
+    return await song.save();
   }
 }
 

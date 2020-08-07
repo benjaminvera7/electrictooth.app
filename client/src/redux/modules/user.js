@@ -38,7 +38,7 @@ const _addToCart = (product_id, type, token) => {
 const _removeFromCart = (product_id, type, token) => {
   return axios({
     url: `/user/cart/remove/${product_id}`,
-    method: 'POST',
+    method: 'DELETE',
     data: {
       productId: product_id,
       type: type,
@@ -55,18 +55,6 @@ const _getCoins = (token) => {
   });
 };
 
-const _exchangeCoins = (token, type, amount) => {
-  return axios({
-    url: `/user/coins/exchange`,
-    method: 'POST',
-    data: {
-      type: type,
-      amount: amount,
-    },
-    headers: { Authorization: token },
-  });
-};
-
 const _addToPlaylist = (token, productId) => {
   return axios({
     url: `user/playlist/add/${productId}`,
@@ -78,7 +66,7 @@ const _addToPlaylist = (token, productId) => {
 const _removeFromPlaylist = (token, productId) => {
   return axios({
     url: `/user/playlist/remove/${productId}`,
-    method: 'POST',
+    method: 'DELETE',
     headers: { Authorization: token },
   });
 };
@@ -95,8 +83,6 @@ export const addToPlaylist = createAction(ADD_TO_PLAYLIST, _addToPlaylist);
 export const GET_COINS = 'user/GET_COINS';
 export const getCoins = createAction(GET_COINS, _getCoins);
 
-export const EXCHANGE_COINS = 'user/EXCHANGE_COINS';
-export const exchangeCoins = createAction(EXCHANGE_COINS, _exchangeCoins);
 
 export const GET_USER = 'user/GET_USER';
 export const getUser = createAction(GET_USER, _getUser);
@@ -144,9 +130,7 @@ export default handleActions(
           error: null,
         };
 
-        let newPlaylist = payload.data.playlist;
-
-        newState.playlist = newPlaylist;
+        newState.playlist = payload.data;
 
         return newState;
       },
@@ -163,7 +147,7 @@ export default handleActions(
           error: null,
         };
 
-        let newPlaylist = payload.data.playlist;
+        let newPlaylist = payload.data;
 
         newState.playlist = newPlaylist;
 
@@ -177,11 +161,11 @@ export default handleActions(
       type: GET_USER,
       onSuccess: (state, { payload }) => {
         const newState = { ...state, updatedAt: getDate(), error: null };
-        newState.albumCollection = payload.data.user.albumCollection;
-        newState.coins = payload.data.user.coins;
-        newState.username = payload.data.user.username;
-        newState.cart = payload.data.user.cart;
-        newState.playlist = payload.data.user.playlist;
+        newState.albumCollection = payload.data.albumCollection;
+        newState.coins = payload.data.coins;
+        newState.username = payload.data.username;
+        newState.cart = payload.data.cart;
+        newState.playlist = payload.data.playlist;
         return newState;
       },
       onFailure: (state, { payload }) => {
@@ -239,45 +223,33 @@ export default handleActions(
       type: ADD_TO_CART,
       onSuccess: (state, { payload }) => {
         const newState = { ...state, updatedAt: getDate(), error: null };
-        newState.cart = payload.data.cart;
+        newState.cart = payload.data;
         return newState;
       },
       onFailure: (state, { payload }) => {
-        return { ...state, error: payload.response.data.error };
+        return { ...state, error: 'err'};
       },
     }),
     ...pender({
       type: REMOVE_FROM_CART,
       onSuccess: (state, { payload }) => {
         const newState = { ...state, updatedAt: getDate(), error: null };
-        newState.cart = payload.data.cart;
+        newState.cart = payload.data;
         return newState;
       },
       onFailure: (state, { payload }) => {
-        return { ...state, error: payload.response.data.error };
+        return { ...state, error: 'err'};
       },
     }),
     ...pender({
       type: GET_COINS,
       onSuccess: (state, { payload }) => {
         const newState = { ...state, updatedAt: getDate(), error: null };
-        newState.coins = payload.data.coins;
+        newState.coins = payload.data;
         return newState;
       },
       onFailure: (state, { payload }) => {
-        return { ...state, error: payload.response.data.error };
-      },
-    }),
-    ...pender({
-      type: EXCHANGE_COINS,
-      onSuccess: (state, { payload }) => {
-        const newState = { ...state, updatedAt: getDate(), error: null };
-        localStorage.setItem('coins', payload.data.coins);
-        newState.coins = payload.data.coins;
-        return newState;
-      },
-      onFailure: (state, { payload }) => {
-        return { ...state, error: payload.response.data.error };
+        return { ...state, error: 'err'};
       },
     }),
     [SIGN_OUT]: (state) => {

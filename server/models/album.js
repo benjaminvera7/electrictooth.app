@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
 const albumSchema = new Schema({
   product_id: String,
   artist: { type: Schema.Types.ObjectId, ref: 'Artist' },

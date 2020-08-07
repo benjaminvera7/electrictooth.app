@@ -1,15 +1,12 @@
-
 const Order = require('../models/order');
-const dbConnection = require('../services/database')
+const dbConnection = require('../services/database');
 
 async function requestPayment(req, res) {
   const user = req.user;
 
   const order = await dbConnection.createOrder(user, 'ETH');
 
-  res
-    .status(200)
-    .json({ message: 'Order created', order: order, error: false });
+  res.status(200).json(order);
 }
 
 async function returnPayment(req, res) {
@@ -21,7 +18,7 @@ async function returnPayment(req, res) {
     'SUCCESSFUL',
     txHash,
   );
-  
+
   let user = req.user;
   let cart = req.user.cart;
   let coins = 0;
@@ -33,31 +30,27 @@ async function returnPayment(req, res) {
     }
   }
 
-  user.exchangeCoins('ADD', coins);
+  await dbConnection.addCoin(user, coins);
 
   let albumArray = [];
 
   for (const item of cart.items) {
     let found = item.product_id.match(/ET/g);
     if (!!found) {
-      let hasAlbum = user.albumCollection.filter(
+      let hasAlbum = user.albumCollection.some(
         (album) => album.product_id === item.product_id,
       );
 
-      if (hasAlbum.length == 0) {
+      if (!hasAlbum.length) {
         albumArray.push(item);
       }
     }
   }
 
-  user.addToAlbumCollection(albumArray);
-  user.clearCart();
+  await dbConnection.addAlbumToCollection(user, albumArray);
+  await dbConnection.clearCart(user);
 
-  user.save();
-
-  return res
-    .status(200)
-    .json({ message: 'SUCCESSFUL', order: order, error: false });
+  return res.status(200).json(order);
 }
 
 module.exports = {
