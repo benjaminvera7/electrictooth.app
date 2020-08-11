@@ -15,6 +15,7 @@ import * as userActions from 'redux/modules/user';
 import { PlaylistAdd, Download as DownloadIcon } from 'components/Icons';
 import { bindActionCreators } from 'redux';
 import toast from 'util/toast';
+import theme from 'theme.js';
 
 class Download extends Component {
   state = {
@@ -26,10 +27,12 @@ class Download extends Component {
       url: `/order/${this.props.match.params.orderId}`,
       method: 'GET',
       headers: { Authorization: this.props.auth },
-    }).then(({ data }) =>
+    }).then(({ data }) => {
+      console.log(data);
       this.setState({
-        downloads: data.items,
-      }),
+        downloads: data.cart.items,
+      });
+    }
     );
   };
 
@@ -52,7 +55,7 @@ class Download extends Component {
 
       let songFound = product_id.match(/-/g);
       if (!!songFound) {
-        link.setAttribute('download', `${songName}.mp3`);
+        link.setAttribute('download', `${songName}.mp3`); 
       } else {
         link.setAttribute('download', `${albumName}.zip`);
       }
@@ -72,9 +75,15 @@ class Download extends Component {
 
   render() {
     return (
-      <Flex justify='center'>
+      <Flex justify='center' mt='40px'>
         <Box color='white' maxW='1440px' flex='1'>
-          <Heading px={4} pt={2} as='h2' size='2xl'>
+          <Heading
+            px={4}
+            py={2}
+            as='h2'
+            size='2xl'
+            color={`${theme.colors.etGreen}`}
+          >
             download
           </Heading>
 
@@ -88,31 +97,26 @@ class Download extends Component {
             </Heading>
           </Flex>
 
-          <Stack m={2}>
+          <Stack px={{ xs: 2, xl: 0 }}>
             {this.state.downloads.length > 0 &&
               this.state.downloads.map((album) => (
-                <Flex
-                  py={2}
-                  borderWidth='1px'
-                  rounded='lg'
-                  key={album.product_id}
-                >
+                <Flex borderWidth='1px' bg='white' key={album.product_id}>
                   <Box>
-                    <Image
-                      src={`/uploads/${album.art_url}`}
-                      maxWidth='96px'
-                      px={2}
-                    />
+                    <Image src={`/uploads/${album.art_url}`} maxWidth='165px' />
                   </Box>
-                  <Box>
-                    <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']}>
+                  <Box p={2}>
+                    <Heading
+                      as='h6'
+                      fontSize={['sm', 'md', 'lg', 'xl']}
+                      color='gray.600'
+                    >
                       {album.album_name && album.album_name}
                       {album.song_name && `${album.song_name} (MP3)`}
                     </Heading>
                     <Text
                       fontSize={['xs', 'sm', 'md', 'lg']}
                       mb={4}
-                      color='grey'
+                      color='gray.500'
                     >
                       {album.artist_name}
                     </Text>
@@ -126,24 +130,32 @@ class Download extends Component {
                       direction='column'
                       justify='center'
                     >
-                      <Heading fontSize={['xs', 'sm', 'md', 'lg']}>
+                      <Heading
+                        as='h6'
+                        fontSize={['sm', 'md', 'lg', 'xl']}
+                        color='gray.600'
+                      >
                         {parseInt(album.product_id.substring(4, 7), 10)} coins
                       </Heading>
                     </Flex>
                   ) : (
-                    <Flex
-                      align='center'
-                      px={2}
-                      direction='column'
-                      justify='center'
-                    >
+                    <Flex direction='column'>
                       <IconButton
-                        variant='solid'
+                        flex='1'
+                        variant='ghost'
                         variantColor='teal'
-                        aria-label='Call Sage'
+                        aria-label='Download album'
                         fontSize='20px'
-                        icon={DownloadIcon}
-                        mb={2}
+                        style={{
+                          borderLeft: '1px',
+                          borderBottom: '1px',
+                          borderStyle: 'solid',
+                          borderColor: 'rgba(5, 174, 165, 0.3)',
+                        }}
+                        rounded='0px'
+                        icon={() => (
+                          <DownloadIcon color={`${theme.colors.etGreen}`} />
+                        )}
                         onClick={(e) =>
                           this.handleSubmit(
                             e,
@@ -154,11 +166,20 @@ class Download extends Component {
                         }
                       />
                       <IconButton
-                        variant='solid'
+                        flex='1'
+                        variant='ghost'
                         variantColor='teal'
-                        aria-label='Call Sage'
+                        aria-label='Add to playlist'
                         fontSize='20px'
-                        icon={PlaylistAdd}
+                        rounded='0px'
+                        style={{
+                          borderLeft: '1px',
+                          borderStyle: 'solid',
+                          borderColor: 'rgba(5, 174, 165, 0.3)',
+                        }}
+                        icon={() => (
+                          <PlaylistAdd color={`${theme.colors.etGreen}`} />
+                        )}
                         onClick={(e) => this.addToPlaylist(album.product_id)}
                       />
                     </Flex>

@@ -66,7 +66,7 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
 
   return (
     <Flex justify='center' mt='40px'>
-      <ProfileCard color='white' maxW='1440px' flex='1' mb={4}>
+      <ProfileCard color='white' maxW='1440px' flex='1' mb={4} px={4}>
         <Flex justify='space-between'>
           <Heading
             px={4}
@@ -105,7 +105,7 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <Stack px={{ xs: 2, lg: 0 }}>
+              <Stack px={{ xs: 2, xl: 0 }}>
                 {albumCollection.length > 0 ? (
                   albumCollection.map((album, i) => (
                     <Flex borderWidth='1px' key={i} bg='white'>

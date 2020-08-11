@@ -25,7 +25,8 @@ async function getDownloadDetails(productId) {
 }
 
 async function downloadFromOrder(req, res) {
-  const { orderId, product_id, userId } = req.params;
+  const { orderId, product_id } = req.params;
+  const userId = req.user._id;
 
   if (!orderId || !product_id || !userId) {
     return res.status(422).send({ error: 'order data not found' });
@@ -33,7 +34,8 @@ async function downloadFromOrder(req, res) {
 
   const order = await dbConnection.getOrderById(orderId);
 
-  if (!order || order.userId.toString() !== userId) {
+
+  if (!order || order.userId.toString() !== userId.toString()) {
     return res.status(422).send({ error: 'No Order found' });
   }
 

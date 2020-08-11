@@ -65,7 +65,7 @@ async function returnPayment(req, res) {
     }
   }
 
-  await dbConnection.addToAlbumCollection(user, albumArray);
+  await dbConnection.addAlbumToCollection(user, albumArray);
   await dbConnection.clearCart(user);
 
   return res.redirect(`${config.host}/download/${orderId}`);
