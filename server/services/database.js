@@ -8,6 +8,8 @@ const User = require('../models/user');
 const Order = require('../models/order');
 const Coin = require('../models/coin');
 
+const Products = require('../models/products');
+
 //this is needed to use populate()
 require('../models/song');
 require('../models/artist');
@@ -50,11 +52,13 @@ class DatabaseService {
     return albums;
   }
 
-  async getAlbumByProductId(productId) {
-    const album = await Album.findOne({ product_id: productId })
-      .populate('songs')
-      .populate('artist');
+  async getProducts() {
+    const products = Products.find();
+    return products;
+  }
 
+  async getAlbumByProductId(productId) {
+    const album = await Album.findOne({ product_id: productId }).populate('songs').populate('artist');
     return album;
   }
 
@@ -105,11 +109,7 @@ class DatabaseService {
   }
 
   async updateOrderStatusById(orderId, status, txHash = '') {
-    return await Order.findOneAndUpdate(
-      { _id: orderId },
-      { status: status },
-      { hash: txHash },
-    );
+    return await Order.findOneAndUpdate({ _id: orderId }, { status: status }, { hash: txHash });
   }
 
   async subtractCoin(user) {
