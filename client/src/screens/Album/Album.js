@@ -1,19 +1,9 @@
 import React, { Component, Fragment } from 'react';
-import {
-  Box,
-  Flex,
-  Text,
-  Image,
-  Heading,
-  Stack,
-  Badge,
-  Button,
-  IconButton,
-} from '@chakra-ui/core';
+import { Box, Flex, Text, Image, Heading, Stack, Badge, Button, IconButton } from '@chakra-ui/core';
 import { PlaylistAdd, CartAdd, Play } from 'components/Icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as albumActions from 'redux/modules/album';
+import * as productsActions from 'redux/modules/products';
 import * as userActions from 'redux/modules/user';
 import toast from 'util/toast';
 import { FADE_IN } from 'style/animations';
@@ -33,8 +23,8 @@ const CardAnimation = styled(Flex)`
 
 class Album extends Component {
   loadAlbum = async () => {
-    const { AlbumActions, match } = this.props;
-    await AlbumActions.getAlbumById(match.params.productId);
+    const { ProductsActions, match } = this.props;
+    await ProductsActions.getAlbumById(match.params.productId);
   };
 
   componentDidMount() {
@@ -71,55 +61,21 @@ class Album extends Component {
 
         {!pending && (
           <CardAnimation justify='center' py={4} mt='40px'>
-            <AlbumCardContainer
-              color='white'
-              maxW='1440px'
-              flex='1'
-              px='2'
-            >
+            <AlbumCardContainer color='white' maxW='1440px' flex='1' px='2'>
               <Box display={{ md: 'flex' }} direction='column' bg='white'>
                 <Box color='black' width='100%'>
-                  <Image
-                    src={`/uploads/${currentAlbum.art_url}`}
-                    width='100%'
-                  />
+                  <Image src={`/uploads/${currentAlbum.img_url}`} width='100%' />
                 </Box>
-                <Flex
-                  color='black'
-                  width='100%'
-                  justify='space-between'
-                  style={{ position: 'relative' }}
-                  pb={16}
-                >
-                  <Box
-                    color='black'
-                    width='100%'
-                    px={{ xs: 2, sm: 4 }}
-                    py={{ xs: 4, sm: 4 }}
-                  >
+                <Flex color='black' width='100%' justify='space-between' style={{ position: 'relative' }} pb={16}>
+                  <Box color='black' width='100%' px={{ xs: 2, sm: 4 }} py={{ xs: 4, sm: 4 }}>
                     <Box d='flex' alignItems='baseline' mb={2} color='white'>
-                      <Badge
-                        px='2'
-                        bg={`${theme.colors.etGreen}`}
-                        variantColor='white'
-                        mr={1}
-                      >
+                      <Badge px='2' bg={`${theme.colors.etGreen}`} variantColor='white' mr={1}>
                         Disco
                       </Badge>
-                      <Badge
-                        px='2'
-                        bg={`${theme.colors.etGreen}`}
-                        variantColor='white'
-                        mr={1}
-                      >
+                      <Badge px='2' bg={`${theme.colors.etGreen}`} variantColor='white' mr={1}>
                         House
                       </Badge>
-                      <Badge
-                        px='2'
-                        bg={`${theme.colors.etGreen}`}
-                        variantColor='white'
-                        mr={1}
-                      >
+                      <Badge px='2' bg={`${theme.colors.etGreen}`} variantColor='white' mr={1}>
                         Indie
                       </Badge>
                     </Box>
@@ -147,25 +103,15 @@ class Album extends Component {
                       color='gray.500'
                       fontSize={['xs', 'sm', 'md', 'lg']}
                     >
-                      {currentAlbum.artist
-                        ? currentAlbum.artist.name
-                        : undefined}
+                      {currentAlbum.artist ? currentAlbum.artist.name : undefined}
                     </Text>
                   </Box>
 
-                  <Box
-                    color='black'
-                    px={{ xs: 2, sm: 4 }}
-                    py={{ xs: 2, sm: 4 }}
-                    textAlign='right'
-                  >
-                    ${currentAlbum.download_price}.00
+                  <Box color='black' px={{ xs: 2, sm: 4 }} py={{ xs: 2, sm: 4 }} textAlign='right'>
+                    ${currentAlbum.price}.00
                   </Box>
 
-                  <Flex
-                    style={{ position: 'absolute', bottom: 0, left: 0 }}
-                    width='100%'
-                  >
+                  <Flex style={{ position: 'absolute', bottom: 0, left: 0 }} width='100%'>
                     <IconButton
                       flex='1'
                       variant='ghost'
@@ -199,9 +145,7 @@ class Album extends Component {
                       //   <PlaylistAdd color={`${theme.colors.etGreen}`} />
                       // )}
                       icon={() => <p>add to playlist</p>}
-                      onClick={() =>
-                        this.addToPlaylist(currentAlbum.product_id)
-                      }
+                      onClick={() => this.addToPlaylist(currentAlbum.product_id)}
                     />
                   </Flex>
                 </Flex>
@@ -213,37 +157,21 @@ class Album extends Component {
                     ? currentAlbum.songs.map((song, i) => (
                         <Flex w='100%' borderWidth='1px' key={i} bg='white'>
                           <Box pr={2}>
-                            <Image
-                              src={`/uploads/${song.art_url}`}
-                              maxWidth='100px'
-                            />
+                            <Image src={`/uploads/${song.img_url}`} maxWidth='100px' />
                           </Box>
 
                           <Flex direction='column' w='100%' p={2}>
-                            <Text
-                              color='gray.600'
-                              fontSize={['sm', 'md', 'lg', 'xl']}
-                            >
+                            <Text color='gray.600' fontSize={['sm', 'md', 'lg', 'xl']}>
                               <b>{song.song_name}</b>
                             </Text>
-                            <Text
-                              color='gray.500'
-                              fontSize={['xs', 'sm', 'md', 'lg']}
-                            >
-                              {currentAlbum.artist
-                                ? currentAlbum.artist.name
-                                : undefined}
+                            <Text color='gray.500' fontSize={['xs', 'sm', 'md', 'lg']}>
+                              {currentAlbum.artist ? currentAlbum.artist.name : undefined}
                             </Text>
                           </Flex>
 
-                          <Flex
-                            p={2}
-                            direction='column'
-                            justify='center'
-                            align='center'
-                          >
+                          <Flex p={2} direction='column' justify='center' align='center'>
                             <Text px={2} color='#222'>
-                              ${song.download_price}.00
+                              ${song.price}.00
                             </Text>
                           </Flex>
 
@@ -282,9 +210,7 @@ class Album extends Component {
                                 borderColor: 'rgba(5, 174, 165, 0.3)',
                               }}
                               rounded='0px'
-                              icon={() => (
-                                <CartAdd color={`${theme.colors.etGreen}`} />
-                              )}
+                              icon={() => <CartAdd color={`${theme.colors.etGreen}`} />}
                               onClick={() => this.addToCart(song.product_id, song.type)}
                             />
                             <IconButton
@@ -299,14 +225,8 @@ class Album extends Component {
                                 borderStyle: 'solid',
                                 borderColor: 'rgba(5, 174, 165, 0.3)',
                               }}
-                              icon={() => (
-                                <PlaylistAdd
-                                  color={`${theme.colors.etGreen}`}
-                                />
-                              )}
-                              onClick={() =>
-                                this.addToPlaylist(song.product_id)
-                              }
+                              icon={() => <PlaylistAdd color={`${theme.colors.etGreen}`} />}
+                              onClick={() => this.addToPlaylist(song.product_id)}
                             />
                           </Flex>
                         </Flex>
@@ -324,15 +244,15 @@ class Album extends Component {
 
 export default connect(
   (state) => ({
+    currentAlbum: state.products.currentAlbum,
     albumCollection: state.user.albumCollection,
-    currentAlbum: state.album.currentAlbum,
     playlist: state.user.playlist,
     auth: state.user.authenticated,
     updatedAt: state.album.updatedAt,
-    pending: state.pender.pending['album/GET_ALBUM_BY_ID'],
+    pending: state.pender.pending['products/GET_ALBUM_BY_ID'],
   }),
   (dispatch) => ({
-    AlbumActions: bindActionCreators(albumActions, dispatch),
     UserActions: bindActionCreators(userActions, dispatch),
+    ProductsActions: bindActionCreators(productsActions, dispatch),
   }),
 )(Album);

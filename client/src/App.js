@@ -20,13 +20,13 @@ import AudioPlayer from 'components/AudioPlayer';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as albumActions from 'redux/modules/album';
+import * as productsActions from 'redux/modules/products';
 import * as userActions from 'redux/modules/user';
 
-function App({ AlbumActions, UserActions, auth, playlist }) {
+function App({ ProductsActions, UserActions, auth, playlist }) {
   //def need to refactor into hook or something
   useEffect(() => {
-    AlbumActions.getAlbums();
+    ProductsActions.getAlbums();
     auth && UserActions.getUser(auth);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -49,7 +49,7 @@ function App({ AlbumActions, UserActions, auth, playlist }) {
           <Route path='/cart' component={Cart} />
           <Route path='/checkout' component={Checkout} />
           <Route path='/download/:orderId' component={Download} />
-          <Route path='/coins' component={Coins} /> 
+          <Route path='/coins' component={Coins} />
           <Route exact path='/' component={Home} />
           <Redirect to='/' />
         </Switch>
@@ -64,14 +64,14 @@ function App({ AlbumActions, UserActions, auth, playlist }) {
 
 export default connect(
   (state) => ({
-    albums: state.album.albums,
+    albums: state.products.albums,
     auth: state.user.authenticated,
     playlist: state.user.playlist,
-    updatedAt: state.album.updatedAt,
-    error: state.pender.failure['album/GET_ALBUMS'],
+    updatedAt: state.products.updatedAt,
+    error: state.pender.failure['products/GET_ALBUMS'],
   }),
   (dispatch) => ({
-    AlbumActions: bindActionCreators(albumActions, dispatch),
+    ProductsActions: bindActionCreators(productsActions, dispatch),
     UserActions: bindActionCreators(userActions, dispatch),
   }),
 )(App);

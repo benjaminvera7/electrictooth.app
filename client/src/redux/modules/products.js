@@ -7,31 +7,29 @@ function getDate() {
   return utcDate.toUTCString();
 }
 
-const _getAlbums = (page) => {
+const _getAlbums = () => {
   return axios({
-    url: `/albums/${page ? page : '1'}`,
+    url: `/api/v1/products/albums`,
     method: 'GET',
   });
 };
 
 const _getAlbumById = (productId) => {
   return axios({
-    url: `/albums/album/${productId}`,
+    url: `/api/v1/products/albums/${productId}`,
     method: 'GET',
   });
 };
 
-export const GET_ALBUMS = 'album/GET_ALBUMS';
+export const GET_ALBUMS = 'products/GET_ALBUMS';
 export const getAlbums = createAction(GET_ALBUMS, _getAlbums);
 
-export const GET_ALBUM_BY_ID = 'album/GET_ALBUM_BY_ID';
+export const GET_ALBUM_BY_ID = 'products/GET_ALBUM_BY_ID';
 export const getAlbumById = createAction(GET_ALBUM_BY_ID, _getAlbumById);
 
 const initialState = {
   albums: [],
-  currentAlbum: {
-    songs: [],
-  },
+  currentAlbum: {},
   updatedAt: getDate(),
 };
 
@@ -52,7 +50,11 @@ export default handleActions(
       type: GET_ALBUM_BY_ID,
       onSuccess: (state, { payload }) => {
         const newState = { ...state, updatedAt: getDate(), error: null };
-        newState.currentAlbum = payload.data;
+        const album = payload.data;
+        const songs = album.filter((p) => p.position !== undefined);
+        const [currentAlbum] = album.filter((p) => p.position === undefined);
+        currentAlbum.songs = songs;
+        newState.currentAlbum = currentAlbum;
         return newState;
       },
       onFailure: (state, { payload }) => {

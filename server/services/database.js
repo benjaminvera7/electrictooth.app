@@ -52,13 +52,13 @@ class DatabaseService {
     return albums;
   }
 
-  async getProducts() {
-    const products = Products.find();
-    return products;
+  async getAlbums() {
+    const albums = Products.find({ type: 'album' });
+    return albums;
   }
 
   async getAlbumByProductId(productId) {
-    const album = await Album.findOne({ product_id: productId }).populate('songs').populate('artist');
+    const album = await Products.find({ product_id: new RegExp(productId) });
     return album;
   }
 

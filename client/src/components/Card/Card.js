@@ -1,22 +1,6 @@
 import React, { useState, useRef } from 'react';
-import {
-  Box,
-  Flex,
-  Text,
-  Image,
-  Heading,
-  Button,
-  Badge,
-  IconButton,
-} from '@chakra-ui/core';
-import {
-  Star,
-  PlaylistAdd,
-  Download,
-  Play,
-  Pause,
-  CartAdd,
-} from 'components/Icons';
+import { Box, Flex, Text, Image, Heading, Button, Badge, IconButton } from '@chakra-ui/core';
+import { Star, PlaylistAdd, Download, Play, Pause, CartAdd } from 'components/Icons';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -63,7 +47,7 @@ const HoverCardContainer = styled(Box)`
   }
 `;
 
-const HoverCard = ({ productId, artUrl }) => {
+const HoverCard = ({ productId, img }) => {
   const isMobile = useWindowSize();
   const [playing, setPlaying] = useState(false);
   const audio = useRef(null);
@@ -73,10 +57,10 @@ const HoverCard = ({ productId, artUrl }) => {
       <audio key='audio' ref={audio} type='audio/mpeg' />
 
       <Link to={`/catalog/${productId}`}>
-        <Image src={`/uploads/${artUrl}`} width='100%' className='big' />
+        <Image src={`/uploads/${img}`} width='100%' className='big' />
       </Link>
       <Box className='mini'>
-        <Image src={`/uploads/${artUrl}`} className='mini' />
+        <Image src={`/uploads/${img}`} className='mini' />
         <IconButton
           onMouseLeave={() => {
             if (playing) {
@@ -115,11 +99,7 @@ const HoverCard = ({ productId, artUrl }) => {
             top: '25%',
           }}
           icon={() =>
-            playing ? (
-              <Pause color={`${theme.colors.etGreen}`} />
-            ) : (
-              <Play color={`${theme.colors.etGreen}`} />
-            )
+            playing ? <Pause color={`${theme.colors.etGreen}`} /> : <Play color={`${theme.colors.etGreen}`} />
           }
         />
       </Box>
@@ -161,44 +141,22 @@ const Card = ({ auth, album, UserActions, collection }) => {
       style={{ position: 'relative' }}
     >
       <Box style={{ position: 'relative' }}>
-        <HoverCard productId={album.product_id} artUrl={album.art_url} />
+        <HoverCard productId={album.product_id} img={album.img_url} />
 
         <Box p='4'>
           <Box d='flex' alignItems='baseline'>
-            <Badge
-              px='2'
-              bg={`${theme.colors.etGreen}`}
-              variantColor='white'
-              mr={1}
-            >
+            <Badge px='2' bg={`${theme.colors.etGreen}`} variantColor='white' mr={1}>
               Disco
             </Badge>
-            <Badge
-              px='2'
-              bg={`${theme.colors.etGreen}`}
-              variantColor='white'
-              mr={1}
-            >
+            <Badge px='2' bg={`${theme.colors.etGreen}`} variantColor='white' mr={1}>
               House
             </Badge>
-            <Badge
-              px='2'
-              bg={`${theme.colors.etGreen}`}
-              variantColor='white'
-              mr={1}
-            >
+            <Badge px='2' bg={`${theme.colors.etGreen}`} variantColor='white' mr={1}>
               Indie
             </Badge>
           </Box>
 
-          <Box
-            mt='1'
-            fontWeight='semibold'
-            as='h4'
-            lineHeight='tight'
-            isTruncated
-            color='gray.600'
-          >
+          <Box mt='1' fontWeight='semibold' as='h4' lineHeight='tight' isTruncated color='gray.600'>
             {album.album_name}
           </Box>
 
@@ -206,10 +164,7 @@ const Card = ({ auth, album, UserActions, collection }) => {
             {album.artist_name}
           </Box>
 
-          <Flex
-            style={{ position: 'absolute', bottom: 0, left: 0 }}
-            width='100%'
-          >
+          <Flex style={{ position: 'absolute', bottom: 0, left: 0 }} width='100%'>
             <IconButton
               flex='1'
               variant='ghost'
@@ -247,24 +202,6 @@ const Card = ({ auth, album, UserActions, collection }) => {
     </CardContainer>
   );
 };
-
-/*
-          <IconButton
-            flex='1'
-            variant='ghost'
-            variantColor='teal'
-            aria-label='Download album'
-            fontSize='20px'
-            style={{
-              borderTop: '1px',
-              borderRight: '1px',
-              borderStyle: 'solid',
-              borderColor: 'rgba(5, 174, 165, 0.3)',
-            }}
-            rounded='0px'
-            icon={() => <Play color={`${theme.colors.etGreen}`} />}
-          />
-*/
 
 export default connect(
   (state) => ({
