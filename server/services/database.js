@@ -57,13 +57,18 @@ class DatabaseService {
     return albums;
   }
 
-  async getAlbumByProductId(productId) {
+  async getFullAlbumByProductId(productId) {
     const album = await Products.find({ product_id: new RegExp(productId) });
     return album;
   }
 
+  async getAlbumByProductId(productId) {
+    const album = await Products.findOne({ product_id: new RegExp(productId), type: 'album' });
+    return album;
+  }
+
   async getSongByProductId(productId) {
-    const song = await Song.findOne({ product_id: productId });
+    const song = await Products.findOne({ product_id: productId, type: 'single' });
     return song;
   }
 
@@ -118,7 +123,7 @@ class DatabaseService {
   }
 
   async getCoinByProductId(productId) {
-    const coin = await Coin.findOne({ product_id: productId });
+    const coin = await Products.findOne({ product_id: productId, type: 'coin' });
     return coin;
   }
 

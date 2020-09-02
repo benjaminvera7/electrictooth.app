@@ -8,7 +8,6 @@ const config = require('./config');
 
 const checkCustomerAuth = require('./util/checkCustomerAuth');
 
-const albumRoutes = require('./routes/album');
 const songRoutes = require('./routes/song');
 const authRoutes = require('./routes/auth');
 const resetRoutes = require('./routes/reset');
@@ -34,14 +33,13 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 app.use('/uploads', express.static(path.join(__dirname, './uploads')));
 
 app.use('/api/v1/products', productRoutes);
+app.use('/user', checkCustomerAuth, userRoutes);
 
-app.use('/albums', albumRoutes);
 app.use('/song', songRoutes);
 app.use('/auth', authRoutes);
 app.use('/reset', resetRoutes);
 app.use('/paypal', paypalRoutes);
 
-app.use('/user', checkCustomerAuth, userRoutes);
 app.use('/eth', checkCustomerAuth, ethRoutes);
 app.use('/download', checkCustomerAuth, downloadRoutes);
 app.use('/stream', checkCustomerAuth, streamRoutes);

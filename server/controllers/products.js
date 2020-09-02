@@ -11,11 +11,11 @@ async function getAlbums(req, res) {
   }
 }
 
-async function getAlbumByProductId(req, res) {
+async function getFullAlbumByProductId(req, res) {
   const productId = req.params.productId;
 
   try {
-    const album = await dbConnection.getAlbumByProductId(productId);
+    const album = await dbConnection.getFullAlbumByProductId(productId);
     res.status(200).json(album);
   } catch (err) {
     errorHandler(err, req, res);
@@ -24,5 +24,5 @@ async function getAlbumByProductId(req, res) {
 
 module.exports = {
   getAlbums,
-  getAlbumByProductId,
+  getFullAlbumByProductId,
 };

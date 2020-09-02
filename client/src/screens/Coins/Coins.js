@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  Box,
-  Flex,
-  Text,
-  Heading,
-  Stack,
-  Image,
-  Button,
-  Link,
-} from '@chakra-ui/core';
+import { Box, Flex, Text, Heading, Stack, Image, Button, Link } from '@chakra-ui/core';
 import { Toll } from 'components/Icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -37,7 +28,7 @@ const Coins = ({ UserActions, auth }) => {
 
   return (
     <>
-      <CoinContainer maxWidth='1440px' m='auto' px={4} pb={4} mt="40px">
+      <CoinContainer maxWidth='1440px' m='auto' px={4} pb={4} mt='40px'>
         <Heading pt={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
           coins
         </Heading>
@@ -71,10 +62,7 @@ const Coins = ({ UserActions, auth }) => {
                 <Box fontSize='40px' color={`${theme.colors.etGreen}`}>
                   100
                 </Box>
-                <Box
-                  style={{ margin: '-10px 0 0 -30px', fontWeight: 'bold' }}
-                  fontSize='13px'
-                >
+                <Box style={{ margin: '-10px 0 0 -30px', fontWeight: 'bold' }} fontSize='13px'>
                   COINS
                 </Box>
               </Box>
@@ -127,10 +115,7 @@ const Coins = ({ UserActions, auth }) => {
                 <Box fontSize='40px' color={`${theme.colors.etGreen}`}>
                   200
                 </Box>
-                <Box
-                  style={{ margin: '-10px 0 0 -30px', fontWeight: 'bold' }}
-                  fontSize='13px'
-                >
+                <Box style={{ margin: '-10px 0 0 -30px', fontWeight: 'bold' }} fontSize='13px'>
                   COINS
                 </Box>
               </Box>
@@ -183,10 +168,7 @@ const Coins = ({ UserActions, auth }) => {
                 <Box fontSize='40px' color={`${theme.colors.etGreen}`}>
                   300
                 </Box>
-                <Box
-                  style={{ margin: '-10px 0 0 -30px', fontWeight: 'bold' }}
-                  fontSize='13px'
-                >
+                <Box style={{ margin: '-10px 0 0 -30px', fontWeight: 'bold' }} fontSize='13px'>
                   COINS
                 </Box>
               </Box>
@@ -221,7 +203,7 @@ export default connect(
   (state) => ({
     user: state.user,
     auth: state.user.authenticated,
-    updatedAt: state.album.updatedAt,
+    updatedAt: state.products.updatedAt,
   }),
   (dispatch) => ({
     UserActions: bindActionCreators(userActions, dispatch),

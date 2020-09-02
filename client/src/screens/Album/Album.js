@@ -248,7 +248,7 @@ export default connect(
     albumCollection: state.user.albumCollection,
     playlist: state.user.playlist,
     auth: state.user.authenticated,
-    updatedAt: state.album.updatedAt,
+    updatedAt: state.products.updatedAt,
     pending: state.pender.pending['products/GET_ALBUM_BY_ID'],
   }),
   (dispatch) => ({

@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  Box,
-  Flex,
-  Heading,
-  Image,
-  Text,
-  Stack,
-  Button,
-} from '@chakra-ui/core';
+import { Box, Flex, Heading, Image, Text, Stack, Button } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
 import { Remove } from 'components/Icons';
 import { connect } from 'react-redux';
@@ -21,6 +13,8 @@ import styled from '@emotion/styled';
 const CartItem = styled(Flex)`
   ${FADE_IN}
 `;
+
+const getAmount = (product_id) => parseInt(product_id.substring(4, 7), 10);
 
 const Cart = ({ UserActions, auth, cart }) => {
   return (
@@ -36,74 +30,42 @@ const Cart = ({ UserActions, auth, cart }) => {
 
         <Stack>
           {cart.items.length > 0 ? (
-            cart.items.map(
-              ({
-                id,
-                artist_name,
-                song_name,
-                album_name,
-                art_url,
-                download_price,
-                price,
-                amount,
-                product_id,
-                type,
-              }) => (
-                <Flex borderWidth='1px' key={id} bg='white'>
-                  <Box>
-                    <Image
-                      src={`/uploads/${art_url}`}
-                      maxWidth={['75px', '75px', '165px', '165px']}
-                    />
-                  </Box>
+            cart.items.map(({ id, artist_name, song_name, album_name, img_url, price, product_id, type }) => (
+              <Flex borderWidth='1px' key={id} bg='white'>
+                <Box>
+                  <Image src={`/uploads/${img_url}`} maxWidth={['75px', '75px', '165px', '165px']} />
+                </Box>
 
-                  <Box p={2}>
-                    <Heading
-                      as='h6'
-                      fontSize={['sm', 'md', 'lg', 'xl']}
-                      color='#000'
-                      color='gray.600'
-                    >
-                      {amount && `${amount} coins`}
-                      {album_name && album_name}
-                      {song_name && `${song_name} (MP3)`}
-                    </Heading>
-                    <Text
-                      fontSize={['xs', 'sm', 'md', 'lg']}
-                      mb={4}
-                      color='gray.500'
-                    >
-                      {artist_name ? artist_name : `@ $0.01`}
-                    </Text>
-                  </Box>
+                <Box p={2}>
+                  <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='#000' color='gray.600'>
+                    {type === 'coin' && `${getAmount(product_id)} stream coins`}
+                    {type === 'album' && album_name}
+                    {type === 'single' && `${song_name} (MP3)`}
+                  </Heading>
+                  <Text fontSize={['xs', 'sm', 'md', 'lg']} mb={4} color='gray.500'>
+                    {artist_name ? artist_name : `@ $0.01`}
+                  </Text>
+                </Box>
 
-                  <Box mx='auto' />
+                <Box mx='auto' />
 
-                  <Flex
-                    p={2}
-                    direction='column'
-                    justify='center'
-                    align='center'
-                  >
-                    <Text px={2} color='#222'>
-                      ${download_price ? download_price : price}.00
-                    </Text>
-                  </Flex>
-
-                  <Flex p={2}>
-                    <Button
-                      onClick={() =>
-                        UserActions.removeFromCart(product_id, type, auth)
-                      }
-                      color='black'
-                      variant='link'
-                    >
-                      remove
-                    </Button>
-                  </Flex>
+                <Flex p={2} direction='column' justify='center' align='center'>
+                  <Text px={2} color='#222'>
+                    ${price}.00
+                  </Text>
                 </Flex>
-              ),
-            )
+
+                <Flex p={2}>
+                  <Button
+                    onClick={() => UserActions.removeFromCart(product_id, type, auth)}
+                    color='black'
+                    variant='link'
+                  >
+                    remove
+                  </Button>
+                </Flex>
+              </Flex>
+            ))
           ) : (
             <Flex justify='center' color='grey'>
               your cart is empty
@@ -123,14 +85,7 @@ const Cart = ({ UserActions, auth, cart }) => {
 
               <Flex justify='flex-end' py={2}>
                 <Link to='/checkout'>
-                  <Box
-                    as='button'
-                    rounded='md'
-                    bg={`${theme.colors.etGreen}`}
-                    color='white'
-                    px={4}
-                    h={8}
-                  >
+                  <Box as='button' rounded='md' bg={`${theme.colors.etGreen}`} color='white' px={4} h={8}>
                     checkout
                   </Box>
                 </Link>
@@ -147,7 +102,7 @@ export default connect(
   (state) => ({
     auth: state.user.authenticated,
     cart: state.user.cart,
-    updatedAt: state.album.updatedAt,
+    updatedAt: state.products.updatedAt,
   }),
   (dispatch) => ({
     UserActions: bindActionCreators(userActions, dispatch),
