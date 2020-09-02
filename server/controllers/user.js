@@ -25,14 +25,7 @@ async function addSongToCart(productId, user) {
   const song = await dbConnection.getSongByProductId(productId);
   const currentCart = user.cart;
 
-  let inCart;
-
-  for (let i = 0; i < currentCart.items.length; i++) {
-    if (currentCart.items[i].product_id == song.product_id) {
-      inCart = true;
-      break;
-    }
-  }
+  const inCart = currentCart.items.some((i) => i.product_id === song.product_id);
 
   if (inCart) {
     return currentCart;
@@ -63,14 +56,7 @@ async function addAlbumToCart(productId, user) {
   const album = await dbConnection.getAlbumByProductId(productId);
   const currentCart = user.cart;
 
-  let inCart;
-
-  for (let i = 0; i < currentCart.items.length; i++) {
-    if (currentCart.items[i].product_id == album.product_id) {
-      inCart = true;
-      break;
-    }
-  }
+  const inCart = currentCart.items.some((i) => i.product_id === album.product_id);
 
   if (inCart) {
     return currentCart;
@@ -101,14 +87,7 @@ async function addCoinToCart(productId, user) {
   const coin = await dbConnection.getCoinByProductId(productId);
   const currentCart = user.cart;
 
-  let inCart;
-
-  for (let i = 0; i < currentCart.items.length; i++) {
-    if (currentCart.items[i].product_id === coin.product_id) {
-      inCart = true;
-      break;
-    }
-  }
+  const inCart = currentCart.items.some((i) => i.product_id === coin.product_id);
 
   if (inCart) {
     return currentCart;
@@ -204,70 +183,68 @@ async function removeCoinFromCart(productId, user) {
 }
 
 async function addToPlaylist(req, res) {
-  let product_id = req.params.product_id;
-  let found = product_id.match(/-/g);
+  const product_id = req.params.product_id;
+  const currentPlaylist = req.user.playlist;
 
-  if (!!found) {
-    let currentPlaylist = req.user.playlist;
-    let newPlaylist = [];
-    let exists = currentPlaylist.some((s) => s.product_id === product_id);
+  const product = await dbConnection.getProduct(product_id);
 
-    if (!exists) {
-      const [song] = await dbConnection.getSongByProductId(product_id);
+  if (product.type === 'single') {
+    const songExistsInPlaylist = currentPlaylist.some((s) => s.product_id === product_id);
 
-      let newSong = {
-        product_id: song.product_id,
-        id: song._id,
-        song_name: song.song_name,
-        artist_name: song.artist_name,
-        art_url: song.art_url,
-      };
-
-      newPlaylist.push(newSong);
+    if (songExistsInPlaylist) {
+      return res.status(200).json(currentPlaylist);
     }
 
-    newPlaylist = [...newPlaylist, ...currentPlaylist];
+    const newPlaylist = [...currentPlaylist];
 
-    let { playlist } = await dbConnection.updatePlaylist(req.user, newPlaylist);
+    const newSong = {
+      product_id: product.product_id,
+      id: product._id,
+      song_name: product.song_name,
+      artist_name: product.artist_name,
+      img_url: product.img_url,
+    };
+
+    newPlaylist.push(newSong);
+
+    const { playlist } = await dbConnection.updatePlaylist(req.user, newPlaylist);
 
     res.status(200).json(playlist);
-  } else {
-    let album;
-    let currentPlaylist = req.user.playlist;
-    let newPlaylist = [];
-    album = await dbConnection.getAlbumByProductId(product_id);
+  } else if (product.type === 'album') {
+    const newPlaylist = [...currentPlaylist];
 
-    album.songs.forEach((song) => {
-      let exists = currentPlaylist.some((s) => s.id.toString() === song.id);
+    const album = await dbConnection.getFullAlbumByProductId(product_id);
+    const songs = album.filter((p) => p.position !== undefined);
 
-      if (!exists) {
-        let newSong = {
+    songs.forEach((song) => {
+      const existsInPlaylist = currentPlaylist.some((s) => s.id.toString() === song.id);
+
+      if (!existsInPlaylist) {
+        const newSong = {
           product_id: song.product_id,
           id: song._id,
           song_name: song.song_name,
           artist_name: song.artist_name,
-          art_url: song.art_url,
+          img_url: song.img_url,
         };
 
         newPlaylist.push(newSong);
       }
     });
 
-    newPlaylist = [...newPlaylist, ...currentPlaylist];
-
-    let { playlist } = await dbConnection.updatePlaylist(req.user, newPlaylist);
+    const { playlist } = await dbConnection.updatePlaylist(req.user, newPlaylist);
 
     res.status(200).json(playlist);
   }
 }
 
 async function removeFromPlaylist(req, res) {
-  let product_id = req.params.product_id;
-  let currentPlaylist = req.user.playlist;
+  const product_id = req.params.product_id;
+  const currentPlaylist = req.user.playlist;
 
-  let newPlaylist = currentPlaylist.filter((s) => s.product_id !== product_id);
+  const newPlaylist = currentPlaylist.filter((s) => s.product_id !== product_id);
 
-  let { playlist } = await dbConnection.updatePlaylist(req.user, newPlaylist);
+  const { playlist } = await dbConnection.updatePlaylist(req.user, newPlaylist);
 
   res.status(200).json(playlist);
 }

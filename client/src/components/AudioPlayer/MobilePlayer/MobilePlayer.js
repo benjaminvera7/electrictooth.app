@@ -1,13 +1,5 @@
 import React, { Fragment } from 'react';
-import {
-  Playlist,
-  ArrowDown,
-  Next,
-  Previous,
-  Play,
-  Pause,
-  Toll,
-} from 'components/Icons';
+import { Playlist, ArrowDown, Next, Previous, Play, Pause, Toll } from 'components/Icons';
 import { Box, Flex, Image, Text, Button } from '@chakra-ui/core';
 import { connect } from 'react-redux';
 import theme from 'theme.js';
@@ -30,10 +22,7 @@ const MobilePlayer = ({
   return (
     <Fragment>
       <Box mt={-1}>
-        <Image
-          src={song.length > 0 ? `/uploads/${song[0].art_url}` : `./filler.jpg`}
-          w='100%'
-        />
+        <Image src={song.length > 0 ? `/uploads/${song[0].img_url}` : `./filler.jpg`} w='100%' />
       </Box>
 
       <Flex direction='column' flex={2} align='center' p={2}>
@@ -50,13 +39,7 @@ const MobilePlayer = ({
           {progressBar}
         </Flex>
 
-        <Flex
-          justify='space-evenly'
-          align='center'
-          w='100%'
-          flex='1 1 auto'
-          minHeight='50px'
-        >
+        <Flex justify='space-evenly' align='center' w='100%' flex='1 1 auto' minHeight='50px'>
           <Button variant='link' onClick={handlePrevious}>
             <Previous />
           </Button>
@@ -80,11 +63,7 @@ const MobilePlayer = ({
         }}
         w='100%'
       >
-        <Button
-          variant='link'
-          onClick={() => setPlayerVisibility(!playerVisible)}
-          style={{ minHeight: '44px' }}
-        >
+        <Button variant='link' onClick={() => setPlayerVisibility(!playerVisible)} style={{ minHeight: '44px' }}>
           <ArrowDown />
         </Button>
 
@@ -99,11 +78,7 @@ const MobilePlayer = ({
 
         <Box mx='auto' />
 
-        <Button
-          variant='link'
-          onClick={() => setPlaylistVisibility(!playlistVisible)}
-          style={{ minHeight: '44px' }}
-        >
+        <Button variant='link' onClick={() => setPlaylistVisibility(!playlistVisible)} style={{ minHeight: '44px' }}>
           <Box style={{ position: 'relative' }}>
             <Playlist />
             <Box

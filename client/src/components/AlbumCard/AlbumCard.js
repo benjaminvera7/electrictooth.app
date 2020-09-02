@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  Box,
-  Flex,
-  Text,
-  Image,
-  Heading,
-  Button,
-  Badge,
-} from '@chakra-ui/core';
+import { Box, Flex, Text, Image, Heading, Button, Badge } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -45,22 +37,10 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
   };
 
   return (
-    <Card
-      className='card'
-      wrap='wrap'
-      p={2}
-      borderWidth='1px'
-      rounded='sm'
-      mb={2}
-      bg='white'
-    >
+    <Card className='card' wrap='wrap' p={2} borderWidth='1px' rounded='sm' mb={2} bg='white'>
       <Box className='card_image'>
         <Link to={`/catalog/${album.product_id}`}>
-          <Image
-            src={`/uploads/${album.art_url}`}
-            rounded='lg'
-            className='zoom'
-          />
+          <Image src={`/uploads/${album.img_url}`} rounded='lg' className='zoom' />
         </Link>
       </Box>
 
@@ -90,14 +70,7 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
           {album.artist_name}
         </Text>
 
-        <Text
-          display='block'
-          fontSize='md'
-          mb={1}
-          lineHeight='normal'
-          textAlign='right'
-          color='#e2f4ff'
-        >
+        <Text display='block' fontSize='md' mb={1} lineHeight='normal' textAlign='right' color='#e2f4ff'>
           $ {album.download_price}
         </Text>
 
@@ -111,33 +84,16 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
           Indie
         </Badge>
 
-        <Text
-          my={2}
-          mb={2}
-          px={2}
-          fontSize='sm'
-          lineHeight='normal'
-          fontWeight='light'
-        >
+        <Text my={2} mb={2} px={2} fontSize='sm' lineHeight='normal' fontWeight='light'>
           yes amazing album description
         </Text>
       </Box>
 
-      <Button
-        mt={1}
-        width='100%'
-        bg='#2d7bb8'
-        onClick={() => addToCart(album.product_id, album.type)}
-      >
+      <Button mt={1} width='100%' bg='#2d7bb8' onClick={() => addToCart(album.product_id, album.type)}>
         Buy Digital Album
       </Button>
 
-      <Button
-        mt={1}
-        width='100%'
-        bg='#134468'
-        onClick={() => addToPlaylist(album.product_id)}
-      >
+      <Button mt={1} width='100%' bg='#134468' onClick={() => addToPlaylist(album.product_id)}>
         Add Album to Player
       </Button>
     </Card>

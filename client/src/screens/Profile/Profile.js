@@ -68,23 +68,11 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
     <Flex justify='center' mt='40px'>
       <ProfileCard color='white' maxW='1440px' flex='1' mb={4} px={4}>
         <Flex justify='space-between'>
-          <Heading
-            px={4}
-            py={2}
-            as='h2'
-            size='2xl'
-            color={`${theme.colors.etGreen}`}
-          >
+          <Heading px={4} py={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
             {user.username}
           </Heading>
 
-          <Heading
-            px={4}
-            py={5}
-            as='h2'
-            size='md'
-            color={`${theme.colors.etGreen}`}
-          >
+          <Heading px={4} py={5} as='h2' size='md' color={`${theme.colors.etGreen}`}>
             <Flex align='center'>
               <Box px={2}>
                 <Toll height='26px' width='26px' />
@@ -94,11 +82,7 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
           </Heading>
         </Flex>
 
-        <Tabs
-          isFitted
-          color={`${theme.colors.etGreen}`}
-          variantColor={`${theme.colors.etGreen}`}
-        >
+        <Tabs isFitted color={`${theme.colors.etGreen}`} variantColor={`${theme.colors.etGreen}`}>
           <TabList mb='1em'>
             <Tab>Collection</Tab>
             <Tab>Settings</Tab>
@@ -110,31 +94,16 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
                   albumCollection.map((album, i) => (
                     <Flex borderWidth='1px' key={i} bg='white'>
                       <Box>
-                        <Link
-                          to={`/catalog/${album.product_id.match(
-                            /([A-Z])\w+/g,
-                          )}`}
-                        >
-                          <Image
-                            src={`/uploads/${album.art_url}`}
-                            maxWidth='165px'
-                          />
+                        <Link to={`/catalog/${album.product_id.match(/([A-Z])\w+/g)}`}>
+                          <Image src={`/uploads/${album.img_url}`} maxWidth='165px' />
                         </Link>
                       </Box>
                       <Box p={2}>
-                        <Heading
-                          as='h6'
-                          fontSize={['sm', 'md', 'lg', 'xl']}
-                          color='gray.600'
-                        >
+                        <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600'>
                           {album.album_name && album.album_name}
                           {album.song_name && `${album.song_name} (MP3)`}
                         </Heading>
-                        <Text
-                          fontSize={['xs', 'sm', 'md', 'lg']}
-                          mb={4}
-                          color='gray.500'
-                        >
+                        <Text fontSize={['xs', 'sm', 'md', 'lg']} mb={4} color='gray.500'>
                           {album.artist_name}
                         </Text>
                       </Box>
@@ -153,17 +122,8 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
                             borderColor: 'rgba(5, 174, 165, 0.3)',
                           }}
                           rounded='0px'
-                          icon={() => (
-                            <Download color={`${theme.colors.etGreen}`} />
-                          )}
-                          onClick={(e) =>
-                            handleSubmit(
-                              e,
-                              album.product_id,
-                              album.album_name,
-                              album.song_name,
-                            )
-                          }
+                          icon={() => <Download color={`${theme.colors.etGreen}`} />}
+                          onClick={(e) => handleSubmit(e, album.product_id, album.album_name, album.song_name)}
                         />
                         <IconButton
                           flex='1'
@@ -177,9 +137,7 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
                             borderStyle: 'solid',
                             borderColor: 'rgba(5, 174, 165, 0.3)',
                           }}
-                          icon={() => (
-                            <PlaylistAdd color={`${theme.colors.etGreen}`} />
-                          )}
+                          icon={() => <PlaylistAdd color={`${theme.colors.etGreen}`} />}
                           onClick={() => addToPlaylist(album.product_id)}
                         />
                       </Flex>
@@ -190,10 +148,7 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
                     <Box fontSize='sm' py={2} color='grey'>
                       <span>
                         your collection is empty.{' '}
-                        <Link
-                          onClick={() => history.push('/')}
-                          style={{ color: theme.colors.etGreen }}
-                        >
+                        <Link onClick={() => history.push('/')} style={{ color: theme.colors.etGreen }}>
                           check out our catalog!
                         </Link>
                       </span>

@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 app.use('/uploads', express.static(path.join(__dirname, './uploads')));
 
 app.use('/api/v1/products', productRoutes);
-app.use('/user', checkCustomerAuth, userRoutes);
+app.use('/api/v1/user', checkCustomerAuth, userRoutes);
 
 app.use('/song', songRoutes);
 app.use('/auth', authRoutes);

@@ -63,9 +63,7 @@ const DesktopPlayer = ({
         <Flex maxW='1100px' flex='1' height='60px'>
           <Flex flex='1' align='center' minWidth='275px'>
             <Image
-              src={
-                song.length > 0 ? `/uploads/${song[0].art_url}` : `./filler.jpg`
-              }
+              src={song.length > 0 ? `/uploads/${song[0].img_url}` : `./filler.jpg`}
               h='48px'
               w='48px'
               borderRadius='50%'
@@ -83,9 +81,7 @@ const DesktopPlayer = ({
                     {song[0].song_name}
                   </Text>
                 </>
-              ) : (
-                undefined
-              )}
+              ) : undefined}
             </Flex>
           </Flex>
           <Flex flex='2' direction='column' justify='center' align='center'>

@@ -1,13 +1,5 @@
 import React, { Fragment } from 'react';
-import {
-  Box,
-  Image,
-  Flex,
-  Text,
-  Button,
-  Stack,
-  Heading,
-} from '@chakra-ui/core';
+import { Box, Image, Flex, Text, Button, Stack, Heading } from '@chakra-ui/core';
 import { Play, Close, Remove, Pause } from 'components/Icons';
 import { connect } from 'react-redux';
 import theme from 'theme.js';
@@ -66,7 +58,7 @@ const MobilePlaylistPanel = (props) => {
                 <PlaylistCard w='100%' key={song.id} p={2} borderRadius='6px'>
                   <Box px={2}>
                     <Image
-                      src={`/uploads/${song.art_url}`}
+                      src={`/uploads/${song.img_url}`}
                       h='48px'
                       w='48px'
                       borderRadius='50%'
@@ -88,34 +80,22 @@ const MobilePlaylistPanel = (props) => {
 
                   <Flex align='center' minWidth='100px' justify='space-evenly'>
                     {props.currentlyPlaying === song.id ? (
-                      <Button
-                        variant='link'
-                        onClick={props.handlePlay}
-                        isLoading={props.loading}
-                      >
+                      <Button variant='link' onClick={props.handlePlay} isLoading={props.loading}>
                         {props.playing ? <Pause /> : <Play />}
                       </Button>
                     ) : (
-                      <Button
-                        variant='link'
-                        onClick={() => props.fetch(song.id)}
-                      >
+                      <Button variant='link' onClick={() => props.fetch(song.id)}>
                         <Play />
                       </Button>
                     )}
-                    <Button
-                      variant='link'
-                      onClick={() => props.remove(song.product_id)}
-                    >
+                    <Button variant='link' onClick={() => props.remove(song.product_id)}>
                       <Remove />
                     </Button>
                   </Flex>
                 </PlaylistCard>
               ))}
             </Box>
-          ) : (
-            undefined
-          )}
+          ) : undefined}
         </Stack>
       </Box>
     </Fragment>

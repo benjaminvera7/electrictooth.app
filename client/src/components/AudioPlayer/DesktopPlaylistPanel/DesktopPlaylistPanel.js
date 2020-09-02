@@ -1,13 +1,5 @@
 import React, { Fragment } from 'react';
-import {
-  Box,
-  Image,
-  Flex,
-  Text,
-  Stack,
-  Heading,
-  Button,
-} from '@chakra-ui/core';
+import { Box, Image, Flex, Text, Stack, Heading, Button } from '@chakra-ui/core';
 import { Play, Close, Remove, Pause } from 'components/Icons';
 import { connect } from 'react-redux';
 import theme from 'theme.js';
@@ -69,7 +61,7 @@ const DesktopPlaylistPanel = ({
                 <PlaylistCard w='100%' key={song.id} p={2}>
                   <Box px={2}>
                     <Image
-                      src={`/uploads/${song.art_url}`}
+                      src={`/uploads/${song.img_url}`}
                       h='48px'
                       w='48px'
                       borderRadius='50%'
@@ -91,11 +83,7 @@ const DesktopPlaylistPanel = ({
 
                   <Flex align='center' minWidth='100px' justify='space-evenly'>
                     {currentlyPlaying === song.id ? (
-                      <Button
-                        variant='link'
-                        onClick={handlePlay}
-                        isLoading={loading}
-                      >
+                      <Button variant='link' onClick={handlePlay} isLoading={loading}>
                         {playing ? <Pause /> : <Play />}
                       </Button>
                     ) : (
@@ -103,19 +91,14 @@ const DesktopPlaylistPanel = ({
                         <Play />
                       </Button>
                     )}
-                    <Button
-                      variant='link'
-                      onClick={() => remove(song.product_id)}
-                    >
+                    <Button variant='link' onClick={() => remove(song.product_id)}>
                       <Remove />
                     </Button>
                   </Flex>
                 </PlaylistCard>
               ))}
             </Fragment>
-          ) : (
-            undefined
-          )}
+          ) : undefined}
         </Stack>
       </Box>
     </Fragment>

@@ -1,13 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Box,
-  Flex,
-  Text,
-  Image,
-  Heading,
-  Stack,
-  IconButton,
-} from '@chakra-ui/core';
+import { Box, Flex, Text, Image, Heading, Stack, IconButton } from '@chakra-ui/core';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import requireAuth from 'components/AuthHOC/requireAuth';
@@ -32,8 +24,7 @@ class Download extends Component {
       this.setState({
         downloads: data.cart.items,
       });
-    }
-    );
+    });
   };
 
   componentDidMount() {
@@ -55,7 +46,7 @@ class Download extends Component {
 
       let songFound = product_id.match(/-/g);
       if (!!songFound) {
-        link.setAttribute('download', `${songName}.mp3`); 
+        link.setAttribute('download', `${songName}.mp3`);
       } else {
         link.setAttribute('download', `${albumName}.zip`);
       }
@@ -77,13 +68,7 @@ class Download extends Component {
     return (
       <Flex justify='center' mt='40px'>
         <Box color='white' maxW='1440px' flex='1'>
-          <Heading
-            px={4}
-            py={2}
-            as='h2'
-            size='2xl'
-            color={`${theme.colors.etGreen}`}
-          >
+          <Heading px={4} py={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
             download
           </Heading>
 
@@ -102,39 +87,22 @@ class Download extends Component {
               this.state.downloads.map((album) => (
                 <Flex borderWidth='1px' bg='white' key={album.product_id}>
                   <Box>
-                    <Image src={`/uploads/${album.art_url}`} maxWidth='165px' />
+                    <Image src={`/uploads/${album.img_url}`} maxWidth='165px' />
                   </Box>
                   <Box p={2}>
-                    <Heading
-                      as='h6'
-                      fontSize={['sm', 'md', 'lg', 'xl']}
-                      color='gray.600'
-                    >
+                    <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600'>
                       {album.album_name && album.album_name}
                       {album.song_name && `${album.song_name} (MP3)`}
                     </Heading>
-                    <Text
-                      fontSize={['xs', 'sm', 'md', 'lg']}
-                      mb={4}
-                      color='gray.500'
-                    >
+                    <Text fontSize={['xs', 'sm', 'md', 'lg']} mb={4} color='gray.500'>
                       {album.artist_name}
                     </Text>
                   </Box>
                   <Box mx='auto' />
 
                   {album.product_id.match(/coin/g) ? (
-                    <Flex
-                      align='center'
-                      px={2}
-                      direction='column'
-                      justify='center'
-                    >
-                      <Heading
-                        as='h6'
-                        fontSize={['sm', 'md', 'lg', 'xl']}
-                        color='gray.600'
-                      >
+                    <Flex align='center' px={2} direction='column' justify='center'>
+                      <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600'>
                         {parseInt(album.product_id.substring(4, 7), 10)} coins
                       </Heading>
                     </Flex>
@@ -153,17 +121,8 @@ class Download extends Component {
                           borderColor: 'rgba(5, 174, 165, 0.3)',
                         }}
                         rounded='0px'
-                        icon={() => (
-                          <DownloadIcon color={`${theme.colors.etGreen}`} />
-                        )}
-                        onClick={(e) =>
-                          this.handleSubmit(
-                            e,
-                            album.product_id,
-                            album.album_name,
-                            album.song_name,
-                          )
-                        }
+                        icon={() => <DownloadIcon color={`${theme.colors.etGreen}`} />}
+                        onClick={(e) => this.handleSubmit(e, album.product_id, album.album_name, album.song_name)}
                       />
                       <IconButton
                         flex='1'
@@ -177,9 +136,7 @@ class Download extends Component {
                           borderStyle: 'solid',
                           borderColor: 'rgba(5, 174, 165, 0.3)',
                         }}
-                        icon={() => (
-                          <PlaylistAdd color={`${theme.colors.etGreen}`} />
-                        )}
+                        icon={() => <PlaylistAdd color={`${theme.colors.etGreen}`} />}
                         onClick={(e) => this.addToPlaylist(album.product_id)}
                       />
                     </Flex>

@@ -69,13 +69,10 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
     if (isMobile && isSafari()) {
       bindSafariAutoPlayEvents();
     }
-
   }, []);
 
   const timeUpdate = () => {
-    console.log(audio.current);
-    let playPercent =
-      100 * (audio.current.currentTime / audio.current.duration);
+    let playPercent = 100 * (audio.current.currentTime / audio.current.duration);
 
     setTimelineDot(playPercent);
   };
@@ -98,9 +95,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   };
 
   const isSafari = () => {
-    return (
-      /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent)
-    );
+    return /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
   };
 
   const onHandleProgress = (value) => {
@@ -108,10 +103,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   };
 
   const ProgressBar = (
-    <div
-      className='progress-bar'
-      style={isMobile ? { width: '90%' } : { width: '505px' }}
-    >
+    <div className='progress-bar' style={isMobile ? { width: '90%' } : { width: '505px' }}>
       <Slider
         max={playing ? Math.ceil(audio.current.duration) : 0}
         defaultValue={0}
@@ -179,7 +171,6 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
       });
 
       let blob = new Blob([response.data], { type: 'audio/mpeg' });
-      console.log(response)
       let url;
 
       try {
@@ -260,10 +251,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
             loading={loading}
           />
 
-          <MobileNavigation
-            playlistVisible={playlistVisible}
-            setPaylistVisibility={setPlaylistVisibility}
-          />
+          <MobileNavigation playlistVisible={playlistVisible} setPaylistVisibility={setPlaylistVisibility} />
         </>
       ) : (
         <DesktopPlayer

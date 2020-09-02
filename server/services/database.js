@@ -57,6 +57,11 @@ class DatabaseService {
     return albums;
   }
 
+  async getProduct(productId) {
+    const product = await Products.findOne({ product_id: productId });
+    return product;
+  }
+
   async getFullAlbumByProductId(productId) {
     const album = await Products.find({ product_id: new RegExp(productId) });
     return album;
@@ -73,7 +78,7 @@ class DatabaseService {
   }
 
   async getSongById(id) {
-    const song = await Song.findById(id);
+    const song = await Products.findById(id);
     return song;
   }
 
@@ -128,11 +133,6 @@ class DatabaseService {
   }
 
   async addCoin(user, amount) {
-    user.coins = user.coins + amount;
-    return await user.save();
-  }
-
-  async subtractCoin(user, amount) {
     user.coins = user.coins + amount;
     return await user.save();
   }

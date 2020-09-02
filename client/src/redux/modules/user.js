@@ -9,7 +9,7 @@ function getDate() {
 
 const _getUser = (token) => {
   return axios({
-    url: '/user',
+    url: '/api/v1/user',
     method: 'GET',
     headers: { Authorization: token },
   });
@@ -25,7 +25,7 @@ const _signin = (credentials) => {
 
 const _addToCart = (product_id, type, token) => {
   return axios({
-    url: `/user/cart/add/${product_id}`,
+    url: `/api/v1/user/cart/add/${product_id}`,
     method: 'POST',
     data: {
       productId: product_id,
@@ -37,7 +37,7 @@ const _addToCart = (product_id, type, token) => {
 
 const _removeFromCart = (product_id, type, token) => {
   return axios({
-    url: `/user/cart/remove/${product_id}`,
+    url: `/api/v1/user/cart/remove/${product_id}`,
     method: 'DELETE',
     data: {
       productId: product_id,
@@ -49,7 +49,7 @@ const _removeFromCart = (product_id, type, token) => {
 
 const _getCoins = (token) => {
   return axios({
-    url: `/user/coins`,
+    url: `/api/v1/user/coins`,
     method: 'GET',
     headers: { Authorization: token },
   });
@@ -57,7 +57,7 @@ const _getCoins = (token) => {
 
 const _addToPlaylist = (token, productId) => {
   return axios({
-    url: `user/playlist/add/${productId}`,
+    url: `/api/v1/user/playlist/add/${productId}`,
     method: 'POST',
     headers: { Authorization: token },
   });
@@ -65,24 +65,20 @@ const _addToPlaylist = (token, productId) => {
 
 const _removeFromPlaylist = (token, productId) => {
   return axios({
-    url: `/user/playlist/remove/${productId}`,
+    url: `/api/v1/user/playlist/remove/${productId}`,
     method: 'DELETE',
     headers: { Authorization: token },
   });
 };
 
 export const REMOVE_FROM_PLAYLIST = 'player/REMOVE_FROM_PLAYLIST';
-export const removeFromPlaylist = createAction(
-  REMOVE_FROM_PLAYLIST,
-  _removeFromPlaylist,
-);
+export const removeFromPlaylist = createAction(REMOVE_FROM_PLAYLIST, _removeFromPlaylist);
 
 export const ADD_TO_PLAYLIST = 'player/ADD_TO_PLAYLIST';
 export const addToPlaylist = createAction(ADD_TO_PLAYLIST, _addToPlaylist);
 
 export const GET_COINS = 'user/GET_COINS';
 export const getCoins = createAction(GET_COINS, _getCoins);
-
 
 export const GET_USER = 'user/GET_USER';
 export const getUser = createAction(GET_USER, _getUser);
@@ -227,7 +223,7 @@ export default handleActions(
         return newState;
       },
       onFailure: (state, { payload }) => {
-        return { ...state, error: 'err'};
+        return { ...state, error: 'err' };
       },
     }),
     ...pender({
@@ -238,7 +234,7 @@ export default handleActions(
         return newState;
       },
       onFailure: (state, { payload }) => {
-        return { ...state, error: 'err'};
+        return { ...state, error: 'err' };
       },
     }),
     ...pender({
@@ -249,7 +245,7 @@ export default handleActions(
         return newState;
       },
       onFailure: (state, { payload }) => {
-        return { ...state, error: 'err'};
+        return { ...state, error: 'err' };
       },
     }),
     [SIGN_OUT]: (state) => {
