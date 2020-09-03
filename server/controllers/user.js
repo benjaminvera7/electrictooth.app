@@ -43,6 +43,7 @@ async function addSongToCart(productId, user) {
     price: song.price,
     img_url: song.img_url,
     type: song.type,
+    quantity: song.quantity,
   });
 
   newCart.total = currentCart.total + song.price;
@@ -74,6 +75,7 @@ async function addAlbumToCart(productId, user) {
     price: album.price,
     img_url: album.img_url,
     type: album.type,
+    quantity: album.quantity,
   });
 
   newCart.total = currentCart.total + album.price;
@@ -103,6 +105,7 @@ async function addCoinToCart(productId, user) {
     img_url: coin.img_url,
     price: coin.price,
     type: coin.type,
+    quantity: coin.quantity,
   });
 
   newCart.total = currentCart.total + coin.price;

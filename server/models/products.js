@@ -7,6 +7,7 @@ const Schema = mongoose.Schema;
 const productsSchema = new Schema({
   type: String,
   price: Number,
+  quantity: Number,
   img_url: String,
   product_id: String,
   stream_url: String,

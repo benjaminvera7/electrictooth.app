@@ -36,11 +36,11 @@ app.use('/api/v1/reset', resetRoutes);
 app.use('/api/v1/user', checkCustomerAuth, userRoutes);
 app.use('/api/v1/products', productRoutes);
 app.use('/api/v1/stream', checkCustomerAuth, streamRoutes);
+app.use('/api/v1/paypal', paypalRoutes);
+app.use('/api/v1/download', checkCustomerAuth, downloadRoutes);
+app.use('/api/v1/order', checkCustomerAuth, orderRoutes);
 
-app.use('/paypal', paypalRoutes);
 app.use('/eth', checkCustomerAuth, ethRoutes);
-app.use('/download', checkCustomerAuth, downloadRoutes);
-app.use('/order', checkCustomerAuth, orderRoutes);
 
 app.get('/*', function passHTML(req, res) {
   res.sendFile(path.join(__dirname, '../client/build/index.html'), function (err) {

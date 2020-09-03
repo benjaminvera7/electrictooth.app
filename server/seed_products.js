@@ -21,6 +21,8 @@ function seed() {
       img_url: 'coin100.png',
       price: 1,
       type: 'coin',
+      quantity: 1,
+      description: '',
     },
     {
       _id: new mongoose.Types.ObjectId(),
@@ -28,6 +30,8 @@ function seed() {
       img_url: 'coin200.png',
       price: 2,
       type: 'coin',
+      quantity: 1,
+      description: '',
     },
     {
       _id: new mongoose.Types.ObjectId(),
@@ -35,6 +39,8 @@ function seed() {
       img_url: 'coin300.png',
       price: 3,
       type: 'coin',
+      quantity: 1,
+      description: '',
     },
     {
       _id: new mongoose.Types.ObjectId(),
@@ -46,6 +52,7 @@ function seed() {
       price: 2,
       type: 'album',
       download_url: path.join(__dirname, `../server/music/Under The Moonlight EP.zip`),
+      quantity: 1,
     },
     {
       _id: new mongoose.Types.ObjectId(),
@@ -62,6 +69,8 @@ function seed() {
       plays: 0,
       type: 'single',
       download_url: path.join(__dirname, `../server/music/Under The Moonlight.mp3`),
+      quantity: 1,
+      description: '',
     },
     {
       _id: new mongoose.Types.ObjectId(),
@@ -78,6 +87,8 @@ function seed() {
       plays: 0,
       type: 'single',
       download_url: path.join(__dirname, `../server/music/Power of Love.mp3`),
+      quantity: 1,
+      description: '',
     },
     {
       _id: new mongoose.Types.ObjectId(),
@@ -89,6 +100,7 @@ function seed() {
       price: 1,
       type: 'album',
       download_url: path.join(__dirname, `../server/music/Killing Me.zip`),
+      quantity: 1,
     },
     {
       _id: new mongoose.Types.ObjectId(),
@@ -105,6 +117,8 @@ function seed() {
       plays: 0,
       type: 'single',
       download_url: path.join(__dirname, `../server/music/Killing Me.mp3`),
+      quantity: 1,
+      description: '',
     },
     {
       _id: new mongoose.Types.ObjectId(),
@@ -116,6 +130,7 @@ function seed() {
       price: 1,
       type: 'album',
       download_url: path.join(__dirname, `../server/music/Synchronicity.zip`),
+      quantity: 1,
     },
     {
       _id: new mongoose.Types.ObjectId(),
@@ -132,6 +147,8 @@ function seed() {
       plays: 0,
       type: 'single',
       download_url: path.join(__dirname, `../server/music/Synchronicity.mp3`),
+      quantity: 1,
+      description: '',
     },
     {
       _id: new mongoose.Types.ObjectId(),
@@ -143,6 +160,7 @@ function seed() {
       price: 1,
       type: 'album',
       download_url: path.join(__dirname, `../server/music/New World LP.zip`),
+      quantity: 1,
     },
     {
       _id: new mongoose.Types.ObjectId(),
@@ -159,6 +177,8 @@ function seed() {
       plays: 0,
       type: 'single',
       download_url: path.join(__dirname, `../server/music/New World.mp3`),
+      quantity: 1,
+      description: '',
     },
     {
       _id: new mongoose.Types.ObjectId(),
@@ -170,6 +190,7 @@ function seed() {
       price: 1,
       type: 'album',
       download_url: path.join(__dirname, `../server/music/Last Month EP.zip`),
+      quantity: 1,
     },
     {
       _id: new mongoose.Types.ObjectId(),
@@ -186,6 +207,8 @@ function seed() {
       plays: 0,
       type: 'single',
       download_url: path.join(__dirname, `../server/music/Last Month.mp3`),
+      quantity: 1,
+      description: '',
     },
     {
       _id: new mongoose.Types.ObjectId(),
@@ -197,6 +220,7 @@ function seed() {
       price: 1,
       type: 'album',
       download_url: path.join(__dirname, `../server/music/Midnight Caller EP.zip`),
+      quantity: 1,
     },
     {
       _id: new mongoose.Types.ObjectId(),
@@ -213,6 +237,8 @@ function seed() {
       plays: 0,
       type: 'single',
       download_url: path.join(__dirname, `../server/music/Midnight Caller.mp3`),
+      quantity: 1,
+      description: '',
     },
   ];
 

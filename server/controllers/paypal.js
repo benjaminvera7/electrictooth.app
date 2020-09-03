@@ -55,9 +55,7 @@ async function returnPayment(req, res) {
   for (const item of order.cart.items) {
     let found = item.product_id.match(/ET/g);
     if (!!found) {
-      let hasAlbum = user.albumCollection.filter(
-        (album) => album.product_id === item.product_id,
-      );
+      let hasAlbum = user.albumCollection.filter((album) => album.product_id === item.product_id);
 
       if (hasAlbum.length == 0) {
         albumArray.push(item);
@@ -105,7 +103,7 @@ function createPaymentObject(order) {
         name: item.product_id,
         description: description,
         quantity: item.quantity,
-        price: item.download_price,
+        price: item.price,
         sku: item.product_id,
         currency: 'USD',
       });

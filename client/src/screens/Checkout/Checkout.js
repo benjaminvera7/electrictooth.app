@@ -130,11 +130,7 @@ class Checkout extends Component {
         });
 
         if (TRANSACTION.status === true) {
-          let { data } = await this.returnPayment(
-            user.authenticated,
-            TRANSACTION.transactionHash,
-            orderId,
-          );
+          let { data } = await this.returnPayment(user.authenticated, TRANSACTION.transactionHash, orderId);
 
           this.setState({
             part: (this.state.part += 100 / 5),
@@ -166,13 +162,7 @@ class Checkout extends Component {
     return (
       <Flex justify='center' mt='40px'>
         <Box color='white' maxW='1440px' flex='1'>
-          <Heading
-            px={4}
-            pt={2}
-            as='h2'
-            size='2xl'
-            color={`${theme.colors.etGreen}`}
-          >
+          <Heading px={4} pt={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
             payment
           </Heading>
 
@@ -181,11 +171,7 @@ class Checkout extends Component {
           </Text>
 
           <Flex justify='center' py={2} px={4}>
-            <Heading
-              as='h3'
-              fontSize={['lg', 'xl']}
-              color={`${theme.colors.etGreen}`}
-            >
+            <Heading as='h3' fontSize={['lg', 'xl']} color={`${theme.colors.etGreen}`}>
               100% of this purchase goes to the artist(s)
             </Heading>
           </Flex>
@@ -206,19 +192,9 @@ class Checkout extends Component {
             </Box>
           </Flex>
 
-          <form id='paypalForm' method='post' action={`/paypal/request`}>
+          <form id='paypalForm' method='post' action={`/api/v1/paypal/request`}>
             <input type='hidden' name='userId' value={user.userId} />
-            <Button
-              rounded='md'
-              bg='#ffc439'
-              color='black'
-              px={4}
-              h={8}
-              my={2}
-              mx={4}
-              type='submit'
-              w='200px'
-            >
+            <Button rounded='md' bg='#ffc439' color='black' px={4} h={8} my={2} mx={4} type='submit' w='200px'>
               Checkout with PayPal
             </Button>
           </form>
@@ -265,8 +241,7 @@ class Checkout extends Component {
               <>
                 <Progress hasStripe isAnimated value={this.state.part} />
                 <Text>
-                  Please wait as your transaction is being processed. You will
-                  be redirected after its been confirmed
+                  Please wait as your transaction is being processed. You will be redirected after its been confirmed
                 </Text>
               </>
             )}

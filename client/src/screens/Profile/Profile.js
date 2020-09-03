@@ -44,7 +44,7 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
   const handleSubmit = (e, product_id, albumName, songName) => {
     e.preventDefault();
     axios({
-      url: `/download/product/${product_id}`,
+      url: `/api/v1/download/product/${product_id}`,
       method: 'GET',
       responseType: 'blob',
       headers: { Authorization: auth },
