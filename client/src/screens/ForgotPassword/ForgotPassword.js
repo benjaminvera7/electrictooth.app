@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {
-  Box,
-  Flex,
-  Image,
-  Stack,
-  Input,
-  Button,
-  Link,
-  Text,
-} from '@chakra-ui/core';
+import { Box, Flex, Image, Stack, Input, Button, Link, Text } from '@chakra-ui/core';
 
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
@@ -27,7 +18,7 @@ class ForgotPassword extends Component {
 
   reset = () => {
     return axios.post(
-      '/reset',
+      '/api/v1/reset',
       {
         email: this.state.email,
       },
@@ -54,8 +45,7 @@ class ForgotPassword extends Component {
 
           <Stack spacing={4} my={4}>
             <Text color='white'>
-              Enter your user account's verified email address and we will send
-              you a password reset link.
+              Enter your user account's verified email address and we will send you a password reset link.
             </Text>
 
             <Input
@@ -72,20 +62,12 @@ class ForgotPassword extends Component {
               }}
             />
 
-            <Button
-              bg='#28a745'
-              variant='solid'
-              w='100%'
-              type='submit'
-              onClick={this.submit}
-            >
+            <Button bg='#28a745' variant='solid' w='100%' type='submit' onClick={this.submit}>
               Send password reset email
             </Button>
           </Stack>
 
-          <Box color={this.state.error ? '#FF0000' : '#00FF00'}>
-            {this.state.message}
-          </Box>
+          <Box color={this.state.error ? '#FF0000' : '#00FF00'}>{this.state.message}</Box>
         </Box>
       </ForgotContainer>
     );

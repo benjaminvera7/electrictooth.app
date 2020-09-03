@@ -16,11 +16,11 @@ const _getUser = (token) => {
 };
 
 const _signup = (credentials) => {
-  return axios.post('/auth/signup', credentials);
+  return axios.post('/api/v1/auth/signup', credentials);
 };
 
 const _signin = (credentials) => {
-  return axios.post('/auth/signin', credentials);
+  return axios.post('/api/v1/auth/signin', credentials);
 };
 
 const _addToCart = (product_id, type, token) => {

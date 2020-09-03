@@ -1,14 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import {
-  Box,
-  Flex,
-  Image,
-  Stack,
-  Input,
-  Button,
-  Link,
-  Text,
-} from '@chakra-ui/core';
+import { Box, Flex, Image, Stack, Input, Button, Link, Text } from '@chakra-ui/core';
 
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
@@ -28,7 +19,7 @@ class NewPassword extends Component {
 
   reset = (password, passwordConfirm, userId, token) => {
     return axios.post(
-      `/reset/${userId}/${token}`,
+      `/api/v1/reset/${userId}/${token}`,
       {
         password: password,
         passwordConfirm: passwordConfirm,
@@ -63,7 +54,7 @@ class NewPassword extends Component {
 
   render() {
     return (
-      <ForgotContainer w='100%' p={4} justify='center' mt="40px">
+      <ForgotContainer w='100%' p={4} justify='center' mt='40px'>
         <Box w='300px'>
           <Flex direction='column' align='center'>
             <Image src='./favicon.ico' w='36px' />
@@ -98,13 +89,7 @@ class NewPassword extends Component {
               }}
             />
 
-            <Button
-              bg='#28a745'
-              variant='solid'
-              w='100%'
-              type='submit'
-              onClick={this.submit}
-            >
+            <Button bg='#28a745' variant='solid' w='100%' type='submit' onClick={this.submit}>
               Reset Password
             </Button>
 

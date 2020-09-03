@@ -164,7 +164,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
 
     try {
       let response = await axios({
-        url: `/stream/${id}`,
+        url: `/api/v1/stream/${id}`,
         method: 'GET',
         responseType: 'blob',
         headers: { Authorization: auth },
