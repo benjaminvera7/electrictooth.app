@@ -8,7 +8,6 @@ const config = require('./config');
 
 const checkCustomerAuth = require('./util/checkCustomerAuth');
 
-const songRoutes = require('./routes/song');
 const authRoutes = require('./routes/auth');
 const resetRoutes = require('./routes/reset');
 const paypalRoutes = require('./routes/paypal');
@@ -32,17 +31,15 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, '../client/build')));
 app.use('/uploads', express.static(path.join(__dirname, './uploads')));
 
-app.use('/api/v1/products', productRoutes);
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/reset', resetRoutes);
 app.use('/api/v1/user', checkCustomerAuth, userRoutes);
+app.use('/api/v1/products', productRoutes);
+app.use('/api/v1/stream', checkCustomerAuth, streamRoutes);
 
-app.use('/song', songRoutes);
-app.use('/auth', authRoutes);
-app.use('/reset', resetRoutes);
 app.use('/paypal', paypalRoutes);
-
 app.use('/eth', checkCustomerAuth, ethRoutes);
 app.use('/download', checkCustomerAuth, downloadRoutes);
-app.use('/stream', checkCustomerAuth, streamRoutes);
 app.use('/order', checkCustomerAuth, orderRoutes);
 
 app.get('/*', function passHTML(req, res) {
