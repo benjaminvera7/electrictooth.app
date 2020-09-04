@@ -9,7 +9,7 @@ function getDate() {
 
 /* Web3 API */
 const getEthereum = () => {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     try {
       resolve(window.ethereum);
     } catch (error) {
@@ -20,7 +20,7 @@ const getEthereum = () => {
 };
 
 const getWeb3 = () => {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     try {
       resolve(window.web3);
     } catch (error) {
@@ -31,7 +31,7 @@ const getWeb3 = () => {
 };
 
 const connect = (web3) => {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     try {
       resolve(new EthereumService(web3));
     } catch (error) {
@@ -108,8 +108,6 @@ export default handleActions(
         const newState = { ...state, updatedAt: getDate(), error: null };
 
         newState.service = payload;
-        newState.address =
-          newState.service.currentProvider.publicConfigStore._state.selectedAddress;
 
         return newState;
       },

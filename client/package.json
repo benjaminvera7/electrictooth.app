@@ -19,7 +19,7 @@
     "redux": "^4.0.1",
     "redux-actions": "^2.6.4",
     "redux-pender": "^2.0.12",
-    "web3": "^1.0.0-beta.33"
+    "web3": "^1.2.11"
   },
   "devDependencies": {
     "redux-logger": "^3.0.6"

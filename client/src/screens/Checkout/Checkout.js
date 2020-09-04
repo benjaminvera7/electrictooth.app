@@ -59,8 +59,10 @@ class Checkout extends Component {
   };
 
   balance = async () => {
-    const { service, address } = this.props;
+    const { service } = this.props;
     const { rate } = this.state;
+
+    const [address] = await service.eth.getAccounts();
 
     service.eth.getBalance(address).then(async (wei) => {
       let balance = await service.utils.fromWei(wei.toString(), 'ether');
@@ -93,7 +95,9 @@ class Checkout extends Component {
   };
 
   sendTransaction = async () => {
-    const { service, address, user, history } = this.props;
+    const { service, user, history } = this.props;
+
+    const [address] = await service.eth.getAccounts();
 
     this.setState({
       pending: true,
@@ -101,15 +105,15 @@ class Checkout extends Component {
       status: 'initializing transaction',
     });
 
-    let { data } = await this.requestPayment(user.authenticated);
+    let { data: order } = await this.requestPayment(user.authenticated);
 
     this.setState({
       part: (this.state.part += 100 / 5),
     });
 
-    let orderId = data.order._id;
+    let orderId = order._id;
 
-    if (!data.order.error) {
+    if (!order.error) {
       try {
         let gasPrice = await service.eth.getGasPrice();
 
@@ -130,13 +134,13 @@ class Checkout extends Component {
         });
 
         if (TRANSACTION.status === true) {
-          let { data } = await this.returnPayment(user.authenticated, TRANSACTION.transactionHash, orderId);
+          let { data: order } = await this.returnPayment(user.authenticated, TRANSACTION.transactionHash, orderId);
 
           this.setState({
             part: (this.state.part += 100 / 5),
           });
 
-          history.push(`/download/${data.order._id}`);
+          history.push(`/download/${order._id}`);
         } else {
           //report to ET server of failure, update order, update page with failure noticeß
 
@@ -240,7 +244,7 @@ class Checkout extends Component {
             {this.state.pending && (
               <>
                 <Progress hasStripe isAnimated value={this.state.part} />
-                <Text>
+                <Text color={`${theme.colors.etGreen}`}>
                   Please wait as your transaction is being processed. You will be redirected after its been confirmed
                 </Text>
               </>
@@ -256,7 +260,6 @@ export default connect(
   (state) => ({
     user: state.user,
     web3: state.web3.web3,
-    address: state.web3.address,
     service: state.web3.service,
     privacyMode: state.web3.privacyMode,
     error: state.web3.error,
