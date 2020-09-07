@@ -5,6 +5,8 @@ const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
 const config = require('./config');
+const formidable = require('formidable');
+const fs = require('fs');
 
 const checkCustomerAuth = require('./util/checkCustomerAuth');
 
@@ -30,6 +32,50 @@ app.use(cors());
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 app.use('/uploads', express.static(path.join(__dirname, './uploads')));
+
+app.use('/admin/upload', (req, res) => {
+  const form = formidable({ multiples: true });
+
+  form.parse(req, function (err, fields, files) {
+    if (err) {
+      next(err);
+      return;
+    }
+
+    var oldpath = files.image.path;
+    var newpath = path.join(__dirname, `../server/uploads/${files.image.name}`);
+
+    fs.rename(oldpath, newpath, function (err) {
+      if (err) throw err;
+      res.write('File uploaded and moved!');
+      res.end();
+    });
+  });
+  /*
+      _id: new mongoose.Types.ObjectId(),
+      product_id: 'ET01',
+      artist_name: 'Shiro Schwarz',
+      album_name: 'Under The Moonlight EP',
+      description: "Let's spend the night together.",
+      img_url: 'UnderTheMoonlight.jpg',
+      price: 2,
+      type: 'album',
+      download_url: path.join(__dirname, `../server/music/Under The Moonlight EP.zip`),
+      quantity: 1,
+  */
+});
+
+app.use('/admin', (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  let response = {
+    result: 'success',
+    token: 'oidioenfe3029u390423jnfasnfjksan',
+  };
+
+  res.status(200).json(response);
+});
 
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/reset', resetRoutes);
