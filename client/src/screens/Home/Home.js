@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, Flex, Image, Spinner } from '@chakra-ui/core';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import Card from 'components/Card';
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';

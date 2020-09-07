@@ -19,7 +19,7 @@ const getAmount = (product_id) => parseInt(product_id.substring(4, 7), 10);
 const Cart = ({ UserActions, auth, cart }) => {
   return (
     <CartItem justify='center' mt='40px'>
-      <Box color='white' maxW='1440px' flex='1' px={{ xs: 2, lg: 0 }}>
+      <Box color='white' maxW='1440px' flex='1' px={{ xs: 2, lg: 2 }}>
         <Heading pt={2} as='h2' size='2xl' color='#05aea5'>
           cart
         </Heading>
