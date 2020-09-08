@@ -1,3 +1,11 @@
+.mb {
+  margin-bottom: 8px;
+}
+
+.small-font {
+  font-size: 12px;
+}
+
 .App {
   text-align: center;
 }

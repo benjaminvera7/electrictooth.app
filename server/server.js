@@ -33,36 +33,42 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, '../client/build')));
 app.use('/uploads', express.static(path.join(__dirname, './uploads')));
 
-app.use('/admin/upload', (req, res) => {
-  const form = formidable({ multiples: true });
-
-  form.parse(req, function (err, fields, files) {
-    if (err) {
-      next(err);
-      return;
-    }
-
-    var oldpath = files.image.path;
-    var newpath = path.join(__dirname, `../server/uploads/${files.image.name}`);
-
-    fs.rename(oldpath, newpath, function (err) {
-      if (err) throw err;
-      res.write('File uploaded and moved!');
-      res.end();
+const upload = (oldPath, newPath) => {
+  return new Promise((resolve, reject) => {
+    fs.rename(oldPath, newPath, function (err) {
+      if (err) reject(err);
+      resolve();
     });
   });
-  /*
-      _id: new mongoose.Types.ObjectId(),
-      product_id: 'ET01',
-      artist_name: 'Shiro Schwarz',
-      album_name: 'Under The Moonlight EP',
-      description: "Let's spend the night together.",
-      img_url: 'UnderTheMoonlight.jpg',
-      price: 2,
-      type: 'album',
-      download_url: path.join(__dirname, `../server/music/Under The Moonlight EP.zip`),
-      quantity: 1,
-  */
+};
+
+const formParse = (req) => {
+  return new Promise((resolve, reject) => {
+    const form = formidable({ multiples: true });
+
+    form.parse(req, (err, fields, files) => {
+      if (err) reject(err);
+      resolve({ fields, files });
+    });
+  });
+};
+
+app.use('/admin/upload', async (req, res) => {
+  let { fields, files } = await formParse(req);
+
+  //let newProductId = generateProductId();
+  let newFields = fields;
+
+  var oldImagePath = files.image.path;
+  var newImagePath = path.join(__dirname, `../server/uploads/${files.image.name}`);
+
+  var oldAudioPath = files.audio.path;
+  var newAudioPath = path.join(__dirname, `../server/music/${files.audio.name}`);
+
+  await upload(oldImagePath, newImagePath);
+  await upload(oldAudioPath, newAudioPath);
+
+  res.end();
 });
 
 app.use('/admin', (req, res) => {
