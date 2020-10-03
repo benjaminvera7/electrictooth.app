@@ -20,6 +20,7 @@ const productsSchema = new Schema({
   position: Number,
   income: Number,
   plays: Number,
+  songs: Array,
 });
 
 const Products = mongoose.model('products', productsSchema);
