@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Route, Switch, Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
@@ -9,8 +9,20 @@ const App = ({ history }) => {
   let audio = [];
   let count = 1;
   const [auth, setAuth] = useState(true);
+  const [newArtist, setNewArtist] = useState(true);
   const [type, setType] = useState('album');
+
+  const [data, setData] = useState([]);
   const formRef = useRef(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get('http://localhost:3090/api/v1/artists');
+      setData(result.data);
+    };
+
+    fetchData();
+  }, []);
 
   // const signIn = (e) => {
   //   e.preventDefault();
@@ -33,7 +45,13 @@ const App = ({ history }) => {
       formData.append(`track_${i + 1}`, audio[i]);
     }
 
-    formData.append('artist_name', formRef.current.artist_name.value);
+    if (newArtist) {
+      formData.append('artist_name', formRef.current.artist_name.value);
+      formData.append('new_artist', true);
+    } else {
+      formData.append('artist_list', formRef.current.artist_list.value);
+    }
+
     formData.append('album_name', formRef.current.album_name.value);
     formData.append('product_type', formRef.current.product_type.value);
     //formData.append('description', formRef.current.description.value);
@@ -80,6 +98,8 @@ const App = ({ history }) => {
     return;
   };
 
+  console.log(data);
+
   return (
     <>
       <Switch>
@@ -124,13 +144,42 @@ const App = ({ history }) => {
                   onSubmit={onSubmit}
                   style={{ display: 'flex', flexDirection: 'column', margin: 'auto', width: '500px' }}
                 >
+                  <span style={{ marginBottom: '32px' }}>
+                    <input
+                      type='checkbox'
+                      id='vehicle1'
+                      name='vehicle1'
+                      value='Bike'
+                      checked={newArtist}
+                      onClick={() => setNewArtist(!newArtist)}
+                    />{' '}
+                    New Artist
+                  </span>
+
                   <select name='product_type' id='productType' style={{ marginBottom: '32px' }}>
                     <option value='album'>Album</option>
                     <option value='single'>Single</option>
                   </select>
 
-                  <label className='small-font'>Arist Name</label>
-                  <input type='text' name='artist_name' className='mb' />
+                  {newArtist ? (
+                    <>
+                      <label className='small-font'>Arist Name</label>
+                      <input type='text' name='artist_name' className='mb' />
+                    </>
+                  ) : (
+                    <>
+                      <label className='small-font'>Artist Select</label>
+                      <select name='artist_list' id='artist_list' style={{ marginBottom: '8px' }}>
+                        {data.length > 0 &&
+                          data.map((a) => (
+                            <option value={`${a.name}`} key={`${a._id}`}>
+                              {a.name}
+                            </option>
+                          ))}
+                      </select>
+                    </>
+                  )}
+
                   <label className='small-font'>Album Name</label>
                   <input type='text' name='album_name' className='mb' />
                   <label className='small-font'>Download Price (USD)</label>
