@@ -4,62 +4,99 @@ import axios from 'axios';
 import './App.css';
 import FormData from 'form-data';
 
-const App = ({ history }) => {
-  let image;
-  let audio = [];
-  let count = 1;
-  const [auth, setAuth] = useState(true);
-  const [newArtist, setNewArtist] = useState(true);
-  const [type, setType] = useState('album');
+const App = () => {
+  return (
+    <>
+      <Switch>
+        <Route path='/edit_album' component={EditAlbum} />
+        <Route path='/edit_track' component={EditTrack} />
+        <Route path='/dashboard' component={Dashboard} />
+        <Redirect to='/dashboard' />
+      </Switch>
+    </>
+  );
+};
 
-  const [data, setData] = useState([]);
-  const formRef = useRef(null);
+const EditAlbum = () => {
+  const [album, setAlbum] = useState({
+    album_name: '',
+    album_price: 1,
+    artist_name: '',
+    cover_art: '',
+    tracks: [],
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios.get('http://localhost:3090/api/v1/artists');
-      setData(result.data);
+  const updateAlbum = (name, value) => {
+    const newAlbum = {
+      ...album,
+      [name]: value,
+    };
+    setAlbum(newAlbum);
+  };
+
+  const updateAlbumTrack = (id, value) => {
+    const track_name = document.getElementById(id).value;
+    const newAlbum = {
+      ...album,
+      tracks: [
+        ...album.tracks,
+        {
+          position: album.tracks.length + 1,
+          name: track_name,
+          track: value,
+        },
+      ],
+    };
+    setAlbum(newAlbum);
+  };
+
+  const addTrack = () => {
+    const form = document.getElementById('addAlbum');
+    const tracks = form.querySelector('#tracks');
+
+    const id = `track_${album.tracks.length + 1}`;
+
+    const label = document.createElement('label');
+    label.classList.add('small-font');
+    label.innerHTML = 'track name';
+    tracks.appendChild(label);
+
+    const input = document.createElement('input');
+    input.classList.add('mb');
+    input.type = 'text';
+    input.id = id;
+    tracks.appendChild(input);
+
+    const audioInput = document.createElement('input');
+    audioInput.type = 'file';
+    audioInput.accept = 'audio/*';
+    audioInput.multiple = false;
+    audioInput.style.cssText = 'padding-bottom: 16px;';
+    audioInput.onchange = function (e) {
+      e.preventDefault();
+      updateAlbumTrack(id, e.target.files[0]);
     };
 
-    fetchData();
-  }, []);
-
-  // const signIn = (e) => {
-  //   e.preventDefault();
-  //   axios.post('http://localhost:3090/admin').then((response) => {
-  //     if (response.data.result === 'success') {
-  //       setAuth(true);
-  //       history.push('/dashboard');
-  //     }
-  //   });
-  // };
+    tracks.appendChild(audioInput);
+    return;
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    console.log(audio);
-    let formData = new FormData();
-    formData.append('image', image);
+    const formData = new FormData();
 
-    for (let i = 0; i < audio.length; i++) {
-      formData.append(`track_${i + 1}`, audio[i]);
+    formData.append('album_name', album.album_name);
+    formData.append('album_price', album.album_price);
+    formData.append('artist_name', album.artist_name);
+    formData.append('cover_art', album.cover_art);
+
+    for (let i = 0; i < album.tracks.length; i++) {
+      formData.append(`${album.tracks[i].name}`, album.tracks[i].track);
     }
-
-    if (newArtist) {
-      formData.append('artist_name', formRef.current.artist_name.value);
-      formData.append('new_artist', true);
-    } else {
-      formData.append('artist_list', formRef.current.artist_list.value);
-    }
-
-    formData.append('album_name', formRef.current.album_name.value);
-    formData.append('product_type', formRef.current.product_type.value);
-    //formData.append('description', formRef.current.description.value);
-    formData.append('download_price', formRef.current.download_price.value);
-    //formData.append('type', formRef.current.type.value);
 
     axios
-      .post('http://localhost:3090/admin/upload', formData, {
+      .post('http://localhost:3090/api/v1/upload/edit_album', formData, {
         headers: {
           'content-type': 'multipart/form-data',
         },
@@ -69,256 +106,78 @@ const App = ({ history }) => {
       });
   };
 
-  const addTrack = () => {
-    const form = document.getElementById('productForm');
-
-    let label = document.createElement('label');
-    label.classList.add('small-font');
-    label.innerHTML = 'track name';
-    form.appendChild(label);
-
-    let input = document.createElement('input');
-    input.classList.add('mb');
-    input.type = 'text';
-    input.name = `track_name_${count}`;
-    count = count + 1;
-    form.appendChild(input);
-
-    let audioInput = document.createElement('input');
-    audioInput.type = 'file';
-    audioInput.accept = 'audio/*';
-    audioInput.multiple = false;
-    audioInput.style.cssText = 'padding-bottom: 16px;';
-    audioInput.onchange = function (e) {
-      e.preventDefault();
-      audio.push(e.target.files[0]);
-    };
-
-    form.appendChild(audioInput);
-    return;
-  };
-
-  console.log(data);
-
+  console.log(album);
   return (
-    <>
-      <Switch>
-        {/* <Route
-          path='/login'
-          component={() => {
-            return (
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <form onSubmit={signIn}>
-                  <input
-                    placeholder='email'
-                    type='text'
-                    name='email'
-                    defaultValue='ben'
-                    style={{ marginTop: '16px' }}
-                  />{' '}
-                  <br />
-                  <input
-                    placeholder='password'
-                    type='password'
-                    name='password'
-                    defaultValue='123'
-                    style={{ marginTop: '8px' }}
-                  />{' '}
-                  <br />
-                  <button style={{ width: '100%', marginTop: '8px' }}>admin login</button>
-                </form>
-              </div>
-            );
-          }}
-        /> */}
-        <Route
-          path='/dashboard'
-          component={() => (
-            <section style={{ padding: '32px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <h1>Add album</h1>
-
-              <section>
-                <form
-                  id='productForm'
-                  ref={formRef}
-                  onSubmit={onSubmit}
-                  style={{ display: 'flex', flexDirection: 'column', margin: 'auto', width: '500px' }}
-                >
-                  <span style={{ marginBottom: '32px' }}>
-                    <input
-                      type='checkbox'
-                      id='vehicle1'
-                      name='vehicle1'
-                      value='Bike'
-                      checked={newArtist}
-                      onClick={() => setNewArtist(!newArtist)}
-                    />{' '}
-                    New Artist
-                  </span>
-
-                  <select name='product_type' id='productType' style={{ marginBottom: '32px' }}>
-                    <option value='album'>Album</option>
-                    <option value='single'>Single</option>
-                  </select>
-
-                  {newArtist ? (
-                    <>
-                      <label className='small-font'>Arist Name</label>
-                      <input type='text' name='artist_name' className='mb' />
-                    </>
-                  ) : (
-                    <>
-                      <label className='small-font'>Artist Select</label>
-                      <select name='artist_list' id='artist_list' style={{ marginBottom: '8px' }}>
-                        {data.length > 0 &&
-                          data.map((a) => (
-                            <option value={`${a.name}`} key={`${a._id}`}>
-                              {a.name}
-                            </option>
-                          ))}
-                      </select>
-                    </>
-                  )}
-
-                  <label className='small-font'>Album Name</label>
-                  <input type='text' name='album_name' className='mb' />
-                  <label className='small-font'>Download Price (USD)</label>
-                  <input
-                    type='number'
-                    name='download_price'
-                    min='1'
-                    max='20'
-                    className='mb'
-                    defaultValue='1'
-                    step='1'
-                  />
-                  <label className='small-font'>Upload artwork</label>
-                  <input
-                    type='file'
-                    //accept='.png'
-                    accept='image/*'
-                    multiple={false}
-                    onChange={(e) => {
-                      e.preventDefault();
-                      image = e.target.files[0];
-                    }}
-                    style={{ paddingBottom: '32px' }}
-                  />
-                  <hr style={{ width: '100%', height: '1px', backgroundColor: 'black', marginBottom: '32px' }} />
-                  <button
-                    type='submit'
-                    style={{
-                      marginBottom: '16px',
-                      backgroundColor: 'green',
-                      position: 'fixed',
-                      bottom: 0,
-                      width: '500px',
-                      height: '50px',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    Upload
-                  </button>
-                </form>
-                <button
-                  onClick={addTrack}
-                  style={{
-                    width: '100%',
-                    cursor: 'pointer',
-                    width: '500px',
-                    height: '50px',
-                    position: 'fixed',
-                    bottom: 100,
-                  }}
-                >
-                  Add Track
-                </button>
-              </section>
-            </section>
-          )}
+    <section style={{ marginTop: '16px' }}>
+      <form id='addAlbum' onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+        <label>album name</label>
+        <input
+          type='text'
+          name='album_name'
+          value={album.album_name}
+          onChange={(e) => updateAlbum(e.target.name, e.target.value)}
         />
-        <Redirect to='/dashboard' />
-      </Switch>
-    </>
+        <label>album price</label>
+        <input
+          type='text'
+          name='album_price'
+          value={album.album_price}
+          onChange={(e) => updateAlbum(e.target.name, e.target.value)}
+        />
+        <label>artist name</label>
+        <input
+          type='text'
+          name='artist_name'
+          value={album.artist_name}
+          onChange={(e) => updateAlbum(e.target.name, e.target.value)}
+        />
+        <label>cover art</label>
+        <input
+          type='file'
+          accept='image/*'
+          multiple={false}
+          name='cover_art'
+          onChange={(e) => updateAlbum(e.target.name, e.target.files[0])}
+        />
+
+        <span id='tracks' style={{ display: 'flex', flexDirection: 'column', marginTop: '16px' }}></span>
+
+        <div style={{ margin: '16px', width: '100px', fontWeight: 'bold', cursor: 'pointer' }} onClick={addTrack}>
+          +add track
+        </div>
+
+        <button
+          type='submit'
+          style={{
+            margin: '16px',
+            backgroundColor: 'green',
+            width: '200px',
+            height: '50px',
+            cursor: 'pointer',
+          }}
+        >
+          Upload
+        </button>
+      </form>
+    </section>
   );
 };
 
-/*
-        <Route
-          path='/dashboard'
-          component={() => {
-            if (!auth) {
-            return (
-              <section style={{ padding: '32px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <h1>Add Product</h1>
-                <form
-                  id='productForm'
-                  ref={formRef}
-                  onSubmit={onSubmit}
-                  style={{ display: 'flex', flexDirection: 'column', margin: 'auto' }}
-                >
-                  <label className='small-font'>Arist Name</label>
-                  <input type='text' name='artist_name' className='mb' />
-                  <label className='small-font'>Album Name</label>
-                  <input type='text' name='album_name' className='mb' />
-                  <label className='small-font'>Product Type</label>
-                  <select
-                    name='type'
-                    id='product_type'
-                    className='mb'
-                    onChange={(e) => {
-                      let t = document.getElementById('product_type').value;
-                      setType(t);
-                    }}
-                  >
-                    <option value='album'>Album/LP/EP</option>
-                    <option value='single'>Single</option>
-                  </select>
-                  <label className='small-font'>Download Price (USD)</label>
-                  <input
-                    type='number'
-                    name='download_price'
-                    min='1'
-                    max='20'
-                    className='mb'
-                    defaultValue='1'
-                    step='1'
-                  />
-                  <label className='small-font'>Description</label>
-                  <textarea name='description' form='productForm' className='mb' />
-                  <label className='small-font'>Upload artwork</label>
-                  <input
-                    type='file'
-                    accept='.png'
-                    multiple={false}
-                    onChange={(e) => {
-                      e.preventDefault();
-                      image = e.target.files[0];
-                    }}
-                    style={{ paddingBottom: '16px' }}
-                  />
-                  <label className='small-font'>Upload music</label>
-                  <input
-                    id='audio-upload'
-                    type='file'
-                    accept={type === 'album' ? '.zip' : '.mp3'}
-                    multiple={false}
-                    onChange={(e) => {
-                      e.preventDefault();
-                      audio = e.target.files[0];
-                    }}
-                    style={{ paddingBottom: '16px' }}
-                  />
+const EditTrack = () => {
+  return <div>add audio</div>;
+};
 
-                  <button type='submit'>Upload</button>
-                </form>
-              </section>
-            );
-            }
-            history.push('/login');
-            return <></>;
-          }}
-        />
-*/
+const Dashboard = () => {
+  return (
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Link to='/edit_album' style={{ margin: '8px' }}>
+        add album
+      </Link>
+      <Link to='/edit_track' style={{ margin: '8px' }}>
+        add track
+      </Link>
+    </div>
+  );
+};
 
 export default App;

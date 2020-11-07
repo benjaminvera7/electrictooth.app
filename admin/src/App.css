@@ -44,3 +44,12 @@
     transform: rotate(360deg);
   }
 }
+
+input {
+  margin: 0 0 16px 16px;
+  width: 200px;
+}
+
+label {
+  margin-left: 16px;
+}
