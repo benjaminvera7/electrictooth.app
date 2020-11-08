@@ -35,14 +35,12 @@ const EditAlbum = () => {
   };
 
   const updateAlbumTrack = (id, value) => {
-    const track_name = document.getElementById(id).value;
     const newAlbum = {
       ...album,
       tracks: [
         ...album.tracks,
         {
-          position: album.tracks.length + 1,
-          name: track_name,
+          id: id,
           track: value,
         },
       ],
@@ -65,12 +63,14 @@ const EditAlbum = () => {
     input.classList.add('mb');
     input.type = 'text';
     input.id = id;
+    input.required = true;
     tracks.appendChild(input);
 
     const audioInput = document.createElement('input');
     audioInput.type = 'file';
     audioInput.accept = 'audio/*';
     audioInput.multiple = false;
+    audioInput.required = true;
     audioInput.style.cssText = 'padding-bottom: 16px;';
     audioInput.onchange = function (e) {
       e.preventDefault();
@@ -92,7 +92,8 @@ const EditAlbum = () => {
     formData.append('cover_art', album.cover_art);
 
     for (let i = 0; i < album.tracks.length; i++) {
-      formData.append(`${album.tracks[i].name}`, album.tracks[i].track);
+      const track_name = document.getElementById(album.tracks[i].id).value;
+      formData.append(track_name, album.tracks[i].track);
     }
 
     axios
@@ -115,6 +116,7 @@ const EditAlbum = () => {
           type='text'
           name='album_name'
           value={album.album_name}
+          required
           onChange={(e) => updateAlbum(e.target.name, e.target.value)}
         />
         <label>album price</label>
@@ -122,6 +124,7 @@ const EditAlbum = () => {
           type='text'
           name='album_price'
           value={album.album_price}
+          required
           onChange={(e) => updateAlbum(e.target.name, e.target.value)}
         />
         <label>artist name</label>
@@ -129,6 +132,7 @@ const EditAlbum = () => {
           type='text'
           name='artist_name'
           value={album.artist_name}
+          required
           onChange={(e) => updateAlbum(e.target.name, e.target.value)}
         />
         <label>cover art</label>
@@ -137,6 +141,7 @@ const EditAlbum = () => {
           accept='image/*'
           multiple={false}
           name='cover_art'
+          required
           onChange={(e) => updateAlbum(e.target.name, e.target.files[0])}
         />
 
