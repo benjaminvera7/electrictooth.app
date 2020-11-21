@@ -6,16 +6,6 @@ const path = require('path');
 const cors = require('cors');
 const config = require('./config');
 
-const checkCustomerAuth = require('./util/checkCustomerAuth');
-
-const authRoutes = require('./routes/auth');
-const resetRoutes = require('./routes/reset');
-const paypalRoutes = require('./routes/paypal');
-const userRoutes = require('./routes/user');
-const ethRoutes = require('./routes/eth');
-const downloadRoutes = require('./routes/download');
-const streamRoutes = require('./routes/stream');
-const orderRoutes = require('./routes/order');
 const uploadRoutes = require('./routes/upload');
 
 const app = express();
@@ -29,17 +19,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, '../client/build')));
 app.use('/uploads', express.static(path.join(__dirname, './uploads')));
 
-app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/reset', resetRoutes);
-app.use('/api/v1/user', checkCustomerAuth, userRoutes);
-//app.use('/api/v1/products', productRoutes);
-app.use('/api/v1/stream', checkCustomerAuth, streamRoutes);
-app.use('/api/v1/paypal', paypalRoutes);
-app.use('/api/v1/download', checkCustomerAuth, downloadRoutes);
-app.use('/api/v1/order', checkCustomerAuth, orderRoutes);
 app.use('/api/v1/upload', uploadRoutes);
-
-app.use('/eth', checkCustomerAuth, ethRoutes);
 
 app.get('/*', function passHTML(req, res) {
   res.sendFile(path.join(__dirname, '../client/build/index.html'), function (err) {

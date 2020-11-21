@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 const config = require('../config');
 
-const User = require('../models/user');
-const Order = require('../models/order');
-const Products = require('../models/products');
+// const User = require('../models/user');
+// const Order = require('../models/order');
+// const Products = require('../models/products');
 
 class DatabaseService {
   constructor() {
@@ -26,23 +26,29 @@ class DatabaseService {
     this.db.on('error', () => console.error.bind(console, 'db error'));
     this.db.once('open', () => console.log('ET3-Database Connection ok!'));
   }
+}
 
-  // async getAlbumCount() {
-  //   const count = await Album.find().countDocuments();
-  //   return count;
-  // }
+const dbConnection = new DatabaseService();
 
-  // async getAlbumsPaginationPage(currentPage) {
-  //   const perPage = 6;
-  //   const albums = await Album.find()
-  //     .populate('songs')
-  //     .populate('artist')
-  //     .sort({ createdAt: -1 })
-  //     .skip((currentPage - 1) * perPage)
-  //     .limit(perPage);
+module.exports = dbConnection;
 
-  //   return albums;
-  // }
+/*
+  async getAlbumCount() {
+    const count = await Album.find().countDocuments();
+    return count;
+  }
+
+  async getAlbumsPaginationPage(currentPage) {
+    const perPage = 6;
+    const albums = await Album.find()
+      .populate('songs')
+      .populate('artist')
+      .sort({ createdAt: -1 })
+      .skip((currentPage - 1) * perPage)
+      .limit(perPage);
+
+    return albums;
+  }
 
   async getAlbums() {
     const albums = Products.find({ type: 'album' });
@@ -158,8 +164,4 @@ class DatabaseService {
     song.plays = song.plays + 1;
     return await song.save();
   }
-}
-
-const dbConnection = new DatabaseService();
-
-module.exports = dbConnection;
+  */
