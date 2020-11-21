@@ -26,6 +26,7 @@ async function editAlbum(req, res) {
   const { fields, files } = await formParse(req);
 
   for (const property in files) {
+    if (property === 'cover_art') continue;
     const songName = property;
     console.log(songName);
   }
