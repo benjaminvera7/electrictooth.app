@@ -93,6 +93,16 @@ class DatabaseService {
 
     return album.save();
   }
+
+  async getAlbumsPaginationPage(currentPage) {
+    const perPage = 6;
+    const albums = await Albums.find()
+      .sort({ createdAt: -1 })
+      .skip((currentPage - 1) * perPage)
+      .limit(perPage);
+
+    return albums;
+  }
 }
 
 const dbConnection = new DatabaseService();

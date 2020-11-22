@@ -7,6 +7,7 @@ const cors = require('cors');
 const config = require('./config');
 
 const uploadRoutes = require('./routes/upload');
+const musicRoutes = require('./routes/music');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 app.use('/uploads', express.static(path.join(__dirname, './uploads')));
 
 app.use('/api/v1/upload', uploadRoutes);
+app.use('/api/v1/music', musicRoutes);
 
 app.get('/*', function passHTML(req, res) {
   res.sendFile(path.join(__dirname, '../client/build/index.html'), function (err) {
