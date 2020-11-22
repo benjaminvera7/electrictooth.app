@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 const config = require('../config');
 
-// const User = require('../models/user');
-// const Order = require('../models/order');
-// const Products = require('../models/products');
+const Artists = require('../models/artists');
+const Albums = require('../models/albums');
+const Tracks = require('../models/tracks');
 
 class DatabaseService {
   constructor() {
@@ -25,6 +25,73 @@ class DatabaseService {
   connect() {
     this.db.on('error', () => console.error.bind(console, 'db error'));
     this.db.once('open', () => console.log('ET3-Database Connection ok!'));
+  }
+
+  async doesArtistExist(artist_name) {
+    const artist = await Artists.findOne({ artist_name });
+    return Boolean(artist);
+  }
+
+  async createArtist(properties) {
+    const newArtist = new Artists({
+      _id: new mongoose.Types.ObjectId(),
+      artist_name: properties.artist_name,
+      artist_bio: properties.artist_bio,
+      artist_img: properties.artist_img,
+      albums: properties.albums,
+    });
+
+    return newArtist.save();
+  }
+
+  async getArtist(artist_name) {
+    return await Artists.findOne({ artist_name });
+  }
+
+  async createAlbum(properties) {
+    const newAlbum = new Albums({
+      _id: new mongoose.Types.ObjectId(),
+      artist_name: properties.artist_name,
+      album_name: properties.album_name,
+      description: properties.description,
+      art_url: properties.art_url,
+      download_price: properties.download_price,
+      tracks: properties.tracks,
+    });
+
+    return newAlbum.save();
+  }
+
+  async createTrack(properties) {
+    const newTrack = new Tracks({
+      _id: new mongoose.Types.ObjectId(),
+      album_id: properties.album_id,
+      album_name: properties.album_name,
+      track_name: properties.track_name,
+      artist_name: properties.artist_name,
+      position: properties.position,
+      art_url: properties.art_url,
+      stream_url: properties.stream_url,
+      coin_price: 1,
+      plays: 0,
+      income: 0,
+    });
+
+    return newTrack.save();
+  }
+
+  async addAlbumToArtist(artist_id, album_id) {
+    const artist = await Artists.findById({ _id: artist_id });
+    artist.albums.push(album_id);
+
+    return artist.save();
+  }
+
+  async addTracksToAlbum(album_id, tracks) {
+    const album = await Albums.findById({ _id: album_id });
+    album.tracks = tracks;
+
+    return album.save();
   }
 }
 

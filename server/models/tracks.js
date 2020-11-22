@@ -6,7 +6,7 @@ const TracksSchema = new Schema({
   artist_name: String,
   album_name: String,
   track_name: String,
-  position: String,
+  position: Number,
   art_url: String,
   stream_url: String,
   download_price: Number,
