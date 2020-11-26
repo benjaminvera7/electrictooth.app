@@ -9,6 +9,7 @@ const EditAlbum = () => {
     artist_name: '',
     cover_art: '',
     tracks: [],
+    tags: '',
   });
 
   const updateAlbum = (name, value) => {
@@ -75,6 +76,7 @@ const EditAlbum = () => {
     formData.append('download_price', album.download_price);
     formData.append('artist_name', album.artist_name);
     formData.append('cover_art', album.cover_art);
+    formData.append('tags', album.tags);
 
     for (let i = 0; i < album.tracks.length; i++) {
       const track_name = document.getElementById(album.tracks[i].id).value;
@@ -101,6 +103,14 @@ const EditAlbum = () => {
           type='text'
           name='album_name'
           value={album.album_name}
+          required
+          onChange={(e) => updateAlbum(e.target.name, e.target.value)}
+        />
+        <label>tags</label>
+        <input
+          type='text'
+          name='tags'
+          value={album.tags}
           required
           onChange={(e) => updateAlbum(e.target.name, e.target.value)}
         />

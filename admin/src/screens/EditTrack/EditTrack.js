@@ -9,6 +9,7 @@ const EditTrack = () => {
     artist_name: '',
     cover_art: '',
     track: '',
+    tags: '',
   });
 
   const updateTrack = (name, value) => {
@@ -29,6 +30,7 @@ const EditTrack = () => {
     formData.append('download_price', track.download_price);
     formData.append('cover_art', track.cover_art);
     formData.append('track', track.track);
+    formData.append('tags', track.tags);
 
     axios
       .post('http://localhost:3090/api/v1/upload/edit_track', formData, {
@@ -50,6 +52,14 @@ const EditTrack = () => {
           type='text'
           name='artist_name'
           value={track.artist_name}
+          onChange={(e) => updateTrack(e.target.name, e.target.value)}
+          required
+        />
+        <label>tags</label>
+        <input
+          type='text'
+          name='tags'
+          value={track.tags}
           onChange={(e) => updateTrack(e.target.name, e.target.value)}
           required
         />

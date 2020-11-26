@@ -57,6 +57,7 @@ class DatabaseService {
       art_url: properties.art_url,
       download_price: properties.download_price,
       tracks: properties.tracks,
+      tags: properties.tags,
     });
 
     return newAlbum.save();

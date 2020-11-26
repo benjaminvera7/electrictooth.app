@@ -7,6 +7,7 @@ const AlbumsSchema = new Schema({
   description: String,
   art_url: String,
   download_price: Number,
+  tags: Array,
   tracks: [{ type: Schema.Types.ObjectId, ref: 'Tracks' }],
 });
 

@@ -48,12 +48,14 @@ async function editAlbum(req, res) {
   await upload(oldCoverArtPath, newCoverArtPath);
 
   //create new album, add properties w/ artist _id, return new album _id
+  const tags = fields.tags.replace(/\s/g, '').toLowerCase().split(',');
   const album = await dbConnection.createAlbum({
     artist_name: artist.artist_name,
     album_name: fields.album_name,
     description: '',
     art_url: newCoverArtPath,
     download_price: fields.download_price,
+    tags: tags,
     tracks: [],
   });
 
@@ -113,12 +115,14 @@ async function editTrack(req, res) {
   await upload(oldCoverArtPath, newCoverArtPath);
 
   //create new album, add properties w/ artist _id, return new album _id
+  const tags = fields.tags.replace(/\s/g, '').toLowerCase().split(',');
   const album = await dbConnection.createAlbum({
     artist_name: artist.artist_name,
     album_name: fields.track_name,
     description: '',
     art_url: newCoverArtPath,
     download_price: fields.download_price,
+    tags: tags,
     tracks: [],
   });
 
