@@ -52,7 +52,7 @@ async function editAlbum(req, res) {
   const album = await dbConnection.createAlbum({
     artist_name: artist.artist_name,
     album_name: fields.album_name,
-    description: '',
+    description: fields.description,
     art_url: newCoverArtPath,
     download_price: fields.download_price,
     tags: tags,
@@ -119,7 +119,7 @@ async function editTrack(req, res) {
   const album = await dbConnection.createAlbum({
     artist_name: artist.artist_name,
     album_name: fields.track_name,
-    description: '',
+    description: fields.description,
     art_url: newCoverArtPath,
     download_price: fields.download_price,
     tags: tags,

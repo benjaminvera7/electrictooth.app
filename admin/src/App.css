@@ -50,6 +50,12 @@ input {
   width: 200px;
 }
 
+textarea {
+  margin: 0 0 16px 16px;
+  width: 200px;
+  height: 100px;
+}
+
 label {
   margin-left: 16px;
 }
