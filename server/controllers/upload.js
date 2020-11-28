@@ -156,7 +156,49 @@ async function editTrack(req, res) {
   res.end();
 }
 
+async function editArtist(req, res) {
+  const { fields, files } = await formParse(req);
+
+  const exists = await dbConnection.doesArtistExist(fields.artist_name);
+
+  if (files.artist_img) {
+    const oldCoverArtPath = files.artist_img.path;
+    const newCoverArtPath = path.join(__dirname, `../uploads/${files.artist_img.name}`);
+    await upload(oldCoverArtPath, newCoverArtPath);
+  }
+
+  if (!exists) {
+    await dbConnection.createArtist({
+      artist_name: fields.artist_name ? fields.artist_name : '',
+      artist_bio: fields.artist_bio ? fields.artist_bio : '',
+      artist_img: files.artist_img ? newCoverArtPath : '',
+      albums: [],
+    });
+    res.end();
+  }
+  //upload album cover art
+
+  if (files.artist_img) {
+    await dbConnection.updateArtist(
+      fields.artist_name,
+      'artist_img',
+      path.join(__dirname, `../uploads/${files.artist_img.name}`),
+    );
+  }
+
+  if (fields.artist_name !== undefined) {
+    await dbConnection.updateArtist(fields.artist_name, 'artist_name', fields.artist_name);
+  }
+
+  if (fields.artist_bio !== undefined) {
+    await dbConnection.updateArtist(fields.artist_name, 'artist_bio', fields.artist_bio);
+  }
+
+  res.end();
+}
+
 module.exports = {
   editAlbum,
   editTrack,
+  editArtist,
 };

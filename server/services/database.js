@@ -104,6 +104,22 @@ class DatabaseService {
 
     return albums;
   }
+
+  async getArtists() {
+    const artists = await Artists.find({}, 'artist_name _id');
+
+    return artists;
+  }
+
+  async getArtist(id) {
+    const artist = await Artists.findById(id);
+    return artist;
+  }
+
+  async updateArtist(name, prop, value) {
+    const artist = Artists.findOneAndUpdate({ artist_name: name }, { [prop]: value });
+    return artist;
+  }
 }
 
 const dbConnection = new DatabaseService();
