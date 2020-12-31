@@ -53,10 +53,10 @@ const Home = ({ albums, pending }) => {
 
 export default connect(
   (state) => ({
-    albums: state.products.albums,
-    updatedAt: state.products.updatedAt,
-    error: state.pender.failure['products/GET_ALBUMS'],
-    pending: state.pender.pending['products/GET_ALBUMS'],
+    albums: state.music.albums,
+    updatedAt: state.music.updatedAt,
+    error: state.pender.failure['music/GET_ALBUMS'],
+    pending: state.pender.pending['music/GET_ALBUMS'],
   }),
   null,
 )(Home);

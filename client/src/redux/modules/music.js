@@ -9,22 +9,22 @@ function getDate() {
 
 const _getAlbums = () => {
   return axios({
-    url: `/api/v1/products/albums`,
+    url: `/api/v1/music`,
     method: 'GET',
   });
 };
 
 const _getAlbumById = (productId) => {
   return axios({
-    url: `/api/v1/products/albums/${productId}`,
+    url: `/api/v1/music/${productId}`,
     method: 'GET',
   });
 };
 
-export const GET_ALBUMS = 'products/GET_ALBUMS';
+export const GET_ALBUMS = 'music/GET_ALBUMS';
 export const getAlbums = createAction(GET_ALBUMS, _getAlbums);
 
-export const GET_ALBUM_BY_ID = 'products/GET_ALBUM_BY_ID';
+export const GET_ALBUM_BY_ID = 'music/GET_ALBUM_BY_ID';
 export const getAlbumById = createAction(GET_ALBUM_BY_ID, _getAlbumById);
 
 const initialState = {

@@ -55,6 +55,7 @@ class DatabaseService {
       album_name: properties.album_name,
       description: properties.description,
       art_url: properties.art_url,
+      art_name: properties.art_name,
       download_price: properties.download_price,
       tracks: properties.tracks,
       tags: properties.tags,
@@ -72,8 +73,10 @@ class DatabaseService {
       artist_name: properties.artist_name,
       position: properties.position,
       art_url: properties.art_url,
+      art_name: properties.art_name,
       stream_url: properties.stream_url,
       coin_price: 1,
+      download_price: 1,
       plays: 0,
       income: 0,
     });
@@ -98,6 +101,7 @@ class DatabaseService {
   async getAlbumsPaginationPage(currentPage) {
     const perPage = 6;
     const albums = await Albums.find()
+      .populate('tracks')
       .sort({ createdAt: -1 })
       .skip((currentPage - 1) * perPage)
       .limit(perPage);
@@ -111,10 +115,10 @@ class DatabaseService {
     return artists;
   }
 
-  async getArtist(id) {
-    const artist = await Artists.findById(id);
-    return artist;
-  }
+  // async getArtist(id) {
+  //   const artist = await Artists.findById(id);
+  //   return artist;
+  // }
 
   async updateArtist(name, prop, value) {
     const artist = Artists.findOneAndUpdate({ artist_name: name }, { [prop]: value });

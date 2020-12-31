@@ -8,6 +8,7 @@ const TracksSchema = new Schema({
   track_name: String,
   position: Number,
   art_url: String,
+  art_name: String,
   stream_url: String,
   download_price: Number,
   coin_price: Number,

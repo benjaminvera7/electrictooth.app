@@ -18,91 +18,16 @@ const CardContainer = styled(Box)`
 
 const HoverCardContainer = styled(Box)`
   cursor: pointer;
-
-  .mini {
-    transition: 0.5s ease;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    margin: 4px;
-    height: 100px;
-    width: 100px;
-    opacity: 0;
-  }
-
-  .big {
-    ${(props) => props.isMobile && 'filter: brightness(60%);'}
-  }
-
-  .mini {
-    ${(props) => props.isMobile && 'opacity: 1;'}
-  }
-
-  &:hover .big {
-    ${(props) => !props.isMobile && `filter: brightness(60%);`}
-  }
-
-  &:hover .mini {
-    opacity: 1;
-  }
 `;
 
 const HoverCard = ({ productId, img }) => {
   const isMobile = useWindowSize();
-  const [playing, setPlaying] = useState(false);
-  const audio = useRef(null);
 
   return (
     <HoverCardContainer width='100%' position='relative' isMobile={isMobile}>
-      <audio key='audio' ref={audio} type='audio/mpeg' />
-
-      <Link to={`/catalog/${productId}`}>
+      <Link to={`/music/${productId}`}>
         <Image src={`/uploads/${img}`} width='100%' className='big' />
       </Link>
-      <Box className='mini'>
-        <Image src={`/uploads/${img}`} className='mini' />
-        <IconButton
-          onMouseLeave={() => {
-            if (playing) {
-              audio.current.pause();
-              setPlaying(!playing);
-            }
-          }}
-          onMouseEnter={() => {
-            if (playing) {
-              audio.current.pause();
-              setPlaying(!playing);
-            } else {
-              audio.current.src = `/uploads/${productId}_preview.mp3`;
-              audio.current.play();
-              setPlaying(!playing);
-            }
-          }}
-          onClick={() => {
-            if (playing) {
-              audio.current.pause();
-              setPlaying(!playing);
-            } else {
-              audio.current.src = `/uploads/${productId}_preview.mp3`;
-              audio.current.play();
-              setPlaying(!playing);
-            }
-          }}
-          variant='outline'
-          variantColor='teal'
-          fontSize='50px'
-          rounded='50%'
-          backgroundColor='white'
-          style={{
-            position: 'relative',
-            left: '25%',
-            top: '25%',
-          }}
-          icon={() =>
-            playing ? <Pause color={`${theme.colors.etGreen}`} /> : <Play color={`${theme.colors.etGreen}`} />
-          }
-        />
-      </Box>
     </HoverCardContainer>
   );
 };
@@ -132,7 +57,7 @@ const Card = ({ auth, album, UserActions, collection }) => {
 
   return (
     <CardContainer
-      flex={{ xs: '100%', sm: '100%', md: '45%', lg: '25%' }}
+      maxWidth='32%'
       boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'
       bg='white'
       overflow='hidden'
@@ -141,19 +66,15 @@ const Card = ({ auth, album, UserActions, collection }) => {
       style={{ position: 'relative' }}
     >
       <Box style={{ position: 'relative' }}>
-        <HoverCard productId={album.product_id} img={album.img_url} />
+        <HoverCard productId={album._id} img={album.art_name} />
 
         <Box p='4'>
           <Box d='flex' alignItems='baseline'>
-            <Badge px='2' bg={`${theme.colors.etGreen}`} variantColor='white' mr={1}>
-              Disco
-            </Badge>
-            <Badge px='2' bg={`${theme.colors.etGreen}`} variantColor='white' mr={1}>
-              House
-            </Badge>
-            <Badge px='2' bg={`${theme.colors.etGreen}`} variantColor='white' mr={1}>
-              Indie
-            </Badge>
+            {album.tags.map((tag, i) => (
+              <Badge px='2' bg={`${theme.colors.etGreen}`} variantColor='white' mr={1}>
+                {tag}
+              </Badge>
+            ))}
           </Box>
 
           <Box mt='1' fontWeight='semibold' as='h4' lineHeight='tight' isTruncated color='gray.600'>

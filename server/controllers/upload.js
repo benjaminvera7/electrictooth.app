@@ -54,6 +54,7 @@ async function editAlbum(req, res) {
     album_name: fields.album_name,
     description: fields.description,
     art_url: newCoverArtPath,
+    art_name: files.cover_art.name,
     download_price: fields.download_price,
     tags: tags,
     tracks: [],
@@ -77,7 +78,8 @@ async function editAlbum(req, res) {
       track_name: track_name,
       artist_name: artist.artist_name,
       position: 0,
-      art_url: files.cover_art.name,
+      art_url: newCoverArtPath,
+      art_name: files.cover_art.name,
       stream_url: newTrackPath,
     });
 
@@ -121,6 +123,7 @@ async function editTrack(req, res) {
     album_name: fields.track_name,
     description: fields.description,
     art_url: newCoverArtPath,
+    art_name: files.cover_art.name,
     download_price: fields.download_price,
     tags: tags,
     tracks: [],
@@ -142,7 +145,8 @@ async function editTrack(req, res) {
       track_name: fields.track_name,
       artist_name: artist.artist_name,
       position: 0,
-      art_url: files.cover_art.name,
+      art_url: newCoverArtPath,
+      art_name: files.cover_art.name,
       stream_url: newTrackPath,
     });
 
@@ -169,9 +173,9 @@ async function editArtist(req, res) {
 
   if (!exists) {
     await dbConnection.createArtist({
-      artist_name: fields.artist_name ? fields.artist_name : '',
-      artist_bio: fields.artist_bio ? fields.artist_bio : '',
-      artist_img: files.artist_img ? newCoverArtPath : '',
+      artist_name: fields.artist_name,
+      artist_bio: fields.artist_bio,
+      artist_img: newCoverArtPath,
       albums: [],
     });
     res.end();
