@@ -5,6 +5,7 @@ const config = require('../config');
 const Artists = require('../models/artists');
 const Albums = require('../models/albums');
 const Tracks = require('../models/tracks');
+const Users = require('../models/users');
 
 class DatabaseService {
   constructor() {
@@ -115,10 +116,10 @@ class DatabaseService {
     return artists;
   }
 
-  // async getArtist(id) {
-  //   const artist = await Artists.findById(id);
-  //   return artist;
-  // }
+  async getUserByEmail(email) {
+    const user = await Users.findOne({ email: email });
+    return user;
+  }
 
   async updateArtist(name, prop, value) {
     const artist = Artists.findOneAndUpdate({ artist_name: name }, { [prop]: value });
@@ -134,6 +135,10 @@ module.exports = dbConnection;
   async getAlbumCount() {
     const count = await Album.find().countDocuments();
     return count;
+  }
+  async getArtist(id) {
+  const artist = await Artists.findById(id);
+    return artist;
   }
 
   async getAlbumsPaginationPage(currentPage) {

@@ -17,7 +17,7 @@ const NavigationContainer = styled(Flex)`
   top: 0px;
   position: fixed;
   z-index: 2;
-  background-color: rgb(255,255,255, 0.2);
+  background-color: rgb(255, 255, 255, 0.2);
   height: 40px;
   width: 100%;
 `;
@@ -25,7 +25,7 @@ const NavigationContainer = styled(Flex)`
 const Navigation = ({ auth, cart, username }) => {
   const isMobile = useWindowSize();
   const router = useRouter();
-  
+
   return (
     <NavigationContainer>
       <Flex maxW='1440px' flex='1'>
@@ -91,6 +91,8 @@ const Navigation = ({ auth, cart, username }) => {
                   <Cart active={router.pathname === '/cart'} />
                 </Button>
 
+                {/* 
+                //number on cart
                 <Box
                   style={{
                     position: 'absolute',
@@ -102,7 +104,7 @@ const Navigation = ({ auth, cart, username }) => {
                   }}
                 >
                   {cart.items.length === 0 ? '' : cart.items.length}
-                </Box>
+                </Box> */}
               </Box>
             </Link>
             <Link to='/profile'>

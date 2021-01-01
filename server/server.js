@@ -8,6 +8,7 @@ const config = require('./config');
 
 const uploadRoutes = require('./routes/upload');
 const musicRoutes = require('./routes/music');
+const authRoutes = require('./routes/auth');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, '../client/build')));
 app.use('/uploads', express.static(path.join(__dirname, './uploads')));
 
+app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/upload', uploadRoutes);
 app.use('/api/v1/music', musicRoutes);
 

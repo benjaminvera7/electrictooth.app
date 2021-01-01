@@ -12,11 +12,11 @@ import Album from 'screens/Album';
 // import Profile from 'screens/Profile';
 // import Help from 'screens/Help';
 // import Coins from 'screens/Coins';
-// import Signin from 'screens/Signin';
-// import Signup from 'screens/Signup';
+import Signin from 'screens/Signin';
+import Signup from 'screens/Signup';
 // import ForgotPassword from 'screens/ForgotPassword';
 // import NewPassword from 'screens/NewPassword';
-// import Navigation from 'components/Navigation';
+import Navigation from 'components/Navigation';
 // import AudioPlayer from 'components/AudioPlayer';
 
 import { connect } from 'react-redux';
@@ -36,12 +36,11 @@ function App({ MusicActions, UserActions, auth, playlist }) {
     <>
       <CSSReset />
 
-      {/* <Navigation /> */}
+      <Navigation />
 
       <Box mb='100px'>
         <Switch>
-          {/* <Route path='/signup' component={Signup} />
-          <Route path='/signin' component={Signin} />
+          {/* 
           <Route path='/help' component={Help} />
           <Route path='/forgot' component={ForgotPassword} />
           <Route path='/reset/:userId/:token' component={NewPassword} />
@@ -51,6 +50,8 @@ function App({ MusicActions, UserActions, auth, playlist }) {
           <Route path='/checkout' component={Checkout} />
           <Route path='/download/:orderId' component={Download} />
           <Route path='/coins' component={Coins} /> */}
+          <Route path='/signup' component={Signup} />
+          <Route path='/signin' component={Signin} />
           <Route path='/music/:productId' component={Album} />
           <Route exact path='/' component={Home} />
           {/* <Redirect to='/' /> */}
