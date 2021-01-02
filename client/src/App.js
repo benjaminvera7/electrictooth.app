@@ -22,13 +22,13 @@ import Navigation from 'components/Navigation';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as musicActions from 'redux/modules/music';
-//import * as userActions from 'redux/modules/user';
+import * as userActions from 'redux/modules/user';
 
 function App({ MusicActions, UserActions, auth, playlist }) {
   //def need to refactor into hook or something
   useEffect(() => {
     MusicActions.getAlbums();
-    //auth && UserActions.getUser(auth);
+    auth && UserActions.getUser(auth);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -75,6 +75,6 @@ export default connect(
   }),
   (dispatch) => ({
     MusicActions: bindActionCreators(musicActions, dispatch),
-    //UserActions: bindActionCreators(userActions, dispatch),
+    UserActions: bindActionCreators(userActions, dispatch),
   }),
 )(App);

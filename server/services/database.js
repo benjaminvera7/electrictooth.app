@@ -125,6 +125,11 @@ class DatabaseService {
     const artist = Artists.findOneAndUpdate({ artist_name: name }, { [prop]: value });
     return artist;
   }
+
+  async getUserById(userId) {
+    const user = await Users.findById(userId);
+    return user;
+  }
 }
 
 const dbConnection = new DatabaseService();

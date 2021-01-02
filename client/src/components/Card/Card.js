@@ -71,7 +71,7 @@ const Card = ({ auth, album, UserActions, collection }) => {
         <Box p='4'>
           <Box d='flex' alignItems='baseline'>
             {album.tags.map((tag, i) => (
-              <Badge px='2' bg={`${theme.colors.etGreen}`} variantColor='white' mr={1}>
+              <Badge px='2' bg={`${theme.colors.etGreen}`} variantColor='white' mr={1} key={i}>
                 {tag}
               </Badge>
             ))}

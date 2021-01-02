@@ -64,7 +64,7 @@ class Album extends Component {
                   <Box color='black' width='100%' px={{ xs: 2, sm: 4 }} py={{ xs: 4, sm: 4 }}>
                     <Box d='flex' alignItems='baseline' mb={2} color='white'>
                       {currentAlbum.tags.map((tag, i) => (
-                        <Badge px='2' bg={`${theme.colors.etGreen}`} variantColor='white' mr={1}>
+                        <Badge px='2' bg={`${theme.colors.etGreen}`} variantColor='white' mr={1} key={i}>
                           {tag}
                         </Badge>
                       ))}
