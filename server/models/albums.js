@@ -9,6 +9,7 @@ const AlbumsSchema = new Schema({
   art_name: String,
   download_price: Number,
   tags: Array,
+  type: String,
   tracks: [{ type: Schema.Types.ObjectId, ref: 'Tracks' }],
 });
 

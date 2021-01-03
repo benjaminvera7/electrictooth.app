@@ -21,18 +21,18 @@ const CardAnimation = styled(Flex)`
 `;
 
 class Album extends Component {
-  addToCart = (productId, type) => {
+  addToCart = (id, type) => {
     if (this.props.auth) {
-      this.props.UserActions.addToCart(productId, type, this.props.auth);
-      toast(`Added to your Cart`);
+      this.props.UserActions.addToCart(id, type, this.props.auth);
+      //toast(`Added to your Cart`);
     } else {
       this.props.history.push('/signup');
     }
   };
 
-  addToPlaylist = (productId) => {
+  addToPlaylist = (id) => {
     if (this.props.auth) {
-      this.props.UserActions.addToPlaylist(this.props.auth, productId);
+      this.props.UserActions.addToPlaylist(this.props.auth, id);
       toast(`Saved to your Playlist`);
     } else {
       this.props.history.push('/signup');
@@ -44,7 +44,7 @@ class Album extends Component {
 
     let currentAlbum = null;
 
-    currentAlbum = albums.filter((a) => a._id === this.props.match.params.productId)[0];
+    currentAlbum = albums.filter((a) => a._id === this.props.match.params.id)[0];
 
     return (
       <Fragment>
@@ -119,7 +119,7 @@ class Album extends Component {
                       rounded='0px'
                       //icon={() => <CartAdd color={`${theme.colors.etGreen}`} />}
                       icon={() => <p>add to cart</p>}
-                      onClick={() => this.addToCart(currentAlbum.product_id, currentAlbum.type)}
+                      onClick={() => this.addToCart(currentAlbum._id, currentAlbum.type)}
                     />
                     <IconButton
                       flex='1'
@@ -137,7 +137,7 @@ class Album extends Component {
                       //   <PlaylistAdd color={`${theme.colors.etGreen}`} />
                       // )}
                       icon={() => <p>add to playlist</p>}
-                      onClick={() => this.addToPlaylist(currentAlbum.product_id)}
+                      onClick={() => this.addToPlaylist(currentAlbum._id)}
                     />
                   </Flex>
                 </Flex>
@@ -203,7 +203,7 @@ class Album extends Component {
                               }}
                               rounded='0px'
                               icon={() => <CartAdd color={`${theme.colors.etGreen}`} />}
-                              onClick={() => this.addToCart(track.product_id)}
+                              onClick={() => this.addToCart(track._id, track.type)}
                             />
                             <IconButton
                               flex='1'
@@ -218,7 +218,7 @@ class Album extends Component {
                                 borderColor: 'rgba(5, 174, 165, 0.3)',
                               }}
                               icon={() => <PlaylistAdd color={`${theme.colors.etGreen}`} />}
-                              onClick={() => this.addToPlaylist(track._id)}
+                              onClick={() => this.addToPlaylist(track._id, track.type)}
                             />
                           </Flex>
                         </Flex>

@@ -14,6 +14,7 @@ const TracksSchema = new Schema({
   coin_price: Number,
   plays: Number,
   income: Number,
+  type: String,
 });
 
 const Tracks = mongoose.model('Tracks', TracksSchema);

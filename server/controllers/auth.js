@@ -18,12 +18,14 @@ async function signin(req, res) {
       return res.status(422).send({ error: true, message: 'Unable to log in' });
     }
 
+    const cart = await dbConnection.getUserCart(user.cart);
+
     if (isMatch) {
       return res.status(200).json({
         userId: user._id,
         albumCollection: user.albumCollection,
         playlist: user.playlist,
-        cart: user.cart,
+        cart: cart.toObject(),
         coins: user.coins,
         username: user.username,
         token: encrypt.tokenForUser(user),
@@ -60,21 +62,26 @@ async function signup(req, res) {
     album_collection: [],
     playlist: [],
     stream: [],
-    cart: { items: [], total: 0 },
-    reset_password_token: '',
     coins: 100,
   });
 
-  await encrypt.encryptUserPassword(user);
+  const newCart = await dbConnection.createUserCart();
+
+  user.cart = newCart._id;
+
+  let newUser = await encrypt.encryptUserPassword(user);
+
+  newUser.save();
+
+  const cart = await dbConnection.getUserCart(newUser.cart);
 
   return res.status(200).json({
-    userId: user._id,
-    username: username,
-    albumCollection: [],
-    playlist: [],
-    cart: user.cart,
-    coins: user.coins,
+    username: user.username,
     token: encrypt.tokenForUser(user),
+    cart: cart.toObject(),
+    album_collection: [],
+    playlist: [],
+    coins: 100,
   });
 }
 

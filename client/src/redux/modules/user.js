@@ -23,12 +23,13 @@ const _signin = (credentials) => {
   return axios.post('/api/v1/auth/signin', credentials);
 };
 
-const _addToCart = (product_id, type, token) => {
+const _addToCart = (id, type, token) => {
+  console.log(id, type, token);
   return axios({
-    url: `/api/v1/user/cart/add/${product_id}`,
+    url: `/api/v1/user/cart/add/${id}`,
     method: 'POST',
     data: {
-      productId: product_id,
+      id: id,
       type: type,
     },
     headers: { Authorization: token },
@@ -178,7 +179,7 @@ export default handleActions(
         newState.authenticated = payload.data.token;
         newState.userId = payload.data.userId;
         newState.albumCollection = payload.data.albumCollection;
-        newState.cart = payload.data.cart;
+        newState.cart = payload.data.cart.cart;
         newState.coins = payload.data.coins;
         newState.username = payload.data.username;
         return newState;
@@ -202,7 +203,7 @@ export default handleActions(
         newState.userId = payload.data.userId;
         newState.authenticated = payload.data.token;
         newState.albumCollection = payload.data.albumCollection;
-        newState.cart = payload.data.cart;
+        newState.cart = payload.data.cart.cart;
         newState.coins = payload.data.coins;
         newState.username = payload.data.username;
         return newState;

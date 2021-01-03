@@ -184,7 +184,7 @@ export default connect(
   (state) => ({
     user: state.user,
     auth: state.user.authenticated,
-    albumCollection: state.user.albumCollection,
+    albumCollection: [],
   }),
   (dispatch) => ({
     UserActions: bindActionCreators(userActions, dispatch),

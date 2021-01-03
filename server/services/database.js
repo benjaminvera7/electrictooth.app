@@ -6,6 +6,7 @@ const Artists = require('../models/artists');
 const Albums = require('../models/albums');
 const Tracks = require('../models/tracks');
 const Users = require('../models/users');
+const Carts = require('../models/carts');
 
 class DatabaseService {
   constructor() {
@@ -60,6 +61,7 @@ class DatabaseService {
       download_price: properties.download_price,
       tracks: properties.tracks,
       tags: properties.tags,
+      type: 'album',
     });
 
     return newAlbum.save();
@@ -80,6 +82,7 @@ class DatabaseService {
       download_price: 1,
       plays: 0,
       income: 0,
+      type: 'track',
     });
 
     return newTrack.save();
@@ -127,8 +130,27 @@ class DatabaseService {
   }
 
   async getUserById(userId) {
-    const user = await Users.findById(userId);
+    const user = await Users.find(userId);
     return user;
+  }
+
+  async getTrackById(id) {
+    const track = await Tracks.findById({ _id: id });
+    return track;
+  }
+
+  async getUserCart(id) {
+    const cart = await Carts.findById({ _id: id });
+    return cart;
+  }
+
+  async createUserCart() {
+    const newCart = new Carts({
+      _id: new mongoose.Types.ObjectId(),
+      cart: { items: [], total: 0 },
+    });
+
+    return newCart.save();
   }
 }
 
