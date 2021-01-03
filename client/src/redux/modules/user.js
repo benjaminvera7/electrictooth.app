@@ -161,7 +161,7 @@ export default handleActions(
         newState.albumCollection = payload.data.albumCollection;
         newState.coins = payload.data.coins;
         newState.username = payload.data.username;
-        newState.cart = payload.data.cart;
+        newState.cart = payload.data.cart.cart;
         newState.playlist = payload.data.playlist;
         return newState;
       },

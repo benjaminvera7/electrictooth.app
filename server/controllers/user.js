@@ -23,15 +23,7 @@ async function addToCart(req, res) {
 
 async function addTrackToCart(id, user) {
   const track = await dbConnection.getTrackById(id);
-  const hasCart = await dbConnection.getUserCart(user._id);
-
-  let userCart;
-
-  if (!hasCart) {
-    userCart = await dbConnection.createUserCart(user._id);
-  } else {
-    userCart = hasCart;
-  }
+  const userCart = user.cart.cart;
 
   const inCart = userCart.items.some((i) => i._id === track._id);
 
@@ -41,22 +33,24 @@ async function addTrackToCart(id, user) {
 
   const newCart = { items: [], total: 0 };
 
-  newCart.items.push(...currentCart.items);
+  newCart.items.push(...userCart.items);
 
   newCart.items.push({
-    id: song._id,
-    artist_name: song.artist_name,
-    product_id: song.product_id,
-    song_name: song.song_name,
-    price: song.price,
-    img_url: song.img_url,
-    type: song.type,
-    quantity: song.quantity,
+    id: track._id,
+    artist_name: track.artist_name,
+    track_name: track.track_name,
+    download_price: track.download_price,
+    art_url: track.art_url,
+    art_name: track.art_name,
+    type: track.type,
+    quantity: 1,
   });
 
-  newCart.total = currentCart.total + song.price;
+  newCart.total = userCart.total + track.download_price;
 
-  const { cart } = await dbConnection.updateCart(user, newCart);
+  const { cart: cart_id } = await dbConnection.getUserById(user._id);
+
+  const cart = await dbConnection.updateUserCart(cart_id, newCart);
 
   return cart;
 }

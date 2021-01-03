@@ -2,7 +2,6 @@ const encrypt = require('../services/encryption');
 const dbConnection = require('../services/database');
 
 async function checkCustomerAuth(req, res, next) {
-
   const token = req.headers.authorization;
 
   if (token) {
@@ -12,6 +11,11 @@ async function checkCustomerAuth(req, res, next) {
 
       if (user && user._id) {
         req.user = user;
+
+        const cart = await dbConnection.getUserCart(user.cart);
+
+        req.user.cart = cart;
+
         next();
         return;
       }

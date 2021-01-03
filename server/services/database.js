@@ -130,7 +130,7 @@ class DatabaseService {
   }
 
   async getUserById(userId) {
-    const user = await Users.find(userId);
+    const user = await Users.findById({ _id: userId });
     return user;
   }
 
@@ -151,6 +151,11 @@ class DatabaseService {
     });
 
     return newCart.save();
+  }
+
+  async updateUserCart(id, updatedCart) {
+    const cart = Carts.findOneAndUpdate({ _id: id }, { cart: updatedCart });
+    return cart;
   }
 }
 

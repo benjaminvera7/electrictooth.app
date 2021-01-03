@@ -8,7 +8,7 @@ import Album from 'screens/Album';
 
 // import Download from 'screens/Download';
 // import Checkout from 'screens/Checkout';
-// import Cart from 'screens/Cart';
+import Cart from 'screens/Cart';
 import Profile from 'screens/Profile';
 // import Help from 'screens/Help';
 // import Coins from 'screens/Coins';
@@ -46,10 +46,11 @@ function App({ MusicActions, UserActions, auth, playlist }) {
           <Route path='/reset/:userId/:token' component={NewPassword} />
           
           
-          <Route path='/cart' component={Cart} />
+          
           <Route path='/checkout' component={Checkout} />
           <Route path='/download/:orderId' component={Download} />
           <Route path='/coins' component={Coins} /> */}
+          <Route path='/cart' component={Cart} />
           <Route path='/profile' component={Profile} />
           <Route path='/signup' component={Signup} />
           <Route path='/signin' component={Signin} />
