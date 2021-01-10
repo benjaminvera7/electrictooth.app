@@ -10,9 +10,9 @@ async function addToCart(req, res) {
     case 'track':
       cart = await addTrackToCart(id, user);
       break;
-    // case 'album':
-    //   cart = await addAlbumToCart(productId, user);
-    //   break;
+    case 'album':
+      cart = await addAlbumToCart(id, user);
+      break;
     // case 'coin':
     //   cart = await addCoinToCart(productId, user);
     //   break;
@@ -55,37 +55,39 @@ async function addTrackToCart(id, user) {
   return cart;
 }
 
-// async function addAlbumToCart(productId, user) {
-//   const album = await dbConnection.getAlbumByProductId(productId);
-//   const currentCart = user.cart;
+async function addAlbumToCart(id, user) {
+  const album = await dbConnection.getAlbumById(id);
+  const userCart = user.cart.cart;
 
-//   const inCart = currentCart.items.some((i) => i.product_id === album.product_id);
+  const inCart = userCart.items.some((i) => i._id === track._id);
 
-//   if (inCart) {
-//     return currentCart;
-//   }
+  if (inCart) {
+    return userCart;
+  }
 
-//   const newCart = { items: [], total: 0 };
+  const newCart = { items: [], total: 0 };
 
-//   newCart.items.push(...currentCart.items);
+  newCart.items.push(...userCart.items);
 
-//   newCart.items.push({
-//     id: album._id,
-//     artist_name: album.artist_name,
-//     product_id: album.product_id,
-//     album_name: album.album_name,
-//     price: album.price,
-//     img_url: album.img_url,
-//     type: album.type,
-//     quantity: album.quantity,
-//   });
+  newCart.items.push({
+    id: album._id,
+    artist_name: album.artist_name,
+    album_name: album.album_name,
+    download_price: album.download_price,
+    art_url: album.art_url,
+    art_name: album.art_name,
+    type: album.type,
+    quantity: 1,
+  });
 
-//   newCart.total = currentCart.total + album.price;
+  newCart.total = userCart.total + album.download_price;
 
-//   const { cart } = await dbConnection.updateCart(user, newCart);
+  const { cart: cart_id } = await dbConnection.getUserById(user._id);
 
-//   return cart;
-// }
+  const cart = await dbConnection.updateUserCart(cart_id, newCart);
+
+  return cart;
+}
 
 // async function addCoinToCart(productId, user) {
 //   const coin = await dbConnection.getCoinByProductId(productId);
@@ -117,6 +119,65 @@ async function addTrackToCart(id, user) {
 //   return cart;
 // }
 
+async function removeFromCart(req, res) {
+  const user = req.user;
+  const type = req.body.type;
+  const id = req.body.id;
+  let cart;
+
+  switch (type) {
+    case 'track':
+      cart = await removeTrackFromCart(id, user);
+      break;
+    case 'album':
+      cart = await removeAlbumFromCart(id, user);
+      break;
+    case 'coin':
+      cart = await removeCoinFromCart(id, user);
+      break;
+  }
+
+  res.status(200).json(cart);
+}
+
+async function removeTrackFromCart(id, user) {
+  const track = await dbConnection.getTrackById(id);
+  const userCart = user.cart.cart;
+
+  const newCart = { items: [], total: 0 };
+
+  const items = userCart.items.filter((item) => item.id.toString() !== track.id);
+
+  newCart.items = items;
+
+  newCart.total = userCart.total > 0 ? userCart.total - track.download_price : 0;
+
+  const { cart: cart_id } = await dbConnection.getUserById(user._id);
+
+  const cart = await dbConnection.updateUserCart(cart_id, newCart);
+
+  return cart;
+}
+
+async function removeAlbumFromCart(id, user) {
+  const album = await dbConnection.getAlbumById(id);
+  const userCart = user.cart.cart;
+
+  const newCart = { items: [], total: 0 };
+
+  const items = userCart.items.filter((item) => item.id.toString() !== album.id);
+
+  newCart.items = items;
+
+  newCart.total = userCart.total > 0 ? userCart.total - album.download_price : 0;
+
+  const { cart: cart_id } = await dbConnection.getUserById(user._id);
+
+  const cart = await dbConnection.updateUserCart(cart_id, newCart);
+
+  return cart;
+}
+
 function getUser(req, res) {
   res.status(200).json(req.user);
 }
@@ -124,4 +185,5 @@ function getUser(req, res) {
 module.exports = {
   getUser,
   addToCart,
+  removeFromCart,
 };

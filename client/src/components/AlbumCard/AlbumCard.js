@@ -16,9 +16,9 @@ const Card = styled(Flex)`
 const AlbumCard = ({ auth, album, UserActions, collection }) => {
   const router = useRouter();
 
-  const addToPlaylist = (productId) => {
+  const addToPlaylist = (id) => {
     if (auth) {
-      UserActions.addToPlaylist(auth, productId);
+      UserActions.addToPlaylist(auth, id);
 
       toast(`Saved to your Playlist`);
     } else {
@@ -26,9 +26,9 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
     }
   };
 
-  const addToCart = (productId, type) => {
+  const addToCart = (id, type) => {
     if (auth) {
-      UserActions.addToCart(productId, type, auth);
+      UserActions.addToCart(id, type, auth);
 
       toast(`Added to your Cart`);
     } else {
@@ -39,8 +39,8 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
   return (
     <Card className='card' wrap='wrap' p={2} borderWidth='1px' rounded='sm' mb={2} bg='white'>
       <Box className='card_image'>
-        <Link to={`/catalog/${album.product_id}`}>
-          <Image src={`/uploads/${album.img_url}`} rounded='lg' className='zoom' />
+        <Link to={`/catalog/${album._id}`}>
+          <Image src={`/uploads/${album.art_name}`} rounded='lg' className='zoom' />
         </Link>
       </Box>
 
@@ -89,11 +89,11 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
         </Text>
       </Box>
 
-      <Button mt={1} width='100%' bg='#2d7bb8' onClick={() => addToCart(album.product_id, album.type)}>
+      <Button mt={1} width='100%' bg='#2d7bb8' onClick={() => addToCart(album._id, album.type)}>
         Buy Digital Album
       </Button>
 
-      <Button mt={1} width='100%' bg='#134468' onClick={() => addToPlaylist(album.product_id)}>
+      <Button mt={1} width='100%' bg='#134468' onClick={() => addToPlaylist(album._id)}>
         Add Album to Player
       </Button>
     </Card>
@@ -105,6 +105,7 @@ export default connect(
     auth: state.user.authenticated,
     collection: state.user.albumCollection,
     playlist: state.user.playlist,
+    updatedAt: state.user.updatedAt,
   }),
   (dispatch) => ({
     UserActions: bindActionCreators(userActions, dispatch),

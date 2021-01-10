@@ -115,7 +115,6 @@ class DatabaseService {
 
   async getArtists() {
     const artists = await Artists.find({}, 'artist_name _id');
-
     return artists;
   }
 
@@ -125,7 +124,7 @@ class DatabaseService {
   }
 
   async updateArtist(name, prop, value) {
-    const artist = Artists.findOneAndUpdate({ artist_name: name }, { [prop]: value });
+    const artist = await Artists.findOneAndUpdate({ artist_name: name }, { [prop]: value }, { new: true });
     return artist;
   }
 
@@ -137,6 +136,11 @@ class DatabaseService {
   async getTrackById(id) {
     const track = await Tracks.findById({ _id: id });
     return track;
+  }
+
+  async getAlbumById(id) {
+    const album = await Albums.findById({ _id: id });
+    return album;
   }
 
   async getUserCart(id) {
@@ -154,7 +158,7 @@ class DatabaseService {
   }
 
   async updateUserCart(id, updatedCart) {
-    const cart = Carts.findOneAndUpdate({ _id: id }, { cart: updatedCart });
+    const cart = await Carts.findOneAndUpdate({ _id: id }, { cart: updatedCart }, { new: true });
     return cart;
   }
 }

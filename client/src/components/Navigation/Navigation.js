@@ -90,9 +90,6 @@ const Navigation = ({ auth, cart, username }) => {
                 <Button variant='link'>
                   <Cart active={router.pathname === '/cart'} />
                 </Button>
-
-                {/* 
-                //number on cart
                 <Box
                   style={{
                     position: 'absolute',
@@ -103,8 +100,8 @@ const Navigation = ({ auth, cart, username }) => {
                     fontWeight: 'bold',
                   }}
                 >
-                  {cart.items.length === 0 ? '' : cart.items.length}
-                </Box> */}
+                  {cart.items?.length === 0 ? '' : cart.items?.length}
+                </Box>
               </Box>
             </Link>
             <Link to='/profile'>

@@ -35,21 +35,21 @@ const HoverCard = ({ productId, img }) => {
 const Card = ({ auth, album, UserActions, collection }) => {
   const router = useRouter();
 
-  const addToPlaylist = (productId) => {
+  const addToPlaylist = (id) => {
     if (auth) {
-      UserActions.addToPlaylist(auth, productId);
+      UserActions.addToPlaylist(auth, id);
 
-      toast(`Saved to your Playlist`);
+      //toast(`Saved to your Playlist`);
     } else {
       router.push('/signup');
     }
   };
 
-  const addToCart = (productId, type) => {
+  const addToCart = (id, type) => {
     if (auth) {
-      UserActions.addToCart(productId, type, auth);
+      UserActions.addToCart(id, type, auth);
 
-      toast(`Added to your Cart`);
+      //toast(`Added to your Cart`);
     } else {
       router.push('/signup');
     }
@@ -100,7 +100,7 @@ const Card = ({ auth, album, UserActions, collection }) => {
               }}
               rounded='0px'
               icon={() => <CartAdd color={`${theme.colors.etGreen}`} />}
-              onClick={() => addToCart(album.product_id, album.type)}
+              onClick={() => addToCart(album._id, album.type)}
             />
             <IconButton
               flex='1'
@@ -115,7 +115,7 @@ const Card = ({ auth, album, UserActions, collection }) => {
               }}
               rounded='0px'
               icon={() => <PlaylistAdd color={`${theme.colors.etGreen}`} />}
-              onClick={() => addToPlaylist(album.product_id)}
+              onClick={() => addToPlaylist(album._id)}
             />
           </Flex>
         </Box>

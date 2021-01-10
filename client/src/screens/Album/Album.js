@@ -241,6 +241,7 @@ export default connect(
     playlist: state.user.playlist,
     auth: state.user.authenticated,
     updatedAt: state.music.updatedAt,
+    updatedUserAt: state.user.updatedAt,
     pending: state.pender.pending['music/GET_ALBUMS'],
   }),
   (dispatch) => ({

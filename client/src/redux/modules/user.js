@@ -26,7 +26,7 @@ const _signin = (credentials) => {
 const _addToCart = (id, type, token) => {
   console.log(id, type, token);
   return axios({
-    url: `/api/v1/user/cart/add/${id}`,
+    url: `/api/v1/user/cart/${id}`,
     method: 'POST',
     data: {
       id: id,
@@ -36,12 +36,12 @@ const _addToCart = (id, type, token) => {
   });
 };
 
-const _removeFromCart = (product_id, type, token) => {
+const _removeFromCart = (id, type, token) => {
   return axios({
-    url: `/api/v1/user/cart/remove/${product_id}`,
+    url: `/api/v1/user/cart/${id}`,
     method: 'DELETE',
     data: {
-      productId: product_id,
+      id: id,
       type: type,
     },
     headers: { Authorization: token },
@@ -220,7 +220,8 @@ export default handleActions(
       type: ADD_TO_CART,
       onSuccess: (state, { payload }) => {
         const newState = { ...state, updatedAt: getDate(), error: null };
-        newState.cart = payload.data;
+        console.log('add', payload.data.cart);
+        newState.cart = payload.data.cart;
         return newState;
       },
       onFailure: (state, { payload }) => {
@@ -231,7 +232,8 @@ export default handleActions(
       type: REMOVE_FROM_CART,
       onSuccess: (state, { payload }) => {
         const newState = { ...state, updatedAt: getDate(), error: null };
-        newState.cart = payload.data;
+        console.log('remove', payload.data.cart);
+        newState.cart = payload.data.cart;
         return newState;
       },
       onFailure: (state, { payload }) => {
