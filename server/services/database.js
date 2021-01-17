@@ -183,7 +183,9 @@ class DatabaseService {
     playlist.tracks.push(track_id);
     await playlist.save();
 
-    const newPlaylist = await Playlists.findById({ _id: playlist_id }).populate('tracks').exec();
+    const newPlaylist = await Playlists.findById({ _id: playlist_id })
+      .populate({ path: 'tracks', select: '-_id artist_name album_name track_name art_url art_name' })
+      .exec();
 
     return newPlaylist;
   }
