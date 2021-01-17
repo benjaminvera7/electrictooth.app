@@ -13,7 +13,7 @@ const UsersSchema = new Schema({
   reset_token: String,
   album_collection: [{ type: Schema.Types.ObjectId, ref: 'Albums' }],
   cart: { type: Schema.Types.ObjectId, ref: 'Carts' },
-  playlists: [{ type: Schema.Types.ObjectId, ref: 'Playlists' }],
+  playlist: { type: Schema.Types.ObjectId, ref: 'Playlists' },
   orders: [{ type: Schema.Types.ObjectId, ref: 'Orders' }],
 });
 

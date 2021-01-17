@@ -7,6 +7,7 @@ const Albums = require('../models/albums');
 const Tracks = require('../models/tracks');
 const Users = require('../models/users');
 const Carts = require('../models/carts');
+const Playlists = require('../models/playlists');
 
 class DatabaseService {
   constructor() {
@@ -148,6 +149,11 @@ class DatabaseService {
     return cart;
   }
 
+  async getUserPlaylist(id) {
+    const playlist = await Playlists.findById({ _id: id }).populate('tracks').exec();
+    return playlist;
+  }
+
   async createUserCart() {
     const newCart = new Carts({
       _id: new mongoose.Types.ObjectId(),
@@ -157,9 +163,29 @@ class DatabaseService {
     return newCart.save();
   }
 
+  async createUserPlaylist() {
+    const newPlaylist = new Playlists({
+      _id: new mongoose.Types.ObjectId(),
+      tracks: [],
+    });
+
+    return newPlaylist.save();
+  }
+
   async updateUserCart(id, updatedCart) {
     const cart = await Carts.findOneAndUpdate({ _id: id }, { cart: updatedCart }, { new: true });
     return cart;
+  }
+
+  async updateUserPlaylist(playlist_id, track_id) {
+    const playlist = await Playlists.findById({ _id: playlist_id });
+
+    playlist.tracks.push(track_id);
+    await playlist.save();
+
+    const newPlaylist = await Playlists.findById({ _id: playlist_id }).populate('tracks').exec();
+
+    return newPlaylist;
   }
 }
 

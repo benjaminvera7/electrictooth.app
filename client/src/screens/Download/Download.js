@@ -55,9 +55,9 @@ class Download extends Component {
     });
   };
 
-  addToPlaylist = (productId) => {
+  addToPlaylist = (id) => {
     if (this.props.auth) {
-      this.props.UserActions.addToPlaylist(this.props.auth, productId);
+      this.props.UserActions.addToPlaylist(id, this.props.auth);
       toast(`Saved to your Playlist`);
     } else {
       console.warn('something went wrong');
@@ -137,7 +137,7 @@ class Download extends Component {
                           borderColor: 'rgba(5, 174, 165, 0.3)',
                         }}
                         icon={() => <PlaylistAdd color={`${theme.colors.etGreen}`} />}
-                        onClick={(e) => this.addToPlaylist(album.product_id)}
+                        onClick={(e) => this.addToPlaylist(album._id)}
                       />
                     </Flex>
                   )}

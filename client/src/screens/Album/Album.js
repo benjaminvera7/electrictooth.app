@@ -30,10 +30,10 @@ class Album extends Component {
     }
   };
 
-  addToPlaylist = (id) => {
+  addToPlaylist = (id, type) => {
     if (this.props.auth) {
-      this.props.UserActions.addToPlaylist(this.props.auth, id);
-      toast(`Saved to your Playlist`);
+      this.props.UserActions.addToPlaylist(id, type, this.props.auth);
+      //toast(`Saved to your Playlist`);
     } else {
       this.props.history.push('/signup');
     }
@@ -137,7 +137,7 @@ class Album extends Component {
                       //   <PlaylistAdd color={`${theme.colors.etGreen}`} />
                       // )}
                       icon={() => <p>add to playlist</p>}
-                      onClick={() => this.addToPlaylist(currentAlbum._id)}
+                      onClick={() => this.addToPlaylist(currentAlbum._id, currentAlbum.type)}
                     />
                   </Flex>
                 </Flex>

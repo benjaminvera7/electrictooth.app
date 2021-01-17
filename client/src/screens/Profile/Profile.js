@@ -32,9 +32,9 @@ const ProfileCard = styled(Box)`
 `;
 
 const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
-  const addToPlaylist = (productId) => {
+  const addToPlaylist = (id) => {
     if (auth) {
-      UserActions.addToPlaylist(auth, productId);
+      UserActions.addToPlaylist(id, auth);
       toast(`Saved to your Playlist`);
     } else {
       console.warn('something went wrong');
@@ -138,7 +138,7 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
                             borderColor: 'rgba(5, 174, 165, 0.3)',
                           }}
                           icon={() => <PlaylistAdd color={`${theme.colors.etGreen}`} />}
-                          onClick={() => addToPlaylist(album.product_id)}
+                          onClick={() => addToPlaylist(album._id)}
                         />
                       </Flex>
                     </Flex>

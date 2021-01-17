@@ -88,7 +88,7 @@ const MobilePlaylistPanel = (props) => {
                         <Play />
                       </Button>
                     )}
-                    <Button variant='link' onClick={() => props.remove(song.product_id)}>
+                    <Button variant='link' onClick={() => props.remove(song._id)}>
                       <Remove />
                     </Button>
                   </Flex>

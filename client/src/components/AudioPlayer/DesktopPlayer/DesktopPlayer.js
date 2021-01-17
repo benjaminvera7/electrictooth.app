@@ -122,7 +122,7 @@ const DesktopPlayer = ({
                     fontWeight: 'bold',
                   }}
                 >
-                  {playlist.length === 0 ? '' : '•'}
+                  {playlist?.length === 0 ? '' : '•'}
                 </Box>
               </Box>
             </Button>

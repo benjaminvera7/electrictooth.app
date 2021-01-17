@@ -19,12 +19,13 @@ async function signin(req, res) {
     }
 
     const cart = await dbConnection.getUserCart(user.cart);
+    const playlist = await dbConnection.getUserPlaylist(user.playlist);
 
     if (isMatch) {
       return res.status(200).json({
         userId: user._id,
         albumCollection: user.albumCollection,
-        playlist: user.playlist,
+        playlist: playlist.toArray(),
         cart: cart.toObject(),
         coins: user.coins,
         username: user.username,
@@ -60,27 +61,28 @@ async function signup(req, res) {
     email: email,
     password: password,
     album_collection: [],
-    playlist: [],
     stream: [],
     coins: 100,
   });
 
   const newCart = await dbConnection.createUserCart();
-
   user.cart = newCart._id;
 
-  let newUser = await encrypt.encryptUserPassword(user);
+  const newPlaylist = await dbConnection.createUserPlaylist();
+  user.playlist = newPlaylist._id;
 
+  const newUser = await encrypt.encryptUserPassword(user);
   newUser.save();
 
   const cart = await dbConnection.getUserCart(newUser.cart);
+  const playlist = await dbConnection.getUserPlaylist(newUser.playlist);
 
   return res.status(200).json({
     username: user.username,
     token: encrypt.tokenForUser(user),
     cart: cart.toObject(),
     album_collection: [],
-    playlist: [],
+    playlist: playlist,
     coins: 100,
   });
 }

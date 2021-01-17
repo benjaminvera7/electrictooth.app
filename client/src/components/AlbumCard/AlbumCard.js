@@ -18,7 +18,7 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
 
   const addToPlaylist = (id) => {
     if (auth) {
-      UserActions.addToPlaylist(auth, id);
+      UserActions.addToPlaylist(id, auth);
 
       toast(`Saved to your Playlist`);
     } else {

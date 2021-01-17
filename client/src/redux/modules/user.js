@@ -56,17 +56,25 @@ const _getCoins = (token) => {
   });
 };
 
-const _addToPlaylist = (token, productId) => {
+const _addToPlaylist = (id, type, token) => {
   return axios({
-    url: `/api/v1/user/playlist/add/${productId}`,
+    url: `/api/v1/user/playlist/${id}`,
+    data: {
+      id: id,
+      type: type,
+    },
     method: 'POST',
     headers: { Authorization: token },
   });
 };
 
-const _removeFromPlaylist = (token, productId) => {
+const _removeFromPlaylist = (id, type, token) => {
   return axios({
-    url: `/api/v1/user/playlist/remove/${productId}`,
+    url: `/api/v1/user/playlist/${id}`,
+    data: {
+      id: id,
+      type: type,
+    },
     method: 'DELETE',
     headers: { Authorization: token },
   });

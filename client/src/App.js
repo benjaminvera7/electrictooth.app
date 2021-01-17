@@ -17,7 +17,7 @@ import Signup from 'screens/Signup';
 // import ForgotPassword from 'screens/ForgotPassword';
 // import NewPassword from 'screens/NewPassword';
 import Navigation from 'components/Navigation';
-// import AudioPlayer from 'components/AudioPlayer';
+import AudioPlayer from 'components/AudioPlayer';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -60,9 +60,9 @@ function App({ MusicActions, UserActions, auth, playlist }) {
         </Switch>
       </Box>
 
-      {/* <div id='snackbar'></div>
+      {/* <div id='snackbar'></div> */}
 
-      {auth && <AudioPlayer />} */}
+      {auth && <AudioPlayer />}
     </>
   );
 }
