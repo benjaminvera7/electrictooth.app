@@ -190,6 +190,53 @@ async function removeTrackFromPlaylist(req, res) {
   res.status(200).json(newPlaylist);
 }
 
+function getUser(req, res) {
+  res.status(200).json(req.user);
+}
+
+function getCoins(req, res) {
+  res.status(200).json(req.user.coins);
+}
+
+module.exports = {
+  getUser,
+  addToCart,
+  removeFromCart,
+  addToPlaylist,
+  removeTrackFromPlaylist,
+  getCoins,
+};
+
+// async function addCoinToCart(productId, user) {
+//   const coin = await dbConnection.getCoinByProductId(productId);
+//   const currentCart = user.cart;
+
+//   const inCart = currentCart.items.some((i) => i.product_id === coin.product_id);
+
+//   if (inCart) {
+//     return currentCart;
+//   }
+
+//   const newCart = { items: [], total: 0 };
+
+//   newCart.items.push(...currentCart.items);
+
+//   newCart.items.push({
+//     id: coin._id,
+//     product_id: coin.product_id,
+//     img_url: coin.img_url,
+//     price: coin.price,
+//     type: coin.type,
+//     quantity: coin.quantity,
+//   });
+
+//   newCart.total = currentCart.total + coin.price;
+
+//   const { cart } = await dbConnection.updateCart(user, newCart);
+
+//   return cart;
+// }
+
 //const album = await dbConnection.getAlbumById(id);
 
 // const product = await dbConnection.getProduct(product_id);
@@ -241,46 +288,4 @@ async function removeTrackFromPlaylist(req, res) {
 //   const { playlist } = await dbConnection.updatePlaylist(req.user, newPlaylist);
 
 //   res.status(200).json(playlist);
-// }
-
-function getUser(req, res) {
-  res.status(200).json(req.user);
-}
-
-module.exports = {
-  getUser,
-  addToCart,
-  removeFromCart,
-  addToPlaylist,
-  removeTrackFromPlaylist,
-};
-
-// async function addCoinToCart(productId, user) {
-//   const coin = await dbConnection.getCoinByProductId(productId);
-//   const currentCart = user.cart;
-
-//   const inCart = currentCart.items.some((i) => i.product_id === coin.product_id);
-
-//   if (inCart) {
-//     return currentCart;
-//   }
-
-//   const newCart = { items: [], total: 0 };
-
-//   newCart.items.push(...currentCart.items);
-
-//   newCart.items.push({
-//     id: coin._id,
-//     product_id: coin.product_id,
-//     img_url: coin.img_url,
-//     price: coin.price,
-//     type: coin.type,
-//     quantity: coin.quantity,
-//   });
-
-//   newCart.total = currentCart.total + coin.price;
-
-//   const { cart } = await dbConnection.updateCart(user, newCart);
-
-//   return cart;
 // }

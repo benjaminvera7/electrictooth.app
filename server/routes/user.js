@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/user');
 
-router.get('/', userController.getUser);
+router.GET('/', userController.getUser);
 
-router.post('/cart/:id', userController.addToCart);
-router.delete('/cart/:id', userController.removeFromCart);
+router.POST('/cart/:id', userController.addToCart);
+router.DELETE('/cart/:id', userController.removeFromCart);
 
-router.post('/playlist/:id', userController.addToPlaylist);
-router.delete('/playlist/:id', userController.removeTrackFromPlaylist);
+router.POST('/playlist/:id', userController.addToPlaylist);
+router.DELETE('/playlist/:id', userController.removeTrackFromPlaylist);
 
-// router.get('/coins', userController.getCoins);
+router.GET('/coins', userController.getCoins);
 
 module.exports = router;
