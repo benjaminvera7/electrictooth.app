@@ -17,7 +17,7 @@ async function seed() {
   const coin100 = {
     _id: new mongoose.Types.ObjectId(),
     amount: 100,
-    art_url: 'coin100.png',
+    art_name: 'coin100.png',
     price: 1,
     type: 'coin',
   };
@@ -25,7 +25,7 @@ async function seed() {
   const coin200 = {
     _id: new mongoose.Types.ObjectId(),
     amount: 200,
-    art_url: 'coin200.png',
+    art_name: 'coin200.png',
     price: 2,
     type: 'coin',
   };
@@ -33,7 +33,7 @@ async function seed() {
   const coin300 = {
     _id: new mongoose.Types.ObjectId(),
     amount: 300,
-    art_url: 'coin300.png',
+    art_name: 'coin300.png',
     price: 3,
     type: 'coin',
   };

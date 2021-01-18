@@ -17,10 +17,10 @@ const CoinContainer = styled(Box)`
 const Coins = ({ UserActions, auth }) => {
   const router = useRouter();
 
-  const addToCart = (coins, type) => {
+  const addToCart = (id, type) => {
     if (auth) {
-      UserActions.addToCart(coins, type, auth);
-      toast(`Added to your Cart`);
+      UserActions.addToCart(id, type, auth);
+      //toast(`Added to your Cart`);
     } else {
       router.push('/signup');
     }
@@ -79,7 +79,7 @@ const Coins = ({ UserActions, auth }) => {
                 width='80%'
                 bg={`${theme.colors.etGreen}`}
                 color='white'
-                onClick={() => addToCart('coin100', 'coin')}
+                onClick={() => addToCart('6005e862433fc4f6d7ea4b73', 'coin')}
                 _hover={{
                   bg: `${theme.colors.etGreen}`,
                 }}
@@ -132,7 +132,7 @@ const Coins = ({ UserActions, auth }) => {
                 width='80%'
                 bg={`${theme.colors.etGreen}`}
                 color='white'
-                onClick={() => addToCart('coin200', 'coin')}
+                onClick={() => addToCart('6005e862433fc4f6d7ea4b74', 'coin')}
                 _hover={{
                   bg: `${theme.colors.etGreen}`,
                 }}
@@ -185,7 +185,7 @@ const Coins = ({ UserActions, auth }) => {
                 width='80%'
                 bg={`${theme.colors.etGreen}`}
                 color='white'
-                onClick={() => addToCart('coin300', 'coin')}
+                onClick={() => addToCart('6005e862433fc4f6d7ea4b75', 'coin')}
                 _hover={{
                   bg: `${theme.colors.etGreen}`,
                 }}
@@ -203,7 +203,7 @@ export default connect(
   (state) => ({
     user: state.user,
     auth: state.user.authenticated,
-    updatedAt: state.products.updatedAt,
+    updatedAt: state.user.updatedAt,
   }),
   (dispatch) => ({
     UserActions: bindActionCreators(userActions, dispatch),

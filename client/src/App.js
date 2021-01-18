@@ -11,7 +11,7 @@ import Album from 'screens/Album';
 import Cart from 'screens/Cart';
 import Profile from 'screens/Profile';
 // import Help from 'screens/Help';
-// import Coins from 'screens/Coins';
+import Coins from 'screens/Coins';
 import Signin from 'screens/Signin';
 import Signup from 'screens/Signup';
 // import ForgotPassword from 'screens/ForgotPassword';
@@ -44,12 +44,10 @@ function App({ MusicActions, UserActions, auth, playlist }) {
           <Route path='/help' component={Help} />
           <Route path='/forgot' component={ForgotPassword} />
           <Route path='/reset/:userId/:token' component={NewPassword} />
-          
-          
-          
           <Route path='/checkout' component={Checkout} />
           <Route path='/download/:orderId' component={Download} />
-          <Route path='/coins' component={Coins} /> */}
+           */}
+          <Route path='/coins' component={Coins} />
           <Route path='/cart' component={Cart} />
           <Route path='/profile' component={Profile} />
           <Route path='/signup' component={Signup} />

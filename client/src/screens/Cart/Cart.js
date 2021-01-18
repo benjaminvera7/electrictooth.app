@@ -30,38 +30,42 @@ const Cart = ({ UserActions, auth, cart }) => {
 
         <Stack>
           {cart.items?.length > 0 ? (
-            cart.items.map(({ id, artist_name, track_name, album_name, art_name, download_price, type }) => (
-              <Flex borderWidth='1px' key={id} bg='white'>
-                <Box>
-                  <Image src={`/uploads/${art_name}`} maxWidth={['75px', '75px', '165px', '165px']} />
-                </Box>
+            cart.items.map(
+              ({ id, artist_name, track_name, album_name, art_name, download_price, type, amount, price }) => (
+                <Flex borderWidth='1px' key={id} bg='white'>
+                  <Box>
+                    <Image src={`/uploads/${art_name}`} maxWidth={['75px', '75px', '165px', '165px']} />
+                  </Box>
 
-                <Box p={2}>
-                  <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='#000' color='gray.600'>
-                    {/* {type === 'coin' && `${getAmount(product_id)} stream coins`} */}
-                    {type === 'album' && album_name}
-                    {type === 'track' && `${track_name} (MP3)`}
-                  </Heading>
-                  <Text fontSize={['xs', 'sm', 'md', 'lg']} mb={4} color='gray.500'>
-                    {artist_name ? artist_name : `@ $0.01`}
-                  </Text>
-                </Box>
+                  <Box p={2}>
+                    <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='#000' color='gray.600'>
+                      {type === 'coin' && `${amount} stream coins`}
+                      {type === 'album' && album_name}
+                      {type === 'track' && `${track_name} (MP3)`}
+                    </Heading>
+                    <Text fontSize={['xs', 'sm', 'md', 'lg']} mb={4} color='gray.500'>
+                      {artist_name ? artist_name : `@ $0.01`}
+                    </Text>
+                  </Box>
 
-                <Box mx='auto' />
+                  <Box mx='auto' />
 
-                <Flex p={2} direction='column' justify='center' align='center'>
-                  <Text px={2} color='#222'>
-                    ${download_price}.00
-                  </Text>
+                  <Flex p={2} direction='column' justify='center' align='center'>
+                    <Text px={2} color='#222'>
+                      {type === 'coin' && `${price}.00`}
+                      {type === 'album' && `${download_price}.00`}
+                      {type === 'track' && `${download_price}.00`}
+                    </Text>
+                  </Flex>
+
+                  <Flex p={2}>
+                    <Button onClick={() => UserActions.removeFromCart(id, type, auth)} color='black' variant='link'>
+                      remove
+                    </Button>
+                  </Flex>
                 </Flex>
-
-                <Flex p={2}>
-                  <Button onClick={() => UserActions.removeFromCart(id, type, auth)} color='black' variant='link'>
-                    remove
-                  </Button>
-                </Flex>
-              </Flex>
-            ))
+              ),
+            )
           ) : (
             <Flex justify='center' color='grey'>
               your cart is empty

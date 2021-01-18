@@ -8,6 +8,7 @@ const Tracks = require('../models/tracks');
 const Users = require('../models/users');
 const Carts = require('../models/carts');
 const Playlists = require('../models/playlists');
+const Coins = require('../models/coins');
 
 class DatabaseService {
   constructor() {
@@ -142,6 +143,11 @@ class DatabaseService {
   async getAlbumById(id) {
     const album = await Albums.findById({ _id: id });
     return album;
+  }
+
+  async getCoinById(id) {
+    const coin = await Coins.findById({ _id: id });
+    return coin;
   }
 
   async getUserCart(id) {

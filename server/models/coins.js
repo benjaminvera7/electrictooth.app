@@ -5,6 +5,7 @@ const CoinsSchema = new Schema({
   amount: Number,
   art_name: String,
   price: Number,
+  amount: Number,
   type: String,
 });
 

@@ -89,6 +89,37 @@ async function addAlbumToCart(id, user) {
   return cart;
 }
 
+async function addCoinToCart(id, user) {
+  const coin = await dbConnection.getCoinById(id);
+  const currentCart = user.cart.cart;
+
+  const inCart = currentCart.items.some((i) => i._id === coin._id);
+
+  if (inCart) {
+    return userCart;
+  }
+
+  const newCart = { items: [], total: 0 };
+
+  newCart.items.push(...currentCart.items);
+
+  newCart.items.push({
+    id: coin._id,
+    art_name: coin.art_name,
+    price: coin.price,
+    amount: coin.amount,
+    type: coin.type,
+  });
+
+  newCart.total = currentCart.total + coin.price;
+
+  const { cart: cart_id } = await dbConnection.getUserById(user._id);
+
+  const cart = await dbConnection.updateUserCart(cart_id, newCart);
+
+  return cart;
+}
+
 async function removeFromCart(req, res) {
   const user = req.user;
   const type = req.body.type;
@@ -140,6 +171,25 @@ async function removeAlbumFromCart(id, user) {
   newCart.items = items;
 
   newCart.total = userCart.total > 0 ? userCart.total - album.download_price : 0;
+
+  const { cart: cart_id } = await dbConnection.getUserById(user._id);
+
+  const cart = await dbConnection.updateUserCart(cart_id, newCart);
+
+  return cart;
+}
+
+async function removeCoinFromCart(id, user) {
+  const coin = await dbConnection.getCoinById(id);
+  const userCart = user.cart.cart;
+
+  const newCart = { items: [], total: 0 };
+
+  const items = userCart.items.filter((item) => item.id.toString() !== coin.id);
+
+  newCart.items = items;
+
+  newCart.total = userCart.total > 0 ? userCart.total - coin.price : 0;
 
   const { cart: cart_id } = await dbConnection.getUserById(user._id);
 
@@ -206,86 +256,3 @@ module.exports = {
   removeTrackFromPlaylist,
   getCoins,
 };
-
-// async function addCoinToCart(productId, user) {
-//   const coin = await dbConnection.getCoinByProductId(productId);
-//   const currentCart = user.cart;
-
-//   const inCart = currentCart.items.some((i) => i.product_id === coin.product_id);
-
-//   if (inCart) {
-//     return currentCart;
-//   }
-
-//   const newCart = { items: [], total: 0 };
-
-//   newCart.items.push(...currentCart.items);
-
-//   newCart.items.push({
-//     id: coin._id,
-//     product_id: coin.product_id,
-//     img_url: coin.img_url,
-//     price: coin.price,
-//     type: coin.type,
-//     quantity: coin.quantity,
-//   });
-
-//   newCart.total = currentCart.total + coin.price;
-
-//   const { cart } = await dbConnection.updateCart(user, newCart);
-
-//   return cart;
-// }
-
-//const album = await dbConnection.getAlbumById(id);
-
-// const product = await dbConnection.getProduct(product_id);
-
-// if (product.type === 'single') {
-//   const songExistsInPlaylist = currentPlaylist.some((s) => s.product_id === product_id);
-
-//   if (songExistsInPlaylist) {
-//     return res.status(200).json(currentPlaylist);
-//   }
-
-//   const newPlaylist = [...currentPlaylist];
-
-//   const newSong = {
-//     product_id: product.product_id,
-//     id: product._id,
-//     song_name: product.song_name,
-//     artist_name: product.artist_name,
-//     img_url: product.img_url,
-//   };
-
-//   newPlaylist.push(newSong);
-
-//   const { playlist } = await dbConnection.updatePlaylist(req.user, newPlaylist);
-
-//   res.status(200).json(playlist);
-// } else if (product.type === 'album') {
-//   const newPlaylist = [...currentPlaylist];
-
-//   const album = await dbConnection.getFullAlbumByProductId(product_id);
-//   const songs = album.filter((p) => p.position !== undefined);
-
-//   songs.forEach((song) => {
-//     const existsInPlaylist = currentPlaylist.some((s) => s.id.toString() === song.id);
-
-//     if (!existsInPlaylist) {
-//       const newSong = {
-//         product_id: song.product_id,
-//         id: song._id,
-//         song_name: song.song_name,
-//         artist_name: song.artist_name,
-//         img_url: song.img_url,
-//       };
-
-//       newPlaylist.push(newSong);
-//     }
-//   });
-
-//   const { playlist } = await dbConnection.updatePlaylist(req.user, newPlaylist);
-
-//   res.status(200).json(playlist);
-// }
