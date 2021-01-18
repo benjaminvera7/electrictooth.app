@@ -8,7 +8,7 @@ router.post('/cart/:id', userController.addToCart);
 router.delete('/cart/:id', userController.removeFromCart);
 
 router.post('/playlist/:id', userController.addToPlaylist);
-// router.delete('/playlist/remove/:product_id', userController.removeFromPlaylist);
+router.delete('/playlist/:id', userController.removeTrackFromPlaylist);
 
 // router.get('/coins', userController.getCoins);
 

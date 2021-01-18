@@ -149,8 +149,10 @@ class DatabaseService {
     return cart;
   }
 
-  async getUserPlaylist(id) {
-    const playlist = await Playlists.findById({ _id: id }).populate('tracks').exec();
+  async getUserPlaylist(playlist_id) {
+    const playlist = await Playlists.findById({ _id: playlist_id })
+      .populate({ path: 'tracks', select: '_id artist_name album_name track_name art_url art_name' })
+      .exec();
     return playlist;
   }
 
@@ -177,14 +179,27 @@ class DatabaseService {
     return cart;
   }
 
-  async updateUserPlaylist(playlist_id, track_id) {
+  async addTrackToPlaylist(playlist_id, track_id) {
     const playlist = await Playlists.findById({ _id: playlist_id });
 
     playlist.tracks.push(track_id);
     await playlist.save();
 
     const newPlaylist = await Playlists.findById({ _id: playlist_id })
-      .populate({ path: 'tracks', select: '-_id artist_name album_name track_name art_url art_name' })
+      .populate({ path: 'tracks', select: '_id artist_name album_name track_name art_url art_name' })
+      .exec();
+
+    return newPlaylist;
+  }
+
+  async removeTrackFromPlaylist(playlist_id, track_id) {
+    const playlist = await Playlists.findById({ _id: playlist_id });
+
+    playlist.tracks = playlist.tracks.filter((t) => t._id.toString() !== track_id);
+    await playlist.save();
+
+    const newPlaylist = await Playlists.findById({ _id: playlist_id })
+      .populate({ path: 'tracks', select: '_id artist_name album_name track_name art_url art_name' })
       .exec();
 
     return newPlaylist;

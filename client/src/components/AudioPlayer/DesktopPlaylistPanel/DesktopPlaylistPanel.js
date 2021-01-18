@@ -55,13 +55,13 @@ const DesktopPlaylistPanel = ({
 
       <Box mt='48px' mb='16px'>
         <Stack spacing={2}>
-          {playlist ? (
+          {playlist.length > 0 ? (
             <Fragment>
-              {playlist.map((song) => (
-                <PlaylistCard w='100%' key={song.id} p={2}>
+              {playlist.map((track) => (
+                <PlaylistCard w='100%' key={track._id} p={2}>
                   <Box px={2}>
                     <Image
-                      src={`/uploads/${song.img_url}`}
+                      src={`/uploads/${track.art_name}`}
                       h='48px'
                       w='48px'
                       borderRadius='50%'
@@ -72,26 +72,26 @@ const DesktopPlaylistPanel = ({
 
                   <Flex direction='column' pl={2} justify='center'>
                     <Text color='gray.600' fontSize='sm'>
-                      {song.artist_name}
+                      {track.artist_name}
                     </Text>
                     <Text color='gray.500' fontSize='sm'>
-                      {song.song_name}
+                      {track.track_name}
                     </Text>
                   </Flex>
 
                   <Box mx='auto' />
 
                   <Flex align='center' minWidth='100px' justify='space-evenly'>
-                    {currentlyPlaying === song.id ? (
+                    {currentlyPlaying === track._id ? (
                       <Button variant='link' onClick={handlePlay} isLoading={loading}>
                         {playing ? <Pause /> : <Play />}
                       </Button>
                     ) : (
-                      <Button variant='link' onClick={() => fetch(song.id)}>
+                      <Button variant='link' onClick={() => fetch(track._id)}>
                         <Play />
                       </Button>
                     )}
-                    <Button variant='link' onClick={() => remove(song._id)}>
+                    <Button variant='link' onClick={() => remove(track._id)}>
                       <Remove />
                     </Button>
                   </Flex>

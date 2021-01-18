@@ -54,11 +54,11 @@ const MobilePlaylistPanel = (props) => {
           </Heading>
           {props.playlist ? (
             <Box pt='50px'>
-              {props.playlist.map((song) => (
-                <PlaylistCard w='100%' key={song.id} p={2} borderRadius='6px'>
+              {props.playlist.map((track) => (
+                <PlaylistCard w='100%' key={track._id} p={2} borderRadius='6px'>
                   <Box px={2}>
                     <Image
-                      src={`/uploads/${song.img_url}`}
+                      src={`/uploads/${track.art_name}`}
                       h='48px'
                       w='48px'
                       borderRadius='50%'
@@ -69,26 +69,26 @@ const MobilePlaylistPanel = (props) => {
 
                   <Flex direction='column' justify='center'>
                     <Text color='gray.600' fontSize='sm'>
-                      {song.artist_name}
+                      {track.artist_name}
                     </Text>
                     <Text color='gray.500' fontSize='sm'>
-                      {song.song_name}
+                      {track.track_name}
                     </Text>
                   </Flex>
 
                   <Box mx='auto' />
 
                   <Flex align='center' minWidth='100px' justify='space-evenly'>
-                    {props.currentlyPlaying === song.id ? (
+                    {props.currentlyPlaying === track._id ? (
                       <Button variant='link' onClick={props.handlePlay} isLoading={props.loading}>
                         {props.playing ? <Pause /> : <Play />}
                       </Button>
                     ) : (
-                      <Button variant='link' onClick={() => props.fetch(song.id)}>
+                      <Button variant='link' onClick={() => props.fetch(track._id)}>
                         <Play />
                       </Button>
                     )}
-                    <Button variant='link' onClick={() => props.remove(song._id)}>
+                    <Button variant='link' onClick={() => props.remove(track._id)}>
                       <Remove />
                     </Button>
                   </Flex>

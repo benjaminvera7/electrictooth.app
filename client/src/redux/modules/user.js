@@ -68,13 +68,9 @@ const _addToPlaylist = (id, type, token) => {
   });
 };
 
-const _removeFromPlaylist = (id, type, token) => {
+const _removeFromPlaylist = (id, token) => {
   return axios({
     url: `/api/v1/user/playlist/${id}`,
-    data: {
-      id: id,
-      type: type,
-    },
     method: 'DELETE',
     headers: { Authorization: token },
   });
@@ -154,7 +150,7 @@ export default handleActions(
 
         let newPlaylist = payload.data;
 
-        newState.playlist = newPlaylist;
+        newState.playlist = newPlaylist.tracks;
 
         return newState;
       },
@@ -170,7 +166,7 @@ export default handleActions(
         newState.coins = payload.data.coins;
         newState.username = payload.data.username;
         newState.cart = payload.data.cart.cart;
-        newState.playlist = payload.data.playlist;
+        newState.playlist = payload.data.playlist.tracks;
         return newState;
       },
       onFailure: (state, { payload }) => {

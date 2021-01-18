@@ -176,9 +176,18 @@ async function addTrackToPlaylist(track_id, user) {
     return currentPlaylist;
   }
 
-  const playlist = await dbConnection.updateUserPlaylist(currentPlaylist._id, track_id);
+  const playlist = await dbConnection.addTrackToPlaylist(currentPlaylist._id, track_id);
 
   return playlist;
+}
+
+async function removeTrackFromPlaylist(req, res) {
+  const playlist_id = req.user.playlist._id;
+  const track_id = req.params.id;
+
+  const newPlaylist = await dbConnection.removeTrackFromPlaylist(playlist_id, track_id);
+
+  res.status(200).json(newPlaylist);
 }
 
 //const album = await dbConnection.getAlbumById(id);
@@ -243,6 +252,7 @@ module.exports = {
   addToCart,
   removeFromCart,
   addToPlaylist,
+  removeTrackFromPlaylist,
 };
 
 // async function addCoinToCart(productId, user) {
