@@ -44,7 +44,7 @@ class ForgotPassword extends Component {
           </Flex>
 
           <Stack spacing={4} my={4}>
-            <Text color='white'>
+            <Text color='teal'>
               Enter your user account's verified email address and we will send you a password reset link.
             </Text>
 

@@ -131,7 +131,9 @@ export default handleActions(
           error: null,
         };
 
-        newState.playlist = payload.data;
+        let newPlaylist = payload.data;
+
+        newState.playlist = newPlaylist.tracks;
 
         return newState;
       },
@@ -186,6 +188,7 @@ export default handleActions(
         newState.cart = payload.data.cart.cart;
         newState.coins = payload.data.coins;
         newState.username = payload.data.username;
+        newState.playlist = payload.data.playlist.tracks;
         return newState;
       },
       onFailure: (state, { payload }) => {
@@ -210,6 +213,7 @@ export default handleActions(
         newState.cart = payload.data.cart.cart;
         newState.coins = payload.data.coins;
         newState.username = payload.data.username;
+        newState.playlist = payload.data.playlist.tracks;
         return newState;
       },
       onFailure: (state, { payload }) => {

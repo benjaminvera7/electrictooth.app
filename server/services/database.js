@@ -210,6 +210,16 @@ class DatabaseService {
 
     return newPlaylist;
   }
+
+  async updateUserResetToken(id, token) {
+    await Users.findOneAndUpdate({ _id: id }, { reset_token: token });
+    return;
+  }
+
+  async getUserByResetToken(resetToken) {
+    const user = await Users.findOne({ reset_token: resetToken });
+    return user;
+  }
 }
 
 const dbConnection = new DatabaseService();

@@ -28,8 +28,7 @@ class EncryptionService {
     const hash = await this.hashPassword(user.password, salt);
 
     user.password = hash;
-    //user.save();
-    return user;
+    return user.save();
   }
 
   generateSalt() {

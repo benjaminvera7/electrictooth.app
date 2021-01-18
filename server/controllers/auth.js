@@ -25,7 +25,7 @@ async function signin(req, res) {
       return res.status(200).json({
         userId: user._id,
         albumCollection: user.albumCollection,
-        playlist: playlist.toArray(),
+        playlist: playlist,
         cart: cart.toObject(),
         coins: user.coins,
         username: user.username,
@@ -63,6 +63,7 @@ async function signup(req, res) {
     album_collection: [],
     stream: [],
     coins: 100,
+    reset_token: '',
   });
 
   const newCart = await dbConnection.createUserCart();

@@ -32,11 +32,10 @@ class MailerService {
       html:
         '<h4><b>Reset Password</b></h4>' +
         '<p>To reset your password, complete this form:</p>' +
-        `<a href='${config.host}reset/${user._id}/${resetToken}'>${config.host}reset/${user._id}/${resetToken}</a>` +
+        `<a href='${config.host}/reset/${user._id}/${resetToken}'>${config.host}reset/${user._id}/${resetToken}</a>` +
         '<br><br>' +
         '<p>--Team</p>',
     });
-
   }
 }
 
