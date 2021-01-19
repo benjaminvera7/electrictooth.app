@@ -20,7 +20,7 @@ const Panel = (props) => (
       handleNext={props.handleNext}
       handlePrevious={props.handlePrevious}
       progressBar={props.progressBar}
-      song={props.song}
+      track={props.track}
       currentlyPlaying={props.currentlyPlaying}
       fetch={props.fetch}
       remove={props.remove}
@@ -52,7 +52,7 @@ const MiniPlayer = ({
   handlePlay,
   handleNext,
   handlePrevious,
-  song,
+  track,
   progressBar,
   currentlyPlaying,
   fetch,
@@ -67,34 +67,20 @@ const MiniPlayer = ({
   return (
     <Fragment>
       <div className='mini-player'>
-        <Button
-          variant='link'
-          onClick={() => setPlayerVisibility(!playerVisible)}
-          style={{ minHeight: '44px' }}
-        >
+        <Button variant='link' onClick={() => setPlayerVisibility(!playerVisible)} style={{ minHeight: '44px' }}>
           <ArrowUp />
         </Button>
 
-        <Flex
-          direction='column'
-          align='center'
-          onClick={() => setPlayerVisibility(!playerVisible)}
-          w='100%'
-        >
+        <Flex direction='column' align='center' onClick={() => setPlayerVisibility(!playerVisible)} w='100%'>
           <Text color='gray.600' fontSize='sm'>
-            {song.length > 0 ? `${song[0].artist_name}` : `~`}
+            {track.length > 0 ? `${track[0].artist_name}` : `~`}
           </Text>
           <Text color='gray.500' fontSize='sm'>
-            {song.length > 0 ? `${song[0].song_name}` : undefined}
+            {track.length > 0 ? `${track[0].track_name}` : undefined}
           </Text>
         </Flex>
 
-        <Button
-          variant='link'
-          style={{ minHeight: '44px' }}
-          onClick={handlePlay}
-          isLoading={loading}
-        >
+        <Button variant='link' style={{ minHeight: '44px' }} onClick={handlePlay} isLoading={loading}>
           {playing ? <Pause /> : <Play />}
         </Button>
       </div>
@@ -107,7 +93,7 @@ const MiniPlayer = ({
         handleNext={handleNext}
         handlePrevious={handlePrevious}
         progressBar={progressBar}
-        song={song}
+        track={track}
         currentlyPlaying={currentlyPlaying}
         fetch={fetch}
         remove={remove}

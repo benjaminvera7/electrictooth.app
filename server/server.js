@@ -13,6 +13,7 @@ const musicRoutes = require('./routes/music');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const resetRoutes = require('./routes/reset');
+const streamRoutes = require('./routes/stream');
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use('/api/v1/upload', uploadRoutes);
 app.use('/api/v1/music', musicRoutes);
 app.use('/api/v1/reset', resetRoutes);
 app.use('/api/v1/user', checkCustomerAuth, userRoutes);
+app.use('/api/v1/stream', checkCustomerAuth, streamRoutes);
 
 app.get('/*', function passHTML(req, res) {
   res.sendFile(path.join(__dirname, '../client/build/index.html'), function (err) {

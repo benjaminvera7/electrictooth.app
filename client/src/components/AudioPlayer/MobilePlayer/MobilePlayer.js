@@ -10,7 +10,7 @@ const MobilePlayer = ({
   handleNext,
   handlePrevious,
   progressBar,
-  song,
+  track,
   playlist,
   coins,
   playlistVisible,
@@ -22,16 +22,16 @@ const MobilePlayer = ({
   return (
     <Fragment>
       <Box mt={-1}>
-        <Image src={song.length > 0 ? `/uploads/${song[0].img_url}` : `./filler.jpg`} w='100%' />
+        <Image src={track.length > 0 ? `/uploads/${track[0].art_name}` : `./filler.jpg`} w='100%' />
       </Box>
 
       <Flex direction='column' flex={2} align='center' p={2}>
         <Flex direction='column' align='center' pb={2}>
           <Text color='gray.600' fontSize='sm'>
-            {song.length > 0 ? `${song[0].artist_name}` : `~`}
+            {track.length > 0 ? `${track[0].artist_name}` : `~`}
           </Text>
           <Text color='gray.500' fontSize='sm'>
-            {song.length > 0 ? `${song[0].song_name}` : undefined}
+            {track.length > 0 ? `${track[0].track_name}` : undefined}
           </Text>
         </Flex>
 

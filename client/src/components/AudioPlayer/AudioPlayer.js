@@ -49,17 +49,17 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   const isMobile = useWindowSize();
   const audio = useRef(null);
 
-  let [currentSongId, setCurrentSongId] = useState('');
+  let [currentTrackId, setCurrentTrackId] = useState('');
   let [playing, setPlaying] = useState(false);
   // eslint-disable-next-line
   let [timelineDot, setTimelineDot] = useState(0);
 
-  let song;
+  let track;
 
   try {
-    song = playlist.filter((song) => song.id === currentSongId);
+    track = playlist.filter((track) => track._id === currentTrackId);
   } catch {
-    song = [];
+    track = [];
   }
 
   useEffect(() => {
@@ -118,34 +118,34 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   );
 
   const next = () => {
-    let [song] = playlist.filter((song) => song.id === currentSongId);
+    let [track] = playlist.filter((track) => track._id === currentTrackId);
 
-    if (playlist.length > 1 && song) {
-      let current = playlist.indexOf(song);
+    if (playlist.length > 1 && track) {
+      let current = playlist.indexOf(track);
       let last = playlist.length - 1;
 
       if (current === last) {
         let start = 0;
-        return fetch(playlist[start].id);
+        return fetch(playlist[start]._id);
       } else {
         let next = current + 1;
-        return fetch(playlist[next].id);
+        return fetch(playlist[next]._id);
       }
     }
   };
 
   const previous = () => {
-    let [song] = playlist.filter((song) => song.id === currentSongId);
+    let [track] = playlist.filter((track) => track._id === currentTrackId);
 
-    if (playlist.length > 1 && song) {
-      let current = playlist.indexOf(song);
+    if (playlist.length > 1 && track) {
+      let current = playlist.indexOf(track);
 
       if (current === 0) {
         let last = playlist.length - 1;
-        return fetch(playlist[last].id);
+        return fetch(playlist[last]._id);
       } else {
         let prev = current - 1;
-        return fetch(playlist[prev].id);
+        return fetch(playlist[prev]._id);
       }
     }
   };
@@ -153,14 +153,14 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   const fetch = async (id) => {
     setPending(true);
 
-    if (playing && currentSongId === id) {
+    if (playing && currentTrackId === id) {
       setPlaying(false);
       setPending(false);
       audio.current.pause();
       return;
     }
 
-    setCurrentSongId(id);
+    setCurrentTrackId(id);
 
     try {
       let response = await axios({
@@ -215,13 +215,13 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
       return audio.current.pause();
     }
 
-    if (currentSongId) {
+    if (currentTrackId) {
       setPlaying(true);
       audio.current.play();
     }
 
-    if (!playing & (currentSongId === '') & (playlist.length > 0)) {
-      fetch(playlist[0].id);
+    if (!playing & (currentTrackId === '') & (playlist.length > 0)) {
+      fetch(playlist[0]._id);
     }
   };
 
@@ -240,11 +240,11 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
             handlePlay={play}
             handleNext={next}
             handlePrevious={previous}
-            song={song}
+            track={track}
             progressBar={ProgressBar}
             remove={remove}
             fetch={fetch}
-            currentlyPlaying={currentSongId}
+            currentlyPlaying={currentTrackId}
             coins={coins}
             playlistVisible={playlistVisible}
             setPlaylistVisibility={setPlaylistVisibility}
@@ -259,11 +259,11 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
           handlePlay={play}
           handleNext={next}
           handlePrevious={previous}
-          song={song}
+          track={track}
           progressBar={ProgressBar}
           remove={remove}
           fetch={fetch}
-          currentlyPlaying={currentSongId}
+          currentlyPlaying={currentTrackId}
           coins={coins}
           loading={loading}
         />
@@ -275,7 +275,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
         playlistVisible={playlistVisible}
         setPlaylistVisibility={setPlaylistVisibility}
         playlist={playlist}
-        currentlyPlaying={currentSongId}
+        currentlyPlaying={currentTrackId}
         handlePlay={play}
         playing={playing}
         fetch={fetch}

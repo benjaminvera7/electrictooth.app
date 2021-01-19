@@ -46,7 +46,7 @@ const DesktopPlayer = ({
   handleNext,
   handlePrevious,
   playing,
-  song,
+  track,
   progressBar,
   remove,
   fetch,
@@ -63,7 +63,7 @@ const DesktopPlayer = ({
         <Flex maxW='1100px' flex='1' height='60px'>
           <Flex flex='1' align='center' minWidth='275px'>
             <Image
-              src={song.length > 0 ? `/uploads/${song[0].img_url}` : `./filler.jpg`}
+              src={track.length > 0 ? `/uploads/${track[0].art_name}` : `./filler.jpg`}
               h='48px'
               w='48px'
               borderRadius='50%'
@@ -72,13 +72,13 @@ const DesktopPlayer = ({
             />
             )
             <Flex direction='column' pl={4}>
-              {song.length > 0 ? (
+              {track.length > 0 ? (
                 <>
                   <Text color='gray.600' fontSize='sm'>
-                    {song[0].artist_name}
+                    {track[0].artist_name}
                   </Text>
                   <Text color='gray.500' fontSize='sm'>
-                    {song[0].song_name}
+                    {track[0].track_name}
                   </Text>
                 </>
               ) : undefined}

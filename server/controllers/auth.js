@@ -24,7 +24,7 @@ async function signin(req, res) {
     if (isMatch) {
       return res.status(200).json({
         userId: user._id,
-        albumCollection: user.albumCollection,
+        library: user.library,
         playlist: playlist,
         cart: cart.toObject(),
         coins: user.coins,
@@ -60,7 +60,7 @@ async function signup(req, res) {
     username: username,
     email: email,
     password: password,
-    album_collection: [],
+    library: [],
     stream: [],
     coins: 100,
     reset_token: '',
@@ -82,7 +82,8 @@ async function signup(req, res) {
     username: user.username,
     token: encrypt.tokenForUser(user),
     cart: cart.toObject(),
-    album_collection: [],
+    library: [],
+    stream: [],
     playlist: playlist,
     coins: 100,
   });

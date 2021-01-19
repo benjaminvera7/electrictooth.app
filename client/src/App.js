@@ -56,7 +56,7 @@ function App({ MusicActions, UserActions, auth, playlist }) {
           <Route path='/signin' component={Signin} />
           <Route path='/music/:id' component={Album} />
           <Route exact path='/' component={Home} />
-          {/* <Redirect to='/' /> */}
+          <Redirect to='/' />
         </Switch>
       </Box>
 

@@ -220,6 +220,11 @@ class DatabaseService {
     const user = await Users.findOne({ reset_token: resetToken });
     return user;
   }
+
+  async subtractCoin(user) {
+    user.coins = user.coins - 1;
+    return await user.save();
+  }
 }
 
 const dbConnection = new DatabaseService();
