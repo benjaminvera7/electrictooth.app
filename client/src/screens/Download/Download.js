@@ -32,10 +32,10 @@ class Download extends Component {
     this.props.auth && this.props.UserActions.getUser(this.props.auth);
   }
 
-  handleSubmit = (e, product_id, albumName, songName) => {
+  handleSubmit = (e, id, type, album_name, track_name) => {
     e.preventDefault();
     axios({
-      url: `/api/v1/download/order/${this.props.match.params.orderId}/${product_id}`,
+      url: `/api/v1/download/order/${this.props.match.params.orderId}/${id}`,
       method: 'GET',
       responseType: 'blob',
       headers: { Authorization: this.props.auth },
@@ -44,21 +44,20 @@ class Download extends Component {
       const link = document.createElement('a');
       link.href = url;
 
-      let songFound = product_id.match(/-/g);
-      if (!!songFound) {
-        link.setAttribute('download', `${songName}.mp3`);
+      if (type === 'track') {
+        link.setAttribute('download', `${track_name}.mp3`);
       } else {
-        link.setAttribute('download', `${albumName}.zip`);
+        link.setAttribute('download', `${album_name}.zip`);
       }
       document.body.appendChild(link);
       link.click();
     });
   };
 
-  addToPlaylist = (id) => {
+  addToPlaylist = (id, type) => {
     if (this.props.auth) {
-      this.props.UserActions.addToPlaylist(id, this.props.auth);
-      toast(`Saved to your Playlist`);
+      this.props.UserActions.addToPlaylist(id, type, this.props.auth);
+      //toast(`Saved to your Playlist`);
     } else {
       console.warn('something went wrong');
     }
@@ -73,7 +72,7 @@ class Download extends Component {
           </Heading>
 
           <Text px={4} fontSize='sm' mb={4} color='grey'>
-            Downloads are available anytime in your Collection!
+            Downloads are available anytime in your Libary!
           </Text>
 
           <Flex justify='center' pt={2} pb={6} px={4}>
@@ -85,14 +84,14 @@ class Download extends Component {
           <Stack px={{ xs: 2, xl: 0 }}>
             {this.state.downloads.length > 0 &&
               this.state.downloads.map((album) => (
-                <Flex borderWidth='1px' bg='white' key={album.product_id}>
+                <Flex borderWidth='1px' bg='white' key={album.id}>
                   <Box>
-                    <Image src={`/uploads/${album.img_url}`} maxWidth='165px' />
+                    <Image src={`/uploads/${album.art_name}`} maxWidth='165px' />
                   </Box>
                   <Box p={2}>
                     <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600'>
                       {album.album_name && album.album_name}
-                      {album.song_name && `${album.song_name} (MP3)`}
+                      {album.track_name && `${album.track_name} (MP3)`}
                     </Heading>
                     <Text fontSize={['xs', 'sm', 'md', 'lg']} mb={4} color='gray.500'>
                       {album.artist_name}
@@ -100,10 +99,10 @@ class Download extends Component {
                   </Box>
                   <Box mx='auto' />
 
-                  {album.product_id.match(/coin/g) ? (
+                  {album.type === 'coins' ? (
                     <Flex align='center' px={2} direction='column' justify='center'>
                       <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600'>
-                        {parseInt(album.product_id.substring(4, 7), 10)} coins
+                        {parseInt(album.amount)} coins
                       </Heading>
                     </Flex>
                   ) : (
@@ -122,7 +121,7 @@ class Download extends Component {
                         }}
                         rounded='0px'
                         icon={() => <DownloadIcon color={`${theme.colors.etGreen}`} />}
-                        onClick={(e) => this.handleSubmit(e, album.product_id, album.album_name, album.song_name)}
+                        onClick={(e) => this.handleSubmit(e, album.id, album.type, album.album_name, album.track_name)}
                       />
                       <IconButton
                         flex='1'
@@ -137,7 +136,7 @@ class Download extends Component {
                           borderColor: 'rgba(5, 174, 165, 0.3)',
                         }}
                         icon={() => <PlaylistAdd color={`${theme.colors.etGreen}`} />}
-                        onClick={(e) => this.addToPlaylist(album._id)}
+                        onClick={(e) => this.addToPlaylist(album.id, album.type)}
                       />
                     </Flex>
                   )}

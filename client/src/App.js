@@ -6,7 +6,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import Home from 'screens/Home';
 import Album from 'screens/Album';
 
-// import Download from 'screens/Download';
+import Download from 'screens/Download';
 import Checkout from 'screens/Checkout';
 import Cart from 'screens/Cart';
 import Profile from 'screens/Profile';
@@ -41,9 +41,7 @@ function App({ MusicActions, UserActions, auth, playlist }) {
 
       <Box mb='100px'>
         <Switch>
-          {/* 
           <Route path='/download/:orderId' component={Download} />
-           */}
           <Route path='/checkout' component={Checkout} />
           <Route path='/help' component={Help} />
           <Route path='/forgot' component={ForgotPassword} />

@@ -250,14 +250,17 @@ class DatabaseService {
   }
 
   async updateOrderStatusById(orderId, status) {
-    //let newDate = this.getDate();
-
     return await Orders.findOneAndUpdate({ _id: orderId }, { status: status }, { new: true });
   }
 
   async addToLibrary(user, list) {
     user.library = [...user.library, ...list];
     return await user.save();
+  }
+
+  async getOrderById(orderId) {
+    const order = await Orders.findById({ _id: orderId });
+    return order;
   }
 }
 
