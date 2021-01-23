@@ -94,9 +94,9 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
                   library.map((album, i) => (
                     <Flex borderWidth='1px' key={i} bg='white'>
                       <Box>
-                        {/* <Link to={`/catalog/${album.album_id}}`}>
-                        </Link> */}
-                        <Image src={`/uploads/${album.art_name}`} maxWidth='165px' />
+                        <Link to={`/music/${album.album_id}`}>
+                          <Image src={`/uploads/${album.art_name}`} maxWidth='165px' />
+                        </Link>
                       </Box>
                       <Box p={2}>
                         <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600'>

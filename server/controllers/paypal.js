@@ -56,7 +56,8 @@ async function returnPayment(req, res) {
       let hasAlbum = user.library.filter((i) => i._id.toString() === item.id.toString());
 
       if (hasAlbum.length == 0) {
-        library.push(item);
+        let track = await dbConnection.getTrackById(item.id);
+        library.push(track);
       }
     }
   }

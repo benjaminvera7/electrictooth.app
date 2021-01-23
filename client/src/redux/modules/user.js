@@ -107,7 +107,6 @@ const initialState = {
   userId: localStorage.getItem('userId'),
   authenticated: localStorage.getItem('token'),
   username: localStorage.getItem('username'),
-  albumCollection: [],
   library: [],
   playlist: [],
   cart: {
@@ -165,7 +164,6 @@ export default handleActions(
       type: GET_USER,
       onSuccess: (state, { payload }) => {
         const newState = { ...state, updatedAt: getDate(), error: null };
-        newState.albumCollection = payload.data.albumCollection;
         newState.coins = payload.data.coins;
         newState.username = payload.data.username;
         newState.cart = payload.data.cart.cart;
@@ -187,7 +185,6 @@ export default handleActions(
         localStorage.setItem('username', payload.data.username);
         newState.authenticated = payload.data.token;
         newState.userId = payload.data.userId;
-        newState.albumCollection = payload.data.albumCollection;
         newState.cart = payload.data.cart.cart;
         newState.coins = payload.data.coins;
         newState.username = payload.data.username;
@@ -213,7 +210,6 @@ export default handleActions(
         localStorage.setItem('username', payload.data.username);
         newState.userId = payload.data.userId;
         newState.authenticated = payload.data.token;
-        newState.albumCollection = payload.data.albumCollection;
         newState.cart = payload.data.cart.cart;
         newState.coins = payload.data.coins;
         newState.username = payload.data.username;
