@@ -79,6 +79,7 @@ async function signup(req, res) {
   const playlist = await dbConnection.getUserPlaylist(newUser.playlist);
 
   return res.status(200).json({
+    userId: user._id,
     username: user.username,
     token: encrypt.tokenForUser(user),
     cart: cart.toObject(),

@@ -9,6 +9,7 @@ const Users = require('../models/users');
 const Carts = require('../models/carts');
 const Playlists = require('../models/playlists');
 const Coins = require('../models/coins');
+const Orders = require('../models/orders');
 
 class DatabaseService {
   constructor() {
@@ -29,6 +30,11 @@ class DatabaseService {
   connect() {
     this.db.on('error', () => console.error.bind(console, 'db error'));
     this.db.once('open', () => console.log('ET3-Database Connection ok!'));
+  }
+
+  getDate() {
+    let utcDate = new Date(Date.now());
+    return utcDate.toUTCString();
   }
 
   async doesArtistExist(artist_name) {
@@ -131,7 +137,7 @@ class DatabaseService {
   }
 
   async getUserById(userId) {
-    const user = await Users.findById({ _id: userId });
+    const user = await Users.findById({ _id: userId }).populate({ path: 'cart' }).exec();
     return user;
   }
 
@@ -223,6 +229,34 @@ class DatabaseService {
 
   async subtractCoin(user) {
     user.coins = user.coins - 1;
+    return await user.save();
+  }
+
+  async addCoin(user, amount) {
+    user.coins = user.coins + amount;
+    return await user.save();
+  }
+
+  async createOrder(userId, cart, currency) {
+    const order = new Orders({
+      user_id: userId,
+      status: 'PENDING',
+      cart: cart,
+      currency: currency,
+      updated_at: this.getDate(),
+    });
+
+    return await order.save();
+  }
+
+  async updateOrderStatusById(orderId, status) {
+    //let newDate = this.getDate();
+
+    return await Orders.findOneAndUpdate({ _id: orderId }, { status: status }, { new: true });
+  }
+
+  async addToLibrary(user, list) {
+    user.library = [...user.library, ...list];
     return await user.save();
   }
 }

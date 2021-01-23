@@ -7,7 +7,7 @@ import Home from 'screens/Home';
 import Album from 'screens/Album';
 
 // import Download from 'screens/Download';
-// import Checkout from 'screens/Checkout';
+import Checkout from 'screens/Checkout';
 import Cart from 'screens/Cart';
 import Profile from 'screens/Profile';
 import Help from 'screens/Help';
@@ -42,10 +42,9 @@ function App({ MusicActions, UserActions, auth, playlist }) {
       <Box mb='100px'>
         <Switch>
           {/* 
-
-          <Route path='/checkout' component={Checkout} />
           <Route path='/download/:orderId' component={Download} />
            */}
+          <Route path='/checkout' component={Checkout} />
           <Route path='/help' component={Help} />
           <Route path='/forgot' component={ForgotPassword} />
           <Route path='/reset/:userId/:token' component={NewPassword} />

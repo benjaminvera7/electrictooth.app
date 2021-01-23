@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 
 const OrdersSchema = new Schema({
   user_id: { type: Schema.Types.ObjectId, ref: 'Users' },
+  cart: Object,
   status: String,
-  cart_id: { type: Schema.Types.ObjectId, ref: 'Carts' },
-  type: String,
+  currency: String,
   hash: String,
-  date: String,
+  updated_at: String,
 });
 
 const Orders = mongoose.model('Orders', OrdersSchema);

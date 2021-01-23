@@ -31,11 +31,11 @@ const ProfileCard = styled(Box)`
   ${FADE_IN}
 `;
 
-const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
-  const addToPlaylist = (id) => {
+const Profile = ({ UserActions, user, auth, history, library }) => {
+  const addToPlaylist = (id, type) => {
     if (auth) {
-      UserActions.addToPlaylist(id, auth);
-      toast(`Saved to your Playlist`);
+      UserActions.addToPlaylist(id, type, auth);
+      //toast(`Saved to your Playlist`);
     } else {
       console.warn('something went wrong');
     }
@@ -84,24 +84,24 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
 
         <Tabs isFitted color={`${theme.colors.etGreen}`} variantColor={`${theme.colors.etGreen}`}>
           <TabList mb='1em'>
-            <Tab>Collection</Tab>
+            <Tab>Library</Tab>
             <Tab>Settings</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
               <Stack px={{ xs: 2, xl: 0 }}>
-                {albumCollection.length > 0 ? (
-                  albumCollection.map((album, i) => (
+                {library.length > 0 ? (
+                  library.map((album, i) => (
                     <Flex borderWidth='1px' key={i} bg='white'>
                       <Box>
-                        <Link to={`/catalog/${album.product_id.match(/([A-Z])\w+/g)}`}>
-                          <Image src={`/uploads/${album.img_url}`} maxWidth='165px' />
-                        </Link>
+                        {/* <Link to={`/catalog/${album.album_id}}`}>
+                        </Link> */}
+                        <Image src={`/uploads/${album.art_name}`} maxWidth='165px' />
                       </Box>
                       <Box p={2}>
                         <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600'>
                           {album.album_name && album.album_name}
-                          {album.song_name && `${album.song_name} (MP3)`}
+                          {album.track_name && `${album.track_name} (MP3)`}
                         </Heading>
                         <Text fontSize={['xs', 'sm', 'md', 'lg']} mb={4} color='gray.500'>
                           {album.artist_name}
@@ -138,7 +138,7 @@ const Profile = ({ UserActions, user, auth, history, albumCollection }) => {
                             borderColor: 'rgba(5, 174, 165, 0.3)',
                           }}
                           icon={() => <PlaylistAdd color={`${theme.colors.etGreen}`} />}
-                          onClick={() => addToPlaylist(album._id)}
+                          onClick={() => addToPlaylist(album.id, album.type)}
                         />
                       </Flex>
                     </Flex>
@@ -184,7 +184,7 @@ export default connect(
   (state) => ({
     user: state.user,
     auth: state.user.authenticated,
-    albumCollection: [],
+    library: state.user.library,
   }),
   (dispatch) => ({
     UserActions: bindActionCreators(userActions, dispatch),

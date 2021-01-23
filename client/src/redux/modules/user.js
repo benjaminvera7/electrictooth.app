@@ -108,6 +108,7 @@ const initialState = {
   authenticated: localStorage.getItem('token'),
   username: localStorage.getItem('username'),
   albumCollection: [],
+  library: [],
   playlist: [],
   cart: {
     items: [],
@@ -169,6 +170,8 @@ export default handleActions(
         newState.username = payload.data.username;
         newState.cart = payload.data.cart.cart;
         newState.playlist = payload.data.playlist.tracks;
+        newState.userId = payload.data.userId;
+        newState.library = payload.data.library;
         return newState;
       },
       onFailure: (state, { payload }) => {
@@ -189,6 +192,7 @@ export default handleActions(
         newState.coins = payload.data.coins;
         newState.username = payload.data.username;
         newState.playlist = payload.data.playlist.tracks;
+        newState.library = payload.data.library;
         return newState;
       },
       onFailure: (state, { payload }) => {
@@ -214,6 +218,7 @@ export default handleActions(
         newState.coins = payload.data.coins;
         newState.username = payload.data.username;
         newState.playlist = payload.data.playlist.tracks;
+        newState.library = payload.data.library;
         return newState;
       },
       onFailure: (state, { payload }) => {

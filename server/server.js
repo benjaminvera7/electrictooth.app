@@ -14,6 +14,7 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const resetRoutes = require('./routes/reset');
 const streamRoutes = require('./routes/stream');
+const paypalRoutes = require('./routes/paypal');
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/upload', uploadRoutes);
 app.use('/api/v1/music', musicRoutes);
 app.use('/api/v1/reset', resetRoutes);
+app.use('/api/v1/paypal', paypalRoutes);
 app.use('/api/v1/user', checkCustomerAuth, userRoutes);
 app.use('/api/v1/stream', checkCustomerAuth, streamRoutes);
 

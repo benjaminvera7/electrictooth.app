@@ -12,10 +12,9 @@ async function checkCustomerAuth(req, res, next) {
       if (user && user._id) {
         req.user = user;
 
-        const cart = await dbConnection.getUserCart(user.cart);
         const playlist = await dbConnection.getUserPlaylist(user.playlist);
 
-        req.user.cart = cart;
+        req.user.cart = user.cart;
         req.user.playlist = playlist;
 
         next();
