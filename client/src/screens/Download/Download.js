@@ -20,7 +20,6 @@ class Download extends Component {
       method: 'GET',
       headers: { Authorization: this.props.auth },
     }).then(({ data }) => {
-      console.log(data);
       this.setState({
         downloads: data.cart.items,
       });

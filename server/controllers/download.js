@@ -1,5 +1,5 @@
-const path = require('path');
 const fs = require('fs');
+const AdmZip = require('adm-zip');
 const fileExists = require('../util/fileExists');
 const dbConnection = require('../services/database');
 
@@ -47,23 +47,40 @@ async function downloadFromOrder(req, res) {
 
   if (item.type === 'track') {
     itemToDownload = await dbConnection.getTrackById(item.id);
+
+    const { fileName, downloadPath, contentType } = await getDownloadDetails(itemToDownload);
+
+    const exists = await fileExists(downloadPath);
+
+    if (exists) {
+      res.writeHead(200, {
+        'Content-Type': 'application/zip',
+        'Content-Disposition': 'attachment; filename=' + fileName,
+      });
+    } else {
+      res.writeHead(400, { 'Content-Type': 'text/plain' });
+      res.end('ERROR File does not exist');
+    }
+
+    fs.createReadStream(downloadPath).pipe(res);
   }
 
-  const { fileName, downloadPath, contentType } = await getDownloadDetails(itemToDownload);
+  if (item.type === 'album') {
+    itemToDownload = await dbConnection.getFullAlbumById(item.id);
 
-  const exists = await fileExists(downloadPath);
+    let zip = new AdmZip();
 
-  if (exists) {
-    res.writeHead(200, {
-      'Content-Type': contentType,
-      'Content-Disposition': 'attachment; filename=' + fileName,
+    itemToDownload.tracks.forEach((track) => {
+      zip.addLocalFile(track.stream_url);
     });
-  } else {
-    res.writeHead(400, { 'Content-Type': 'text/plain' });
-    res.end('ERROR File does not exist');
-  }
 
-  fs.createReadStream(downloadPath).pipe(res);
+    let data = zip.toBuffer();
+
+    res.set('Content-Type', 'application/octet-stream');
+    res.set('Content-Disposition', `attachment; filename=${itemToDownload.album_name}.zip`);
+    res.set('Content-Length', data.length);
+    res.send(data);
+  }
 }
 
 async function downloadFromProfile(req, res) {
@@ -80,23 +97,40 @@ async function downloadFromProfile(req, res) {
 
   if (item.type === 'track') {
     itemToDownload = await dbConnection.getTrackById(item._id);
+
+    const { fileName, downloadPath, contentType } = await getDownloadDetails(itemToDownload);
+
+    const exists = await fileExists(downloadPath);
+
+    if (exists) {
+      res.writeHead(200, {
+        'Content-Type': contentType,
+        'Content-Disposition': 'attachment; filename=' + fileName,
+      });
+    } else {
+      res.writeHead(400, { 'Content-Type': 'text/plain' });
+      res.end('ERROR File does not exist');
+    }
+
+    fs.createReadStream(downloadPath).pipe(res);
   }
 
-  const { fileName, downloadPath, contentType } = await getDownloadDetails(itemToDownload);
+  if (item.type === 'album') {
+    itemToDownload = await dbConnection.getFullAlbumById(item._id);
 
-  const exists = await fileExists(downloadPath);
+    let zip = new AdmZip();
 
-  if (exists) {
-    res.writeHead(200, {
-      'Content-Type': contentType,
-      'Content-Disposition': 'attachment; filename=' + fileName,
+    itemToDownload.tracks.forEach((track) => {
+      zip.addLocalFile(track.stream_url);
     });
-  } else {
-    res.writeHead(400, { 'Content-Type': 'text/plain' });
-    res.end('ERROR File does not exist');
-  }
 
-  fs.createReadStream(downloadPath).pipe(res);
+    let data = zip.toBuffer();
+
+    res.set('Content-Type', 'application/octet-stream');
+    res.set('Content-Disposition', `attachment; filename=${itemToDownload.album_name}.zip`);
+    res.set('Content-Length', data.length);
+    res.send(data);
+  }
 }
 
 module.exports = {

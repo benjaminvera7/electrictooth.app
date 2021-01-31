@@ -170,6 +170,7 @@ export default handleActions(
         newState.playlist = payload.data.playlist.tracks;
         newState.userId = payload.data.userId;
         newState.library = payload.data.library;
+        newState.userId = payload.data._id;
         return newState;
       },
       onFailure: (state, { payload }) => {
@@ -181,10 +182,10 @@ export default handleActions(
       onSuccess: (state, { payload }) => {
         const newState = { ...state, updatedAt: getDate(), error: null };
         localStorage.setItem('token', payload.data.token);
-        localStorage.setItem('userId', payload.data.userId);
+        localStorage.setItem('userId', payload.data._id);
         localStorage.setItem('username', payload.data.username);
         newState.authenticated = payload.data.token;
-        newState.userId = payload.data.userId;
+        newState.userId = payload.data._id;
         newState.cart = payload.data.cart.cart;
         newState.coins = payload.data.coins;
         newState.username = payload.data.username;
@@ -206,9 +207,9 @@ export default handleActions(
         const newState = { ...state, updatedAt: getDate(), error: null };
         console.log(payload);
         localStorage.setItem('token', payload.data.token);
-        localStorage.setItem('userId', payload.data.userId);
+        localStorage.setItem('userId', payload.data._id);
         localStorage.setItem('username', payload.data.username);
-        newState.userId = payload.data.userId;
+        newState.userId = payload.data._id;
         newState.authenticated = payload.data.token;
         newState.cart = payload.data.cart.cart;
         newState.coins = payload.data.coins;

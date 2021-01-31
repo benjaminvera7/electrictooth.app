@@ -151,6 +151,11 @@ class DatabaseService {
     return album;
   }
 
+  async getFullAlbumById(id) {
+    const album = await Albums.findById({ _id: id }).populate({ path: 'tracks' }).exec();
+    return album;
+  }
+
   async getCoinById(id) {
     const coin = await Coins.findById({ _id: id });
     return coin;

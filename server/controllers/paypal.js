@@ -7,7 +7,7 @@ async function requestPayment(req, res) {
 
   const user = await dbConnection.getUserById(userId);
 
-  const order = await dbConnection.createOrder(user._id, user.cart.cart, 'USD');
+  const order = await dbConnection.createOrder(userId, user.cart.cart, 'USD');
 
   const payment = createPaymentObject(order);
 
@@ -53,17 +53,26 @@ async function returnPayment(req, res) {
   let library = [];
   for (const item of order.cart.items) {
     if (item.type === 'track') {
+      let hadTrack = user.library.filter((i) => i._id.toString() === item.id.toString());
+
+      if (hasTrack.length == 0) {
+        let track = await dbConnection.getTrackById(item.id);
+        library.push(track);
+      }
+    }
+
+    if (item.type === 'album') {
       let hasAlbum = user.library.filter((i) => i._id.toString() === item.id.toString());
 
       if (hasAlbum.length == 0) {
-        let track = await dbConnection.getTrackById(item.id);
-        library.push(track);
+        let album = await dbConnection.getAlbumById(item.id);
+        library.push(album);
       }
     }
   }
 
   await dbConnection.addToLibrary(user, library);
-  await dbConnection.updateUserCart(user.cart, []);
+  await dbConnection.updateUserCart(user.cart, { items: [], total: 0 });
 
   return res.redirect(`${config.host}/download/${orderId}`);
 }
