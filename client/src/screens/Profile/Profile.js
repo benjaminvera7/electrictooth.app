@@ -41,24 +41,25 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
     }
   };
 
-  const handleSubmit = (e, product_id, albumName, songName) => {
+  const handleSubmit = (e, id, type, album_name, track_name) => {
     e.preventDefault();
     axios({
-      url: `/api/v1/download/product/${product_id}`,
+      url: `/api/v1/download/${id}`,
       method: 'GET',
       responseType: 'blob',
       headers: { Authorization: auth },
     }).then((response) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
+
       link.href = url;
 
-      let songFound = product_id.match(/-/g);
-      if (!!songFound) {
-        link.setAttribute('download', `${songName}.mp3`);
+      if (type === 'track') {
+        link.setAttribute('download', `${track_name}.mp3`);
       } else {
-        link.setAttribute('download', `${albumName}.zip`);
+        link.setAttribute('download', `${album_name}.zip`);
       }
+
       document.body.appendChild(link);
       link.click();
     });
@@ -123,7 +124,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
                           }}
                           rounded='0px'
                           icon={() => <Download color={`${theme.colors.etGreen}`} />}
-                          onClick={(e) => handleSubmit(e, album.product_id, album.album_name, album.song_name)}
+                          onClick={(e) => handleSubmit(e, album._id, album.type, album.album_name, album.track_name)}
                         />
                         <IconButton
                           flex='1'
@@ -138,7 +139,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
                             borderColor: 'rgba(5, 174, 165, 0.3)',
                           }}
                           icon={() => <PlaylistAdd color={`${theme.colors.etGreen}`} />}
-                          onClick={() => addToPlaylist(album.id, album.type)}
+                          onClick={() => addToPlaylist(album._id, album.type)}
                         />
                       </Flex>
                     </Flex>

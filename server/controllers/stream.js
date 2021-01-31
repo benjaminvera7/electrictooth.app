@@ -4,7 +4,7 @@ const dbConnection = require('../services/database');
 async function userOwnsProduct(user, trackId) {
   const library = user.library;
 
-  const trackExists = library.some((l) => l._id === trackId);
+  const trackExists = library.some((l) => l._id.toString() === trackId.toString());
 
   return trackExists;
 }

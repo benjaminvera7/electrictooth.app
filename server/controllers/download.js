@@ -67,9 +67,22 @@ async function downloadFromOrder(req, res) {
 }
 
 async function downloadFromProfile(req, res) {
-  const product_id = req.params.product_id;
+  const id = req.params.id;
+  const userId = req.user._id;
 
-  const { fileName, downloadPath, contentType } = await getDownloadDetails(product_id);
+  if (!id || !userId) {
+    return res.status(422).send({ error: 'order data not found' });
+  }
+
+  const [item] = req.user.library.filter((i) => i._id.toString() === id.toString());
+
+  let itemToDownload;
+
+  if (item.type === 'track') {
+    itemToDownload = await dbConnection.getTrackById(item._id);
+  }
+
+  const { fileName, downloadPath, contentType } = await getDownloadDetails(itemToDownload);
 
   const exists = await fileExists(downloadPath);
 
