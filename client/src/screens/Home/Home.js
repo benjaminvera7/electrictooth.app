@@ -37,7 +37,7 @@ const Home = ({ albums, pending }) => {
             px={{ xs: 2, lg: 0 }}
             my={{ sm: '0', md: '-100px', lg: '-100px', xl: '-100px' }}
           >
-            <Box color='white' maxW='1440px' flex='1' mt='16px'>
+            <Box color='white' maxW='915px' flex='1' mt='16px'>
               <Flex wrap='wrap'>
                 {albums.map((album, i) => (
                   <Card album={album} key={i} />

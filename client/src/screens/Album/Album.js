@@ -48,14 +48,16 @@ class Album extends Component {
 
     return (
       <Fragment>
-        {/* <Helmet>
-          <title>{currentAlbum.album_name}</title>
-          <meta name='description' content='amazing' />
-        </Helmet> */}
+        {currentAlbum && (
+          <Helmet>
+            <title>{currentAlbum.album_name}</title>
+            <meta name='description' content='amazing' />
+          </Helmet>
+        )}
 
         {currentAlbum && (
           <CardAnimation justify='center' py={4} mt='40px'>
-            <AlbumCardContainer color='white' maxW='1440px' flex='1' px='2'>
+            <AlbumCardContainer color='white' maxW='915px' flex='1' px='2'>
               <Box display={{ md: 'flex' }} direction='column' bg='white'>
                 <Box color='black' width='100%'>
                   <Image src={`/uploads/${currentAlbum.art_name}`} width='100%' />

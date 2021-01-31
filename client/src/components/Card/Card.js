@@ -57,7 +57,7 @@ const Card = ({ auth, album, UserActions, collection }) => {
 
   return (
     <CardContainer
-      maxWidth='32%'
+      maxWidth={{ sm: '100%', md: '33%' }}
       boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'
       bg='white'
       overflow='hidden'
