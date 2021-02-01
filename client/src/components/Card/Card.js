@@ -35,9 +35,9 @@ const HoverCard = ({ productId, img }) => {
 const Card = ({ auth, album, UserActions, collection }) => {
   const router = useRouter();
 
-  const addToPlaylist = (id) => {
+  const addToPlaylist = (id, type) => {
     if (auth) {
-      UserActions.addToPlaylist(id, auth);
+      UserActions.addToPlaylist(id, type, auth);
 
       //toast(`Saved to your Playlist`);
     } else {
@@ -115,7 +115,7 @@ const Card = ({ auth, album, UserActions, collection }) => {
               }}
               rounded='0px'
               icon={() => <PlaylistAdd color={`${theme.colors.etGreen}`} />}
-              onClick={() => addToPlaylist(album._id)}
+              onClick={() => addToPlaylist(album._id, album.type)}
             />
           </Flex>
         </Box>

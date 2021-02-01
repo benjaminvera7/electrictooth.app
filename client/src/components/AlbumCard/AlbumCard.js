@@ -16,11 +16,11 @@ const Card = styled(Flex)`
 const AlbumCard = ({ auth, album, UserActions, collection }) => {
   const router = useRouter();
 
-  const addToPlaylist = (id) => {
+  const addToPlaylist = (id, type) => {
     if (auth) {
-      UserActions.addToPlaylist(id, auth);
+      UserActions.addToPlaylist(id, type, auth);
 
-      toast(`Saved to your Playlist`);
+      //toast(`Saved to your Playlist`);
     } else {
       router.push('/signup');
     }
@@ -30,7 +30,7 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
     if (auth) {
       UserActions.addToCart(id, type, auth);
 
-      toast(`Added to your Cart`);
+      //toast(`Added to your Cart`);
     } else {
       router.push('/signup');
     }
@@ -93,7 +93,7 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
         Buy Digital Album
       </Button>
 
-      <Button mt={1} width='100%' bg='#134468' onClick={() => addToPlaylist(album._id)}>
+      <Button mt={1} width='100%' bg='#134468' onClick={() => addToPlaylist(album._id, album.type)}>
         Add Album to Player
       </Button>
     </Card>

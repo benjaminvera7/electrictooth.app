@@ -231,6 +231,28 @@ async function addTrackToPlaylist(track_id, user) {
   return playlist;
 }
 
+async function addAlbumToPlaylist(album_id, user) {
+  const currentPlaylist = user.playlist;
+
+  const fullAlbum = await dbConnection.getFullAlbumById(album_id);
+
+  let playlist = [];
+
+  for await (track of fullAlbum.tracks) {
+    const inPlaylist = currentPlaylist.tracks.some((t) => t._id.toString() === track._id.toString());
+
+    if (!inPlaylist) {
+      playlist = await dbConnection.addTrackToPlaylist(currentPlaylist._id, track._id);
+    }
+  }
+
+  if (playlist.length == 0) {
+    return currentPlaylist;
+  } else {
+    return playlist;
+  }
+}
+
 async function removeTrackFromPlaylist(req, res) {
   const playlist_id = req.user.playlist._id;
   const track_id = req.params.id;
