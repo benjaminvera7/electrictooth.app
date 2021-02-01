@@ -20,7 +20,7 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
     if (auth) {
       UserActions.addToPlaylist(id, type, auth);
 
-      //toast(`Saved to your Playlist`);
+      toast(`Saved to your Playlist`);
     } else {
       router.push('/signup');
     }
@@ -30,7 +30,7 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
     if (auth) {
       UserActions.addToCart(id, type, auth);
 
-      //toast(`Added to your Cart`);
+      toast(`Added to your Cart`);
     } else {
       router.push('/signup');
     }

@@ -59,10 +59,10 @@ async function addAlbumToCart(id, user) {
   const album = await dbConnection.getAlbumById(id);
   const userCart = user.cart.cart;
 
-  const inCart = userCart.items.some((i) => i._id === track._id);
+  const inCart = userCart.items.some((i) => i.id.toString() === album._id.toString());
 
   if (inCart) {
-    return userCart;
+    return { cart: userCart };
   }
 
   const newCart = { items: [], total: 0 };

@@ -24,7 +24,7 @@ class Album extends Component {
   addToCart = (id, type) => {
     if (this.props.auth) {
       this.props.UserActions.addToCart(id, type, this.props.auth);
-      //toast(`Added to your Cart`);
+      toast(`Added to your Cart`);
     } else {
       this.props.history.push('/signup');
     }
@@ -33,7 +33,7 @@ class Album extends Component {
   addToPlaylist = (id, type) => {
     if (this.props.auth) {
       this.props.UserActions.addToPlaylist(id, type, this.props.auth);
-      //toast(`Saved to your Playlist`);
+      toast(`Saved to your Playlist`);
     } else {
       this.props.history.push('/signup');
     }

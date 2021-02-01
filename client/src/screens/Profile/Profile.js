@@ -35,7 +35,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
   const addToPlaylist = (id, type) => {
     if (auth) {
       UserActions.addToPlaylist(id, type, auth);
-      //toast(`Saved to your Playlist`);
+      toast(`Saved to your Playlist`);
     } else {
       console.warn('something went wrong');
     }

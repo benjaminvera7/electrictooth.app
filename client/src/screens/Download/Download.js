@@ -58,7 +58,7 @@ class Download extends Component {
   addToPlaylist = (id, type) => {
     if (this.props.auth) {
       this.props.UserActions.addToPlaylist(id, type, this.props.auth);
-      //toast(`Saved to your Playlist`);
+      toast(`Saved to your Playlist`);
     } else {
       console.warn('something went wrong');
     }

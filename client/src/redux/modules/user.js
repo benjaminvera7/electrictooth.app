@@ -24,7 +24,6 @@ const _signin = (credentials) => {
 };
 
 const _addToCart = (id, type, token) => {
-  console.log(id, type, token);
   return axios({
     url: `/api/v1/user/cart/${id}`,
     method: 'POST',
@@ -230,7 +229,7 @@ export default handleActions(
       type: ADD_TO_CART,
       onSuccess: (state, { payload }) => {
         const newState = { ...state, updatedAt: getDate(), error: null };
-        console.log('add', payload.data.cart);
+        console.log('add', payload.data);
         newState.cart = payload.data.cart;
         return newState;
       },
@@ -242,7 +241,6 @@ export default handleActions(
       type: REMOVE_FROM_CART,
       onSuccess: (state, { payload }) => {
         const newState = { ...state, updatedAt: getDate(), error: null };
-        console.log('remove', payload.data.cart);
         newState.cart = payload.data.cart;
         return newState;
       },

@@ -53,7 +53,7 @@ async function returnPayment(req, res) {
   let library = [];
   for (const item of order.cart.items) {
     if (item.type === 'track') {
-      let hadTrack = user.library.filter((i) => i._id.toString() === item.id.toString());
+      let hasTrack = user.library.filter((i) => i._id.toString() === item.id.toString());
 
       if (hasTrack.length == 0) {
         let track = await dbConnection.getTrackById(item.id);

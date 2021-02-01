@@ -57,7 +57,7 @@ function App({ MusicActions, UserActions, auth, playlist }) {
         </Switch>
       </Box>
 
-      {/* <div id='snackbar'></div> */}
+      <div id='snackbar'></div>
 
       {auth && <AudioPlayer />}
     </>
