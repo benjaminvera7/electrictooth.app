@@ -54,8 +54,8 @@ class DatabaseService {
     return newArtist.save();
   }
 
-  async getArtist(artist_name) {
-    return await Artists.findOne({ artist_name });
+  async getArtist(artist_id) {
+    return await Artists.findById({ _id: artist_id });
   }
 
   async createAlbum(properties) {
