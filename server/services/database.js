@@ -42,6 +42,11 @@ class DatabaseService {
     return Boolean(artist);
   }
 
+  async getArtistDetailByName(artist_name) {
+    const artist = await Artists.findOne({ artist_name }).populate({ path: 'albums' }).exec();
+    return artist;
+  }
+
   async createArtist(properties) {
     const newArtist = new Artists({
       _id: new mongoose.Types.ObjectId(),
@@ -58,6 +63,11 @@ class DatabaseService {
     return await Artists.findById({ _id: artist_id });
   }
 
+  async getArtistByName(artist_name) {
+    const artist = await Artists.findOne({ artist_name });
+    return artist;
+  }
+
   async createAlbum(properties) {
     const newAlbum = new Albums({
       _id: new mongoose.Types.ObjectId(),
@@ -70,6 +80,7 @@ class DatabaseService {
       tracks: properties.tracks,
       tags: properties.tags,
       type: 'album',
+      artist: properties.artist,
     });
 
     return newAlbum.save();
@@ -114,6 +125,13 @@ class DatabaseService {
     const perPage = 6;
     const albums = await Albums.find()
       .populate('tracks')
+      .populate({
+        path: 'artist',
+        populate: {
+          path: 'albums',
+          populate: 'tracks',
+        },
+      })
       .sort({ createdAt: -1 })
       .skip((currentPage - 1) * perPage)
       .limit(perPage);

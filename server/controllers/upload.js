@@ -40,7 +40,7 @@ async function editAlbum(req, res) {
   }
 
   //return new artist _id
-  const artist = await dbConnection.getArtist(fields.artist_name);
+  const artist = await dbConnection.getArtistByName(fields.artist_name);
 
   //upload album cover art
   const oldCoverArtPath = files.cover_art.path;
@@ -58,6 +58,7 @@ async function editAlbum(req, res) {
     download_price: fields.download_price,
     tags: tags,
     tracks: [],
+    artist: artist._id,
   });
 
   const tracks = [];
@@ -109,7 +110,7 @@ async function editTrack(req, res) {
   }
 
   //return new artist _id
-  const artist = await dbConnection.getArtist(fields.artist_name);
+  const artist = await dbConnection.getArtistByName(fields.artist_name);
 
   //upload album cover art
   const oldCoverArtPath = files.cover_art.path;
@@ -127,6 +128,7 @@ async function editTrack(req, res) {
     download_price: fields.download_price,
     tags: tags,
     tracks: [],
+    artist: artist._id,
   });
 
   const tracks = [];
@@ -183,11 +185,7 @@ async function editArtist(req, res) {
   //upload album cover art
 
   if (files.artist_img) {
-    await dbConnection.updateArtist(
-      fields.artist_name,
-      'artist_img',
-      path.join(__dirname, `../uploads/${files.artist_img.name}`),
-    );
+    await dbConnection.updateArtist(fields.artist_name, 'artist_img', `${files.artist_img.name}`);
   }
 
   if (fields.artist_name !== undefined) {

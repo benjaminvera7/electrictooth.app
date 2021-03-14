@@ -22,7 +22,7 @@ const EditArtist = () => {
       fetchData();
       console.log('fetching...');
     }
-  }, []);
+  }, [data.length]);
 
   const updateArtist = (name, value) => {
     const newArtist = {

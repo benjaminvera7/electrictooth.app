@@ -62,15 +62,6 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
     track = [];
   }
 
-  useEffect(() => {
-    audio.current.addEventListener('ended', next);
-    audio.current.addEventListener('timeupdate', timeUpdate, false);
-
-    if (isMobile && isSafari()) {
-      bindSafariAutoPlayEvents();
-    }
-  }, []);
-
   const timeUpdate = () => {
     let playPercent = 100 * (audio.current.currentTime / audio.current.duration);
 
@@ -228,6 +219,15 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   const remove = (id) => {
     UserActions.removeFromPlaylist(id, auth);
   };
+
+  useEffect(() => {
+    audio.current.addEventListener('ended', next);
+    audio.current.addEventListener('timeupdate', timeUpdate, false);
+
+    if (isMobile && isSafari()) {
+      bindSafariAutoPlayEvents();
+    }
+  }, []);
 
   return (
     <Fragment>

@@ -11,6 +11,7 @@ const AlbumsSchema = new Schema({
   tags: Array,
   type: String,
   tracks: [{ type: Schema.Types.ObjectId, ref: 'Tracks' }],
+  artist: { type: Schema.Types.ObjectId, ref: 'Artists' },
 });
 
 const Albums = mongoose.model('Albums', AlbumsSchema);
