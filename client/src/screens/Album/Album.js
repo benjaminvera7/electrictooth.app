@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Box, Flex, Text, Image, Heading, Stack, Badge, Button, IconButton } from '@chakra-ui/core';
 import { PlaylistAdd, CartAdd, Play } from 'components/Icons';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
 import toast from 'util/toast';
@@ -234,10 +235,12 @@ class Album extends Component {
             <Flex flex='1' direction='column'>
               <Box color='black' width='100%' p='8px'>
                 <>
-                  <Image src={`/uploads/${currentAlbum.artist.artist_img}`} width='100%' />
-                  <Text>
-                    <b>{currentAlbum.artist_name}</b>
-                  </Text>
+                  <Link to={`/artist/${currentAlbum.artist.artist_name}`}>
+                    <Image src={`/uploads/${currentAlbum.artist.artist_img}`} width='100%' />
+                    <Text>
+                      <b>{currentAlbum.artist_name}</b>
+                    </Text>
+                  </Link>
                 </>
               </Box>
 

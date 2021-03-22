@@ -14,6 +14,7 @@ import Help from 'screens/Help';
 import Coins from 'screens/Coins';
 import Signin from 'screens/Signin';
 import Signup from 'screens/Signup';
+import Artist from 'screens/Artist';
 
 import ForgotPassword from 'screens/ForgotPassword';
 import NewPassword from 'screens/NewPassword';
@@ -52,6 +53,7 @@ function App({ MusicActions, UserActions, auth, playlist }) {
           <Route path='/signup' component={Signup} />
           <Route path='/signin' component={Signin} />
           <Route path='/music/:id' component={Album} />
+          <Route path='/artist/:name' component={Artist} />
           <Route exact path='/' component={Home} />
           <Redirect to='/' />
         </Switch>

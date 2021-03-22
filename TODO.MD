@@ -1,4 +1,22 @@
-x associate new albums & tracks with artists defined in the database (happening in background by artist_name)
+- associate new albums & tracks with artists defined in the database (happening in background by artist_name)
+
+- in inital fetch, send object with albums (tracks populated) & artists
+
+```
+{
+  data: {
+    albums: [
+      ...
+      tracks: [
+        ...
+      ]
+    ],
+    artists: [
+      ...
+    ]
+  }
+}
+```
 
 - artist column on album page w/ artist albums
 - simple artist page
