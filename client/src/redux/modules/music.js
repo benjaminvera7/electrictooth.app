@@ -29,6 +29,7 @@ export const getAlbumById = createAction(GET_ALBUM_BY_ID, _getAlbumById);
 
 const initialState = {
   albums: [],
+  artists: [],
   currentAlbum: {},
   updatedAt: getDate(),
 };
@@ -39,7 +40,10 @@ export default handleActions(
       type: GET_ALBUMS,
       onSuccess: (state, { payload }) => {
         const newState = { ...state, updatedAt: getDate(), error: null };
-        newState.albums = payload.data;
+
+        newState.albums = payload.data.albums;
+        newState.artists = payload.data.artists;
+
         return newState;
       },
       onFailure: (state, { payload }) => {

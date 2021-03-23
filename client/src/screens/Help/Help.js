@@ -1,15 +1,7 @@
 import React from 'react';
-import {
-  Box,
-  Flex,
-  Text,
-  Heading,
-  List,
-  ListItem,
-  ListIcon,
-} from '@chakra-ui/core';
+import { Box, Flex, Text, Heading, List, ListItem, ListIcon } from '@chakra-ui/core';
 
-import { Toll, Download, Star } from 'components/Icons';
+import { Toll, Star } from 'components/Icons';
 
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
@@ -61,18 +53,15 @@ const Help = () => {
             </ListItem>
             <ListItem fontSize={['xs', 'sm', 'md', 'lg']} color='gray.500'>
               <ListIcon icon='info' color='yellow.300' />
-              As long as you have coins, you can stream any unpurchased album or
-              song.
+              As long as you have coins, you can stream any unpurchased album or song.
             </ListItem>
             <ListItem fontSize={['xs', 'sm', 'md', 'lg']} color='gray.500'>
               <ListIcon icon='download' color='purple.300' />
-              If you purchase an album or song, you can view and download it in
-              your Profile.
+              If you purchase an album or song, you can view and download it in your Profile.
             </ListItem>
             <ListItem fontSize={['xs', 'sm', 'md', 'lg']} color='gray.500'>
               <ListIcon icon='check-circle' color='green.300' />
-              If you purchase an album or song, streaming it no longer uses a
-              coin.
+              If you purchase an album or song, streaming it no longer uses a coin.
             </ListItem>
           </List>
         </Box>
@@ -106,10 +95,7 @@ const Help = () => {
             </Box>
             <Text fontSize={['xs', 'sm', 'md', 'lg']} color='gray.500'>
               Coded by{' '}
-              <a
-                href='https://twitter.com/princebiomass'
-                style={{ color: '#0FF4C6', textDecoration: 'underline' }}
-              >
+              <a href='https://twitter.com/princebiomass' style={{ color: '#0FF4C6', textDecoration: 'underline' }}>
                 Ben.
               </a>
             </Text>

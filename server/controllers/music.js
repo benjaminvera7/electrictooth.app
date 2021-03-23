@@ -1,8 +1,8 @@
 const dbConnection = require('../services/database');
 
 async function getMusic(req, res) {
-  const albums = await dbConnection.getAlbumsPaginationPage(1);
-  res.status(200).json(albums);
+  const data = await dbConnection.getData();
+  res.status(200).json(data);
 }
 
 async function getArtists(req, res) {

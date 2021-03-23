@@ -1,12 +1,12 @@
 import React, { Component, Fragment } from 'react';
-import { Box, Flex, Text, Image, Heading, Stack, Badge, Button, IconButton } from '@chakra-ui/core';
-import { PlaylistAdd, CartAdd, Play } from 'components/Icons';
+import { Box, Flex, Text, Image, Heading, Stack, Badge, IconButton } from '@chakra-ui/core';
+import { PlaylistAdd, CartAdd } from 'components/Icons';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
 import toast from 'util/toast';
-import { FADE_IN } from 'style/animations';
+// import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
 import Helmet from 'react-helmet';
 import theme from 'theme.js';
@@ -15,11 +15,11 @@ const AlbumCardContainer = styled(Box)``;
 
 const AlbumSongList = styled(Box)``;
 
-const AlbumCard = styled(Flex)``;
+// const AlbumCard = styled(Flex)``;
 
-const CardAnimation = styled(Flex)`
-  ${FADE_IN}
-`;
+// const CardAnimation = styled(Flex)`
+//   ${FADE_IN}
+// `;
 
 class Album extends Component {
   addToCart = (id, type) => {
@@ -41,11 +41,16 @@ class Album extends Component {
   };
 
   render() {
-    let { pending, albums } = this.props;
+    let { pending, match, albums, artists } = this.props;
 
-    let currentAlbum = null;
+    let albumName = match.params.name.replaceAll('-', ' ');
+    let currentAlbum = albums.filter((a) => a.album_name === albumName)[0];
+    let currentArtist = artists.filter((a) => a._id === currentAlbum.artist)[0];
+    let artistAlbums = albums.filter((a) => a.artist_name === currentArtist.artist_name);
 
-    currentAlbum = albums.filter((a) => a._id === this.props.match.params.id)[0];
+    if (pending || pending === undefined) {
+      return <div>loading</div>;
+    }
 
     return (
       <Fragment>
@@ -91,7 +96,6 @@ class Album extends Component {
                       <Text
                         fontWeight='light'
                         textTransform='uppercase'
-                        fontSize='xs'
                         letterSpacing='wide'
                         textAlign='left'
                         color='gray.500'
@@ -173,8 +177,7 @@ class Album extends Component {
 
                             <Flex direction='column'>
                               {/*
-                            
-                            
+
                             <IconButton
                               flex='1'
                               variant='ghost'
@@ -235,10 +238,10 @@ class Album extends Component {
             <Flex flex='1' direction='column'>
               <Box color='black' width='100%' p='8px'>
                 <>
-                  <Link to={`/artist/${currentAlbum.artist.artist_name}`}>
-                    <Image src={`/uploads/${currentAlbum.artist.artist_img}`} width='100%' />
+                  <Link to={`/artist/${currentArtist.artist_name.replaceAll(' ', '-')}`}>
+                    <Image src={`/uploads/${currentArtist.artist_img}`} width='100%' />
                     <Text>
-                      <b>{currentAlbum.artist_name}</b>
+                      <b>{currentArtist.artist_name}</b>
                     </Text>
                   </Link>
                 </>
@@ -248,11 +251,11 @@ class Album extends Component {
                 <i>discography</i>
               </div>
               <Box color='black' width='100%' p='8px'>
-                {currentAlbum.artist.albums.map((album, i) => (
-                  <>
+                {artistAlbums.map((album, i) => (
+                  <div key={i}>
                     <Image src={`/uploads/${album.art_name}`} />
                     <Text>{album.album_name}</Text>
-                  </>
+                  </div>
                 ))}
               </Box>
             </Flex>
@@ -266,6 +269,7 @@ class Album extends Component {
 export default connect(
   (state) => ({
     albums: state.music.albums,
+    artists: state.music.artists,
     albumCollection: state.user.albumCollection,
     playlist: state.user.playlist,
     auth: state.user.authenticated,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Flex, Heading, Image, Text, Stack, Button } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
-import { Remove } from 'components/Icons';
+// import { Remove } from 'components/Icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
@@ -38,7 +38,7 @@ const Cart = ({ UserActions, auth, cart }) => {
                   </Box>
 
                   <Box p={2}>
-                    <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='#000' color='gray.600'>
+                    <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600'>
                       {type === 'coin' && `${amount} stream coins`}
                       {type === 'album' && album_name}
                       {type === 'track' && `${track_name} (MP3)`}

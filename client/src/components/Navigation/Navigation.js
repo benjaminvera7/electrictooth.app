@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
-import { Account, Cart, Home, Toll, Help } from 'components/Icons';
+import { Account, Cart, Home, Toll } from 'components/Icons';
 import { Box, Button, Flex } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
 import useWindowSize from 'hooks/useWindowSize';

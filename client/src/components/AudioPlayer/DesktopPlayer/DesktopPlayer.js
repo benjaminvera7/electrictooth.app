@@ -35,8 +35,8 @@ const transProps = {
   mountOnEnter: true,
   unmountOnExit: true,
   timeout: {
-    enter: 350,
-    exit: 500,
+    enter: 250,
+    exit: 200,
   },
   classNames: 'panel3',
 };

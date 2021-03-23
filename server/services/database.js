@@ -121,6 +121,14 @@ class DatabaseService {
     return album.save();
   }
 
+  async getData() {
+    const artists = await Artists.find().populate({ path: 'albums', select: '_id art_name album_name' });
+
+    const albums = await Albums.find().populate('tracks');
+
+    return { artists, albums };
+  }
+
   async getAlbumsPaginationPage(currentPage) {
     const perPage = 6;
     const albums = await Albums.find()

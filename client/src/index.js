@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { Provider } from 'react-redux';
-import { ThemeProvider, theme } from '@chakra-ui/core';
+//import { ThemeProvider, theme } from '@chakra-ui/core';
+import { ThemeProvider } from '@chakra-ui/core';
 
 import configureStore from 'redux/configureStore';
 import axios from 'axios';
@@ -16,14 +17,14 @@ axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 const { store } = configureStore();
 const history = createBrowserHistory();
 
-const etTheme = {
-  colors: {
-    ...theme.colors,
-    etGreen: '#05AEA5',
-    etGrey: '#94999E',
-    etWhite: '#ECEFED',
-  },
-};
+// const etTheme = {
+//   colors: {
+//     ...theme.colors,
+//     etGreen: '#05AEA5',
+//     etGrey: '#94999E',
+//     etWhite: '#ECEFED',
+//   },
+// };
 
 ReactDOM.render(
   <Provider store={store}>

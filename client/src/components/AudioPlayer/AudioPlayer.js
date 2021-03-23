@@ -34,8 +34,8 @@ const transProps = {
   mountOnEnter: true,
   unmountOnExit: true,
   timeout: {
-    enter: 350,
-    exit: 500,
+    enter: 250,
+    exit: 250,
   },
   classNames: 'panel2',
 };
@@ -227,6 +227,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
     if (isMobile && isSafari()) {
       bindSafariAutoPlayEvents();
     }
+    // eslint-disable-next-line
   }, []);
 
   return (

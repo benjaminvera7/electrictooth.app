@@ -52,7 +52,7 @@ function App({ MusicActions, UserActions, auth, playlist }) {
           <Route path='/profile' component={Profile} />
           <Route path='/signup' component={Signup} />
           <Route path='/signin' component={Signin} />
-          <Route path='/music/:id' component={Album} />
+          <Route path='/music/:name' component={Album} />
           <Route path='/artist/:name' component={Artist} />
           <Route exact path='/' component={Home} />
           <Redirect to='/' />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Text, Heading, Stack, Image, Button, Link } from '@chakra-ui/core';
+import { Box, Flex, Text, Heading, Image, Button } from '@chakra-ui/core';
 import { Toll } from 'components/Icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';

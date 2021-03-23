@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
-import { Box, Flex, Text, Image, Heading, Button, Badge, IconButton } from '@chakra-ui/core';
-import { Star, PlaylistAdd, Download, Play, Pause, CartAdd } from 'components/Icons';
+import React from 'react';
+import { Box, Flex, Image, Badge, IconButton } from '@chakra-ui/core';
+import { PlaylistAdd, CartAdd } from 'components/Icons';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -20,12 +20,13 @@ const HoverCardContainer = styled(Box)`
   cursor: pointer;
 `;
 
-const HoverCard = ({ productId, img }) => {
+const HoverCard = ({ productId, img, name }) => {
   const isMobile = useWindowSize();
+  const url = name.replaceAll(' ', '-');
 
   return (
     <HoverCardContainer width='100%' position='relative' isMobile={isMobile}>
-      <Link to={`/music/${productId}`}>
+      <Link to={`/music/${url}`}>
         <Image src={`/uploads/${img}`} width='100%' className='big' />
       </Link>
     </HoverCardContainer>
@@ -66,7 +67,7 @@ const Card = ({ auth, album, UserActions, collection }) => {
       style={{ position: 'relative' }}
     >
       <Box style={{ position: 'relative' }}>
-        <HoverCard productId={album._id} img={album.art_name} />
+        <HoverCard productId={album._id} img={album.art_name} name={album.album_name} />
 
         <Box p='4'>
           <Box d='flex' alignItems='baseline'>

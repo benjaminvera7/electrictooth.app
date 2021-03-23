@@ -14,39 +14,34 @@ const AnimateBody = styled(Flex)`
 `;
 
 const Home = ({ albums, pending }) => {
+  if (pending || pending === undefined) {
+    return (
+      <div className='container'>
+        <div className='centered'>
+          <Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='#05aea5' size='xl' />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
-      {pending ? (
-        <div className='container'>
-          <div className='centered'>
-            <Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='#05aea5' size='xl' />
-          </div>
-        </div>
-      ) : (
-        <>
-          {' '}
-          <AnimateHeader className='container'>
-            <Image src='./water.gif' objectFit='cover' w='100%' h='40vh' />
+      <AnimateHeader className='container'>
+        <Image src='./water.gif' objectFit='cover' w='100%' h='40vh' />
 
-            <div className='centered'>
-              <Image src='./logoani.gif' />
-            </div>
-          </AnimateHeader>
-          <AnimateBody
-            justify='center'
-            px={{ xs: 2, lg: 0 }}
-            my={{ sm: '0', md: '-100px', lg: '-100px', xl: '-100px' }}
-          >
-            <Box color='white' maxW='915px' flex='1' mt='16px'>
-              <Flex wrap='wrap'>
-                {albums.map((album, i) => (
-                  <Card album={album} key={i} />
-                ))}
-              </Flex>
-            </Box>
-          </AnimateBody>
-        </>
-      )}
+        <div className='centered'>
+          <Image src='./logoani.gif' />
+        </div>
+      </AnimateHeader>
+      <AnimateBody justify='center' px={{ xs: 2, lg: 0 }} my={{ sm: '0', md: '-100px', lg: '-100px', xl: '-100px' }}>
+        <Box color='white' maxW='915px' flex='1' mt='16px'>
+          <Flex wrap='wrap'>
+            {albums.map((album, i) => (
+              <Card album={album} key={i} />
+            ))}
+          </Flex>
+        </Box>
+      </AnimateBody>
     </>
   );
 };
