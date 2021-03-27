@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useRef, useEffect } from 'react';
+import React, { Fragment, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
@@ -11,6 +11,7 @@ import { CSSTransition } from 'react-transition-group';
 import MobileNavigation from 'components/MobileNavigation';
 import MobilePlaylistPanel from './MobilePlaylistPanel';
 import useWindowSize from 'hooks/useWindowSize';
+import useEventListener from 'hooks/useEventListener';
 import toast from 'util/toast';
 //import debounce from 'util/debounce';
 import theme from 'theme.js';
@@ -220,15 +221,13 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
     UserActions.removeFromPlaylist(id, auth);
   };
 
-  useEffect(() => {
-    audio.current.addEventListener('ended', next);
-    audio.current.addEventListener('timeupdate', timeUpdate, false);
+
+  useEventListener('ended', next, audio.current);
+  useEventListener('timeupdate', timeUpdate, audio.current);
 
     if (isMobile && isSafari()) {
       bindSafariAutoPlayEvents();
     }
-    // eslint-disable-next-line
-  }, []);
 
   return (
     <Fragment>

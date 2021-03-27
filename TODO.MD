@@ -1,6 +1,6 @@
-- associate new albums & tracks with artists defined in the database (happening in background by artist_name)
+x associate new albums & tracks with artists defined in the database (happening in background by artist_name)
 
-- in inital fetch, send object with albums (tracks populated) & artists
+x in inital fetch, send object with albums (tracks populated) & artists
 
 ```
 {
@@ -18,8 +18,8 @@
 }
 ```
 
-- artist column on album page w/ artist albums
-- simple artist page
+x artist column on album page w/ artist albums
+x simple artist page
 - edit track
 - edit album
 - disable track from homepage (visible flag)
