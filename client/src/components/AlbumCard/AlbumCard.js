@@ -37,7 +37,7 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
   };
 
   return (
-    <Card className='card' wrap='wrap' p={2} borderWidth='1px' rounded='sm' mb={2} bg='white'>
+    <Card className='card' wrap='wrap' p={2} borderWidth='1px' rounded='sm' mb={2} bg='white' borderRadius="10px">
       <Box className='card_image'>
         <Link to={`/catalog/${album._id}`}>
           <Image src={`/uploads/${album.art_name}`} rounded='lg' className='zoom' />

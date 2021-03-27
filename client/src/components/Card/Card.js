@@ -65,6 +65,7 @@ const Card = ({ auth, album, UserActions, collection }) => {
       mx='8px'
       mb='16px'
       style={{ position: 'relative' }}
+      borderRadius="20px"
     >
       <Box style={{ position: 'relative' }}>
         <HoverCard productId={album._id} img={album.art_name} name={album.album_name} />

@@ -55,13 +55,9 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   // eslint-disable-next-line
   let [timelineDot, setTimelineDot] = useState(0);
 
-  let track;
+  let track = [];
 
-  try {
-    track = playlist.filter((track) => track._id === currentTrackId);
-  } catch {
-    track = [];
-  }
+  track = playlist?.filter((track) => track._id === currentTrackId);
 
   const timeUpdate = () => {
     let playPercent = 100 * (audio.current.currentTime / audio.current.duration);

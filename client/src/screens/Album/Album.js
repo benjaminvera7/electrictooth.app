@@ -63,11 +63,11 @@ class Album extends Component {
 
         {currentAlbum && (
           <Flex mt='40px' maxW='1440px' mx='auto'>
-            <Flex flex='7'>
-              <AlbumCardContainer color='white' flex='1'>
-                <Box display={{ md: 'flex' }} direction='column' bg='white'>
+            <Flex flex='7' >
+              <AlbumCardContainer color='white' flex='1' >
+                <Box display={{ md: 'flex' }} direction='column' bg='white' borderRadius="20px">
                   <Box color='black' width='100%'>
-                    <Image src={`/uploads/${currentAlbum.art_name}`} width='100%' />
+                    <Image src={`/uploads/${currentAlbum.art_name}`} width='100%' borderRadius="20px 0 0 20px" />
                   </Box>
                   <Flex color='black' width='100%' justify='space-between' style={{ position: 'relative' }} pb={16}>
                     <Box color='black' width='100%' px={{ xs: 2, sm: 4 }} py={{ xs: 4, sm: 4 }}>
@@ -155,9 +155,9 @@ class Album extends Component {
                   <Stack spacing={4}>
                     {currentAlbum.tracks
                       ? currentAlbum.tracks.map((track, i) => (
-                          <Flex w='100%' borderWidth='1px' key={i} bg='white'>
+                          <Flex w='100%' borderWidth='1px' key={i} bg='white' borderRadius="20px">
                             <Box pr={2}>
-                              <Image src={`/uploads/${track.art_name}`} maxWidth='100px' />
+                              <Image src={`/uploads/${track.art_name}`} maxWidth='100px' borderRadius="20px 0 0 20px"/>
                             </Box>
 
                             <Flex direction='column' w='100%' p={2}>
@@ -239,7 +239,7 @@ class Album extends Component {
               <Box color='black' width='100%' p='8px'>
                 <>
                   <Link to={`/artist/${currentArtist.artist_name.replaceAll(' ', '-')}`}>
-                    <Image src={`/uploads/${currentArtist.artist_img}`} width='100%' />
+                    <Image src={`/uploads/${currentArtist.artist_img}`} width='100%' borderRadius="10px"/>
                     <Text>
                       <b>{currentArtist.artist_name}</b>
                     </Text>
@@ -253,7 +253,7 @@ class Album extends Component {
               <Box color='black' width='100%' p='8px'>
                 {artistAlbums.map((album, i) => (
                   <div key={i}>
-                    <Image src={`/uploads/${album.art_name}`} />
+                    <Image src={`/uploads/${album.art_name}`} borderRadius="10px" />
                     <Text>{album.album_name}</Text>
                   </div>
                 ))}

@@ -20,7 +20,7 @@ const Artist = ({ artists, pending, match }) => {
     <ArtistContainer style={{ margin: '50px auto', maxWidth: '720px' }}>
       <Box color='black' width='100%' p='8px'>
         <>
-          <Image src={`/uploads/${currentArtist.artist_img}`} width='100%' />
+          <Image src={`/uploads/${currentArtist.artist_img}`} width='100%' borderRadius="20px"/>
           <Text>
             <b>{currentArtist.artist_name}</b>
           </Text>
