@@ -67,7 +67,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
 
   return (
     <Flex justify='center' mt='40px'>
-      <ProfileCard color='white' maxW='1440px' flex='1' mb={4} px={4}>
+      <ProfileCard color='white' maxW='900px' flex='1' mb={4} px={4}>
         <Flex justify='space-between'>
           <Heading px={4} py={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
             {user.username}
@@ -95,7 +95,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
                   library.map((album, i) => (
                     <Flex borderWidth='1px' key={i} bg='white' borderRadius="20px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'>
                       <Box>
-                        <Link to={`/music/${album.album_id}`}>
+                        <Link to={`/music/${album.album_name.replaceAll('-', ' ')}`}>
                           <Image src={`/uploads/${album.art_name}`} maxWidth='100px' borderRadius="20px 0 0 20px"/>
                         </Link>
                       </Box>

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
 import theme from 'theme.js';
-import { Close } from 'components/Icons';
+import { Remove } from 'components/Icons';
 
 
 import { FADE_IN } from 'style/animations';
@@ -62,7 +62,7 @@ const Cart = ({ UserActions, auth, cart }) => {
 
                   <Flex p={2}>
                     <Button onClick={() => UserActions.removeFromCart(id, type, auth)} color='black' variant='link'>
-                      <Close />
+                      <Remove />
                     </Button>
                   </Flex>
                 </Flex>
