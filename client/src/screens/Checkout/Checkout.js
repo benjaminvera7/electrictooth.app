@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Box, Flex, Text, Heading, Button, Progress } from '@chakra-ui/core';
+import { Box, Flex, Text, Heading, Button, Progress, Stack, Image } from '@chakra-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
@@ -47,11 +47,12 @@ class Checkout extends Component {
 
   getEthRate = async () => {
     try {
-      let { data } = await axios.get('https://api.infura.io/v1/ticker/ethusd');
+
+      const { data } = await axios.get('https://api.etherscan.io/api?module=stats&action=ethprice&apikey=PIBNFTNWYFQN2H387T61KZCRQGVQJB9RAP');
 
       this.setState({
-        rate: data.bid,
-        totalEth: this.props.user.cart.total / data.bid,
+        rate: data.result.ethusd,
+        totalEth: this.props.user.cart.total / data.result.ethusd,
       });
     } catch (error) {
       return error;
@@ -80,7 +81,7 @@ class Checkout extends Component {
 
   requestPayment = (token) => {
     return axios({
-      url: `/eth/request`,
+      url: `/api/v1/eth/request`,
       method: 'POST',
       headers: { Authorization: token },
     });
@@ -88,7 +89,7 @@ class Checkout extends Component {
 
   returnPayment = (token, hash, orderId) => {
     return axios({
-      url: `/eth/return/${hash}/${orderId}`,
+      url: `/api/v1/eth/return/${hash}/${orderId}`,
       method: 'GET',
       headers: { Authorization: token },
     });
@@ -121,10 +122,12 @@ class Checkout extends Component {
           part: (this.state.part += 100 / 5),
         });
 
+        const totalEth = this.state.totalEth.toFixed(8)
+
         const TRANSACTION = await service.eth.sendTransaction({
           from: address, //metamask
           to: '0x866ff4209d37813cc2c46361775b960d81e6b724', //coinbase
-          value: service.utils.toWei(this.state.totalEth.toString(), 'ether'),
+          value: service.utils.toWei(totalEth.toString(), 'ether'),
           gasLimit: 21000,
           gasPrice: gasPrice,
         });
@@ -134,7 +137,7 @@ class Checkout extends Component {
         });
 
         if (TRANSACTION.status === true) {
-          let { data: order } = await this.returnPayment(user.authenticated, TRANSACTION.transactionHash, orderId);
+          await this.returnPayment(user.authenticated, TRANSACTION.transactionHash, orderId);
 
           this.setState({
             part: (this.state.part += 100 / 5),
@@ -143,7 +146,6 @@ class Checkout extends Component {
           history.push(`/download/${order._id}`);
         } else {
           //report to ET server of failure, update order, update page with failure noticeß
-
           this.setState({
             part: 0,
           });
@@ -174,20 +176,57 @@ class Checkout extends Component {
             Electric Tooth currently only accepts PayPal & Ethereum payments
           </Text>
 
-          <Flex justify='center' py={2} px={4}>
+          <Flex justify='center' py={4} px={4}>
             <Heading as='h3' fontSize={['lg', 'xl']} color={`${theme.colors.etGreen}`}>
-              100% of this purchase goes to the artist(s)
+              100% of this purchase goes to the artist
             </Heading>
           </Flex>
 
-          <Flex justify='flex-end' py={2} px={4}>
+          <Stack>
+            {user.cart.items?.length > 0 ? (
+              user.cart.items.map(
+                ({ id, artist_name, track_name, album_name, art_name, download_price, type, amount, price }) => (
+                  <Flex borderWidth='1px' key={id} bg='white' borderRadius="20px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'>
+                    <Box>
+                      <Image src={`/uploads/${art_name}`} width="100px" borderRadius="20px 0 0 20px" />
+                    </Box>
+
+                    <Box p={2}>
+                      <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600'>
+                        {type === 'coin' && `${amount} stream coins`}
+                        {type === 'album' && album_name}
+                        {type === 'track' && `${track_name} (MP3)`}
+                      </Heading>
+                      <Text fontSize={['xs', 'sm', 'md', 'lg']} mb={4} color='gray.500'>
+                        {artist_name ? artist_name : `@ $0.01`}
+                      </Text>
+                    </Box>
+
+                    <Box mx='auto' />
+
+                    <Flex p={2} direction='column' justify='center' align='center'>
+                      <Text px={2} color='#222'>
+                        {type === 'coin' && `$${price}.00`}
+                        {type === 'album' && `$${download_price}.00`}
+                        {type === 'track' && `$${download_price}.00`}
+                      </Text>
+                    </Flex>
+                  </Flex>
+                ),
+              )
+            ) : (
+              undefined
+            )}
+          </Stack>
+
+          <Flex justify='flex-end' py={2} px={2}>
             <Box px={2} color='black'>
               Subtotal ({`${user.cart.items.length}`} items):
             </Box>
             <Box color='black'>${`${user.cart.total}`}.00</Box>
           </Flex>
 
-          <Flex justify='flex-end' pb={2} pt={0} px={4} color='black'>
+          <Flex justify='flex-end' pb={2} pt={0} px={2} color='black'>
             <Box color='black' px={2}>
               Total:
             </Box>
@@ -196,49 +235,55 @@ class Checkout extends Component {
             </Box>
           </Flex>
 
-          <form id='paypalForm' method='post' action={`/api/v1/paypal/request`}>
-            <input type='hidden' name='userId' value={user.userId} />
-            <Button rounded='md' bg='#ffc439' color='black' px={4} h={8} my={2} mx={4} type='submit' w='200px'>
-              Checkout with PayPal
-            </Button>
-          </form>
+          <Flex direction="column" alignItems="flex-end" pt={4}>
+            <Box>
+              <form id='paypalForm' method='post' action={`/api/v1/paypal/request`}>
+                <input type='hidden' name='userId' value={user.userId} />
+                <Button rounded='md' bg='#ffc439' color='black' px={4} h={8} my={2} mx={4} type='submit' w='200px'>
+                  Checkout with PayPal
+                </Button>
+              </form>
+            </Box>
 
-          {this.state.active ? (
-            <Button
-              rounded='md'
-              style={{
-                background: 'linear-gradient(-90deg, #E52F50 0%, #A3278F 100%)',
-              }}
-              color='black'
-              px={4}
-              h={8}
-              my={2}
-              mx={4}
-              type='submit'
-              w='200px'
-              onClick={this.sendTransaction}
-            >
-              Checkout with web3
-            </Button>
-          ) : (
-            <Button
-              rounded='md'
-              style={{
-                background: 'linear-gradient(-90deg, #A3278F 0%, #E52F50 100%)',
-              }}
-              color='black'
-              px={4}
-              h={8}
-              my={2}
-              mx={4}
-              type='submit'
-              w='200px'
-              onClick={this.initConnect}
-              disabled={this.props.error}
-            >
-              Connect to web3
-            </Button>
-          )}
+
+            {this.state.active ? (
+              <Button
+                rounded='md'
+                style={{
+                  background: 'linear-gradient(-90deg, #E52F50 0%, #A3278F 100%)',
+                }}
+                color='black'
+                px={4}
+                h={8}
+                my={2}
+                mx={4}
+                type='submit'
+                w='200px'
+                onClick={this.sendTransaction}
+              >
+                Checkout with web3
+              </Button>
+            ) : (
+              <Button
+                rounded='md'
+                style={{
+                  background: 'linear-gradient(-90deg, #A3278F 0%, #E52F50 100%)',
+                }}
+                color='black'
+                px={4}
+                h={8}
+                my={2}
+                mx={4}
+                type='submit'
+                w='200px'
+                onClick={this.initConnect}
+                disabled={this.props.error}
+              >
+                Connect to web3
+              </Button>
+            )}
+          </Flex>
+
 
           <Box px={4} mt={4}>
             {this.state.pending && (

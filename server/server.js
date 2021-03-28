@@ -17,6 +17,8 @@ const streamRoutes = require('./routes/stream');
 const paypalRoutes = require('./routes/paypal');
 const downloadRoutes = require('./routes/download');
 const orderRoutes = require('./routes/order');
+const ethRoutes = require('./routes/eth');
+
 
 const app = express();
 
@@ -38,6 +40,7 @@ app.use('/api/v1/user', checkCustomerAuth, userRoutes);
 app.use('/api/v1/stream', checkCustomerAuth, streamRoutes);
 app.use('/api/v1/download', checkCustomerAuth, downloadRoutes);
 app.use('/api/v1/order', checkCustomerAuth, orderRoutes);
+app.use('/api/v1/eth', checkCustomerAuth, ethRoutes);
 
 app.get('/*', function passHTML(req, res) {
   res.sendFile(path.join(__dirname, '../client/build/index.html'), function (err) {

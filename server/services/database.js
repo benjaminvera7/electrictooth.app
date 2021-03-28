@@ -284,6 +284,10 @@ class DatabaseService {
     return await Orders.findOneAndUpdate({ _id: orderId }, { status: status }, { new: true });
   }
 
+  async updateEthOrderStatusById(orderId, status, hash) {
+    return await Orders.findOneAndUpdate({ _id: orderId }, { status: status, hash: hash }, { new: true });
+  }
+
   async addToLibrary(user, list) {
     user.library = [...user.library, ...list];
     return await user.save();

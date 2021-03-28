@@ -20,6 +20,7 @@ class Download extends Component {
       method: 'GET',
       headers: { Authorization: this.props.auth },
     }).then(({ data }) => {
+      console.log(data.cart.items)
       this.setState({
         downloads: data.cart.items,
       });
@@ -100,10 +101,10 @@ class Download extends Component {
                   </Box>
                   <Box mx='auto' />
 
-                  {album.type === 'coins' ? (
-                    <Flex align='center' px={2} direction='column' justify='center'>
-                      <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600'>
-                        {parseInt(album.amount)} coins
+                  {album.type === 'coin' ? (
+                    <Flex align='center' px={2} direction='column' justify='center' width="100%">
+                      <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600' margin="auto" >
+                        {parseInt(album.amount)} stream coins have been added to your account!
                       </Heading>
                     </Flex>
                   ) : (
