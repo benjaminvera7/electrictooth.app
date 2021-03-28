@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
-import { Text, Button, Flex, Image } from '@chakra-ui/core';
-import { Play, Pause } from 'components/Icons';
+import { Text, Button, Flex } from '@chakra-ui/core';
+import { Play, Pause, ArrowUp } from 'components/Icons';
 import { CSSTransition } from 'react-transition-group';
 import MobilePlayer from '../MobilePlayer';
 
@@ -67,15 +67,15 @@ const MiniPlayer = ({
   return (
     <Fragment>
       <div className='mini-player'>
-        <Image
-            src={track.length > 0 ? `/uploads/${track[0].art_name}` : null}
-            h='48px'
-            w='48px'
-            border="0px"
-            onClick={() => setPlayerVisibility(!playerVisible)} 
-          />
+      <Button
+          variant='link'
+          onClick={() => setPlayerVisibility(!playerVisible)}
+          style={{ minHeight: '44px' }}
+        >
+          <ArrowUp />
+        </Button>
 
-        <Flex direction='column' align='start' onClick={() => setPlayerVisibility(!playerVisible)} w='100%' paddingLeft="8px">
+        <Flex direction='column' align='center' onClick={() => setPlayerVisibility(!playerVisible)} w='100%' paddingLeft="8px">
           <Text color='gray.600' fontSize='sm'>
             {track.length > 0 ? `${track[0].artist_name}` : null}
           </Text>

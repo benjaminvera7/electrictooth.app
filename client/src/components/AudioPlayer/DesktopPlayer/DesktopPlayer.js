@@ -62,15 +62,27 @@ const DesktopPlayer = ({
       <div className='large-player'>
         <Flex maxW='1100px' flex='1' height='60px'>
           <Flex flex='1' align='center' minWidth='275px'>
+
+            {track.length > 0 ?             
             <Image
-              src={track.length > 0 ? `/uploads/${track[0].art_name}` : `./filler.jpg`}
+              src={`/uploads/${track[0].art_name}`}
               h='48px'
               w='48px'
               borderRadius='50%'
               border='1px'
               borderColor={`${theme.colors.etGreen}`}
-            />
-            )
+            /> :
+              <Box
+              h='48px'
+              w='48px'
+              borderRadius='50%'
+              border='1px'
+              borderColor={`${theme.colors.etGreen}`}
+              backgroundColor={`${theme.colors.etGreen}`}
+             />
+          
+            }
+
             <Flex direction='column' pl={4}>
               {track.length > 0 ? (
                 <>

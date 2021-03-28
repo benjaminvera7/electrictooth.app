@@ -62,12 +62,12 @@ class Album extends Component {
         )}
 
         {currentAlbum && (
-          <Flex mt='40px' maxW='1440px' mx='auto'>
-            <Flex flex='7' >
-              <AlbumCardContainer color='white' flex='1' >
-                <Box display={{ md: 'flex' }} direction='column' bg='white' borderRadius="20px">
+          <Flex mt='40px' maxW='900px' mx='auto' direction={{sm: 'column', md: 'row'}}>
+            <Flex flex='7'>
+              <AlbumCardContainer color='white' flex='1' px={2}>
+                <Box display={{ md: 'flex' }} direction='column' bg='white' borderRadius="20px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'>
                   <Box color='black' width='100%'>
-                    <Image src={`/uploads/${currentAlbum.art_name}`} width='100%' borderRadius="20px 0 0 20px" />
+                    <Image src={`/uploads/${currentAlbum.art_name}`} width='100%' borderRadius={{sm: '20px 20px 0 0', md : "20px 0 0 20px" }} />
                   </Box>
                   <Flex color='black' width='100%' justify='space-between' style={{ position: 'relative' }} pb={16}>
                     <Box color='black' width='100%' px={{ xs: 2, sm: 4 }} py={{ xs: 4, sm: 4 }}>
@@ -104,7 +104,7 @@ class Album extends Component {
                         {currentAlbum.artist ? currentAlbum.artist.name : undefined}
                       </Text>
 
-                      <Box p={4}>{currentAlbum.description}</Box>
+                      <Box py={4}>{currentAlbum.description}</Box>
                     </Box>
 
                     <Box color='black' px={{ xs: 2, sm: 4 }} py={{ xs: 2, sm: 4 }} textAlign='right'>
@@ -155,7 +155,7 @@ class Album extends Component {
                   <Stack spacing={4}>
                     {currentAlbum.tracks
                       ? currentAlbum.tracks.map((track, i) => (
-                          <Flex w='100%' borderWidth='1px' key={i} bg='white' borderRadius="20px">
+                          <Flex w='100%' borderWidth='1px' key={i} bg='white' borderRadius="20px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'>
                             <Box pr={2}>
                               <Image src={`/uploads/${track.art_name}`} maxWidth='100px' borderRadius="20px 0 0 20px"/>
                             </Box>
@@ -235,11 +235,11 @@ class Album extends Component {
                 </AlbumSongList>
               </AlbumCardContainer>
             </Flex>
-            <Flex flex='1' direction='column'>
+            <Flex flex='1' direction='column' width={{sm: '300px'}} margin={{sm: 'auto', md: '0px'}} py={{sm: '40px', md: '0px'}}>
               <Box color='black' width='100%' p='8px'>
                 <>
                   <Link to={`/artist/${currentArtist.artist_name.replaceAll(' ', '-')}`}>
-                    <Image src={`/uploads/${currentArtist.artist_img}`} width='100%' borderRadius="10px"/>
+                    <Image src={`/uploads/${currentArtist.artist_img}`} width='100%' borderRadius="10px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'/>
                     <Text>
                       <b>{currentArtist.artist_name}</b>
                     </Text>
@@ -248,13 +248,15 @@ class Album extends Component {
               </Box>
 
               <div style={{ margin: '32px 0 0 8px' }}>
-                <i>discography</i>
+                <b>discography</b>
               </div>
               <Box color='black' width='100%' p='8px'>
                 {artistAlbums.map((album, i) => (
                   <div key={i}>
-                    <Image src={`/uploads/${album.art_name}`} borderRadius="10px" />
+                    <Link to={`/music/${album.album_name.replaceAll(' ', '-')}`}>
+                    <Image src={`/uploads/${album.art_name}`} borderRadius="10px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'/>
                     <Text>{album.album_name}</Text>
+                    </Link>
                   </div>
                 ))}
               </Box>

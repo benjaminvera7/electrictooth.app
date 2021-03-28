@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
 import theme from 'theme.js';
+import { Close } from 'components/Icons';
+
 
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
@@ -32,9 +34,9 @@ const Cart = ({ UserActions, auth, cart }) => {
           {cart.items?.length > 0 ? (
             cart.items.map(
               ({ id, artist_name, track_name, album_name, art_name, download_price, type, amount, price }) => (
-                <Flex borderWidth='1px' key={id} bg='white'>
+                <Flex borderWidth='1px' key={id} bg='white' borderRadius="20px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'>
                   <Box>
-                    <Image src={`/uploads/${art_name}`} maxWidth={['75px', '75px', '165px', '165px']} />
+                    <Image src={`/uploads/${art_name}`} width="100px" borderRadius="20px 0 0 20px" />
                   </Box>
 
                   <Box p={2}>
@@ -52,15 +54,15 @@ const Cart = ({ UserActions, auth, cart }) => {
 
                   <Flex p={2} direction='column' justify='center' align='center'>
                     <Text px={2} color='#222'>
-                      {type === 'coin' && `${price}.00`}
-                      {type === 'album' && `${download_price}.00`}
-                      {type === 'track' && `${download_price}.00`}
+                      {type === 'coin' && `$${price}.00`}
+                      {type === 'album' && `$${download_price}.00`}
+                      {type === 'track' && `$${download_price}.00`}
                     </Text>
                   </Flex>
 
                   <Flex p={2}>
                     <Button onClick={() => UserActions.removeFromCart(id, type, auth)} color='black' variant='link'>
-                      remove
+                      <Close />
                     </Button>
                   </Flex>
                 </Flex>

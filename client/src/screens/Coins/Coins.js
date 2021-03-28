@@ -48,9 +48,10 @@ const Coins = ({ UserActions, auth }) => {
           mt={8}
           bg='white'
           display={{ md: 'flex' }}
+          borderRadius="20px"
         >
           <Box>
-            <Image src={`/uploads/coin100.png`} width='100%' />
+            <Image src={`/uploads/coin100.png`} width='100%' borderRadius={{sm: '20px 20px 0 0', md : "20px 0 0 20px" }}/>
           </Box>
           <Box display={{ md: 'flex' }} width='100%' px={2}>
             <Flex align='center' justify='center'>
@@ -100,9 +101,10 @@ const Coins = ({ UserActions, auth }) => {
           mb={4}
           bg='white'
           display={{ md: 'flex' }}
+          borderRadius="20px"
         >
           <Box>
-            <Image src={`/uploads/coin200.png`} width='100%' />
+            <Image src={`/uploads/coin200.png`} width='100%' borderRadius={{sm: '20px 20px 0 0', md : "20px 0 0 20px" }}/>
           </Box>
 
           <Box display={{ md: 'flex' }} width='100%' px={2}>
@@ -153,9 +155,10 @@ const Coins = ({ UserActions, auth }) => {
           mb={4}
           bg='white'
           display={{ md: 'flex' }}
+          borderRadius="20px"
         >
           <Box>
-            <Image src={`/uploads/coin300.png`} width='100%' />
+            <Image src={`/uploads/coin300.png`} width='100%' borderRadius={{sm: '20px 20px 0 0', md : "20px 0 0 20px" }}/>
           </Box>
 
           <Box display={{ md: 'flex' }} width='100%' px={2}>

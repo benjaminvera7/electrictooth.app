@@ -22,7 +22,10 @@ const MobilePlayer = ({
   return (
     <Fragment>
       <Box mt={-1}>
-        <Image src={track.length > 0 ? `/uploads/${track[0].art_name}` : `./filler.jpg`} w='100%' />
+        {track.length > 0
+          ? <Image src={`/uploads/${track[0].art_name}`} w='100%' />
+          : <Box w='100%' minHeight='500px' backgroundColor={`${theme.colors.etGreen}`} />
+        }
       </Box>
 
       <Flex direction='column' flex={2} align='center' p={2}>

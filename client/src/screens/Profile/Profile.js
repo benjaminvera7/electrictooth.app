@@ -93,10 +93,10 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
               <Stack px={{ xs: 2, xl: 0 }}>
                 {library.length > 0 ? (
                   library.map((album, i) => (
-                    <Flex borderWidth='1px' key={i} bg='white'>
+                    <Flex borderWidth='1px' key={i} bg='white' borderRadius="20px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'>
                       <Box>
                         <Link to={`/music/${album.album_id}`}>
-                          <Image src={`/uploads/${album.art_name}`} maxWidth='165px' />
+                          <Image src={`/uploads/${album.art_name}`} maxWidth='100px' borderRadius="20px 0 0 20px"/>
                         </Link>
                       </Box>
                       <Box p={2}>

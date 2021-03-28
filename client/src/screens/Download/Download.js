@@ -67,7 +67,7 @@ class Download extends Component {
   render() {
     return (
       <Flex justify='center' mt='40px'>
-        <Box color='white' maxW='1440px' flex='1'>
+        <Box color='white' maxW='768px' flex='1'>
           <Heading px={4} py={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
             download
           </Heading>
@@ -77,7 +77,7 @@ class Download extends Component {
           </Text>
 
           <Flex justify='center' pt={2} pb={6} px={4}>
-            <Heading fontSize='40px' color='#6eacdd'>
+            <Heading fontSize={{sm: '30px', md: '40px'}} color='#6eacdd'>
               Thank you for supporting art!
             </Heading>
           </Flex>
@@ -85,9 +85,9 @@ class Download extends Component {
           <Stack px={{ xs: 2, xl: 0 }}>
             {this.state.downloads.length > 0 &&
               this.state.downloads.map((album) => (
-                <Flex borderWidth='1px' bg='white' key={album.id}>
+                <Flex borderWidth='1px' bg='white' key={album.id} borderRadius="20px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'>
                   <Box>
-                    <Image src={`/uploads/${album.art_name}`} maxWidth='165px' />
+                    <Image src={`/uploads/${album.art_name}`} maxWidth='165px' borderRadius="20px 0 0 20px"/>
                   </Box>
                   <Box p={2}>
                     <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600'>
