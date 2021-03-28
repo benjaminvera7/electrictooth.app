@@ -80,7 +80,7 @@ const Coins = ({ UserActions, auth }) => {
                 width='80%'
                 bg={`${theme.colors.etGreen}`}
                 color='white'
-                onClick={() => addToCart('6005e862433fc4f6d7ea4b73', 'coin')}
+                onClick={() => addToCart('6060c8b6961c1940376f9727', 'coin')}
                 _hover={{
                   bg: `${theme.colors.etGreen}`,
                 }}
@@ -134,7 +134,7 @@ const Coins = ({ UserActions, auth }) => {
                 width='80%'
                 bg={`${theme.colors.etGreen}`}
                 color='white'
-                onClick={() => addToCart('6005e862433fc4f6d7ea4b74', 'coin')}
+                onClick={() => addToCart('6060c8b6961c1940376f9728', 'coin')}
                 _hover={{
                   bg: `${theme.colors.etGreen}`,
                 }}
@@ -188,7 +188,7 @@ const Coins = ({ UserActions, auth }) => {
                 width='80%'
                 bg={`${theme.colors.etGreen}`}
                 color='white'
-                onClick={() => addToCart('6005e862433fc4f6d7ea4b75', 'coin')}
+                onClick={() => addToCart('6060c8b6961c1940376f9729', 'coin')}
                 _hover={{
                   bg: `${theme.colors.etGreen}`,
                 }}
