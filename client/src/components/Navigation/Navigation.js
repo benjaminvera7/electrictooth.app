@@ -17,7 +17,7 @@ const NavigationContainer = styled(Flex)`
   top: 0px;
   position: fixed;
   z-index: 2;
-  background-color: rgb(255, 255, 255, 0.2);
+  background-color: rgb(255, 255, 255, 1);
   height: 40px;
   width: 100%;
 `;

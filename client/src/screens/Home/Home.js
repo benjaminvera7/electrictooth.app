@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Card from 'components/Card';
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
+import Helmet from 'react-helmet';
 
 const AnimateHeader = styled(Box)`
   ${FADE_IN}
@@ -26,6 +27,10 @@ const Home = ({ albums, pending }) => {
 
   return (
     <>
+      <Helmet>
+        <title>Electric Tooth</title>
+        <meta name='description' content='amazing' />
+      </Helmet>
       <AnimateHeader className='container'>
         <Image src='./water.gif' objectFit='cover' w='100%' h='40vh' />
 

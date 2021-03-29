@@ -166,7 +166,7 @@ class Checkout extends Component {
     const { user } = this.props;
 
     return (
-      <Flex justify='center' mt='40px'>
+      <Flex justify='center' mt='40px' px={{sm: '8px', md: '0px'}}>
         <Box color='white' maxW='900px' flex='1'>
           <Heading px={4} pt={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
             payment
@@ -219,7 +219,7 @@ class Checkout extends Component {
             )}
           </Stack>
 
-          <Flex justify='flex-end' py={2} px={2}>
+          <Flex justify='flex-end' py={2} px={2} mt={4}>
             <Box px={2} color='black'>
               Subtotal ({`${user.cart.items.length}`} items):
             </Box>
@@ -239,7 +239,7 @@ class Checkout extends Component {
             <Box>
               <form id='paypalForm' method='post' action={`/api/v1/paypal/request`}>
                 <input type='hidden' name='userId' value={user.userId} />
-                <Button rounded='md' bg='#ffc439' color='black' px={4} h={8} my={2} mx={4} type='submit' w='200px'>
+                <Button rounded='md' bg='#ffc439' color='black' px={4} h={8} my={2} type='submit' w='200px'>
                   Checkout with PayPal
                 </Button>
               </form>
@@ -250,36 +250,34 @@ class Checkout extends Component {
               <Button
                 rounded='md'
                 style={{
-                  background: 'linear-gradient(-90deg, #E52F50 0%, #A3278F 100%)',
+                  background: '#f08d1d',
                 }}
                 color='black'
                 px={4}
                 h={8}
                 my={2}
-                mx={4}
                 type='submit'
                 w='200px'
                 onClick={this.sendTransaction}
               >
-                Checkout with web3
+                Checkout with MetaMask
               </Button>
             ) : (
               <Button
                 rounded='md'
                 style={{
-                  background: 'linear-gradient(-90deg, #A3278F 0%, #E52F50 100%)',
+                  background: '#f08d1d',
                 }}
                 color='black'
                 px={4}
                 h={8}
                 my={2}
-                mx={4}
                 type='submit'
                 w='200px'
                 onClick={this.initConnect}
                 disabled={this.props.error}
               >
-                Connect to web3
+                Connect to MetaMask
               </Button>
             )}
           </Flex>

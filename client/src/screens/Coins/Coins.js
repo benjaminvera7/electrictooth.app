@@ -28,7 +28,7 @@ const Coins = ({ UserActions, auth }) => {
 
   return (
     <>
-      <CoinContainer maxWidth='1440px' m='auto' px={4} pb={4} mt='40px'>
+      <CoinContainer maxWidth='900px' m='auto' px={4} pb={4} mt='40px'>
         <Heading pt={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
           coins
         </Heading>

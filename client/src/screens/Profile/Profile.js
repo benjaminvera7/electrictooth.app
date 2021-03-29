@@ -69,13 +69,13 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
     <Flex justify='center' mt='40px'>
       <ProfileCard color='white' maxW='900px' flex='1' mb={4} px={4}>
         <Flex justify='space-between'>
-          <Heading px={4} py={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
+          <Heading py={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
             {user.username}
           </Heading>
 
-          <Heading px={4} py={5} as='h2' size='md' color={`${theme.colors.etGreen}`}>
+          <Heading py={5} as='h2' size='md' color={`${theme.colors.etGreen}`}>
             <Flex align='center'>
-              <Box px={2}>
+              <Box>
                 <Toll height='26px' width='26px' />
               </Box>
               {user.coins}

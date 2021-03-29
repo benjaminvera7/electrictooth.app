@@ -28,4 +28,6 @@ x simple artist page
 - re-think player transistions
 - re-design front page
 - thank you email
-- player doesn't call next after song ends
+x player doesn't call next after song ends
+- player options: repeat, shuffle
+- player volume
