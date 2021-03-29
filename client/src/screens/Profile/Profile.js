@@ -75,7 +75,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
 
           <Heading py={5} as='h2' size='md' color={`${theme.colors.etGreen}`}>
             <Flex align='center'>
-              <Box>
+              <Box pr={2}>
                 <Toll height='26px' width='26px' />
               </Box>
               {user.coins}

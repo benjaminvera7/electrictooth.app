@@ -20,6 +20,7 @@ x in inital fetch, send object with albums (tracks populated) & artists
 
 x artist column on album page w/ artist albums
 x simple artist page
+- share page, redeem stream coins
 - edit track
 - edit album
 - disable track from homepage (visible flag)

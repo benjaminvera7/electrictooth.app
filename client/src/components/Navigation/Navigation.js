@@ -28,7 +28,7 @@ const Navigation = ({ auth, cart, username }) => {
 
   return (
     <NavigationContainer>
-      <Flex maxW='1440px' flex='1'>
+      <Flex maxW='900px' flex='1'>
         {(!isMobile || !auth) && (
           <Fragment>
             <Link to='/'>
@@ -107,18 +107,19 @@ const Navigation = ({ auth, cart, username }) => {
             <Link to='/profile'>
               <Button variant='link' mx={1}>
                 {auth ? (
-                  <Flex
-                    h='24px'
-                    w='24px'
-                    align='center'
-                    justify='center'
-                    //bg='#0FF4C6'
-                    color={`${theme.colors.etGreen}`}
-                    border='1px'
-                    borderRadius='50%'
-                  >
-                    {username[0].toLowerCase()}
-                  </Flex>
+                  // <Flex
+                  //   h='24px'
+                  //   w='24px'
+                  //   align='center'
+                  //   justify='center'
+                  //   //bg='#0FF4C6'
+                  //   color={`${theme.colors.etGreen}`}
+                  //   border='1px'
+                  //   borderRadius='50%'
+                  // >
+                  //   {username[0].toLowerCase()}
+                  // </Flex>
+                  <Account active={router.pathname === '/profile'} />
                 ) : (
                   <Account />
                 )}

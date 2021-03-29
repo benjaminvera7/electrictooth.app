@@ -6,6 +6,12 @@ import * as userActions from 'redux/modules/user';
 import * as web3Actions from 'redux/modules/web3';
 import axios from 'axios';
 import theme from 'theme.js';
+import styled from '@emotion/styled';
+import { FADE_IN } from 'style/animations';
+
+const CheckoutItems = styled(Flex)`
+    ${FADE_IN}
+`;
 
 class Checkout extends Component {
   constructor() {
@@ -166,13 +172,13 @@ class Checkout extends Component {
     const { user } = this.props;
 
     return (
-      <Flex justify='center' mt='40px' px={{sm: '8px', md: '0px'}}>
+      <CheckoutItems justify='center' mt='40px' px={{sm: '8px', md: '0px'}}>
         <Box color='white' maxW='900px' flex='1'>
-          <Heading px={4} pt={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
+          <Heading pt={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
             payment
           </Heading>
 
-          <Text px={4} fontSize='sm' mb={4} color='grey'>
+          <Text fontSize='sm' mb={4} color='grey'>
             Electric Tooth currently only accepts PayPal & Ethereum payments
           </Text>
 
@@ -294,7 +300,7 @@ class Checkout extends Component {
             )}
           </Box>
         </Box>
-      </Flex>
+      </CheckoutItems>
     );
   }
 }
