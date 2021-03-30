@@ -22,7 +22,22 @@ class MailerService {
     });
   }
 
-  async sendMail(user, resetToken) {
+  async sendOrderSummaryMail(user, order) {
+    await this.transporter.verify();
+
+    await this.transporter.sendMail({
+      from: 'info@electrictooth.io',
+      to: user.email,
+      subject: 'Underwater Peoples Records: Thank you for your purchase',
+      html:
+        '<h4><b>Thank you!</b></h4>' +
+        '<p>now to create order Summary</p>' +
+        '<br><br>' +
+        '<p>--Team</p>',
+    });
+  }
+
+  async sendResetPasswordMail(user, resetToken) {
     await this.transporter.verify();
 
     await this.transporter.sendMail({

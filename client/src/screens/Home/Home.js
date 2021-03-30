@@ -28,7 +28,7 @@ const Home = ({ albums, pending }) => {
   return (
     <>
       <Helmet>
-        <title>Electric Tooth</title>
+        <title>Electric Tooth - home</title>
         <meta name='description' content='amazing' />
       </Helmet>
       <AnimateHeader className='container'>

@@ -8,6 +8,8 @@ import { PlaylistAdd, Download as DownloadIcon } from 'components/Icons';
 import { bindActionCreators } from 'redux';
 import toast from 'util/toast';
 import theme from 'theme.js';
+import Helmet from 'react-helmet';
+
 
 class Download extends Component {
   state = {
@@ -67,86 +69,92 @@ class Download extends Component {
 
   render() {
     return (
-      <Flex justify='center' mt='40px'>
-        <Box color='white' maxW='768px' flex='1'>
-          <Heading px={4} py={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
-            download
+      <>
+        <Helmet>
+          <title>Electric Tooth - download</title>
+          <meta name='description' content='amazing' />
+        </Helmet>
+        <Flex justify='center' mt='40px'>
+          <Box color='white' maxW='768px' flex='1'>
+            <Heading px={4} py={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
+              download
           </Heading>
 
-          <Text px={4} fontSize='sm' mb={4} color='grey'>
-            Downloads are available anytime in your Libary!
+            <Text px={4} fontSize='sm' mb={4} color='grey'>
+              Downloads are available anytime in your Libary!
           </Text>
 
-          <Flex justify='center' pt={2} pb={6} px={4}>
-            <Heading fontSize={{sm: '30px', md: '40px'}} color='#6eacdd'>
-              Thank you for supporting art!
+            <Flex justify='center' pt={2} pb={6} px={4}>
+              <Heading fontSize={{ sm: '30px', md: '40px' }} color='#6eacdd'>
+                Thank you for supporting art!
             </Heading>
-          </Flex>
+            </Flex>
 
-          <Stack px={{ xs: 2, xl: 0 }}>
-            {this.state.downloads.length > 0 &&
-              this.state.downloads.map((album) => (
-                <Flex borderWidth='1px' bg='white' key={album.id} borderRadius="20px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'>
-                  <Box>
-                    <Image src={`/uploads/${album.art_name}`} maxWidth='165px' borderRadius="20px 0 0 20px"/>
-                  </Box>
-                  <Box p={2}>
-                    <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600'>
-                      {album.album_name && album.album_name}
-                      {album.track_name && `${album.track_name} (MP3)`}
-                    </Heading>
-                    <Text fontSize={['xs', 'sm', 'md', 'lg']} mb={4} color='gray.500'>
-                      {album.artist_name}
-                    </Text>
-                  </Box>
-                  <Box mx='auto' />
-
-                  {album.type === 'coin' ? (
-                    <Flex align='center' px={2} direction='column' justify='center' width="100%">
-                      <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600' margin="auto" >
-                        {parseInt(album.amount)} stream coins have been added to your account!
+            <Stack px={{ xs: 2, xl: 0 }}>
+              {this.state.downloads.length > 0 &&
+                this.state.downloads.map((album) => (
+                  <Flex borderWidth='1px' bg='white' key={album.id} borderRadius="20px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'>
+                    <Box>
+                      <Image src={`/uploads/${album.art_name}`} maxWidth='165px' borderRadius="20px 0 0 20px" />
+                    </Box>
+                    <Box p={2}>
+                      <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600'>
+                        {album.album_name && album.album_name}
+                        {album.track_name && `${album.track_name} (MP3)`}
                       </Heading>
-                    </Flex>
-                  ) : (
-                    <Flex direction='column'>
-                      <IconButton
-                        flex='1'
-                        variant='ghost'
-                        variantColor='teal'
-                        aria-label='Download album'
-                        fontSize='20px'
-                        style={{
-                          borderLeft: '1px',
-                          borderBottom: '1px',
-                          borderStyle: 'solid',
-                          borderColor: 'rgba(5, 174, 165, 0.3)',
-                        }}
-                        rounded='0px'
-                        icon={() => <DownloadIcon color={`${theme.colors.etGreen}`} />}
-                        onClick={(e) => this.handleSubmit(e, album.id, album.type, album.album_name, album.track_name)}
-                      />
-                      <IconButton
-                        flex='1'
-                        variant='ghost'
-                        variantColor='teal'
-                        aria-label='Add to playlist'
-                        fontSize='20px'
-                        rounded='0px'
-                        style={{
-                          borderLeft: '1px',
-                          borderStyle: 'solid',
-                          borderColor: 'rgba(5, 174, 165, 0.3)',
-                        }}
-                        icon={() => <PlaylistAdd color={`${theme.colors.etGreen}`} />}
-                        onClick={(e) => this.addToPlaylist(album.id, album.type)}
-                      />
-                    </Flex>
-                  )}
-                </Flex>
-              ))}
-          </Stack>
-        </Box>
-      </Flex>
+                      <Text fontSize={['xs', 'sm', 'md', 'lg']} mb={4} color='gray.500'>
+                        {album.artist_name}
+                      </Text>
+                    </Box>
+                    <Box mx='auto' />
+
+                    {album.type === 'coin' ? (
+                      <Flex align='center' px={2} direction='column' justify='center' width="100%">
+                        <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600' margin="auto" >
+                          {parseInt(album.amount)} stream coins have been added to your account!
+                      </Heading>
+                      </Flex>
+                    ) : (
+                      <Flex direction='column'>
+                        <IconButton
+                          flex='1'
+                          variant='ghost'
+                          variantColor='teal'
+                          aria-label='Download album'
+                          fontSize='20px'
+                          style={{
+                            borderLeft: '1px',
+                            borderBottom: '1px',
+                            borderStyle: 'solid',
+                            borderColor: 'rgba(5, 174, 165, 0.3)',
+                          }}
+                          rounded='0px'
+                          icon={() => <DownloadIcon color={`${theme.colors.etGreen}`} />}
+                          onClick={(e) => this.handleSubmit(e, album.id, album.type, album.album_name, album.track_name)}
+                        />
+                        <IconButton
+                          flex='1'
+                          variant='ghost'
+                          variantColor='teal'
+                          aria-label='Add to playlist'
+                          fontSize='20px'
+                          rounded='0px'
+                          style={{
+                            borderLeft: '1px',
+                            borderStyle: 'solid',
+                            borderColor: 'rgba(5, 174, 165, 0.3)',
+                          }}
+                          icon={() => <PlaylistAdd color={`${theme.colors.etGreen}`} />}
+                          onClick={(e) => this.addToPlaylist(album.id, album.type)}
+                        />
+                      </Flex>
+                    )}
+                  </Flex>
+                ))}
+            </Stack>
+          </Box>
+        </Flex>
+      </>
     );
   }
 }

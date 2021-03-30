@@ -18,6 +18,10 @@ x in inital fetch, send object with albums (tracks populated) & artists
 }
 ```
 
+- ability to sell merch
+
+
+
 x artist column on album page w/ artist albums
 x simple artist page
 - share page, redeem stream coins
@@ -26,9 +30,7 @@ x simple artist page
 - multiple playlists
 - edit track
 - edit album
-- add merch
 - physical and digital bundles
-- ability to sell merch
 - discount codes
 - disable track from homepage (visible flag)
 - protect admin page or have it talk to hosted database

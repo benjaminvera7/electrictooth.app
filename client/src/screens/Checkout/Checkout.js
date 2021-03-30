@@ -8,6 +8,7 @@ import axios from 'axios';
 import theme from 'theme.js';
 import styled from '@emotion/styled';
 import { FADE_IN } from 'style/animations';
+import Helmet from 'react-helmet';
 
 const CheckoutItems = styled(Flex)`
     ${FADE_IN}
@@ -172,135 +173,142 @@ class Checkout extends Component {
     const { user } = this.props;
 
     return (
-      <CheckoutItems justify='center' mt='40px' px={{sm: '8px', md: '0px'}}>
-        <Box color='white' maxW='900px' flex='1'>
-          <Heading pt={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
-            payment
+      <>
+        <Helmet>
+          <title>Electric Tooth - checkout</title>
+          <meta name='description' content='amazing' />
+        </Helmet>
+
+        <CheckoutItems justify='center' mt='40px' px={{ sm: '8px', md: '0px' }}>
+          <Box color='white' maxW='900px' flex='1'>
+            <Heading pt={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
+              payment
           </Heading>
 
-          <Text fontSize='sm' mb={4} color='grey'>
-            Electric Tooth currently only accepts PayPal & Ethereum payments
+            <Text fontSize='sm' mb={4} color='grey'>
+              Electric Tooth currently only accepts PayPal & Ethereum payments
           </Text>
 
-          <Flex justify='center' py={4} px={4}>
-            <Heading as='h3' fontSize={['lg', 'xl']} color={`${theme.colors.etGreen}`}>
-              100% of this purchase goes to the artist
+            <Flex justify='center' py={4} px={4}>
+              <Heading as='h3' fontSize={['lg', 'xl']} color={`${theme.colors.etGreen}`}>
+                100% of this purchase goes to the artist
             </Heading>
-          </Flex>
+            </Flex>
 
-          <Stack>
-            {user.cart.items?.length > 0 ? (
-              user.cart.items.map(
-                ({ id, artist_name, track_name, album_name, art_name, download_price, type, amount, price }) => (
-                  <Flex borderWidth='1px' key={id} bg='white' borderRadius="20px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'>
-                    <Box>
-                      <Image src={`/uploads/${art_name}`} width="100px" borderRadius="20px 0 0 20px" />
-                    </Box>
+            <Stack>
+              {user.cart.items?.length > 0 ? (
+                user.cart.items.map(
+                  ({ id, artist_name, track_name, album_name, art_name, download_price, type, amount, price }) => (
+                    <Flex borderWidth='1px' key={id} bg='white' borderRadius="20px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'>
+                      <Box>
+                        <Image src={`/uploads/${art_name}`} width="100px" borderRadius="20px 0 0 20px" />
+                      </Box>
 
-                    <Box p={2}>
-                      <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600'>
-                        {type === 'coin' && `${amount} stream coins`}
-                        {type === 'album' && album_name}
-                        {type === 'track' && `${track_name} (MP3)`}
-                      </Heading>
-                      <Text fontSize={['xs', 'sm', 'md', 'lg']} mb={4} color='gray.500'>
-                        {artist_name ? artist_name : `@ $0.01`}
-                      </Text>
-                    </Box>
+                      <Box p={2}>
+                        <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600'>
+                          {type === 'coin' && `${amount} stream coins`}
+                          {type === 'album' && album_name}
+                          {type === 'track' && `${track_name} (MP3)`}
+                        </Heading>
+                        <Text fontSize={['xs', 'sm', 'md', 'lg']} mb={4} color='gray.500'>
+                          {artist_name ? artist_name : `@ $0.01`}
+                        </Text>
+                      </Box>
 
-                    <Box mx='auto' />
+                      <Box mx='auto' />
 
-                    <Flex p={2} direction='column' justify='center' align='center'>
-                      <Text px={2} color='#222'>
-                        {type === 'coin' && `$${price}.00`}
-                        {type === 'album' && `$${download_price}.00`}
-                        {type === 'track' && `$${download_price}.00`}
-                      </Text>
+                      <Flex p={2} direction='column' justify='center' align='center'>
+                        <Text px={2} color='#222'>
+                          {type === 'coin' && `$${price}.00`}
+                          {type === 'album' && `$${download_price}.00`}
+                          {type === 'track' && `$${download_price}.00`}
+                        </Text>
+                      </Flex>
                     </Flex>
-                  </Flex>
-                ),
-              )
-            ) : (
-              undefined
-            )}
-          </Stack>
+                  ),
+                )
+              ) : (
+                undefined
+              )}
+            </Stack>
 
-          <Flex justify='flex-end' py={2} px={2} mt={4}>
-            <Box px={2} color='black'>
-              Subtotal ({`${user.cart.items.length}`} items):
+            <Flex justify='flex-end' py={2} px={2} mt={4}>
+              <Box px={2} color='black'>
+                Subtotal ({`${user.cart.items.length}`} items):
             </Box>
-            <Box color='black'>${`${user.cart.total}`}.00</Box>
-          </Flex>
+              <Box color='black'>${`${user.cart.total}`}.00</Box>
+            </Flex>
 
-          <Flex justify='flex-end' pb={2} pt={0} px={2} color='black'>
-            <Box color='black' px={2}>
-              Total:
+            <Flex justify='flex-end' pb={2} pt={0} px={2} color='black'>
+              <Box color='black' px={2}>
+                Total:
             </Box>
-            <Box>
-              <b>${`${user.cart.total}`}.00</b>
-            </Box>
-          </Flex>
+              <Box>
+                <b>${`${user.cart.total}`}.00</b>
+              </Box>
+            </Flex>
 
-          <Flex direction="column" alignItems="flex-end" pt={4}>
-            <Box>
-              <form id='paypalForm' method='post' action={`/api/v1/paypal/request`}>
-                <input type='hidden' name='userId' value={user.userId} />
-                <Button rounded='md' bg='#ffc439' color='black' px={4} h={8} my={2} type='submit' w='200px'>
-                  Checkout with PayPal
+            <Flex direction="column" alignItems="flex-end" pt={4}>
+              <Box>
+                <form id='paypalForm' method='post' action={`/api/v1/paypal/request`}>
+                  <input type='hidden' name='userId' value={user.userId} />
+                  <Button rounded='md' bg='#ffc439' color='black' px={4} h={8} my={2} type='submit' w='200px'>
+                    Checkout with PayPal
                 </Button>
-              </form>
-            </Box>
+                </form>
+              </Box>
 
 
-            {this.state.active ? (
-              <Button
-                rounded='md'
-                style={{
-                  background: '#f08d1d',
-                }}
-                color='black'
-                px={4}
-                h={8}
-                my={2}
-                type='submit'
-                w='200px'
-                onClick={this.sendTransaction}
-              >
-                Checkout with MetaMask
-              </Button>
-            ) : (
-              <Button
-                rounded='md'
-                style={{
-                  background: '#f08d1d',
-                }}
-                color='black'
-                px={4}
-                h={8}
-                my={2}
-                type='submit'
-                w='200px'
-                onClick={this.initConnect}
-                disabled={this.props.error}
-              >
-                Connect to MetaMask
-              </Button>
-            )}
-          </Flex>
+              {this.state.active ? (
+                <Button
+                  rounded='md'
+                  style={{
+                    background: '#f08d1d',
+                  }}
+                  color='black'
+                  px={4}
+                  h={8}
+                  my={2}
+                  type='submit'
+                  w='200px'
+                  onClick={this.sendTransaction}
+                >
+                  Checkout with MetaMask
+                </Button>
+              ) : (
+                <Button
+                  rounded='md'
+                  style={{
+                    background: '#f08d1d',
+                  }}
+                  color='black'
+                  px={4}
+                  h={8}
+                  my={2}
+                  type='submit'
+                  w='200px'
+                  onClick={this.initConnect}
+                  disabled={this.props.error}
+                >
+                  Connect to MetaMask
+                </Button>
+              )}
+            </Flex>
 
 
-          <Box px={4} mt={4}>
-            {this.state.pending && (
-              <>
-                <Progress hasStripe isAnimated value={this.state.part} />
-                <Text color={`${theme.colors.etGreen}`}>
-                  Please wait as your transaction is being processed. You will be redirected after its been confirmed
+            <Box px={4} mt={4}>
+              {this.state.pending && (
+                <>
+                  <Progress hasStripe isAnimated value={this.state.part} />
+                  <Text color={`${theme.colors.etGreen}`}>
+                    Please wait as your transaction is being processed. You will be redirected after its been confirmed
                 </Text>
-              </>
-            )}
+                </>
+              )}
+            </Box>
           </Box>
-        </Box>
-      </CheckoutItems>
+        </CheckoutItems>
+      </>
     );
   }
 }

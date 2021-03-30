@@ -9,6 +9,7 @@ import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
 import toast from 'util/toast';
 import theme from 'theme.js';
+import Helmet from 'react-helmet';
 
 const CoinContainer = styled(Box)`
   ${FADE_IN}
@@ -28,6 +29,11 @@ const Coins = ({ UserActions, auth }) => {
 
   return (
     <>
+      <Helmet>
+        <title>Electric Tooth - coins</title>
+        <meta name='description' content='amazing' />
+      </Helmet>
+
       <CoinContainer maxWidth='900px' m='auto' px={4} pb={4} mt='40px'>
         <Heading pt={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
           coins
@@ -51,7 +57,7 @@ const Coins = ({ UserActions, auth }) => {
           borderRadius="20px"
         >
           <Box>
-            <Image src={`/uploads/coin100.png`} width='100%' borderRadius={{sm: '20px 20px 0 0', md : "20px 0 0 20px" }}/>
+            <Image src={`/uploads/coin100.png`} width='100%' borderRadius={{ sm: '20px 20px 0 0', md: "20px 0 0 20px" }} />
           </Box>
           <Box display={{ md: 'flex' }} width='100%' px={2}>
             <Flex align='center' justify='center'>
@@ -104,7 +110,7 @@ const Coins = ({ UserActions, auth }) => {
           borderRadius="20px"
         >
           <Box>
-            <Image src={`/uploads/coin200.png`} width='100%' borderRadius={{sm: '20px 20px 0 0', md : "20px 0 0 20px" }}/>
+            <Image src={`/uploads/coin200.png`} width='100%' borderRadius={{ sm: '20px 20px 0 0', md: "20px 0 0 20px" }} />
           </Box>
 
           <Box display={{ md: 'flex' }} width='100%' px={2}>
@@ -158,7 +164,7 @@ const Coins = ({ UserActions, auth }) => {
           borderRadius="20px"
         >
           <Box>
-            <Image src={`/uploads/coin300.png`} width='100%' borderRadius={{sm: '20px 20px 0 0', md : "20px 0 0 20px" }}/>
+            <Image src={`/uploads/coin300.png`} width='100%' borderRadius={{ sm: '20px 20px 0 0', md: "20px 0 0 20px" }} />
           </Box>
 
           <Box display={{ md: 'flex' }} width='100%' px={2}>

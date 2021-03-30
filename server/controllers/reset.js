@@ -17,7 +17,7 @@ async function resetPassword(req, res) {
       let resetToken = encrypt.tokenForUser(user);
 
       await dbConnection.updateUserResetToken(user._id, resetToken);
-      await mailer.sendMail(user, resetToken);
+      await mailer.sendResetPasswordMail(user, resetToken);
 
     } catch (err) {
       console.log(err);
