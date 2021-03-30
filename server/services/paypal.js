@@ -22,7 +22,6 @@ class PayPalService {
       ],
       note_to_payer: 'Contact us for any questions on your order.',
       redirect_urls: {
-        //return_url: `${config.appUrl}/paypal/return`,
         return_url: `${config.api}/api/v1/paypal/return`,
         cancel_url: `${config.api}/api/v1/paypal/cancel`,
       },
