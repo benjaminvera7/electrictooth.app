@@ -58,6 +58,11 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   let track = [];
 
   track = playlist?.filter((track) => track._id === currentTrackId);
+  console.log(playlist)
+  
+  if (playlist.length > 1 & currentTrackId == '') {
+    setCurrentTrackId(playlist[0]._id);
+  }
 
   const timeUpdate = () => {
     let playPercent = 100 * (audio.current.currentTime / audio.current.duration);
