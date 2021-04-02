@@ -126,7 +126,9 @@ class DatabaseService {
 
     const albums = await Albums.find().populate('tracks');
 
-    return { artists, albums };
+    const coins = await Coins.find();
+
+    return { artists, albums, coins };
   }
 
   async getAlbumsPaginationPage(currentPage) {
