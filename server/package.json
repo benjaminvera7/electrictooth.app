@@ -4,9 +4,11 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "seed": "concurrently --kill-others-on-fail \"node createAdmin.js\" \"node coinSeed.js\"",
     "start": "nodemon server.js",
     "build": "cd ../client && yarn build",
-    "dev": "concurrently --kill-others-on-fail \"NODE_ENV=development npm run start\" \"cd ../client && yarn start\""
+    "dev": "concurrently --kill-others-on-fail \"NODE_ENV=development npm run start\" \"cd ../client && yarn start\"",
+    "seed-dev": "concurrently --kill-others-on-fail \"NODE_ENV=development node createAdmin.js\" \"NODE_ENV=development node coinSeed.js\""
   },
   "author": "",
   "license": "ISC",
