@@ -50,6 +50,8 @@ app.get('/*', function passHTML(req, res) {
   });
 });
 
+
+
 app.use((error, req, res, next) => {
   console.log(error);
   const status = error.statusCode || 500;
@@ -61,3 +63,27 @@ app.use((error, req, res, next) => {
 app.listen(config.port);
 
 console.log(`ET3-Server is listening on http://localhost:${config.port}`);
+
+
+// const admin = express();
+
+// admin.use(morgan('dev'));
+// admin.use(bodyParser.json());
+// admin.use(bodyParser.urlencoded({ extended: false }));
+// admin.use(cookieParser());
+// admin.use(cors());
+
+// admin.use(express.static(path.join(__dirname, '../admin/build')));
+
+// admin.get('/*', function passHTML(req, res) {
+//   res.sendFile(path.join(__dirname, '../admin/build/index.html'), function (err) {
+//     if (err) {
+//       res.status(500).send(err);
+//     }
+//   });
+// });
+
+// admin.listen(5000);
+
+// console.log(`ET3-Admin is listening on http://localhost:5000`);
+
