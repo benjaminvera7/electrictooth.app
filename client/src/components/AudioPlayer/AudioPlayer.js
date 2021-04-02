@@ -54,13 +54,15 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   let [playing, setPlaying] = useState(false);
   // eslint-disable-next-line
   let [timelineDot, setTimelineDot] = useState(0);
+  let firstLoad = true;
 
   let track = [];
 
   track = playlist?.filter((track) => track._id === currentTrackId);
-  
+
   if (playlist.length >= 1 & currentTrackId === '') {
     setCurrentTrackId(playlist[0]._id);
+    firstLoad = true;
   }
 
   const timeUpdate = () => {
@@ -207,13 +209,13 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
       return audio.current.pause();
     }
 
+    if (!playing & firstLoad) {
+      fetch(currentTrackId);
+    }
+
     if (currentTrackId) {
       setPlaying(true);
       audio.current.play();
-    }
-
-    if (!playing & (currentTrackId === '') & (playlist.length > 0)) {
-      fetch(playlist[0]._id);
     }
   };
 
@@ -225,9 +227,9 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   useEventListener('ended', next, audio.current);
   useEventListener('timeupdate', timeUpdate, audio.current);
 
-    if (isMobile && isSafari()) {
-      bindSafariAutoPlayEvents();
-    }
+  if (isMobile && isSafari()) {
+    bindSafariAutoPlayEvents();
+  }
 
   return (
     <Fragment>
