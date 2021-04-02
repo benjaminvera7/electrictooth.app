@@ -1,10 +1,8 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 mongoose.Promise = require('bluebird');
 const config = require('./config');
-const path = require('path');
 
-const db = mongoose.connection.openUri('mongodb://localhost:27017/ET3', {
+const db = mongoose.connection.openUri(config.dbUri, {
   useNewUrlParser: true,
   useCreateIndex: true,
 });
