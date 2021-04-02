@@ -7,6 +7,7 @@ const cors = require('cors');
 const config = require('./config');
 
 const checkCustomerAuth = require('./util/checkCustomerAuth');
+const checkAdminAuth = require('./util/checkAdminAuth');
 
 const uploadRoutes = require('./routes/upload');
 const musicRoutes = require('./routes/music');
@@ -18,6 +19,7 @@ const paypalRoutes = require('./routes/paypal');
 const downloadRoutes = require('./routes/download');
 const orderRoutes = require('./routes/order');
 const ethRoutes = require('./routes/eth');
+const adminRoutes = require('./routes/admin');
 
 
 const app = express();
@@ -32,15 +34,19 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 app.use('/uploads', express.static(path.join(__dirname, './uploads')));
 
 app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/upload', uploadRoutes);
 app.use('/api/v1/music', musicRoutes);
 app.use('/api/v1/reset', resetRoutes);
 app.use('/api/v1/paypal', paypalRoutes);
+
+app.use('/api/v1/admin', adminRoutes);
+app.use('/api/v1/upload', checkAdminAuth, uploadRoutes);
+
 app.use('/api/v1/user', checkCustomerAuth, userRoutes);
 app.use('/api/v1/stream', checkCustomerAuth, streamRoutes);
 app.use('/api/v1/download', checkCustomerAuth, downloadRoutes);
 app.use('/api/v1/order', checkCustomerAuth, orderRoutes);
 app.use('/api/v1/eth', checkCustomerAuth, ethRoutes);
+
 
 app.get('/*', function passHTML(req, res) {
   res.sendFile(path.join(__dirname, '../client/build/index.html'), function (err) {

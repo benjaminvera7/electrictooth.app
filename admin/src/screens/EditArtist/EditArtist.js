@@ -45,6 +45,7 @@ const EditArtist = () => {
       .post('http://localhost:3090/api/v1/upload/edit_artist', formData, {
         headers: {
           'content-type': 'multipart/form-data',
+          'authorization': localStorage.getItem('admin_token')
         },
       })
       .then((response) => {

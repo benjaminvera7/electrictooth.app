@@ -89,6 +89,7 @@ const EditAlbum = () => {
       .post('http://localhost:3090/api/v1/upload/edit_album', formData, {
         headers: {
           'content-type': 'multipart/form-data',
+          'authorization': localStorage.getItem('admin_token')
         },
       })
       .then((response) => {

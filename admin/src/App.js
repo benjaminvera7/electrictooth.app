@@ -6,8 +6,9 @@ import EditAlbum from 'screens/EditAlbum';
 import EditTrack from 'screens/EditTrack';
 import EditArtist from 'screens/EditArtist';
 import Dashboard from 'screens/Dashboard';
+import Signin from 'screens/Signin';
 
-const App = () => {
+const App = ({ history }) => {
   return (
     <>
       <Switch>
@@ -15,7 +16,8 @@ const App = () => {
         <Route path='/edit_track' component={EditTrack} />
         <Route path='/edit_artist' component={EditArtist} />
         <Route path='/dashboard' component={Dashboard} />
-        <Redirect to='/dashboard' />
+        <Route path='/' component={Signin} history={history} />
+        <Redirect to='/' />
       </Switch>
     </>
   );
