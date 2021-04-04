@@ -86,7 +86,7 @@ const EditAlbum = () => {
     }
 
     axios
-      .post('https://eletrictooth.app/api/v1/upload/edit_album', formData, {
+      .post('https://electrictooth.app/api/v1/upload/edit_album', formData, {
         headers: {
           'content-type': 'multipart/form-data',
           'authorization': localStorage.getItem('admin_token')
