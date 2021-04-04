@@ -25,7 +25,7 @@ const Signin = ({ history }) => {
         formData.append('password', admin.password);
 
         axios
-            .post('http://138.197.4.93/api/v1/admin/signin', formData, {
+            .post('http://eletrictooth.app/api/v1/admin/signin', formData, {
                 headers: {
                     'content-type': 'multipart/form-data',
                 },

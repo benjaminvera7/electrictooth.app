@@ -48,15 +48,9 @@ app.use('/api/v1/order', checkCustomerAuth, orderRoutes);
 app.use('/api/v1/eth', checkCustomerAuth, ethRoutes);
 
 
-app.get('/*', function passHTML(req, res) {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'), function (err) {
-    if (err) {
-      res.status(500).send(err);
-    }
-  });
+app.get('/*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 });
-
-
 
 app.use((error, req, res, next) => {
   console.log(error);
@@ -70,26 +64,21 @@ app.listen(config.port);
 
 console.log(`ET3-Server is listening on http://localhost:${config.port}`);
 
+const admin = express();
 
-// const admin = express();
+admin.use(morgan('dev'));
+admin.use(bodyParser.json());
+admin.use(bodyParser.urlencoded({ extended: false }));
+admin.use(cookieParser());
+admin.use(cors());
 
-// admin.use(morgan('dev'));
-// admin.use(bodyParser.json());
-// admin.use(bodyParser.urlencoded({ extended: false }));
-// admin.use(cookieParser());
-// admin.use(cors());
+admin.use(express.static(path.join(__dirname, '../admin/build')));
 
-// admin.use(express.static(path.join(__dirname, '../admin/build')));
+admin.get('/admin', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../admin/build', 'index.html'));
+});
 
-// admin.get('/*', function passHTML(req, res) {
-//   res.sendFile(path.join(__dirname, '../admin/build/index.html'), function (err) {
-//     if (err) {
-//       res.status(500).send(err);
-//     }
-//   });
-// });
 
-// admin.listen(5000);
+admin.listen(5000);
 
-// console.log(`ET3-Admin is listening on http://localhost:5000`);
-
+console.log(`ET3-Admin is listening on http://localhost:5000`);
