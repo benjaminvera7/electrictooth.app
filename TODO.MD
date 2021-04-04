@@ -33,10 +33,12 @@ x simple artist page
 - physical and digital bundles
 - discount codes
 - disable track from homepage (visible flag)
-- protect admin page or have it talk to hosted database
-- player remembers where music left off
+x protect admin page or have it talk to hosted database
+x player remembers where music left off
 - re-design front page
 - thank you email
 x player doesn't call next after song ends
 - player options: repeat, shuffle
 - player volume
+- add track plays
+- add track income

@@ -35,7 +35,7 @@ const EditTrack = () => {
     formData.append('description', track.description);
 
     axios
-      .post('http://localhost:3090/api/v1/upload/edit_track', formData, {
+      .post('http://138.197.4.93/api/v1/upload/edit_track', formData, {
         headers: {
           'content-type': 'multipart/form-data',
           'authorization': localStorage.getItem('admin_token')
