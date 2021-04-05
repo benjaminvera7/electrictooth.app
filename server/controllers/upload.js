@@ -167,9 +167,11 @@ async function editArtist(req, res) {
 
   const exists = await dbConnection.doesArtistExist(fields.artist_name);
 
+  let newCoverArtPath = ''; //default image?
+
   if (files.artist_img) {
     const oldCoverArtPath = files.artist_img.path;
-    const newCoverArtPath = path.join(__dirname, `../uploads/${files.artist_img.name}`);
+    newCoverArtPath = path.join(__dirname, `../uploads/${files.artist_img.name}`);
     await upload(oldCoverArtPath, newCoverArtPath);
   }
 
