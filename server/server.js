@@ -51,8 +51,11 @@ app.use('/api/v1/eth', checkCustomerAuth, ethRoutes);
 app.get('/*', (req, res) => {
 
   let data = path.resolve(__dirname, '../client/build', 'index.html');
+
   if (req.url === '/music/Lambda-Edits') {
-    data.replace(/\__IMAGE__/g, 'https://www.electrictooth.app/uploads/lambda.png');
+    data = data.replace(/\$OG_TITLE/g, 'Lambda Edits');
+    data = data.replace(/\$OG_DESCRIPTION/g, 'Play this in your DJ sets');
+    data = data.replace(/\$OG_IMAGE/g, 'https://www.electrictooth.app/uploads/lambda.png');
   }
   res.sendFile(data);
 });
