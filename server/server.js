@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
 const config = require('./config');
+const fs = require('fs');
 
 const checkCustomerAuth = require('./util/checkCustomerAuth');
 const checkAdminAuth = require('./util/checkAdminAuth');
@@ -20,6 +21,7 @@ const downloadRoutes = require('./routes/download');
 const orderRoutes = require('./routes/order');
 const ethRoutes = require('./routes/eth');
 const adminRoutes = require('./routes/admin');
+const { file } = require('jszip');
 
 
 const app = express();
@@ -50,14 +52,16 @@ app.use('/api/v1/eth', checkCustomerAuth, ethRoutes);
 
 app.get('/*', (req, res) => {
 
-  let data = path.resolve(__dirname, '../client/build', 'index.html');
+  const filePath = path.resolve(__dirname, '../client/build', 'index.html');
 
-  if (req.url === '/music/Lambda-Edits') {
-    data = data.replace(/\$OG_TITLE/g, 'Lambda Edits');
-    data = data.replace(/\$OG_DESCRIPTION/g, 'Play this in your DJ sets');
-    data = data.replace(/\$OG_IMAGE/g, 'https://www.electrictooth.app/uploads/lambda.png');
-  }
-  res.sendFile(data);
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (req.url === '/music/Lambda-Edits') {
+      data = data.replace(/\$OG_TITLE/g, 'Lambda Edits');
+      data = data.replace(/\$OG_DESCRIPTION/g, 'Play this in your DJ sets');
+      data = data.replace(/\$OG_IMAGE/g, 'https://www.electrictooth.app/uploads/lambda.png');
+    }
+    res.send(data);
+  });
 });
 
 app.use((error, req, res, next) => {
