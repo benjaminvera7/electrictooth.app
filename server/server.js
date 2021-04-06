@@ -49,7 +49,12 @@ app.use('/api/v1/eth', checkCustomerAuth, ethRoutes);
 
 
 app.get('/*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+
+  let data = path.resolve(__dirname, '../client/build', 'index.html');
+  if (req.url === '/music/Lambda-Edits') {
+    data.replace(/\__IMAGE__/g, 'https://www.electrictooth.app/uploads/lambda.png');
+  }
+  res.sendFile(data);
 });
 
 app.use((error, req, res, next) => {
