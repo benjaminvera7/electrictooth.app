@@ -64,7 +64,7 @@ class Album extends Component {
         {currentAlbum && (
           <Helmet>
             <title>{currentAlbum.album_name}</title>
-            <meta name='description' content='amazing' />
+            {/* <meta name='description' content='amazing' />
             <meta name="twitter:title" content="Support music" />
             <meta
               name="twitter:description"
@@ -74,7 +74,7 @@ class Album extends Component {
               name="twitter:image"
               content={`/uploads/${currentAlbum.art_name}`}
             />
-            <meta name="twitter:card" content="summary" />
+            <meta name="twitter:card" content="summary" /> */}
           </Helmet>
         )}
 
