@@ -54,7 +54,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   let [playing, setPlaying] = useState(false);
   // eslint-disable-next-line
   let [timelineDot, setTimelineDot] = useState(0);
-  let firstLoad = true;
+  let [firstLoad, setFirstLoad] = useState(false);
 
   let track = [];
 
@@ -62,7 +62,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
 
   if (playlist.length >= 1 & currentTrackId === '') {
     setCurrentTrackId(playlist[0]._id);
-    firstLoad = true;
+    setFirstLoad(true);
   }
 
   const timeUpdate = () => {
@@ -210,6 +210,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
     }
 
     if (!playing & firstLoad) {
+      setFirstLoad(false);
       fetch(currentTrackId);
     }
 

@@ -18,14 +18,22 @@ x in inital fetch, send object with albums (tracks populated) & artists
 }
 ```
 
+
+short-term
 - ability to sell merch
+- re-design front page
+- thank you email
+- player options: repeat, shuffle
+- player volume
+- add track plays
+- add track income
+- pause/play spacebar
+- off-click close playlist
+- back button close mobile player/playlist
 
-
-
-x artist column on album page w/ artist albums
-x simple artist page
-- share page, redeem stream coins
+nice-to-have
 - 'supported by' list
+- share page, redeem stream coins
 - favorites
 - multiple playlists
 - edit track
@@ -33,12 +41,3 @@ x simple artist page
 - physical and digital bundles
 - discount codes
 - disable track from homepage (visible flag)
-x protect admin page or have it talk to hosted database
-x player remembers where music left off
-- re-design front page
-- thank you email
-x player doesn't call next after song ends
-- player options: repeat, shuffle
-- player volume
-- add track plays
-- add track income
