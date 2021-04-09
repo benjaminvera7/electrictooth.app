@@ -13,7 +13,7 @@ import MobilePlaylistPanel from './MobilePlaylistPanel';
 import useWindowSize from 'hooks/useWindowSize';
 import useEventListener from 'hooks/useEventListener';
 import toast from 'util/toast';
-//import debounce from 'util/debounce';
+import debounce from 'util/debounce';
 import theme from 'theme.js';
 
 const slideHOC = (InputComponent) => {
@@ -60,7 +60,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
 
   track = playlist?.filter((track) => track._id === currentTrackId);
 
-  if (playlist.length >= 1 & currentTrackId === '') {
+  if (playlist.length >= 1 && currentTrackId === '') {
     setCurrentTrackId(playlist[0]._id);
     setFirstLoad(true);
   }
@@ -111,7 +111,9 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
     </div>
   );
 
-  const next = () => {
+  const next = (e) => {
+    document.getElementsByName('play')[0].focus();
+
     let [track] = playlist.filter((track) => track._id === currentTrackId);
 
     if (playlist.length > 1 && track) {
@@ -129,6 +131,8 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   };
 
   const previous = () => {
+    document.getElementsByName('play')[0].focus();
+
     let [track] = playlist.filter((track) => track._id === currentTrackId);
 
     if (playlist.length > 1 && track) {
@@ -209,14 +213,14 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
       return audio.current.pause();
     }
 
-    if (!playing & firstLoad) {
+    if (!playing && firstLoad) {
       setFirstLoad(false);
-      fetch(currentTrackId);
+      return fetch(currentTrackId);
     }
 
-    if (currentTrackId) {
+    if (currentTrackId && !playing) {
       setPlaying(true);
-      audio.current.play();
+      return audio.current.play();
     }
   };
 
@@ -224,13 +228,23 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
     UserActions.removeFromPlaylist(id, auth);
   };
 
+  const handlePlay = e => {
+    if (e.code === 'Space') {
+      document.getElementsByName('play')[0].focus();
+
+      play();
+    }
+  }
 
   useEventListener('ended', next, audio.current);
   useEventListener('timeupdate', timeUpdate, audio.current);
 
+  useEventListener('keydown', debounce(handlePlay, 500, false))
+
   if (isMobile && isSafari()) {
     bindSafariAutoPlayEvents();
   }
+
 
   return (
     <Fragment>

@@ -63,24 +63,24 @@ const DesktopPlayer = ({
         <Flex maxW='1100px' flex='1' height='60px'>
           <Flex flex='1' align='center' minWidth='275px'>
 
-            {track.length > 0 ?             
-            <Image
-              src={`/uploads/${track[0].art_name}`}
-              h='48px'
-              w='48px'
-              borderRadius='50%'
-              border='1px'
-              borderColor={`${theme.colors.etGreen}`}
-            /> :
+            {track.length > 0 ?
+              <Image
+                src={`/uploads/${track[0].art_name}`}
+                h='48px'
+                w='48px'
+                borderRadius='50%'
+                border='1px'
+                borderColor={`${theme.colors.etGreen}`}
+              /> :
               <Box
-              h='48px'
-              w='48px'
-              borderRadius='50%'
-              border='1px'
-              borderColor={`${theme.colors.etGreen}`}
-              backgroundColor={`${theme.colors.etGreen}`}
-             />
-          
+                h='48px'
+                w='48px'
+                borderRadius='50%'
+                border='1px'
+                borderColor={`${theme.colors.etGreen}`}
+                backgroundColor={`${theme.colors.etGreen}`}
+              />
+
             }
 
             <Flex direction='column' pl={4}>
@@ -101,7 +101,7 @@ const DesktopPlayer = ({
               <Button variant='link' onClick={handlePrevious}>
                 <Previous />
               </Button>
-              <Button variant='link' onClick={handlePlay} isLoading={loading}>
+              <Button variant='link' onClick={handlePlay} isLoading={loading} name="play">
                 {playing ? <Pause /> : <Play />}
               </Button>
               <Button variant='link' onClick={handleNext}>
