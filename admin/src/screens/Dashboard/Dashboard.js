@@ -13,6 +13,9 @@ const Dashboard = () => {
       <Link to='/edit_artist' style={{ margin: '8px' }}>
         add artist
       </Link>
+      <Link to='/edit_product' style={{ margin: '8px' }}>
+        add product
+      </Link>
     </div>
   );
 };

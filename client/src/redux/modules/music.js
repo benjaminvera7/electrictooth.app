@@ -31,6 +31,7 @@ const initialState = {
   albums: [],
   artists: [],
   coins: [],
+  products: [],
   currentAlbum: {},
   updatedAt: getDate(),
 };
@@ -45,6 +46,7 @@ export default handleActions(
         newState.albums = payload.data.albums;
         newState.artists = payload.data.artists;
         newState.coins = payload.data.coins;
+        newState.products = payload.data.products;
 
         return newState;
       },

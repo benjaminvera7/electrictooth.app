@@ -201,8 +201,48 @@ async function editArtist(req, res) {
   res.end();
 }
 
+async function editProduct(req, res) {
+  const { fields, files } = await formParse(req);
+
+  const exists = await dbConnection.doesArtistExist(fields.artist_name);
+
+  if (!exists) {
+    await dbConnection.createArtist({
+      artist_name: fields.artist_name,
+      artist_bio: '',
+      artist_img: '',
+      albums: [],
+    });
+  }
+
+  let newProductImgPath = ''; //default image?
+
+  if (files.product_img) {
+    const oldProductImgPath = files.product_img.path;
+    newProductImgPath = path.join(__dirname, `../uploads/${files.product_img.name}`);
+    await upload(oldProductImgPath, newProductImgPath);
+  }
+
+  const artist = await dbConnection.getArtistByName(fields.artist_name);
+
+  await dbConnection.createProduct({
+    product_name: fields.product_name,
+    description: fields.description,
+    art_url: newProductImgPath,
+    art_name: files.product_img.name,
+    price: fields.price,
+    tags: fields.tags,
+    artist_name: fields.artist_name,
+    artist: artist._id,
+    quantity: fields.quantity
+  });
+
+  res.status(200).json({ status: 'saved successfully' });
+}
+
 module.exports = {
   editAlbum,
   editTrack,
   editArtist,
+  editProduct
 };

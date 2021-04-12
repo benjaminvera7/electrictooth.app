@@ -5,6 +5,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Home from 'screens/Home';
 import Album from 'screens/Album';
+import Merch from 'screens/Merch';
 
 import Download from 'screens/Download';
 import Checkout from 'screens/Checkout';
@@ -53,6 +54,7 @@ function App({ MusicActions, UserActions, auth, playlist }) {
           <Route path='/signup' component={Signup} />
           <Route path='/signin' component={Signin} />
           <Route path='/music/:name' component={Album} />
+          <Route path='/merch/:name' component={Merch} />
           <Route path='/artist/:name' component={Artist} />
           <Route exact path='/' component={Home} />
           <Redirect to='/' />

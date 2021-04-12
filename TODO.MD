@@ -1,26 +1,12 @@
-x associate new albums & tracks with artists defined in the database (happening in background by artist_name)
 
-x in inital fetch, send object with albums (tracks populated) & artists
-
-```
-{
-  data: {
-    albums: [
-      ...
-      tracks: [
-        ...
-      ]
-    ],
-    artists: [
-      ...
-    ]
-  }
-}
-```
+current objective - ability to sell merch
+x upload merch
+^ add/remove to product/merch to cart
+^ user cart & checkout view
+^ thank you letter / shipping tracking
 
 
 short-term
-- ability to sell merch
 - re-design front page
 - thank you email
 - player options: repeat, shuffle

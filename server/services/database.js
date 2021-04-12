@@ -10,6 +10,7 @@ const Carts = require('../models/carts');
 const Playlists = require('../models/playlists');
 const Coins = require('../models/coins');
 const Orders = require('../models/orders');
+const Products = require('../models/products');
 
 class DatabaseService {
   constructor() {
@@ -66,6 +67,24 @@ class DatabaseService {
   async getArtistByName(artist_name) {
     const artist = await Artists.findOne({ artist_name });
     return artist;
+  }
+
+  async createProduct(properties) {
+    const newProduct = new Products({
+      _id: new mongoose.Types.ObjectId(),
+      product_name: properties.product_name,
+      description: properties.description,
+      art_url: properties.art_url,
+      art_name: properties.art_name,
+      price: properties.price,
+      tags: properties.tags,
+      type: 'merch',
+      artist_name: properties.artist_name,
+      artist: properties.artist,
+      quantity: properties.quantity
+    });
+
+    return newProduct.save();
   }
 
   async createAlbum(properties) {
@@ -128,7 +147,9 @@ class DatabaseService {
 
     const coins = await Coins.find();
 
-    return { artists, albums, coins };
+    const products = await Products.find();
+
+    return { artists, albums, coins, products };
   }
 
   async getAlbumsPaginationPage(currentPage) {

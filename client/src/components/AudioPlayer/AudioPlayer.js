@@ -112,7 +112,8 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   );
 
   const next = (e) => {
-    document.getElementsByName('play')[0].focus();
+    //document.getElementsByName('play')[0].focus();
+
 
     let [track] = playlist.filter((track) => track._id === currentTrackId);
 
@@ -131,7 +132,8 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   };
 
   const previous = () => {
-    document.getElementsByName('play')[0].focus();
+    //document.getElementsByName('play')[0].focus();
+
 
     let [track] = playlist.filter((track) => track._id === currentTrackId);
 
@@ -208,6 +210,9 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   };
 
   const play = () => {
+    //document.getElementsByName('play')[0].focus();
+
+
     if (playing) {
       setPlaying(false);
       return audio.current.pause();
@@ -230,7 +235,8 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
 
   const handlePlay = e => {
     if (e.code === 'Space') {
-      document.getElementsByName('play')[0].focus();
+      //document.getElementsByName('play')[0].focus();
+
 
       play();
     }

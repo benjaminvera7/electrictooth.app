@@ -21,7 +21,6 @@ const downloadRoutes = require('./routes/download');
 const orderRoutes = require('./routes/order');
 const ethRoutes = require('./routes/eth');
 const adminRoutes = require('./routes/admin');
-const { file } = require('jszip');
 
 
 const app = express();
