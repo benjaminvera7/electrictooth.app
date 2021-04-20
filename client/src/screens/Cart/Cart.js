@@ -41,7 +41,7 @@ const Cart = ({ UserActions, auth, cart }) => {
           <Stack>
             {cart.items?.length > 0 ? (
               cart.items.map(
-                ({ id, artist_name, track_name, album_name, art_name, download_price, type, amount, price }) => (
+                ({ id, artist_name, track_name, album_name, art_name, download_price, type, amount, price, product_name, size }) => (
                   <Flex borderWidth='1px' key={id} bg='white' borderRadius="20px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'>
                     <Box>
                       <Image src={`/uploads/${art_name}`} width="100px" borderRadius="20px 0 0 20px" />
@@ -52,6 +52,7 @@ const Cart = ({ UserActions, auth, cart }) => {
                         {type === 'coin' && `${amount} stream coins`}
                         {type === 'album' && album_name}
                         {type === 'track' && `${track_name} (MP3)`}
+                        {type === 'merch' && `${product_name} (${size})`}
                       </Heading>
                       <Text fontSize={['xs', 'sm', 'md', 'lg']} mb={4} color='gray.500'>
                         {artist_name ? artist_name : `@ $0.01`}
@@ -65,11 +66,12 @@ const Cart = ({ UserActions, auth, cart }) => {
                         {type === 'coin' && `$${price}.00`}
                         {type === 'album' && `$${download_price}.00`}
                         {type === 'track' && `$${download_price}.00`}
+                        {type === 'merch' && `$${price}.00`}
                       </Text>
                     </Flex>
 
                     <Flex p={2}>
-                      <Button onClick={() => UserActions.removeFromCart(id, type, auth)} color='black' variant='link'>
+                      <Button onClick={() => UserActions.removeFromCart(id, type, auth, size)} color='black' variant='link'>
                         <Remove />
                       </Button>
                     </Flex>

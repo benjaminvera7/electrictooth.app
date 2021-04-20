@@ -1,6 +1,7 @@
 const dbConnection = require('../services/database');
 const paypal = require('../services/paypal');
 const config = require('../config');
+const mailer = require('../services/mailer');
 
 async function requestPayment(req, res) {
   const userId = req.body.userId;
@@ -30,13 +31,19 @@ async function returnPayment(req, res) {
 
   orderId = response.transactions[0].invoice_number;
 
+  const shippingAddress = response.transactions[0].item_list.shipping_address;
+
   if (error) {
     await dbConnection.updateOrderStatusById(orderId, 'FAILED');
     //TODO: redirect to error processing page
     res.end();
   }
 
-  let order = await dbConnection.updateOrderStatusById(orderId, 'SUCCESSFUL');
+  await dbConnection.updateOrderStatusById(orderId, 'SUCCESSFUL');
+  await dbConnection.updateOrderShippingAddressById(orderId, shippingAddress);
+
+  let order = await dbConnection.getOrderById(orderId);
+
   let user = await dbConnection.getUserById(order.user_id);
 
   /* Add coins to user account */
@@ -69,10 +76,27 @@ async function returnPayment(req, res) {
         library.push(album);
       }
     }
+
+    if (item.type === 'merch') {
+      const merch = await dbConnection.getProductById(item.id);
+      const size = item.size;
+
+      const quantity = JSON.parse(merch.quantity);
+
+      const updatedQty = {
+        ...quantity,
+        [size]: quantity[size] - 1
+      }
+
+      await dbConnection.updateProductQuantityById(item.id, JSON.stringify(updatedQty))
+    }
+
   }
 
   await dbConnection.addToLibrary(user, library);
   await dbConnection.updateUserCart(user.cart, { items: [], total: 0 });
+
+  await mailer.sendOrderSummaryMail(user, order)
 
   return res.redirect(`${config.host}/download/${orderId}`);
 }
@@ -92,7 +116,7 @@ function createPaymentObject(order) {
         description: `${item.artist_name} - ${item.track_name} (MP3)`,
         quantity: 1,
         price: item.download_price,
-        sku: item.id,
+        sku: item.id.toString(),
         currency: order.currency,
       });
     }
@@ -103,7 +127,7 @@ function createPaymentObject(order) {
         description: 'Coins for sustainable streaming',
         quantity: 1,
         price: item.price,
-        sku: item.id,
+        sku: item.id.toString(),
         currency: order.currency,
       });
     }
@@ -114,7 +138,18 @@ function createPaymentObject(order) {
         description: `${item.artist_name} - ${item.album_name} (ZIP)`,
         quantity: 1,
         price: item.download_price,
-        sku: item.id,
+        sku: item.id.toString(),
+        currency: order.currency,
+      });
+    }
+
+    if (item.type === 'merch') {
+      items.push({
+        name: `${item.product_name}`,
+        description: `${item.product_name} (${item.size})`,
+        quantity: 1,
+        price: item.price,
+        sku: item.id.toString(),
         currency: order.currency,
       });
     }

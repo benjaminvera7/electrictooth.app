@@ -79,7 +79,7 @@ class Album extends Component {
         )}
 
         {currentAlbum && (
-          <Flex mt='80px' maxW='900px' mx='auto' direction={{ sm: 'column', md: 'row' }}>
+          <Flex mt='80px' maxW='900px' mx='auto' direction={{ xs: 'column', md: 'row' }}>
             <Flex flex='7'>
               <AlbumCardContainer color='white' flex='1' px={2}>
                 <Box display={{ md: 'flex' }} direction='column' bg='white' borderRadius="20px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'>
@@ -124,7 +124,7 @@ class Album extends Component {
                       <Box py={4}>{currentAlbum.description}</Box>
                     </Box>
 
-                    <Box color='black' px={{ xs: 2, sm: 4 }} py={{ xs: 2, sm: 4 }} textAlign='right'>
+                    <Box color='black' px={{ xs: 2, sm: 4 }} py={{ xs: 4, sm: 4 }} textAlign='right' style={{ position: 'absolute', top: 0, right: 0 }}>
                       ${currentAlbum.download_price}.00
                     </Box>
 

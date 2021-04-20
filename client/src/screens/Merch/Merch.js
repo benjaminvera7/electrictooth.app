@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Box, Flex, Text, Image, Heading, Stack, Badge, IconButton } from '@chakra-ui/core';
+import { Box, Flex, Text, Image, Heading, Stack, Badge, IconButton, Select } from '@chakra-ui/core';
 import { PlaylistAdd, CartAdd } from 'components/Icons';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -30,12 +30,21 @@ const AlbumSongList = styled(Box)``;
 
 class Merch extends Component {
     addToCart = (id, type) => {
+
+        const size = document.getElementById('sizeSelect');
+
+        if (size.value === "") {
+            toast(`Please select size`);
+            return
+        }
+
         if (this.props.auth) {
-            this.props.UserActions.addToCart(id, type, this.props.auth);
+            this.props.UserActions.addToCart(id, type, this.props.auth, size.value);
             toast(`Added to your Cart`);
         } else {
             this.props.history.push('/signup');
         }
+
     };
 
     render() {
@@ -53,10 +62,26 @@ class Merch extends Component {
             return <div>loading</div>;
         }
 
+        const createDropdown = (product) => {
+            const quantity = JSON.parse(product.quantity);
+
+            let optionItems = []
+
+            Object.entries(quantity).forEach(([size, quantity]) => {
+                optionItems.push(<option key={size} value={size} disabled={!quantity}>{size}</option>)
+            })
+
+            return (
+                <Select placeholder="size" id="sizeSelect" isRequired>
+                    {optionItems}
+                </Select>
+            )
+        }
+
         return (
             <Fragment>
                 {currentProduct && (
-                    <Flex mt='80px' maxW='900px' mx='auto' direction={{ sm: 'column', md: 'row' }}>
+                    <Flex mt='80px' maxW='900px' mx='auto' direction={{ xs: 'column', md: 'row' }}>
                         <Flex flex='7'>
                             <AlbumCardContainer color='white' flex='1' px={2}>
                                 <Box display={{ md: 'flex' }} direction='column' bg='white' borderRadius="20px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'>
@@ -99,9 +124,13 @@ class Merch extends Component {
                                             </Text>
 
                                             <Box py={4}>{currentProduct.description}</Box>
+
+                                            <Box my={8} width="100px">
+                                                {currentProduct?.quantity && createDropdown(currentProduct)}
+                                            </Box>
                                         </Box>
 
-                                        <Box color='black' px={{ xs: 2, sm: 4 }} py={{ xs: 2, sm: 4 }} textAlign='right'>
+                                        <Box color='black' px={{ xs: 2, sm: 4 }} py={{ xs: 4, sm: 4 }} textAlign='right' style={{ position: 'absolute', top: 0, right: 0 }}>
                                             ${currentProduct.price}.00
                                         </Box>
 

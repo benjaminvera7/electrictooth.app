@@ -27,8 +27,9 @@ class MailerService {
 
     await this.transporter.sendMail({
       from: 'info@electrictooth.io',
-      to: user.email,
-      subject: 'Underwater Peoples Records: Thank you for your purchase',
+      //to: user.email,
+      to: 'vera.benjamin88@gmail.com',
+      subject: `ET MUSIC: Thank you for your purchase - ${order._id}`,
       html:
         '<h4><b>Thank you!</b></h4>' +
         '<p>now to create order Summary</p>' +

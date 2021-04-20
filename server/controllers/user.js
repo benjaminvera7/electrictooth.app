@@ -4,6 +4,7 @@ async function addToCart(req, res) {
   const user = req.user;
   const type = req.body.type;
   const id = req.body.id;
+  const size = req.body.size;
   let cart;
 
   switch (type) {
@@ -16,9 +17,49 @@ async function addToCart(req, res) {
     case 'coin':
       cart = await addCoinToCart(id, user);
       break;
+    case 'merch':
+      cart = await addMerchToCart(id, user, size);
+      break;
   }
 
   res.status(200).json(cart);
+}
+
+async function addMerchToCart(id, user, size) {
+  const merch = await dbConnection.getProductById(id);
+
+  const userCart = user.cart.cart;
+
+  const inCart = userCart.items.some((i) => i._id === merch._id);
+
+  if (inCart) {
+    return userCart;
+  }
+
+  const newCart = { items: [], total: 0 };
+
+  newCart.items.push(...userCart.items);
+
+  newCart.items.push({
+    id: merch._id,
+    artist_name: merch.artist_name,
+    product_name: merch.product_name,
+    price: merch.price,
+    art_url: merch.art_url,
+    art_name: merch.art_name,
+    type: merch.type,
+    quantity: 1,
+    size: size
+  });
+
+  newCart.total = userCart.total + merch.price;
+
+  const { cart: cart_id } = await dbConnection.getUserById(user._id);
+
+  const cart = await dbConnection.updateUserCart(cart_id, newCart);
+
+  return cart;
+
 }
 
 async function addTrackToCart(id, user) {
@@ -124,6 +165,7 @@ async function removeFromCart(req, res) {
   const user = req.user;
   const type = req.body.type;
   const id = req.body.id;
+  const size = req.body.size;
   let cart;
 
   switch (type) {
@@ -136,9 +178,31 @@ async function removeFromCart(req, res) {
     case 'coin':
       cart = await removeCoinFromCart(id, user);
       break;
+    case 'merch':
+      cart = await removeMerchFromCart(id, user, size);
+      break;
   }
 
   res.status(200).json(cart);
+}
+
+async function removeMerchFromCart(id, user, size) {
+  const merch = await dbConnection.getProductById(id);
+  const userCart = user.cart.cart;
+
+  const newCart = { items: [], total: 0 };
+
+  const items = userCart.items.filter((item) => item.size !== size);
+
+  newCart.items = items;
+
+  newCart.total = userCart.total > 0 ? userCart.total - merch.price : 0;
+
+  const { cart: cart_id } = await dbConnection.getUserById(user._id);
+
+  const cart = await dbConnection.updateUserCart(cart_id, newCart);
+
+  return cart;
 }
 
 async function removeTrackFromCart(id, user) {

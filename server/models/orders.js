@@ -8,6 +8,7 @@ const OrdersSchema = new Schema({
   currency: String,
   hash: String,
   updated_at: String,
+  shippingAddress: Object
 });
 
 const Orders = mongoose.model('Orders', OrdersSchema);

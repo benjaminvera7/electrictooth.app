@@ -87,6 +87,10 @@ class DatabaseService {
     return newProduct.save();
   }
 
+  async getProductById(product_id) {
+    return await Products.findById({ _id: product_id });
+  }
+
   async createAlbum(properties) {
     const newAlbum = new Albums({
       _id: new mongoose.Types.ObjectId(),
@@ -307,8 +311,16 @@ class DatabaseService {
     return await Orders.findOneAndUpdate({ _id: orderId }, { status: status }, { new: true });
   }
 
+  async updateOrderShippingAddressById(orderId, shippingAddress) {
+    return await Orders.findOneAndUpdate({ _id: orderId }, { shippingAddress: shippingAddress }, { new: true });
+  }
+
   async updateEthOrderStatusById(orderId, status, hash) {
     return await Orders.findOneAndUpdate({ _id: orderId }, { status: status, hash: hash }, { new: true });
+  }
+
+  async updateProductQuantityById(id, quantity) {
+    return await Products.findOneAndUpdate({ _id: id }, { quantity: quantity }, { new: true });
   }
 
   async addToLibrary(user, list) {

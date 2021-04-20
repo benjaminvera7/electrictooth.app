@@ -14,6 +14,7 @@ import Helmet from 'react-helmet';
 class Download extends Component {
   state = {
     downloads: {},
+    shippingAddress: {}
   };
 
   loadOrder = () => {
@@ -25,6 +26,7 @@ class Download extends Component {
       console.log(data.cart.items)
       this.setState({
         downloads: data.cart.items,
+        shippingAddress: data.shippingAddress
       });
     });
   };
@@ -67,6 +69,8 @@ class Download extends Component {
     }
   };
 
+
+
   render() {
     return (
       <>
@@ -78,7 +82,7 @@ class Download extends Component {
           <Box color='white' maxW='768px' flex='1'>
             <Heading px={4} py={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
               download
-          </Heading>
+            </Heading>
 
             <Text px={4} fontSize='sm' mb={4} color='grey'>
               Downloads are available anytime in your Libary!
@@ -97,24 +101,42 @@ class Download extends Component {
                     <Box>
                       <Image src={`/uploads/${album.art_name}`} maxWidth='165px' borderRadius="20px 0 0 20px" />
                     </Box>
-                    <Box p={2}>
+                    <Box p={2} width={{ xs: '50%', md: '80%' }}>
                       <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600'>
                         {album.album_name && album.album_name}
                         {album.track_name && `${album.track_name} (MP3)`}
+                        {album.product_name && `${album.product_name} (${album.size})`}
                       </Heading>
                       <Text fontSize={['xs', 'sm', 'md', 'lg']} mb={4} color='gray.500'>
                         {album.artist_name}
                       </Text>
                     </Box>
+
+                    {album.product_name &&
+                      <Box width={{ xs: '50%', md: '20%' }} p="8px">
+                        <Text fontSize={['xs']} mb={4} color='gray.500'>
+                          <b>Shipping To:</b>
+                          <div>{this.state.shippingAddress.recipient_name}</div>
+                          <div>{this.state.shippingAddress.line1}</div>
+                          <div>{this.state.shippingAddress.city}, {this.state.shippingAddress.state}</div>
+                          <div>{this.state.shippingAddress.postal_code}</div>
+                          <div>{this.state.shippingAddress.country_code}</div>
+                        </Text>
+                      </Box>
+                    }
+
+
                     <Box mx='auto' />
 
-                    {album.type === 'coin' ? (
+                    {album.type === 'coin' && (
                       <Flex align='center' px={2} direction='column' justify='center' width="100%">
                         <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600' margin="auto" >
                           {parseInt(album.amount)} stream coins have been added to your account!
                       </Heading>
                       </Flex>
-                    ) : (
+                    )}
+
+                    {(album.album_name || album.track_name) &&
                       <Flex direction='column'>
                         <IconButton
                           flex='1'
@@ -147,8 +169,8 @@ class Download extends Component {
                           icon={() => <PlaylistAdd color={`${theme.colors.etGreen}`} />}
                           onClick={(e) => this.addToPlaylist(album.id, album.type)}
                         />
-                      </Flex>
-                    )}
+                      </Flex>}
+
                   </Flex>
                 ))}
             </Stack>

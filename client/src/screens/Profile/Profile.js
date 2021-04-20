@@ -93,6 +93,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
           <Tabs isFitted color={`${theme.colors.etGreen}`} variantColor={`${theme.colors.etGreen}`}>
             <TabList mb='1em'>
               <Tab>Library</Tab>
+              <Tab>Order History</Tab>
               <Tab>Settings</Tab>
             </TabList>
             <TabPanels>
@@ -164,6 +165,9 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
                     </Flex>
                   )}
                 </Stack>
+              </TabPanel>
+              <TabPanel>
+                order history
               </TabPanel>
               <TabPanel>
                 <Flex justify='flex-end'>

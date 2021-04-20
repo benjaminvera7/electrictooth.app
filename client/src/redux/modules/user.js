@@ -23,25 +23,27 @@ const _signin = (credentials) => {
   return axios.post('/api/v1/auth/signin', credentials);
 };
 
-const _addToCart = (id, type, token) => {
+const _addToCart = (id, type, token, size) => {
   return axios({
     url: `/api/v1/user/cart/${id}`,
     method: 'POST',
     data: {
       id: id,
       type: type,
+      size: size,
     },
     headers: { Authorization: token },
   });
 };
 
-const _removeFromCart = (id, type, token) => {
+const _removeFromCart = (id, type, token, size) => {
   return axios({
     url: `/api/v1/user/cart/${id}`,
     method: 'DELETE',
     data: {
       id: id,
       type: type,
+      size: size
     },
     headers: { Authorization: token },
   });
