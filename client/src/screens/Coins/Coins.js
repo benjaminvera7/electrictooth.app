@@ -20,7 +20,7 @@ const Coins = ({ UserActions, auth, coins }) => {
 
   const addToCart = (id, type) => {
     if (auth) {
-      UserActions.addToCart(id, type, auth);
+      UserActions.addToCart(id, type);
       toast(`Added to your Cart`);
     } else {
       router.push('/signup');

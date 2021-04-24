@@ -31,7 +31,7 @@ const AlbumSongList = styled(Box)``;
 class Album extends Component {
   addToCart = (id, type) => {
     if (this.props.auth) {
-      this.props.UserActions.addToCart(id, type, this.props.auth);
+      this.props.UserActions.addToCart(id, type);
       toast(`Added to your Cart`);
     } else {
       this.props.history.push('/signup');
@@ -40,7 +40,7 @@ class Album extends Component {
 
   addToPlaylist = (id, type) => {
     if (this.props.auth) {
-      this.props.UserActions.addToPlaylist(id, type, this.props.auth);
+      this.props.UserActions.addToPlaylist(id, type);
       toast(`Saved to your Playlist`);
     } else {
       this.props.history.push('/signup');

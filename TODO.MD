@@ -1,14 +1,13 @@
 
 current objective - ability to sell merch
 x upload merch
-^ add/remove to product/merch to cart
-^ user cart & checkout view
-^ thank you letter / shipping tracking
-
+x add/remove to product/merch to cart
+x user cart & checkout view
+x thank you letter / shipping tracking
 
 short-term
-- re-design front page
-- thank you email
+- update api signature to take auth in header?
+- replace metadata for social 
 - player options: repeat, shuffle
 - player volume
 - add track plays
@@ -16,6 +15,9 @@ short-term
 - pause/play spacebar
 - off-click close playlist
 - back button close mobile player/playlist
+
+- mid-term
+- re-design front page
 
 nice-to-have
 - 'supported by' list

@@ -189,7 +189,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
           .then((_) => {
             // Automatic playback started!
             // Show playing UI.
-            UserActions.getCoins(auth);
+            UserActions.getCoins();
             setPlaying(true);
             setPending(false);
           })
@@ -230,7 +230,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   };
 
   const remove = (id) => {
-    UserActions.removeFromPlaylist(id, auth);
+    UserActions.removeFromPlaylist(id);
   };
 
   const handlePlay = e => {

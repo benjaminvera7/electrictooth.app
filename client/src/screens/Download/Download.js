@@ -33,7 +33,7 @@ class Download extends Component {
 
   componentDidMount() {
     this.loadOrder();
-    this.props.auth && this.props.UserActions.getUser(this.props.auth);
+    this.props.auth && this.props.UserActions.getUser();
   }
 
   handleSubmit = (e, id, type, album_name, track_name) => {
@@ -62,7 +62,7 @@ class Download extends Component {
 
   addToPlaylist = (id, type) => {
     if (this.props.auth) {
-      this.props.UserActions.addToPlaylist(id, type, this.props.auth);
+      this.props.UserActions.addToPlaylist(id, type);
       toast(`Saved to your Playlist`);
     } else {
       console.warn('something went wrong');
