@@ -21,6 +21,7 @@ const CartItem = styled(Flex)`
 // const getAmount = (product_id) => parseInt(product_id.substring(4, 7), 10);
 
 const Cart = ({ UserActions, auth, cart }) => {
+
   return (
     <>
       <Helmet>

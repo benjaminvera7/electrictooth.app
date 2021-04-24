@@ -30,10 +30,10 @@ async function addMerchToCart(id, user, size) {
 
   const userCart = user.cart.cart;
 
-  const inCart = userCart.items.some((i) => i._id === merch._id);
+  const inCart = userCart.items.some((i) => i.id.toString() === merch._id.toString());
 
   if (inCart) {
-    return userCart;
+    return { cart: userCart };
   }
 
   const newCart = { items: [], total: 0 };
@@ -66,10 +66,10 @@ async function addTrackToCart(id, user) {
   const track = await dbConnection.getTrackById(id);
   const userCart = user.cart.cart;
 
-  const inCart = userCart.items.some((i) => i._id === track._id);
+  const inCart = userCart.items.some((i) => i.id.toString() === track._id.toString());
 
   if (inCart) {
-    return userCart;
+    return { cart: userCart };
   }
 
   const newCart = { items: [], total: 0 };
@@ -132,17 +132,17 @@ async function addAlbumToCart(id, user) {
 
 async function addCoinToCart(id, user) {
   const coin = await dbConnection.getCoinById(id);
-  const currentCart = user.cart.cart;
+  const userCart = user.cart.cart;
 
-  const inCart = currentCart.items.some((i) => i._id === coin._id);
+  const inCart = userCart.items.some((i) => i.id.toString() === coin._id.toString());
 
   if (inCart) {
-    return userCart;
+    return { cart: userCart };
   }
 
   const newCart = { items: [], total: 0 };
 
-  newCart.items.push(...currentCart.items);
+  newCart.items.push(...userCart.items);
 
   newCart.items.push({
     id: coin._id,
@@ -152,7 +152,7 @@ async function addCoinToCart(id, user) {
     type: coin.type,
   });
 
-  newCart.total = currentCart.total + coin.price;
+  newCart.total = userCart.total + coin.price;
 
   const { cart: cart_id } = await dbConnection.getUserById(user._id);
 
