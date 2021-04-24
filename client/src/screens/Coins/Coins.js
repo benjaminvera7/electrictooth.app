@@ -31,8 +31,6 @@ const Coins = ({ UserActions, auth, coins }) => {
     return <div>loading...</div>
   }
 
-  console.log(coins)
-
   return (
     <>
       <Helmet>
@@ -51,6 +49,7 @@ const Coins = ({ UserActions, auth, coins }) => {
 
         {coins.map(({ _id, art_name, price, amount, type }) => (
           <Box
+            key={`${_id}`}
             maxWidth='768px'
             m='auto'
             align='center'
