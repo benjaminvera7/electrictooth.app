@@ -28,6 +28,7 @@ async function stream(req, res) {
 
     if (Date.now() > stream.expire || stream.expire === null || stream.id !== track_id) {
       await dbConnection.subtractCoin(user);
+      await dbConnection.addTrackIncome(track_id);
       stream.id = track_id;
       stream.expire = Date.now() + 60000;
       const filtered = user.stream.filter((s) => s.id !== track_id);
@@ -35,6 +36,8 @@ async function stream(req, res) {
       user.save();
     }
   }
+
+  await dbConnection.addTrackPlay(track_id);
 
   const stat = fs.statSync(track.stream_url);
   const readStream = fs.createReadStream(track.stream_url);

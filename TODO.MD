@@ -4,14 +4,13 @@ x upload merch
 x add/remove to product/merch to cart
 x user cart & checkout view
 x thank you letter / shipping tracking
+x add track plays
+x add track income
 
 short-term
-- update api signature to take auth in header?
 - replace metadata for social 
 - player options: repeat, shuffle
 - player volume
-- add track plays
-- add track income
 - pause/play spacebar
 - off-click close playlist
 - back button close mobile player/playlist

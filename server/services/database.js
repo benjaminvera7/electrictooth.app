@@ -332,6 +332,14 @@ class DatabaseService {
     const order = await Orders.findById({ _id: orderId });
     return order;
   }
+
+  async addTrackIncome(track_id) {
+    return await Tracks.findOneAndUpdate({ _id: track_id }, { $inc: { income: 1 } }, { new: true });
+  }
+
+  async addTrackPlay(track_id) {
+    return await Tracks.findOneAndUpdate({ _id: track_id }, { $inc: { plays: 1 } }, { new: true });
+  }
 }
 
 const dbConnection = new DatabaseService();
