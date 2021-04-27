@@ -2,9 +2,15 @@ const fs = require('fs');
 const dbConnection = require('../services/database');
 
 async function userOwnsProduct(user, trackId) {
-  const library = user.library;
+  let tracks = [];
 
-  const trackExists = library.some((l) => l._id.toString() === trackId.toString());
+  const libary = user.library;
+
+  for (const album of libary) {
+    tracks.push(...album.tracks);
+  }
+
+  const trackExists = tracks.some((l) => l._id.toString() === trackId.toString());
 
   return trackExists;
 }

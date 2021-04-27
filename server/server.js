@@ -22,7 +22,6 @@ const orderRoutes = require('./routes/order');
 const ethRoutes = require('./routes/eth');
 const adminRoutes = require('./routes/admin');
 
-
 const app = express();
 
 app.use(morgan('dev'));
@@ -48,16 +47,28 @@ app.use('/api/v1/download', checkCustomerAuth, downloadRoutes);
 app.use('/api/v1/order', checkCustomerAuth, orderRoutes);
 app.use('/api/v1/eth', checkCustomerAuth, ethRoutes);
 
+var metadata = new Map();
+
+metadata.set(
+  '/music/Lambda-Edits',
+  {
+    title: "Lambda Edits",
+    description: 'Play this in your DJ sets',
+    img: "https://www.electrictooth.app/uploads/lambda.png"
+  });
+
 
 app.get('/*', (req, res) => {
 
   const filePath = path.resolve(__dirname, '../client/build', 'index.html');
 
+  let meta = metadata.get(req.url);
+
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (req.url === '/music/Lambda-Edits') {
-      data = data.replace(/\$OG_TITLE/g, 'Lambda Edits');
-      data = data.replace(/\$OG_DESCRIPTION/g, 'Play this in your DJ sets');
-      data = data.replace(/\$OG_IMAGE/g, 'https://www.electrictooth.app/uploads/lambda.png');
+      data = data.replace(/\$OG_TITLE/g, meta.title);
+      data = data.replace(/\$OG_DESCRIPTION/g, meta.description);
+      data = data.replace(/\$OG_IMAGE/g, meta.img);
     }
     res.send(data);
   });
