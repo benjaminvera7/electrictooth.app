@@ -269,10 +269,20 @@ export default handleActions(
       localStorage.removeItem('username');
 
       const newState = {
-        ...initialState,
-        authenticated: undefined,
+        userId: '',
+        authenticated: '',
+        username: '',
+        library: [],
+        playlist: [],
+        cart: {
+          items: [],
+          total: 0,
+        },
+        coins: 0,
+        showModal: false,
         updatedAt: getDate(),
-        error: null,
+        error: '',
+        message: '',
       };
 
       return newState;
