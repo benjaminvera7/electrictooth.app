@@ -253,10 +253,11 @@ class Checkout extends Component {
             <Flex direction="column" alignItems="flex-end" pt={4}>
               <Box>
                 <form id='paypalForm' method='post' action={`/api/v1/paypal/request`}>
-                  <input type='hidden' name='userId' value={user.userId} />
+                  {/* <input type='hidden' name='userId' value={user.userId} /> */}
+                  <input type="hidden" name="auth" value={this.props.auth} />
                   <Button rounded='md' bg='#ffc439' color='black' px={4} h={8} my={2} type='submit' w='200px'>
                     Checkout with PayPal
-                </Button>
+                  </Button>
                 </form>
               </Box>
 
@@ -318,6 +319,7 @@ class Checkout extends Component {
 export default connect(
   (state) => ({
     user: state.user,
+    auth: state.user.authenticated,
     web3: state.web3.web3,
     service: state.web3.service,
     privacyMode: state.web3.privacyMode,

@@ -1,8 +1,9 @@
 const encrypt = require('../services/encryption');
 const dbConnection = require('../services/database');
+const { resetPassword } = require('../controllers/reset');
 
 async function checkCustomerAuth(req, res, next) {
-  const token = req.headers.authorization;
+  const token = req.headers.authorization || req.body.auth
 
   if (token) {
     try {

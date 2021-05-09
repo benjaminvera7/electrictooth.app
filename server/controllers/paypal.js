@@ -4,22 +4,24 @@ const config = require('../config');
 const mailer = require('../services/mailer');
 
 async function requestPayment(req, res) {
-  const userId = req.body.userId;
+  const userId = req.user._id;
+  const { cart } = req.user.cart.toObject();
 
-  const user = await dbConnection.getUserById(userId);
+  try {
 
-  const order = await dbConnection.createOrder(userId, user.cart.cart, 'USD');
+    const order = await dbConnection.createOrder(userId, cart, 'USD');
 
-  const payment = createPaymentObject(order);
+    const payment = createPaymentObject(order);
 
-  const { error, response } = await paypal.createPayment(payment);
+    const { response } = await paypal.createPayment(payment);
 
-  if (error) {
+    res.redirect(response.redirectUrl);
+
+  } catch (error) {
+    console.log(error)
     res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.end(JSON.stringify(response));
   }
-
-  res.redirect(response.redirectUrl);
 }
 
 async function returnPayment(req, res) {

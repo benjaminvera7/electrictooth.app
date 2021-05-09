@@ -185,10 +185,10 @@ export default handleActions(
       onSuccess: (state, { payload }) => {
         const newState = { ...state, updatedAt: getDate(), error: null };
         localStorage.setItem('token', payload.data.token);
-        localStorage.setItem('userId', payload.data._id);
+        localStorage.setItem('userId', payload.data.userId);
         localStorage.setItem('username', payload.data.username);
         newState.authenticated = payload.data.token;
-        newState.userId = payload.data._id;
+        newState.userId = payload.data.userId;
         newState.cart = payload.data.cart.cart;
         newState.coins = payload.data.coins;
         newState.username = payload.data.username;
@@ -210,9 +210,9 @@ export default handleActions(
         const newState = { ...state, updatedAt: getDate(), error: null };
         console.log(payload);
         localStorage.setItem('token', payload.data.token);
-        localStorage.setItem('userId', payload.data._id);
+        localStorage.setItem('userId', payload.data.userId);
         localStorage.setItem('username', payload.data.username);
-        newState.userId = payload.data._id;
+        newState.userId = payload.data.userId;
         newState.authenticated = payload.data.token;
         newState.cart = payload.data.cart.cart;
         newState.coins = payload.data.coins;
