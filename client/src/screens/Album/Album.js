@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Box, Flex, Text, Image, Heading, Stack, Badge, IconButton } from '@chakra-ui/core';
+import { Box, Flex, Text, Image, Heading, Stack, Badge, IconButton } from '@chakra-ui/react';
 import { PlaylistAdd, CartAdd } from 'components/Icons';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -189,7 +189,7 @@ class Album extends Component {
                           <Flex p={2} direction='column' justify='center' align='center'>
                             <Text px={2} color='#222'>
                               ${track.download_price}.00
-                              </Text>
+                            </Text>
                           </Flex>
 
                           <Flex direction='column'>

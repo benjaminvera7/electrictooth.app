@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Text, Heading, Image, Button } from '@chakra-ui/core';
+import { Box, Flex, Text, Heading, Image, Button } from '@chakra-ui/react';
 import { Toll } from 'components/Icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -77,14 +77,14 @@ const Coins = ({ UserActions, auth, coins }) => {
                   </Box>
                   <Box style={{ margin: '-10px 0 0 -30px', fontWeight: 'bold' }} fontSize='13px'>
                     COINS
-                </Box>
+                  </Box>
                 </Box>
               </Flex>
 
               <Flex align='center' justify='center' width='100%'>
                 <Box p={1} px={8}>
                   Sustainability listen to your favorite artist.
-              </Box>
+                </Box>
               </Flex>
 
               <Flex align='center' justify='center' width='100%' mb={2}>
@@ -98,7 +98,7 @@ const Coins = ({ UserActions, auth, coins }) => {
                   }}
                 >
                   ${price}.00
-              </Button>
+                </Button>
               </Flex>
             </Box>
           </Box>

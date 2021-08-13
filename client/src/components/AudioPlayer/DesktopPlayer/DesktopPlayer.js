@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { Box, Text, Flex, Image, Button } from '@chakra-ui/core';
+import { Box, Text, Flex, Image, Button } from '@chakra-ui/react';
 import { Playlist, Previous, Next, Play, Pause, Toll } from 'components/Icons';
 import { CSSTransition } from 'react-transition-group';
 import DesktopPlaylistPanel from '../DesktopPlaylistPanel';

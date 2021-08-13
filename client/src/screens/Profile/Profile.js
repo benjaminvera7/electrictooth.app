@@ -13,7 +13,7 @@ import {
   Stack,
   Image,
   IconButton,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import { Toll, PlaylistAdd, Download } from 'components/Icons';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -159,7 +159,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
                           your collection is empty.{' '}
                           <Link onClick={() => history.push('/')} style={{ color: theme.colors.etGreen }}>
                             check out our catalog!
-                        </Link>
+                          </Link>
                         </span>
                       </Box>
                     </Flex>
@@ -182,7 +182,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
                     }}
                   >
                     Log out
-                </Button>
+                  </Button>
                 </Flex>
               </TabPanel>
             </TabPanels>

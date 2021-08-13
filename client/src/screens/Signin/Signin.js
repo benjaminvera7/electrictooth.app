@@ -11,7 +11,7 @@ import {
   Button,
   Link,
   Text,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import theme from 'theme.js';
 
 import { FADE_IN } from 'style/animations';

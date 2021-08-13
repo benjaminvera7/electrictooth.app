@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Playlist, ArrowDown, Next, Previous, Play, Pause, Toll } from 'components/Icons';
-import { Box, Flex, Image, Text, Button } from '@chakra-ui/core';
+import { Box, Flex, Image, Text, Button } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import theme from 'theme.js';
 

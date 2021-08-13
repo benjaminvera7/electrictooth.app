@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Box, Image, Flex, Text, Stack, Heading, Button } from '@chakra-ui/core';
+import { Box, Image, Flex, Text, Stack, Heading, Button } from '@chakra-ui/react';
 import { Play, Close, Remove, Pause } from 'components/Icons';
 import { connect } from 'react-redux';
 import theme from 'theme.js';

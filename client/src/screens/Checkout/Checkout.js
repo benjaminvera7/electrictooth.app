@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Box, Flex, Text, Heading, Button, Progress, Stack, Image } from '@chakra-ui/core';
+import { Box, Flex, Text, Heading, Button, Progress, Stack, Image } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
@@ -183,16 +183,16 @@ class Checkout extends Component {
           <Box color='white' maxW='900px' flex='1'>
             <Heading pt={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
               payment
-          </Heading>
+            </Heading>
 
             <Text fontSize='sm' mb={4} color='grey'>
               Electric Tooth currently only accepts PayPal & Ethereum payments
-          </Text>
+            </Text>
 
             <Flex justify='center' py={4} px={4}>
               <Heading as='h3' fontSize={['lg', 'xl']} color={`${theme.colors.etGreen}`}>
                 100% of this purchase goes to the artist
-            </Heading>
+              </Heading>
             </Flex>
 
             <Stack>
@@ -237,14 +237,14 @@ class Checkout extends Component {
             <Flex justify='flex-end' py={2} px={2} mt={4}>
               <Box px={2} color='black'>
                 Subtotal ({`${user.cart.items.length}`} items):
-            </Box>
+              </Box>
               <Box color='black'>${`${user.cart.total}`}.00</Box>
             </Flex>
 
             <Flex justify='flex-end' pb={2} pt={0} px={2} color='black'>
               <Box color='black' px={2}>
                 Total:
-            </Box>
+              </Box>
               <Box>
                 <b>${`${user.cart.total}`}.00</b>
               </Box>
@@ -305,7 +305,7 @@ class Checkout extends Component {
                   <Progress hasStripe isAnimated value={this.state.part} />
                   <Text color={`${theme.colors.etGreen}`}>
                     Please wait as your transaction is being processed. You will be redirected after its been confirmed
-                </Text>
+                  </Text>
                 </>
               )}
             </Box>

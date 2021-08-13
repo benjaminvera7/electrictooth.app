@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Box, Flex, Text, Image, Heading, Stack, Badge, IconButton, Select } from '@chakra-ui/core';
+import { Box, Flex, Text, Image, Heading, Stack, Badge, IconButton, Select } from '@chakra-ui/react';
 import { PlaylistAdd, CartAdd } from 'components/Icons';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';

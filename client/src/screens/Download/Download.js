@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Box, Flex, Text, Image, Heading, Stack, IconButton } from '@chakra-ui/core';
+import { Box, Flex, Text, Image, Heading, Stack, IconButton } from '@chakra-ui/react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import requireAuth from 'components/AuthHOC/requireAuth';
@@ -86,12 +86,12 @@ class Download extends Component {
 
             <Text px={4} fontSize='sm' mb={4} color='grey'>
               Downloads are available anytime in your Libary!
-          </Text>
+            </Text>
 
             <Flex justify='center' pt={2} pb={6} px={4}>
               <Heading fontSize={{ sm: '30px', md: '40px' }} color='#6eacdd'>
                 Thank you for supporting art!
-            </Heading>
+              </Heading>
             </Flex>
 
             <Stack px={{ xs: 2, xl: 0 }}>
@@ -132,7 +132,7 @@ class Download extends Component {
                       <Flex align='center' px={2} direction='column' justify='center' width="100%">
                         <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600' margin="auto" >
                           {parseInt(album.amount)} stream coins have been added to your account!
-                      </Heading>
+                        </Heading>
                       </Flex>
                     )}
 

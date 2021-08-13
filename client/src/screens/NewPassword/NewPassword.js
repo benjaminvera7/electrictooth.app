@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Box, Flex, Image, Stack, Input, Button } from '@chakra-ui/core';
+import { Box, Flex, Image, Stack, Input, Button } from '@chakra-ui/react';
 
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';

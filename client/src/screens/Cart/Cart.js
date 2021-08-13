@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Heading, Image, Text, Stack, Button } from '@chakra-ui/core';
+import { Box, Flex, Heading, Image, Text, Stack, Button } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 // import { Remove } from 'components/Icons';
 import { connect } from 'react-redux';
@@ -33,11 +33,11 @@ const Cart = ({ UserActions, auth, cart }) => {
         <Box color='white' maxW='900px' flex='1' px={{ xs: 2, lg: 2 }}>
           <Heading pt={2} as='h2' size='2xl' color='#05aea5'>
             cart
-        </Heading>
+          </Heading>
 
           <Text fontSize='sm' mb={4} color='grey'>
             Review your order
-        </Text>
+          </Text>
 
           <Stack>
             {cart.items?.length > 0 ? (
@@ -90,7 +90,7 @@ const Cart = ({ UserActions, auth, cart }) => {
                 <Flex justify='flex-end' pt={4}>
                   <Box px={2} color='black'>
                     Subtotal ({cart.items !== undefined ? cart.items.length : 0}):
-                </Box>
+                  </Box>
                   <Box color='black'>
                     <b>${cart.items !== undefined ? cart.total : 0}.00</b>
                   </Box>
@@ -100,7 +100,7 @@ const Cart = ({ UserActions, auth, cart }) => {
                   <Link to='/checkout'>
                     <Box as='button' rounded='md' bg={`${theme.colors.etGreen}`} color='white' px={4} h={8}>
                       checkout
-                  </Box>
+                    </Box>
                   </Link>
                 </Flex>
               </>

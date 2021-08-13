@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Image, Spinner } from '@chakra-ui/core';
+import { Box, Flex, Image, Spinner } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import AlbumCard from 'components/AlbumCard';
 import ProductCard from 'components/ProductCard';

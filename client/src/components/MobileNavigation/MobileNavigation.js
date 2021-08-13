@@ -1,7 +1,7 @@
 import React from 'react';
 import { Home, Playlist, Toll } from 'components/Icons';
 import { Link } from 'react-router-dom';
-import { Flex, Box, Button } from '@chakra-ui/core';
+import { Flex, Box, Button } from '@chakra-ui/react';
 import useRouter from 'hooks/useRouter';
 import { connect } from 'react-redux';
 import theme from 'theme.js';

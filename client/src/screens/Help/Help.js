@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Text, Heading, List, ListItem, ListIcon } from '@chakra-ui/core';
+import { Box, Flex, Text, Heading, List, ListItem, ListIcon } from '@chakra-ui/react';
 
 import { Toll, Star } from 'components/Icons';
 

@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { Text, Button, Flex } from '@chakra-ui/core';
+import { Text, Button, Flex } from '@chakra-ui/react';
 import { Play, Pause, ArrowUp } from 'components/Icons';
 import { CSSTransition } from 'react-transition-group';
 import MobilePlayer from '../MobilePlayer';
@@ -67,7 +67,7 @@ const MiniPlayer = ({
   return (
     <Fragment>
       <div className='mini-player'>
-      <Button
+        <Button
           variant='link'
           onClick={() => setPlayerVisibility(!playerVisible)}
           style={{ minHeight: '44px' }}

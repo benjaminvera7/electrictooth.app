@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { CSSReset } from '@chakra-ui/core';
-import { Box } from '@chakra-ui/core';
+import { Box } from '@chakra-ui/react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Home from 'screens/Home';
@@ -37,8 +36,6 @@ function App({ MusicActions, UserActions, auth, playlist }) {
 
   return (
     <>
-      <CSSReset />
-
       <Navigation />
 
       <Box mb='100px'>

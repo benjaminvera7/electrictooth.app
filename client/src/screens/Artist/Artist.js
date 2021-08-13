@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Text, Image } from '@chakra-ui/core';
+import { Box, Text, Image } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
@@ -20,7 +20,7 @@ const Artist = ({ artists, pending, match }) => {
     <ArtistContainer style={{ margin: '50px auto', maxWidth: '720px' }}>
       <Box color='black' width='100%' p='8px'>
         <>
-          <Image src={`/uploads/${currentArtist.artist_img}`} width='100%' borderRadius="20px"/>
+          <Image src={`/uploads/${currentArtist.artist_img}`} width='100%' borderRadius="20px" />
           <Text>
             <b>{currentArtist.artist_name}</b>
           </Text>
