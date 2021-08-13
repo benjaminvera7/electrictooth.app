@@ -3,24 +3,9 @@ import { Box, Flex, Image, Spinner } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import AlbumCard from 'components/AlbumCard';
 import ProductCard from 'components/ProductCard';
-import { FADE_IN } from 'style/animations';
-import styled from '@emotion/styled';
 import Helmet from 'react-helmet';
+import theme from 'theme.js';
 
-const AnimateHeader = styled(Box)`
-  ${FADE_IN}
-`;
-
-const AnimateBody = styled(Flex)`
-  ${FADE_IN}
-`;
-
-
-const Home = () => {
-  return <div>home</div>
-}
-
-/*
 const Home = ({ albums, products, pending }) => {
   if (pending || pending === undefined) {
     return (
@@ -38,29 +23,22 @@ const Home = ({ albums, products, pending }) => {
         <title>Electric Tooth - home</title>
         <meta name='description' content='amazing' />
       </Helmet>
-      <AnimateHeader className='container'>
-        <Image src='./water.gif' objectFit='cover' w='100%' h='40vh' />
 
-        <div className='centered'>
-          <Image src='./logoani.gif' />
-        </div>
-      </AnimateHeader>
-      <AnimateBody justify='center' px={{ xs: 2, lg: 0 }} my={{ sm: '0', md: '-100px', lg: '-100px', xl: '-100px' }}>
-        <Box color='white' maxW='915px' flex='1'>
+      <Flex justify='center' mt='64px' backgroundColor={`${theme.colors.etBlack}`}>
+        <Box color='white' maxW='768px' flex='1'>
           <Flex wrap='wrap'>
             {albums.map((album, i) => (
               <AlbumCard album={album} key={i} />
             ))}
-            {products.map((product, i) => (
+            {/* {products.map((product, i) => (
               <ProductCard product={product} key={i} />
-            ))}
+            ))} */}
           </Flex>
         </Box>
-      </AnimateBody>
+      </Flex>
     </>
   );
 };
-*/
 
 export default connect(
   (state) => ({

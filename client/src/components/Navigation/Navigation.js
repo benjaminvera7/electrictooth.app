@@ -28,7 +28,7 @@ const Navigation = ({ auth, cart, username }) => {
 
   return (
     <NavigationContainer>
-      <Flex maxW='900px' flex='1'>
+      <Flex maxW='900px' flex='1' alignItems="center" justifyContent="center">
         {(!isMobile || !auth) && (
           <Fragment>
             <Link to='/'>
@@ -68,49 +68,53 @@ const Navigation = ({ auth, cart, username }) => {
         ) : (
           <>
             {' '}
-            <Flex direction='column' align='center' px={2}>
+            <Flex direction='column' justifyContent='center' ml="8px">
               <Image src='./favicon.ico' w='28px' />
             </Flex>
             <Box mx='auto' />
-            <Link to='/coins'>
-              <Button
-                variant='solid'
-                bg={`${theme.colors.etBlack}`}
-                size='xs'
-                color='white'
-                border='1px solid white'
-              >
-                Get coins
-              </Button>
-            </Link>
-            <Link to='/profile'>
-              <Button variant='link' mx={1}>
-                {auth ? (
-                  <Account active={router.pathname === '/profile'} />
-                ) : (
-                  <Account />
-                )}
-              </Button>
-            </Link>
-            <Link to='/cart'>
-              <Box style={{ position: 'relative' }} pl={2}>
-                <Button variant='link'>
-                  <Cart active={router.pathname === '/cart'} />
-                </Button>
-                <Box
-                  style={{
-                    position: 'absolute',
-                    color: `${theme.colors.etGreen}`,
-                    top: '-4px',
-                    right: 0,
-                    fontSize: '14px',
-                    fontWeight: 'bold',
-                  }}
+            <Flex alignItems="center">
+              <Link to='/coins'>
+                <Button
+                  variant='solid'
+                  bg={`${theme.colors.etBlack}`}
+                  size='xs'
+                  color='white'
+                  border='1px solid white'
                 >
-                  {cart.items?.length === 0 ? '' : cart.items?.length}
-                </Box>
+                  Get coins
+                </Button>
+              </Link>
+              <Box mt='8px' ml='10px'>
+                <Link to='/profile'>
+                  <Button variant='link'>
+                    {auth ? (
+                      <Account active={router.pathname === '/profile'} />
+                    ) : (
+                      <Account />
+                    )}
+                  </Button>
+                </Link>
               </Box>
-            </Link>
+              <Link to='/cart'>
+                <Box style={{ position: 'relative' }}>
+                  <Button variant='link' mt='4px' mr="8px">
+                    <Cart active={router.pathname === '/cart'} />
+                  </Button>
+                  <Box
+                    style={{
+                      position: 'absolute',
+                      color: `${theme.colors.etBlue}`,
+                      top: '-2px',
+                      right: '21px',
+                      fontSize: '14px',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    {cart.items?.length === 0 ? 0 : cart.items?.length}
+                  </Box>
+                </Box>
+              </Link>
+            </Flex>
 
           </>
         )}

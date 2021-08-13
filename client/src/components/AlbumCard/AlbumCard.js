@@ -27,7 +27,7 @@ const HoverCard = ({ productId, img, name }) => {
   return (
     <HoverCardContainer width='100%' position='relative' isMobile={isMobile}>
       <Link to={`/music/${url}`}>
-        <Image src={`/uploads/${img}`} width='100%' className='big' />
+        <Image src={`/uploads/${img}`} width='100%' objectFit='fill' maxHeight='288px' />
       </Link>
     </HoverCardContainer>
   );
@@ -58,32 +58,93 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
 
   return (
     <CardContainer
-      maxWidth={{ sm: '100%', md: '25%' }}
-      boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'
-      bg='white'
+      maxWidth="300px"
+      minHeight="474px"
+      boxShadow='8px 8px 0 #89DBFF'
       overflow='hidden'
-      mx='8px'
-      mb='16px'
+      mb='32px'
       style={{ position: 'relative' }}
+      border="2px solid #89DBFF"
       borderRadius="20px"
+      backgroundColor={`${theme.colors.etBlack}`}
     >
       <Box style={{ position: 'relative' }}>
         <HoverCard productId={album._id} img={album.art_name} name={album.album_name} />
 
-        <Box p='4'>
-          <Box d='flex' alignItems='baseline'>
+        <Flex minHeight='118px' direction="column" justifyContent='center' px='16px'>
+          <Box d='flex' alignItems='baseline' pb="10px">
             {album.tags.map((tag, i) => (
-              <Badge px='2' bg={`${theme.colors.etGreen}`} variantColor='white' mr={1} key={i}>
+              <Badge mr='8px' px={2} bg={`${theme.colors.etBlue}`} variantColor='white' key={i} height="18px">
                 {tag}
               </Badge>
             ))}
           </Box>
 
-          <Box mt='1' fontWeight='semibold' as='h4' lineHeight='tight' isTruncated color='gray.600'>
+          <Box fontWeight='semibold' fontSize="18px" lineHeight='tight' isTruncated color='white' pb="8px">
             {album.album_name}
           </Box>
 
-          <Box color='gray.500' mb={8}>
+          <Box color='white' fontSize="18px">
+            {album.artist_name}
+          </Box>
+        </Flex>
+        <Box minHeight='64px'>
+          <Flex style={{ position: 'absolute', bottom: 0, left: 0 }} width='100%' minHeight='64px'>
+            <IconButton
+              flex='1'
+              variant='ghost'
+              variantColor='teal'
+              aria-label='Add album to cart'
+              fontSize='20px'
+              style={{
+                borderTop: '2px',
+                borderRight: '2px',
+                borderStyle: 'solid',
+                borderColor: '#89DBFF',
+              }}
+              height='64px'
+              rounded='0px'
+              icon={<CartAdd color={`${theme.colors.etBlue}`} />}
+              onClick={() => addToCart(album._id, album.type)}
+            />
+            <IconButton
+              flex='1'
+              variant='ghost'
+              variantColor='teal'
+              aria-label='Add album to playlist'
+              fontSize='20px'
+              height='64px'
+              style={{
+                borderTop: '2px',
+                borderStyle: 'solid',
+                borderColor: '#89DBFF',
+              }}
+              rounded='0px'
+              icon={<PlaylistAdd color={`${theme.colors.etBlue}`} />}
+              onClick={() => addToPlaylist(album._id, album.type)}
+            />
+          </Flex>
+        </Box>
+      </Box>
+    </CardContainer>
+  );
+};
+
+/*
+        <Box p='4'>
+          <Box d='flex' alignItems='baseline'>
+            {album.tags.map((tag, i) => (
+              <Badge px='2' bg={`${theme.colors.etBlue}`} variantColor='white' mr={1} key={i} borderRadius='16px' border='1px solid white'>
+                {tag}
+              </Badge>
+            ))}
+          </Box>
+
+          <Box mt='1' fontWeight='semibold' as='h4' lineHeight='tight' isTruncated color='white'>
+            {album.album_name}
+          </Box>
+
+          <Box color='white' mb={8}>
             {album.artist_name}
           </Box>
 
@@ -95,13 +156,13 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
               aria-label='Add album to cart'
               fontSize='20px'
               style={{
-                borderTop: '1px',
+                borderTop: '2px',
                 borderRight: '1px',
                 borderStyle: 'solid',
-                borderColor: 'rgba(5, 174, 165, 0.3)',
+                borderColor: '#89DBFF',
               }}
               rounded='0px'
-              icon={() => <CartAdd color={`${theme.colors.etGreen}`} />}
+              icon={<CartAdd color={`${theme.colors.etBlue}`} />}
               onClick={() => addToCart(album._id, album.type)}
             />
             <IconButton
@@ -111,20 +172,17 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
               aria-label='Add album to playlist'
               fontSize='20px'
               style={{
-                borderTop: '1px',
+                borderTop: '2px',
                 borderStyle: 'solid',
-                borderColor: 'rgba(5, 174, 165, 0.3)',
+                borderColor: '#89DBFF',
               }}
               rounded='0px'
-              icon={() => <PlaylistAdd color={`${theme.colors.etGreen}`} />}
+              icon={<PlaylistAdd color={`${theme.colors.etBlue}`} />}
               onClick={() => addToPlaylist(album._id, album.type)}
             />
           </Flex>
         </Box>
-      </Box>
-    </CardContainer>
-  );
-};
+*/
 
 export default connect(
   (state) => ({
