@@ -9,12 +9,14 @@
   --color-700: #134468;
   --color-800: #042941;
   --color-900: #000f1b;
-
   --et-green: #05aea5;
-  --et-grey: #94999e;
   --et-whiteblue: #f0f7f7;
 
-  background-color: var(--et-whiteblue);
+  --et-black: #1d1d1d;
+  --et-blue: #89DBFF;
+  --et-gray: #324148;
+
+  background-color: var(--et-black);
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -40,7 +42,7 @@
   display: flex;
   bottom: 0px;
   z-index: 2;
-  background-color: #fff;
+  background-color: var(--et-gray);
   color: var(--color-50);
   height: 50px;
   align-items: center;
@@ -68,7 +70,7 @@
   display: flex;
   bottom: 50px;
   z-index: 3;
-  background-color: #fff;
+  background-color: var(--et-gray);
   color: var(--color-50);
   height: 50px;
   align-items: center;

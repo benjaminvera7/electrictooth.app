@@ -25,7 +25,7 @@ const Signin = ({ UserActions, history, error, message }) => {
   let form;
 
   return (
-    <SigninContainer w='100%' justify='center' mt="40px">
+    <SigninContainer w='100%' justify='center' mt="64px" backgroundColor={`${theme.colors.etBlack}`}>
       <Box w='300px'>
         <Flex direction='column' align='center'>
           <Image src='./favicon.ico' w='36px' />
@@ -43,22 +43,26 @@ const Signin = ({ UserActions, history, error, message }) => {
           }}
         >
           <Stack spacing={4} my={4}>
-            <Input placeholder='Email' size='lg' name='email' type='text' />
+            <Input height='41px' placeholder='Email' size='lg' name='email' type='text' backgroundColor="#2d2d2d" border="none" color="white" />
             <Input
               placeholder='Password'
               size='lg'
               name='password'
               type='password'
+              backgroundColor="#2d2d2d" border="none"
+              height='41px'
+              color="white"
             />
 
             <Button
-              bg={`${theme.colors.etGreen}`}
-              color='white'
+              bg={`${theme.colors.etBlue}`}
+              color='black'
               variant='solid'
+              height='41px'
               w='100%'
               type='submit'
               _hover={{
-                bg: `${theme.colors.etGreen}`,
+                bg: `${theme.colors.etBlue}`,
               }}
             >
               Log in
@@ -71,15 +75,20 @@ const Signin = ({ UserActions, history, error, message }) => {
           type='submit'
           mt={4}
           textAlign='center'
-          border='1px solid #d8dee2'
+          backgroundColor="#2d2d2d" border="none"
           borderRadius='md'
+          height='41px'
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
         >
           <Box fontSize='xs' py={2} color='black'>
             <span>
-              New to Electric Tooth?{' '}
+              <span style={{ color: 'white' }}>New to Electric Tooth?</span>
               <Link
                 onClick={() => history.push('/signup')}
-                style={{ color: theme.colors.etGreen }}
+                style={{ color: theme.colors.etBlue }}
+                px={2}
               >
                 Create an account.
               </Link>
@@ -92,7 +101,7 @@ const Signin = ({ UserActions, history, error, message }) => {
             <span>
               <Link
                 onClick={() => history.push('/forgot')}
-                style={{ color: theme.colors.etGreen }}
+                style={{ color: theme.colors.etBlue }}
               >
                 Forgot Password?
               </Link>

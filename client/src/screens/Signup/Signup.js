@@ -24,7 +24,7 @@ const Signup = ({ UserActions, history, error, message }) => {
   let form;
 
   return (
-    <SignupContainer w='100%' justify='center' mt="40px">
+    <SignupContainer w='100%' justify='center' mt="64px" backgroundColor={`${theme.colors.etBlack}`}>
       <Box w='300px'>
         <Flex direction='column' align='center'>
           <Image src='./favicon.ico' w='36px' />
@@ -49,29 +49,39 @@ const Signup = ({ UserActions, history, error, message }) => {
               name='username'
               type='text'
               maxlength='15'
+              backgroundColor="#2d2d2d" border="none"
+              height='41px'
+              color="white"
             />
             <Input
               placeholder='Email address'
               size='lg'
               name='email'
               type='email'
+              backgroundColor="#2d2d2d" border="none"
+              height='41px'
+              color="white"
             />
             <Input
               placeholder='Password'
               size='lg'
               name='password'
               type='password'
+              backgroundColor="#2d2d2d" border="none"
+              height='41px'
+              color="white"
             />
 
             <Button
-              bg={`${theme.colors.etGreen}`}
-              color='white'
+              bg={`${theme.colors.etBlue}`}
+              color='black'
               variant='solid'
               w='100%'
               type='submit'
               _hover={{
-                bg: `${theme.colors.etGreen}`,
+                bg: `${theme.colors.etBlue}`,
               }}
+              height='41px'
             >
               Sign up
             </Button>
@@ -83,15 +93,19 @@ const Signup = ({ UserActions, history, error, message }) => {
           type='submit'
           mt={4}
           textAlign='center'
-          border='1px solid #d8dee2'
+          backgroundColor="#2d2d2d" border="none"
           borderRadius='md'
+          height='41px'
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
         >
           <Box fontSize='xs' py={2} color='black'>
             <span>
-              Already have an account?{' '}
+              <span style={{ color: 'white' }}>Already have an account?</span>
               <Link
                 onClick={() => history.push('/signin')}
-                style={{ color: theme.colors.etGreen }}
+                style={{ color: theme.colors.etBlue, paddingLeft: '8px' }}
               >
                 Log in.
               </Link>

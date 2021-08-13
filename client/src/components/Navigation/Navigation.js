@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
 import { Account, Cart, Home, Toll } from 'components/Icons';
-import { Box, Button, Flex } from '@chakra-ui/react';
+import { Box, Button, Flex, Image } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import useWindowSize from 'hooks/useWindowSize';
 import useRouter from 'hooks/useRouter';
@@ -17,8 +17,8 @@ const NavigationContainer = styled(Flex)`
   top: 0px;
   position: fixed;
   z-index: 2;
-  background-color: rgb(255, 255, 255, 1);
-  height: 40px;
+  background-color: #1d1d1d;
+  height: 48px;
   width: 100%;
 `;
 
@@ -33,7 +33,7 @@ const Navigation = ({ auth, cart, username }) => {
           <Fragment>
             <Link to='/'>
               <Box>
-                <Button variant='link'>
+                <Button variant='link' mx={4}>
                   <Home active={router.pathname === '/'} />
                 </Button>
               </Box>
@@ -50,41 +50,48 @@ const Navigation = ({ auth, cart, username }) => {
         </Link> */}
 
         {!auth ? (
-          <Link to='/signup'>
-            <Button
-              bg={`${theme.colors.etGreen}`}
-              variant='solid'
-              size='xs'
-              color='white'
-              _hover={{
-                bg: `${theme.colors.etGreen}`,
-              }}
-              mx={1}
-              mt='1px'
-            >
-              sign up
-            </Button>
-          </Link>
+          <>
+            <Box mx='auto' />
+            <Link to='/signup' >
+              <Button
+                bg={`${theme.colors.etBlack}`}
+                border='1px solid white'
+                size='xs'
+                color='white'
+                mx={4}
+                mt='1px'
+              >
+                sign up
+              </Button>
+            </Link>
+          </>
         ) : (
           <>
             {' '}
+            <Flex direction='column' align='center' px={2}>
+              <Image src='./favicon.ico' w='28px' />
+            </Flex>
+            <Box mx='auto' />
             <Link to='/coins'>
               <Button
-                leftIcon={Toll}
-                bg={`${theme.colors.etGreen}`}
                 variant='solid'
+                bg={`${theme.colors.etBlack}`}
                 size='xs'
                 color='white'
-                _hover={{
-                  bg: `${theme.colors.etGreen}`,
-                }}
-                mx={1}
-                mt='1px'
+                border='1px solid white'
               >
                 Get coins
               </Button>
             </Link>
-            <Box mx='auto' />
+            <Link to='/profile'>
+              <Button variant='link' mx={1}>
+                {auth ? (
+                  <Account active={router.pathname === '/profile'} />
+                ) : (
+                  <Account />
+                )}
+              </Button>
+            </Link>
             <Link to='/cart'>
               <Box style={{ position: 'relative' }} pl={2}>
                 <Button variant='link'>
@@ -104,31 +111,11 @@ const Navigation = ({ auth, cart, username }) => {
                 </Box>
               </Box>
             </Link>
-            <Link to='/profile'>
-              <Button variant='link' mx={1}>
-                {auth ? (
-                  // <Flex
-                  //   h='24px'
-                  //   w='24px'
-                  //   align='center'
-                  //   justify='center'
-                  //   //bg='#0FF4C6'
-                  //   color={`${theme.colors.etGreen}`}
-                  //   border='1px'
-                  //   borderRadius='50%'
-                  // >
-                  //   {username[0].toLowerCase()}
-                  // </Flex>
-                  <Account active={router.pathname === '/profile'} />
-                ) : (
-                  <Account />
-                )}
-              </Button>
-            </Link>
+
           </>
         )}
       </Flex>
-    </NavigationContainer>
+    </NavigationContainer >
   );
 };
 

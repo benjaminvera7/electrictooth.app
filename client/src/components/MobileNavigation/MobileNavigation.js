@@ -28,7 +28,7 @@ const MobileNavigation = ({
         <Box px={2}>
           <Toll height='26px' width='26px' />
         </Box>
-        <Box minWidth='25px' color={`${theme.colors.etGreen}`}>
+        <Box minWidth='25px' color={`${theme.colors.etBlue}`}>
           {coins}
         </Box>
       </Flex>

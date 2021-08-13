@@ -15,6 +15,12 @@ const AnimateBody = styled(Flex)`
   ${FADE_IN}
 `;
 
+
+const Home = () => {
+  return <div>home</div>
+}
+
+/*
 const Home = ({ albums, products, pending }) => {
   if (pending || pending === undefined) {
     return (
@@ -54,6 +60,7 @@ const Home = ({ albums, products, pending }) => {
     </>
   );
 };
+*/
 
 export default connect(
   (state) => ({

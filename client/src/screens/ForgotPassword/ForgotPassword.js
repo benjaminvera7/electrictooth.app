@@ -4,6 +4,8 @@ import { Box, Flex, Image, Stack, Input, Button, Text } from '@chakra-ui/react';
 
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
+import theme from 'theme.js';
+
 
 const ForgotContainer = styled(Flex)`
   ${FADE_IN}
@@ -37,14 +39,14 @@ class ForgotPassword extends Component {
 
   render() {
     return (
-      <ForgotContainer w='100%' p={4} justify='center'>
+      <ForgotContainer w='100%' p={4} justify='center' mt="48px" backgroundColor={`${theme.colors.etBlack}`}>
         <Box w='300px'>
           <Flex direction='column' align='center'>
             <Image src='./favicon.ico' w='36px' />
           </Flex>
 
           <Stack spacing={4} my={4}>
-            <Text color='teal'>
+            <Text color={`${theme.colors.etBlue}`}>
               Enter your user account's verified email address and we will send you a password reset link.
             </Text>
 
@@ -53,6 +55,9 @@ class ForgotPassword extends Component {
               size='lg'
               name='email'
               type='text'
+              height="41px"
+              backgroundColor="#2d2d2d" border="none"
+              color="white"
               onChange={(e) => {
                 this.setState({
                   error: false,
@@ -62,7 +67,7 @@ class ForgotPassword extends Component {
               }}
             />
 
-            <Button bg='#28a745' variant='solid' w='100%' type='submit' onClick={this.submit}>
+            <Button backgroundColor={`${theme.colors.etBlue}`} color="black" variant='solid' w='100%' type='submit' onClick={this.submit}>
               Send password reset email
             </Button>
           </Stack>
