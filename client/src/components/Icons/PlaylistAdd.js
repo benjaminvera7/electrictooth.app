@@ -3,7 +3,7 @@ import Icon from '../Icon';
 
 const PlaylistAdd = (props) => (
   <Icon {...props}>
-    <svg width="144" height="32" viewBox="0 0 144 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width={props.width ? props.width : '144px'} height="32" viewBox="0 0 144 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M74.8571 11.619H58V14.4286H74.8571V11.619ZM74.8571 6H58V8.80952H74.8571V6ZM80.4762 17.2381V11.619H77.6667V17.2381H72.0476V20.0476H77.6667V25.6667H80.4762V20.0476H86.0952V17.2381H80.4762ZM58 20.0476H69.2381V17.2381H58V20.0476Z" fill="#89DBFF" />
     </svg>
   </Icon>

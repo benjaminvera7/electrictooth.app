@@ -1,32 +1,33 @@
 import React, { Component, Fragment } from 'react';
-import { Box, Flex, Text, Image, Heading, Stack, Badge, IconButton } from '@chakra-ui/react';
-import { PlaylistAdd, CartAdd } from 'components/Icons';
+import { Box, Flex, Text, Image, Heading, Stack, Badge, IconButton, Icon } from '@chakra-ui/react';
+//import { PlaylistAdd, CartAdd } from 'components/Icons';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
 import toast from 'util/toast';
-// import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
 import Helmet from 'react-helmet';
 import theme from 'theme.js';
-import { FADE_IN } from 'style/animations';
 
+const CartAdd = () => (
+  <Icon mt="-4px">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1 1.90918H4.2V11.5092H14.8667L17 4.04251" stroke="#89DBFF" stroke-width="2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round" />
+      <path d="M4.7333 17.9091C5.61696 17.9091 6.3333 17.1928 6.3333 16.3091C6.3333 15.4255 5.61696 14.7091 4.7333 14.7091C3.84965 14.7091 3.1333 15.4255 3.1333 16.3091C3.1333 17.1928 3.84965 17.9091 4.7333 17.9091Z" stroke="#89DBFF" stroke-width="2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round" />
+      <path d="M14.3334 17.9091C15.2171 17.9091 15.9334 17.1928 15.9334 16.3091C15.9334 15.4255 15.2171 14.7091 14.3334 14.7091C13.4497 14.7091 12.7334 15.4255 12.7334 16.3091C12.7334 17.1928 13.4497 17.9091 14.3334 17.9091Z" stroke="#89DBFF" stroke-width="2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round" />
+      <path d="M9.54539 7.72732H11.3636V5.00004H14.0908V3.18186H11.3636V0.45459H9.54539V3.18186H6.81812V5.00004H9.54539V7.72732Z" fill="#89DBFF" />
+    </svg>
+  </Icon>
+);
+const PlaylistAdd = () => (
+  <Icon>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12.871 4.95783H0.67749V6.99008H12.871V4.95783ZM12.871 0.893311H0.67749V2.92557H12.871V0.893311ZM16.9356 9.02234V4.95783H14.9033V9.02234H10.8388V11.0546H14.9033V15.1191H16.9356V11.0546H21.0001V9.02234H16.9356ZM0.67749 11.0546H8.80652V9.02234H0.67749V11.0546Z" fill="#89DBFF" />
+    </svg>
+  </Icon>
+);
 
-const AlbumCardContainer = styled(Box)`
-    ${FADE_IN}
-`;
-const ArtistDetail = styled(Flex)`
-    ${FADE_IN}
-`;
-
-const AlbumSongList = styled(Box)``;
-
-// const AlbumCard = styled(Flex)``;
-
-// const CardAnimation = styled(Flex)`
-//   ${FADE_IN}
-// `;
 
 class Album extends Component {
   addToCart = (id, type) => {
@@ -60,227 +61,78 @@ class Album extends Component {
     }
 
     return (
-      <Fragment>
-        {currentAlbum && (
-          <Helmet>
-            <title>{currentAlbum.album_name}</title>
-            {/* <meta name='description' content='amazing' />
-            <meta name="twitter:title" content="Support music" />
-            <meta
-              name="twitter:description"
-              content={currentAlbum.album_name}
-            />
-            <meta
-              name="twitter:image"
-              content={`/uploads/${currentAlbum.art_name}`}
-            />
-            <meta name="twitter:card" content="summary" /> */}
-          </Helmet>
-        )}
+      <Box mt="64px" color='white' backgroundColor={`${theme.colors.etBlack}`}>
 
-        {currentAlbum && (
-          <Flex mt='80px' maxW='900px' mx='auto' direction={{ xs: 'column', md: 'row' }}>
-            <Flex flex='7'>
-              <AlbumCardContainer color='white' flex='1' px={2}>
-                <Box display={{ md: 'flex' }} direction='column' bg='white' borderRadius="20px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'>
-                  <Box color='black' width='100%'>
-                    <Image src={`/uploads/${currentAlbum.art_name}`} width='100%' borderRadius={{ sm: '20px 20px 0 0', md: "20px 0 0 20px" }} />
-                  </Box>
-                  <Flex color='black' width='100%' justify='space-between' style={{ position: 'relative' }} pb={16}>
-                    <Box color='black' width='100%' px={{ xs: 2, sm: 4 }} py={{ xs: 4, sm: 4 }}>
-                      <Box d='flex' alignItems='baseline' mb={2} color='white'>
-                        {currentAlbum.tags.map((tag, i) => (
-                          <Badge px='2' bg={`${theme.colors.etGreen}`} variantColor='white' mr={1} key={i}>
-                            {tag}
-                          </Badge>
-                        ))}
-                      </Box>
+        <Flex justifyContent='center' mb='24px'>
+          <Image
+            src={`/uploads/${currentAlbum.art_name}`}
+            maxWidth='264px'
+            maxHeight='264px'
+            borderRadius="16px"
+            border="2px solid #89DBFF"
+            boxShadow='8px 8px 0 #89DBFF'
+          />
+        </Flex>
 
-                      <Heading
-                        mb={1}
-                        display='block'
-                        color='gray.600'
-                        fontSize={['sm', 'md', 'lg', 'xl']}
-                        as='h6'
-                        size='md'
-                        lineHeight='normal'
-                        fontWeight='semibold'
-                        textAlign='left'
-                      >
-                        {currentAlbum.album_name}
-                      </Heading>
+        <Flex flexDirection='column' px="24px">
 
-                      <Text
-                        fontWeight='light'
-                        textTransform='uppercase'
-                        letterSpacing='wide'
-                        textAlign='left'
-                        color='gray.500'
-                        fontSize={['xs', 'sm', 'md', 'lg']}
-                      >
-                        {currentAlbum.artist ? currentAlbum.artist.name : undefined}
-                      </Text>
+          <Flex justifyContent='space-between' pb="8px">
+            <Box>
+              {currentAlbum.tags.map((tag, i) => (
+                <Badge mr='8px' px={2} bg={`${theme.colors.etBlue}`} key={i} height="18px" style={{ fontFamily: 'Spotify-Light' }}>
+                  {tag}
+                </Badge>
+              ))}
+            </Box>
 
-                      <Box py={4}>{currentAlbum.description}</Box>
-                    </Box>
-
-                    <Box color='black' px={{ xs: 2, sm: 4 }} py={{ xs: 4, sm: 4 }} textAlign='right' style={{ position: 'absolute', top: 0, right: 0 }}>
-                      ${currentAlbum.download_price}.00
-                    </Box>
-
-                    <Flex style={{ position: 'absolute', bottom: 0, left: 0 }} width='100%'>
-                      <IconButton
-                        flex='1'
-                        variant='ghost'
-                        variantColor='teal'
-                        aria-label='Add album to cart'
-                        fontSize='20px'
-                        style={{
-                          borderTop: '1px',
-                          borderRight: '1px',
-                          borderStyle: 'solid',
-                          borderColor: 'rgba(5, 174, 165, 0.3)',
-                        }}
-                        rounded='0px'
-                        //icon={() => <CartAdd color={`${theme.colors.etGreen}`} />}
-                        icon={() => <p>add to cart</p>}
-                        onClick={() => this.addToCart(currentAlbum._id, currentAlbum.type)}
-                      />
-                      <IconButton
-                        flex='1'
-                        variant='ghost'
-                        variantColor='teal'
-                        aria-label='Add album to playlist'
-                        fontSize='20px'
-                        style={{
-                          borderTop: '1px',
-                          borderStyle: 'solid',
-                          borderColor: 'rgba(5, 174, 165, 0.3)',
-                        }}
-                        rounded='0px'
-                        // icon={() => (
-                        //   <PlaylistAdd color={`${theme.colors.etGreen}`} />
-                        // )}
-                        icon={() => <p>add to playlist</p>}
-                        onClick={() => this.addToPlaylist(currentAlbum._id, currentAlbum.type)}
-                      />
-                    </Flex>
-                  </Flex>
-                </Box>
-
-                <AlbumSongList mt='24px'>
-                  <Stack spacing={4}>
-                    {currentAlbum.tracks
-                      ? currentAlbum.tracks.map((track, i) => (
-                        <Flex w='100%' borderWidth='1px' key={i} bg='white' borderRadius="20px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'>
-                          <Box pr={2}>
-                            <Image src={`/uploads/${track.art_name}`} maxWidth='100px' borderRadius="20px 0 0 20px" />
-                          </Box>
-
-                          <Flex direction='column' w='100%' p={2}>
-                            <Text color='gray.600' fontSize={['sm', 'md', 'lg', 'xl']}>
-                              <b>{track.track_name}</b>
-                            </Text>
-                            <Text color='gray.500' fontSize={['xs', 'sm', 'md', 'lg']}>
-                              {currentAlbum.artist ? currentAlbum.artist.name : undefined}
-                            </Text>
-                          </Flex>
-
-                          <Flex p={2} direction='column' justify='center' align='center'>
-                            <Text px={2} color='#222'>
-                              ${track.download_price}.00
-                            </Text>
-                          </Flex>
-
-                          <Flex direction='column'>
-                            {/*
-
-                            <IconButton
-                              flex='1'
-                              variant='ghost'
-                              variantColor='teal'
-                              aria-label='Download album'
-                              fontSize='20px'
-                              style={{
-                                borderLeft: '1px',
-                                borderBottom: '1px',
-                                borderStyle: 'solid',
-                                borderColor: 'rgba(5, 174, 165, 0.3)',
-                              }}
-                              rounded='0px'
-                              icon={() => (
-                                <Play color={`${theme.colors.etGreen}`} />
-                              )}
-                            />
-                            */}
-                            <IconButton
-                              flex='1'
-                              variant='ghost'
-                              variantColor='teal'
-                              aria-label='Download album'
-                              fontSize='20px'
-                              style={{
-                                borderLeft: '1px',
-                                borderBottom: '1px',
-                                borderStyle: 'solid',
-                                borderColor: 'rgba(5, 174, 165, 0.3)',
-                              }}
-                              rounded='0px'
-                              icon={() => <CartAdd color={`${theme.colors.etGreen}`} />}
-                              onClick={() => this.addToCart(track._id, track.type)}
-                            />
-                            <IconButton
-                              flex='1'
-                              variant='ghost'
-                              variantColor='teal'
-                              aria-label='Add to playlist'
-                              fontSize='20px'
-                              rounded='0px'
-                              style={{
-                                borderLeft: '1px',
-                                borderStyle: 'solid',
-                                borderColor: 'rgba(5, 174, 165, 0.3)',
-                              }}
-                              icon={() => <PlaylistAdd color={`${theme.colors.etGreen}`} />}
-                              onClick={() => this.addToPlaylist(track._id, track.type)}
-                            />
-                          </Flex>
-                        </Flex>
-                      ))
-                      : undefined}
-                  </Stack>
-                </AlbumSongList>
-              </AlbumCardContainer>
-            </Flex>
-            <ArtistDetail flex='1' direction='column' width={{ sm: '300px' }} margin={{ sm: 'auto', md: '0px' }} py={{ sm: '40px', md: '0px' }}>
-              <Box color='black' width='100%' p='8px'>
-                <>
-                  <Link to={`/artist/${currentArtist.artist_name.replaceAll(' ', '-')}`}>
-                    <Image src={`/uploads/${currentArtist.artist_img}`} width='100%' borderRadius="10px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)' />
-                    <Text>
-                      <b>{currentArtist.artist_name}</b>
-                    </Text>
-                  </Link>
-                </>
-              </Box>
-
-              <div style={{ margin: '32px 0 0 8px' }}>
-                <b>discography</b>
-              </div>
-              <Box color='black' width='100%' p='8px'>
-                {artistAlbums.map((album, i) => (
-                  <div key={i}>
-                    <Link to={`/music/${album.album_name.replaceAll(' ', '-')}`}>
-                      <Image src={`/uploads/${album.art_name}`} borderRadius="10px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)' />
-                      <Text>{album.album_name}</Text>
-                    </Link>
-                  </div>
-                ))}
-              </Box>
-            </ArtistDetail>
+            <Box>
+              ${currentAlbum.download_price}.00
+            </Box>
           </Flex>
-        )}
-      </Fragment>
+
+          <Box fontWeight='semibold' fontSize="18px" lineHeight='tight' isTruncated color='white' pb="8px" style={{ fontFamily: 'Spotify-Bold' }}>
+            {currentAlbum.album_name}
+          </Box>
+
+          <Flex color='white' fontSize="18px" style={{ fontFamily: 'Spotify-Light' }} pb="8px" alignItems='center'>
+            <Box>
+              <Image src={`/uploads/${currentArtist.artist_img}`} width='32px' height='32px' borderRadius="50%" boxShadow='1px 1px 0 #89DBFF' objectFit='cover' />
+            </Box>
+            <Box pl='16px'>
+              {currentAlbum.artist_name}
+            </Box>
+          </Flex>
+          <Box>
+            {currentAlbum.type && 'LP - 2021'}
+          </Box>
+        </Flex>
+
+        <Stack spacing={6} pt="32px" px="24px">
+          {currentAlbum.tracks.map((track, i) => (
+            <Flex alignItems='center' justifyContent='center'>
+              <Box flex='1' fontFamily='Spotify-Bold'>{track.track_name}</Box>
+              <Flex flex='1' fontFamily='Spotify-Bold' justifyContent='flex-end' alignItems='center'>
+                <Box fontFamily='Spotify-Light' pr='16px'>${track.download_price}.00</Box>
+                <Box mt="4px">
+                  <IconButton
+                    variant='unstyled'
+                    aria-label='Download album'
+                    icon={<CartAdd />}
+                    onClick={() => this.addToCart(track._id, track.type)}
+                  />
+                  <IconButton
+                    variant='unstyled'
+                    variantColor='teal'
+                    aria-label='Add to playlist'
+                    icon={<PlaylistAdd />}
+                    onClick={() => this.addToPlaylist(track._id, track.type)}
+                  />
+                </Box>
+              </Flex>
+            </Flex>
+          ))}
+        </Stack>
+      </Box >
     );
   }
 }
@@ -300,3 +152,33 @@ export default connect(
     UserActions: bindActionCreators(userActions, dispatch),
   }),
 )(Album);
+
+/*
+              <Box flexBasis='50%' fontFamily='Spotify-Bold'>{track.track_name}</Box>
+              <Box>${track.download_price}.00</Box>
+              <Box>
+                <IconButton
+                  flex='1'
+                  variant='ghost'
+                  variantColor='teal'
+                  aria-label='Download album'
+                  fontSize='20px'
+                  rounded='0px'
+                  icon={<CartAdd color={`${theme.colors.etBlue}`} />}
+                  onClick={() => this.addToCart(track._id, track.type)}
+                />
+              </Box>
+              <Box>
+                <IconButton
+                  flex='1'
+                  variant='ghost'
+                  variantColor='teal'
+                  aria-label='Add to playlist'
+                  fontSize='20px'
+                  rounded='0px'
+                  icon={<PlaylistAdd color={`${theme.colors.etGreen}`} />}
+                  onClick={() => this.addToPlaylist(track._id, track.type)}
+                />
+              </Box>
+
+*/
