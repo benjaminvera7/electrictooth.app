@@ -66,30 +66,23 @@ const DesktopPlayer = ({
             {track.length > 0 ?
               <Image
                 src={`/uploads/${track[0].art_name}`}
-                h='48px'
-                w='48px'
-                borderRadius='50%'
-                border='1px'
-                borderColor={`${theme.colors.etGreen}`}
+                h='74px'
+                w='74px'
               /> :
               <Box
-                h='48px'
-                w='48px'
-                borderRadius='50%'
-                border='1px'
-                borderColor={`${theme.colors.etGreen}`}
+                h='74px'
+                w='74px'
                 backgroundColor={`${theme.colors.etGreen}`}
               />
-
             }
 
             <Flex direction='column' pl={4}>
               {track.length > 0 ? (
                 <>
-                  <Text color='gray.600' fontSize='sm'>
+                  <Text color='gray.600' fontSize='sm' color='white' style={{ fontFamily: 'Spotify-Bold' }}>
                     {track[0].artist_name}
                   </Text>
-                  <Text color='gray.500' fontSize='sm'>
+                  <Text color='gray.500' fontSize='sm' color='white'  >
                     {track[0].track_name}
                   </Text>
                 </>
@@ -116,7 +109,7 @@ const DesktopPlayer = ({
               <Box>
                 <Toll height='26px' width='26px' />
               </Box>
-              <Box minWidth='50px' px={2}>
+              <Box minWidth='50px' px={2} color={`${theme.colors.etBlue}`}>
                 {coins}
               </Box>
             </Flex>

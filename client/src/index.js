@@ -10,6 +10,9 @@ import axios from 'axios';
 import App from './App';
 import '../src/app.css';
 
+import './fonts/Spotify-Bold.woff2';
+import './fonts/Spotify-Light.woff2';
+
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 const { store } = configureStore();

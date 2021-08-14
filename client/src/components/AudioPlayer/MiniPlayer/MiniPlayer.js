@@ -76,10 +76,10 @@ const MiniPlayer = ({
         </Button>
 
         <Flex direction='column' align='center' onClick={() => setPlayerVisibility(!playerVisible)} w='100%' paddingLeft="8px">
-          <Text color='gray.600' fontSize='sm'>
+          <Text color='gray.600' fontSize='sm' style={{ fontFamily: 'Spotify-Bold' }} color='white'>
             {track.length > 0 ? `${track[0].artist_name}` : null}
           </Text>
-          <Text color='gray.500' fontSize='sm'>
+          <Text color='gray.500' fontSize='sm' style={{ fontFamily: 'Spotify-Light' }} color='white'>
             {track.length > 0 ? `${track[0].track_name}` : undefined}
           </Text>
         </Flex>

@@ -15,8 +15,24 @@
   --et-black: #1d1d1d;
   --et-blue: #89DBFF;
   --et-gray: #324148;
+  --et-violet: #9480FF;
 
   background-color: var(--et-black);
+}
+
+@font-face {
+  font-family: 'Spotify-Bold';
+  src: url('./fonts/Spotify-Bold.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Spotify-Light';
+  src: url('./fonts/Spotify-Light.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -55,14 +71,13 @@
   display: flex;
   bottom: 0px;
   z-index: 2;
-  background-color: #fff;
-  color: var(--color-50);
+  background-color: var(--et-gray);
+  color: var(--et-gray);
   height: 90px;
   align-items: center;
   justify-content: center;
   width: 100%;
   padding: 0 16px 0 16px;
-  border-top: 1px solid var(--et-green);
 }
 
 .mini-player {

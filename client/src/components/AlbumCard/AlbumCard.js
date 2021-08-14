@@ -74,17 +74,17 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
         <Flex minHeight='118px' direction="column" justifyContent='center' px='16px'>
           <Box d='flex' alignItems='baseline' pb="10px">
             {album.tags.map((tag, i) => (
-              <Badge mr='8px' px={2} bg={`${theme.colors.etBlue}`} variantColor='white' key={i} height="18px">
+              <Badge mr='8px' px={2} bg={`${theme.colors.etBlue}`} variantColor='white' key={i} height="18px" style={{ fontFamily: 'Spotify-Light' }}>
                 {tag}
               </Badge>
             ))}
           </Box>
 
-          <Box fontWeight='semibold' fontSize="18px" lineHeight='tight' isTruncated color='white' pb="8px">
+          <Box fontWeight='semibold' fontSize="18px" lineHeight='tight' isTruncated color='white' pb="8px" style={{ fontFamily: 'Spotify-Bold' }}>
             {album.album_name}
           </Box>
 
-          <Box color='white' fontSize="18px">
+          <Box color='white' fontSize="18px" style={{ fontFamily: 'Spotify-Light' }}>
             {album.artist_name}
           </Box>
         </Flex>

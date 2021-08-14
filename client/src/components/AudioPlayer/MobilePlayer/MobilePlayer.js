@@ -28,12 +28,12 @@ const MobilePlayer = ({
         }
       </Box>
 
-      <Flex direction='column' flex={2} align='center' p={2}>
+      <Flex direction='column' flex={2} align='center' p={2} backgroundColor={`${theme.colors.etBlack}`}>
         <Flex direction='column' align='center' pb={2}>
-          <Text color='gray.600' fontSize='sm'>
+          <Text color='gray.600' fontSize='sm' style={{ fontFamily: 'Spotify-Bold' }} color='white'>
             {track.length > 0 ? `${track[0].artist_name}` : `~`}
           </Text>
-          <Text color='gray.500' fontSize='sm'>
+          <Text color='gray.500' fontSize='sm' style={{ fontFamily: 'Spotify-Light' }} color='white'>
             {track.length > 0 ? `${track[0].track_name}` : undefined}
           </Text>
         </Flex>
@@ -65,6 +65,7 @@ const MobilePlayer = ({
           padding: '0 8px 0 6px',
         }}
         w='100%'
+        backgroundColor={`${theme.colors.etBlack}`}
       >
         <Button variant='link' onClick={() => setPlayerVisibility(!playerVisible)} style={{ minHeight: '44px' }}>
           <ArrowDown />

@@ -80,6 +80,7 @@ const Navigation = ({ auth, cart, username }) => {
                   size='xs'
                   color='white'
                   border='1px solid white'
+                  style={{ fontFamily: 'Spotify-Light' }}
                 >
                   Get coins
                 </Button>

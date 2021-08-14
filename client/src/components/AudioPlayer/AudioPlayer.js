@@ -103,9 +103,15 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
         defaultValue={0}
         value={playing ? Math.ceil(audio.current.currentTime) : 0}
         onChange={onHandleProgress}
-        trackStyle={{ backgroundColor: `${theme.colors.etGreen}` }}
+        railStyle={{
+          backgroundColor: '#5b676d'
+        }}
+        trackStyle={{
+          backgroundColor: `${theme.colors.etViolet}`
+        }}
         handleStyle={{
-          borderColor: `${theme.colors.etGreen}`,
+          borderColor: `${theme.colors.etViolet}`,
+          backgroundColor: `${theme.colors.etViolet}`
         }}
       />
     </div>

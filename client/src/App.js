@@ -38,7 +38,7 @@ function App({ MusicActions, UserActions, auth, playlist }) {
     <>
       <Navigation />
 
-      <Box mb='100px'>
+      <Box mb='100px' style={{ fontFamily: 'Spotify-Light' }}>
         <Switch>
           <Route path='/download/:orderId' component={Download} />
           <Route path='/checkout' component={Checkout} />
