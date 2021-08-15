@@ -2,7 +2,12 @@ import React, { Fragment } from 'react';
 import { Playlist, ArrowDown, Next, Previous, Play, Pause, Toll } from 'components/Icons';
 import { Box, Flex, Image, Text, Button } from '@chakra-ui/react';
 import { connect } from 'react-redux';
+import styled from '@emotion/styled';
 import theme from 'theme.js';
+
+const Panel = styled(Box)`
+  background: linear-gradient(180deg, #324148 50%, #000000 100%)
+`;
 
 const MobilePlayer = ({
   playing,
@@ -24,7 +29,7 @@ const MobilePlayer = ({
       <Box mt={-1}>
         {track.length > 0
           ? <Image src={`/uploads/${track[0].art_name}`} w='100%' />
-          : <Box w='100%' minHeight='500px' backgroundColor={`${theme.colors.etGreen}`} />
+          : <Box w='100%' height='500px' backgroundColor={`${theme.colors.etGreen}`} />
         }
       </Box>
 

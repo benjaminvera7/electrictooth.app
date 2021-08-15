@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Box, Image, Flex, Text, Button, Stack, Heading } from '@chakra-ui/react';
-import { Play, Close, Remove, Pause } from 'components/Icons';
+import { Play, ChevronDown, Remove, Pause } from 'components/Icons';
 import { connect } from 'react-redux';
 import theme from 'theme.js';
 
@@ -11,49 +11,30 @@ const PlaylistCard = styled(Flex)`
   ${FADE_IN}
 `;
 
+const Panel = styled(Box)`
+  background: linear-gradient(180deg, #324148 50%, #000000 100%)
+`;
+
 const MobilePlaylistPanel = (props) => {
   return (
-    <Fragment>
-      <Flex
-        bg='#fff'
-        style={{
-          position: 'fixed',
-          bottom: 0,
-          borderTop: `1px solid ${theme.colors.etGreen}`,
-        }}
-        w='100%'
-        h='50px'
-        align='center'
-        justify='flex-end'
-        pr='10px'
-      >
-        <Button
-          variant='link'
-          onClick={() => props.setPlaylistVisibility(!props.playlistVisible)}
-          style={{ minHeight: '44px' }}
-        >
-          <Close />
-        </Button>
-      </Flex>
-
-      <Box>
+    <Panel>
+      <Box minHeight='100vh'>
         <Stack pt={2}>
-          <Heading
-            px={2}
-            py={2}
-            as='h2'
-            size='md'
-            color={`${theme.colors.etGreen}`}
-            style={{
-              position: 'absolute',
-              right: '8px',
-              opacity: '0.5',
-            }}
-          >
-            playlist
-          </Heading>
+
+          <Box px={2}>
+            <Button
+              variant='link'
+              onClick={() => props.setPlaylistVisibility(!props.playlistVisible)}
+              style={{ minHeight: '44px' }}
+            >
+              <ChevronDown />
+            </Button>
+          </Box>
+
+          <Box px={4} color='white' fontFamily='Spotify-Bold' fontSize='24px' pb={2}>Playlist</Box>
+
           {props.playlist ? (
-            <Box pt='50px'>
+            <Box>
               {props.playlist.map((track) => (
                 <PlaylistCard w='100%' key={track._id} p={2} borderRadius='6px'>
                   <Box px={2}>
@@ -61,17 +42,14 @@ const MobilePlaylistPanel = (props) => {
                       src={`/uploads/${track.art_name}`}
                       h='48px'
                       w='48px'
-                      borderRadius='50%'
-                      border='1px'
-                      borderColor={`${theme.colors.etGreen}`}
                     />
                   </Box>
 
                   <Flex direction='column' justify='center'>
-                    <Text color='gray.600' fontSize='sm'>
+                    <Text color='white' fontSize='sm' fontFamily='Spotify-Bold'>
                       {track.artist_name}
                     </Text>
-                    <Text color='gray.500' fontSize='sm'>
+                    <Text color='white' fontSize='sm' fontFamily='Spotify-Light'>
                       {track.track_name}
                     </Text>
                   </Flex>
@@ -98,7 +76,7 @@ const MobilePlaylistPanel = (props) => {
           ) : undefined}
         </Stack>
       </Box>
-    </Fragment>
+    </Panel>
   );
 };
 

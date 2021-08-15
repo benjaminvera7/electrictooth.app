@@ -3,6 +3,7 @@ export default {
     etGreen: '#05aea5',
     etBlue: '#89DBFF',
     etBlack: '#1d1d1d',
-    etViolet: '#9480FF'
+    etViolet: '#9480FF',
+    etGray: '#324148'
   },
 };

@@ -23,3 +23,4 @@ export { default as VolumeUp } from './VolumeUp';
 export { default as Download } from './Download';
 export { default as Help } from './Help';
 export { default as CartAdd } from './CartAdd';
+export { default as ChevronDown } from './ChevronDown';
