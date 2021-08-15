@@ -55,7 +55,7 @@ const MobilePlayer = ({
           }
         </Flex>
 
-        <Flex direction='column' pb={2}>
+        <Flex direction='column' pb="18px">
           <Text fontSize='24px' style={{ fontFamily: 'Spotify-Bold' }} color='white'>
             {track.length > 0 ? `${track[0].artist_name}` : `~`}
           </Text>

@@ -97,7 +97,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   };
 
   const ProgressBar = (
-    <div className='progress-bar' style={isMobile ? { width: '100%' } : { width: '505px' }}>
+    <div className='progress-bar' style={isMobile ? { width: '96%' } : { width: '505px' }}>
       <Slider
         max={playing ? Math.ceil(audio.current.duration) : 0}
         defaultValue={0}

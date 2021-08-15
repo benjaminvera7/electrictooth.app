@@ -40,7 +40,7 @@ const MobileNavigation = ({
       >
         <Button variant='link' style={{ minHeight: '44px' }}>
           <Playlist />
-          <Box
+          {/* <Box
             style={{
               position: 'absolute',
               color: `${theme.colors.etGreen}`,
@@ -51,7 +51,7 @@ const MobileNavigation = ({
             }}
           >
             {playlist.length === 0 ? '' : '•'}
-          </Box>
+          </Box> */}
         </Button>
       </Box>
     </div>

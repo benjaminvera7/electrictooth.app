@@ -1,8 +1,10 @@
 import React, { Fragment, useState } from 'react';
-import { Text, Button, Flex } from '@chakra-ui/react';
+import { Text, Button, Flex, Box, Image } from '@chakra-ui/react';
 import { Play, Pause, ArrowUp } from 'components/Icons';
 import { CSSTransition } from 'react-transition-group';
 import MobilePlayer from '../MobilePlayer';
+import styled from '@emotion/styled';
+
 
 const slideHOC = (InputComponent) => {
   return (props) => (
@@ -47,6 +49,15 @@ const transProps = {
   classNames: 'panel',
 };
 
+const MiniProgressBar = styled(Box)`
+  height: 2px;
+  position: absolute;
+  width: 40%;
+  top: 0;
+  left: 0;
+  background-color: #9480FF;
+`;
+
 const MiniPlayer = ({
   playing,
   handlePlay,
@@ -67,24 +78,27 @@ const MiniPlayer = ({
   return (
     <Fragment>
       <div className='mini-player'>
-        <Button
-          variant='link'
-          onClick={() => setPlayerVisibility(!playerVisible)}
-          style={{ minHeight: '44px' }}
-        >
-          <ArrowUp />
-        </Button>
 
-        <Flex direction='column' align='center' onClick={() => setPlayerVisibility(!playerVisible)} w='100%' paddingLeft="8px">
-          <Text color='gray.600' fontSize='sm' style={{ fontFamily: 'Spotify-Bold' }} color='white'>
+        <MiniProgressBar />
+
+        <Image
+          src={track.length > 0 ? `/uploads/${track[0].art_name}` : null}
+          h='50px'
+          w='50px'
+          objectFit="cover"
+          borderBottom='1px solid #1d1d1d'
+        />
+
+        <Flex direction='column' onClick={() => setPlayerVisibility(!playerVisible)} w='100%' paddingLeft={4}>
+          <Text fontSize='sm' style={{ fontFamily: 'Spotify-Bold' }} color='white'>
             {track.length > 0 ? `${track[0].artist_name}` : null}
           </Text>
-          <Text color='gray.500' fontSize='sm' style={{ fontFamily: 'Spotify-Light' }} color='white'>
+          <Text fontSize='sm' style={{ fontFamily: 'Spotify-Light' }} color='white'>
             {track.length > 0 ? `${track[0].track_name}` : undefined}
           </Text>
         </Flex>
 
-        <Button variant='link' style={{ minHeight: '44px' }} onClick={handlePlay} isLoading={loading}>
+        <Button variant='link' style={{ minHeight: '44px' }} onClick={handlePlay} isLoading={loading} pr={4}>
           {playing ? <Pause /> : <Play />}
         </Button>
       </div>
