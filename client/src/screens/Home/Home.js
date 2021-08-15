@@ -26,6 +26,10 @@ const Home = ({ albums, products, pending }) => {
 
       <Flex justify='center' mt='64px' backgroundColor={`${theme.colors.etBlack}`}>
         <Box color='white' maxW='768px' flex='1'>
+          <Flex justifyContent="center">
+            <Image src='./water.gif' w='300px' borderRadius="16px" mb='32px' />
+          </Flex>
+
           <Flex wrap='wrap' justifyContent="center">
             {albums.map((album, i) => (
               <AlbumCard album={album} key={i} />

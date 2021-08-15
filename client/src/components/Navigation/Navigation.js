@@ -30,7 +30,7 @@ const Navigation = ({ auth, cart, username }) => {
   return (
     <NavigationContainer>
       <Flex maxW='900px' flex='1' alignItems="center" justifyContent="center">
-        {(!isMobile || !auth) && (
+        {/* {(!isMobile || !auth) && (
           <Fragment>
             <Link to='/'>
               <Box>
@@ -40,7 +40,7 @@ const Navigation = ({ auth, cart, username }) => {
               </Box>
             </Link>
           </Fragment>
-        )}
+        )} */}
 
         {/* <Link to='/help'>
           <Box>
