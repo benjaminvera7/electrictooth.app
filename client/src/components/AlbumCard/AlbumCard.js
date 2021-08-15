@@ -92,10 +92,9 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
           <Flex style={{ position: 'absolute', bottom: 0, left: 0 }} width='100%' minHeight='64px'>
             <IconButton
               flex='1'
-              variant='ghost'
+              variant='link'
               variantColor='teal'
               aria-label='Add album to cart'
-              fontSize='20px'
               style={{
                 borderTop: '2px',
                 borderRight: '2px',
@@ -104,15 +103,13 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
               }}
               height='64px'
               rounded='0px'
-              icon={<CartAdd color={`${theme.colors.etBlue}`} />}
+              icon={<CartAdd />}
               onClick={() => addToCart(album._id, album.type)}
             />
             <IconButton
               flex='1'
-              variant='ghost'
-              variantColor='teal'
+              variant='link'
               aria-label='Add album to playlist'
-              fontSize='20px'
               height='64px'
               style={{
                 borderTop: '2px',
@@ -120,7 +117,7 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
                 borderColor: '#89DBFF',
               }}
               rounded='0px'
-              icon={<PlaylistAdd color={`${theme.colors.etBlue}`} />}
+              icon={<PlaylistAdd />}
               onClick={() => addToPlaylist(album._id, album.type)}
             />
           </Flex>

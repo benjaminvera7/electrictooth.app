@@ -3,11 +3,11 @@ import Icon from '../Icon';
 
 const CartAdd = (props) => (
   <Icon {...props}>
-    <svg width="144" height="32" viewBox="0 0 144 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M61 7H65.4V20.2H80.0667L83 9.93333" stroke="#89DBFF" stroke-width="3" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round" />
-      <path d="M66.1333 29C67.3484 29 68.3333 28.015 68.3333 26.8C68.3333 25.5849 67.3484 24.6 66.1333 24.6C64.9183 24.6 63.9333 25.5849 63.9333 26.8C63.9333 28.015 64.9183 29 66.1333 29Z" stroke="#89DBFF" stroke-width="3" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round" />
-      <path d="M79.3334 29C80.5484 29 81.5334 28.015 81.5334 26.8C81.5334 25.5849 80.5484 24.6 79.3334 24.6C78.1183 24.6 77.1334 25.5849 77.1334 26.8C77.1334 28.015 78.1183 29 79.3334 29Z" stroke="#89DBFF" stroke-width="3" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round" />
-      <path d="M72.75 15H75.25V11.25H79V8.75H75.25V5H72.75V8.75H69V11.25H72.75V15Z" fill="#89DBFF" />
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 2H6.4V15.2H21.0667L24 4.93333" stroke="#89DBFF" stroke-width="3" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round" />
+      <path d="M7.13335 24C8.34838 24 9.33335 23.015 9.33335 21.8C9.33335 20.585 8.34838 19.6 7.13335 19.6C5.91832 19.6 4.93335 20.585 4.93335 21.8C4.93335 23.015 5.91832 24 7.13335 24Z" stroke="#89DBFF" stroke-width="3" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round" />
+      <path d="M20.3334 24C21.5484 24 22.5334 23.015 22.5334 21.8C22.5334 20.585 21.5484 19.6 20.3334 19.6C19.1183 19.6 18.1334 20.585 18.1334 21.8C18.1334 23.015 19.1183 24 20.3334 24Z" stroke="#89DBFF" stroke-width="3" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round" />
+      <path d="M13.75 10H16.25V6.25H20V3.75H16.25V0H13.75V3.75H10V6.25H13.75V10Z" fill="#89DBFF" />
     </svg>
   </Icon>
 );

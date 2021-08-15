@@ -3,11 +3,19 @@ import Icon from '../Icon';
 
 const PlaylistAdd = (props) => (
   <Icon {...props}>
-    <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12.8713 4.95783H0.677734V6.99008H12.8713V4.95783ZM12.8713 0.893311H0.677734V2.92557H12.8713V0.893311ZM16.9358 9.02234V4.95783H14.9035V9.02234H10.839V11.0546H14.9035V15.1191H16.9358V11.0546H21.0003V9.02234H16.9358ZM0.677734 11.0546H8.80677V9.02234H0.677734V11.0546Z" fill="#89DBFF" />
+    <svg width="29" height="20" viewBox="0 0 29 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16.8571 5.61905H0V8.42857H16.8571V5.61905ZM16.8571 0H0V2.80952H16.8571V0ZM22.4762 11.2381V5.61905H19.6667V11.2381H14.0476V14.0476H19.6667V19.6667H22.4762V14.0476H28.0952V11.2381H22.4762ZM0 14.0476H11.2381V11.2381H0V14.0476Z" fill="#89DBFF" />
     </svg>
   </Icon>
 );
+// const PlaylistAdd = (props) => (
+//   <Icon {...props}>
+//     <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+//       <path d="M12.8713 4.95783H0.677734V6.99008H12.8713V4.95783ZM12.8713 0.893311H0.677734V2.92557H12.8713V0.893311ZM16.9358 9.02234V4.95783H14.9035V9.02234H10.839V11.0546H14.9035V15.1191H16.9358V11.0546H21.0003V9.02234H16.9358ZM0.677734 11.0546H8.80677V9.02234H0.677734V11.0546Z" fill="#89DBFF" />
+//     </svg>
+//   </Icon>
+// );
+
 // const PlaylistAdd = (props) => (
 //   <Icon {...props}>
 //     <svg

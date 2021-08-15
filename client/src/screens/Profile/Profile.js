@@ -12,9 +12,10 @@ import {
   Button,
   Stack,
   Image,
+  Icon,
   IconButton,
 } from '@chakra-ui/react';
-import { Toll, PlaylistAdd, Download } from 'components/Icons';
+import { Toll, Download } from 'components/Icons';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -31,6 +32,15 @@ import styled from '@emotion/styled';
 const ProfileCard = styled(Box)`
   ${FADE_IN}
 `;
+
+
+const PlaylistAdd = () => (
+  <Icon>
+    <svg width="24" height="30" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16.8571 5.61905H0V8.42857H16.8571V5.61905ZM16.8571 0H0V2.80952H16.8571V0ZM22.4762 11.2381V5.61905H19.6667V11.2381H14.0476V14.0476H19.6667V19.6667H22.4762V14.0476H28.0952V11.2381H22.4762ZM0 14.0476H11.2381V11.2381H0V14.0476Z" fill="#89DBFF" />
+    </svg>
+  </Icon>
+);
 
 const Profile = ({ UserActions, user, auth, history, library }) => {
   const addToPlaylist = (id, type) => {
