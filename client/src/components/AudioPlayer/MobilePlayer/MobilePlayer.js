@@ -1,12 +1,14 @@
 import React, { Fragment } from 'react';
-import { Playlist, ArrowDown, Next, Previous, Play, Pause, Toll } from 'components/Icons';
-import { Box, Flex, Image, Text, Button } from '@chakra-ui/react';
+import { Playlist, ArrowDown, Next, Previous, Play, Pause, Toll, ChevronDown } from 'components/Icons';
+import { Box, Flex, Image, Text, Button, Stack } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import styled from '@emotion/styled';
 import theme from 'theme.js';
 
-const Panel = styled(Box)`
-  background: linear-gradient(180deg, #324148 50%, #000000 100%)
+const Panel = styled(Flex)`
+  background: linear-gradient(180deg, #324148 50%, #000000 100%);
+  min-height: 100vh;
+  justify-content: center;
 `;
 
 const MobilePlayer = ({
@@ -25,7 +27,117 @@ const MobilePlayer = ({
   loading,
 }) => {
   return (
-    <Fragment>
+    <Panel>
+      <Stack pt={2} width='345px'>
+
+        <Box ml="-12px" w='345px'>
+          <Button
+            variant='link'
+            onClick={() => setPlayerVisibility(!playerVisible)}
+            style={{ minHeight: '44px' }}
+          >
+            <ChevronDown />
+          </Button>
+        </Box>
+
+        <Flex pb="28px">
+          {track.length > 0
+            ? <Image
+              src={`/uploads/${track[0].art_name}`}
+              h='345px'
+              w='345px'
+              border="2px solid #89DBFF"
+              borderRadius="20px"
+              backgroundColor={`${theme.colors.etBlack}`}
+              boxShadow='8px 8px 0 #89DBFF'
+            />
+            : <Box h='345px' w='345px' backgroundColor={`${theme.colors.etGreen}`} />
+          }
+        </Flex>
+
+        <Flex direction='column' pb={2}>
+          <Text fontSize='24px' style={{ fontFamily: 'Spotify-Bold' }} color='white'>
+            {track.length > 0 ? `${track[0].artist_name}` : `~`}
+          </Text>
+          <Text fontSize='18px' style={{ fontFamily: 'Spotify-Light' }} color='white'>
+            {track.length > 0 ? `${track[0].track_name}` : undefined}
+          </Text>
+        </Flex>
+
+        <Flex direction='column' align='center' w='100%'>
+          {progressBar}
+        </Flex>
+
+        <Flex justify='space-evenly' align='center' py={8}>
+          <Box>
+            <Button variant='link' onClick={handlePrevious}>
+              <Previous />
+            </Button>
+          </Box>
+          <Box>
+            <Button variant='link' onClick={handlePlay} isLoading={loading}>
+              {playing ? <Pause /> : <Play />}
+            </Button>
+          </Box>
+          <Box>
+            <Button variant='link' onClick={handleNext}>
+              <Next />
+            </Button>
+          </Box>
+        </Flex>
+
+
+      </Stack>
+    </Panel>
+  );
+};
+
+/*
+      <Box py={2} ml="-12px" w='345px' alignSelf='center'>
+        <Button
+          variant='link'
+          onClick={() => setPlayerVisibility(!playerVisible)}
+          style={{ minHeight: '44px' }}
+        >
+          <ChevronDown />
+        </Button>
+      </Box>
+
+      <Flex
+        justifyContent='center'
+        pb="40px"
+      >
+        {track.length > 0
+          ? <Image
+            src={`/uploads/${track[0].art_name}`}
+            h='345px'
+            w='345px'
+            border="2px solid #89DBFF"
+            borderRadius="20px"
+            backgroundColor={`${theme.colors.etBlack}`}
+            boxShadow='8px 8px 0 #89DBFF'
+          />
+          : <Box h='345px' w='345px' backgroundColor={`${theme.colors.etGreen}`} />
+        }
+      </Flex>
+
+      <Flex width='100%' justifyContent='flex-start'>
+        <Flex direction='column' pb={2} minWidth='345px' border='1px solid red'>
+          <Text fontSize='24px' style={{ fontFamily: 'Spotify-Bold' }} color='white'>
+            {track.length > 0 ? `${track[0].artist_name}` : `~`}
+          </Text>
+          <Text fontSize='18px' style={{ fontFamily: 'Spotify-Light' }} color='white'>
+            {track.length > 0 ? `${track[0].track_name}` : undefined}
+          </Text>
+        </Flex>
+
+      </Flex>
+
+
+
+*/
+
+/*
       <Box mt={-1}>
         {track.length > 0
           ? <Image src={`/uploads/${track[0].art_name}`} w='100%' />
@@ -105,9 +217,7 @@ const MobilePlayer = ({
           </Box>
         </Button>
       </Flex>
-    </Fragment>
-  );
-};
+*/
 
 export default connect((state) => ({
   playlist: state.user.playlist,
