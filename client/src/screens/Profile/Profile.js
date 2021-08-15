@@ -66,6 +66,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
     });
   };
 
+  //http://localhost:3000/download/6118a5599811a50c786bb2e4
   return (
     <>
       <Helmet>
@@ -73,14 +74,14 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
         <meta name='description' content='amazing' />
       </Helmet>
 
-      <Flex justify='center' mt='40px'>
+      <Flex justify='center' mt='40px' backgroundColor={`${theme.colors.etBlack}`}>
         <ProfileCard color='white' maxW='900px' flex='1' mb={4} px={4}>
           <Flex justify='space-between'>
-            <Heading py={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
+            <Heading py={2} as='h2' size='2xl' color='white' fontFamily='Spotify-Bold'>
               {user.username}
             </Heading>
 
-            <Heading py={5} as='h2' size='md' color={`${theme.colors.etGreen}`}>
+            <Heading py={5} as='h2' size='md' color={`${theme.colors.etBlue}`}>
               <Flex align='center'>
                 <Box pr={2}>
                   <Toll height='26px' width='26px' />
@@ -90,11 +91,11 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
             </Heading>
           </Flex>
 
-          <Tabs isFitted color={`${theme.colors.etGreen}`} variantColor={`${theme.colors.etGreen}`}>
+          <Tabs isFitted colorScheme='cyan' >
             <TabList mb='1em'>
-              <Tab>Library</Tab>
-              <Tab>Order History</Tab>
-              <Tab>Settings</Tab>
+              <Tab><Text fontSize="14px" fontFamily='Spotify-Bold'>Library</Text></Tab>
+              <Tab><Text fontSize="14px" fontFamily='Spotify-Bold'>Order History</Text></Tab>
+              <Tab><Text fontSize="14px" fontFamily='Spotify-Bold'>Settings</Text></Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
@@ -157,7 +158,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
                       <Box fontSize='sm' py={2} color='grey'>
                         <span>
                           your collection is empty.{' '}
-                          <Link onClick={() => history.push('/')} style={{ color: theme.colors.etGreen }}>
+                          <Link onClick={() => history.push('/')} style={{ color: '#00a3c4' }}>
                             check out our catalog!
                           </Link>
                         </span>
@@ -172,10 +173,11 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
               <TabPanel>
                 <Flex justify='flex-end'>
                   <Button
-                    size='sm'
+                    isFullWidth={true}
                     variant='solid'
-                    bg='#E63946'
-                    color='white'
+                    bg={`${theme.colors.etBlue}`}
+                    color='black'
+                    fontFamily='Spotify-Light'
                     onClick={() => {
                       UserActions.signOut();
                       history.push('/signin');

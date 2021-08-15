@@ -1,8 +1,9 @@
 import React from 'react';
-import { Box, Text, Image } from '@chakra-ui/react';
+import { Box, Text, Image, Flex } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
+import theme from 'theme.js';
 
 const ArtistContainer = styled(Box)`
   ${FADE_IN}
@@ -17,18 +18,22 @@ const Artist = ({ artists, pending, match }) => {
   }
 
   return (
-    <ArtistContainer style={{ margin: '50px auto', maxWidth: '720px' }}>
-      <Box color='black' width='100%' p='8px'>
-        <>
-          <Image src={`/uploads/${currentArtist.artist_img}`} width='100%' borderRadius="20px" />
-          <Text>
+    <ArtistContainer style={{ margin: '50px auto', maxWidth: '720px' }} backgroundColor={`${theme.colors.etBlack}`}>
+      <Flex color='black' width='100%' p='8px' justifyContent='center'>
+        <Box borderRadius="50%" width="256px" height="256px" overflow='hidden' position='relative' boxShadow='8px 8px 0 #89DBFF' border="2px solid #89DBFF">
+          <Image src={`/uploads/${currentArtist.artist_img}`} h='100%' w='100%' objectFit='cover' />
+        </Box>
+      </Flex>
+      <Flex width='100%' justifyContent='center'>
+        <Box width='80%'>
+          <Text fontFamily='Spotify-Bold' color='white'>
             <b>{currentArtist.artist_name}</b>
           </Text>
-        </>
-      </Box>
-      <Box color='black' width='100%' p='8px'>
-        {currentArtist.artist_bio}
-      </Box>
+          <Box color='black' width='100%' fontFamily='Spotify-Light' color='white'>
+            {currentArtist.artist_bio}
+          </Box>
+        </Box>
+      </Flex>
     </ArtistContainer>
   );
 };

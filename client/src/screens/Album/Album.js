@@ -95,9 +95,9 @@ class Album extends Component {
           </Box>
 
           <Flex color='white' fontSize="18px" style={{ fontFamily: 'Spotify-Light' }} pb="8px" alignItems='center'>
-            <Box>
+            <Link to={`/artist/${currentAlbum.artist_name}`}>
               <Image src={`/uploads/${currentArtist.artist_img}`} width='32px' height='32px' borderRadius="50%" boxShadow='1px 1px 0 #89DBFF' objectFit='cover' />
-            </Box>
+            </Link>
             <Box pl='16px'>
               {currentAlbum.artist_name}
             </Box>
