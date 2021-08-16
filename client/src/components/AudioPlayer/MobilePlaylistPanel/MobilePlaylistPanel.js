@@ -47,10 +47,10 @@ const MobilePlaylistPanel = (props) => {
 
                   <Flex direction='column' justify='center'>
                     <Text color='white' fontSize='sm' fontFamily='Spotify-Bold'>
-                      {track.artist_name}
+                      {track.track_name}
                     </Text>
                     <Text color='white' fontSize='sm' fontFamily='Spotify-Light'>
-                      {track.track_name}
+                      {track.artist_name}
                     </Text>
                   </Flex>
 

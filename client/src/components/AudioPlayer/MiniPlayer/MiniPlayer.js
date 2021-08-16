@@ -91,10 +91,10 @@ const MiniPlayer = ({
 
         <Flex direction='column' onClick={() => setPlayerVisibility(!playerVisible)} w='100%' paddingLeft={4}>
           <Text fontSize='sm' style={{ fontFamily: 'Spotify-Bold' }} color='white'>
-            {track.length > 0 ? `${track[0].artist_name}` : null}
+            {track.length > 0 ? `${track[0].track_name}` : undefined}
           </Text>
           <Text fontSize='sm' style={{ fontFamily: 'Spotify-Light' }} color='white'>
-            {track.length > 0 ? `${track[0].track_name}` : undefined}
+            {track.length > 0 ? `${track[0].artist_name}` : null}
           </Text>
         </Flex>
 

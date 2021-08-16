@@ -61,6 +61,9 @@ const Navigation = ({ auth, cart, username }) => {
                 color='white'
                 mx={4}
                 mt='1px'
+                variant='link'
+                p={2}
+                py={1}
               >
                 sign up
               </Button>
@@ -101,14 +104,16 @@ const Navigation = ({ auth, cart, username }) => {
 
             <Box mx='auto' />
             <Flex alignItems="center">
-              <Link to='/coins'>
+              <Link to='/coins' >
                 <Button
-                  variant='solid'
                   bg={`${theme.colors.etBlack}`}
                   size='xs'
                   color='white'
                   border='1px solid white'
-                  style={{ fontFamily: 'Spotify-Light' }}
+                  style={{ fontFamily: 'Spotify-Light', textDecoration: 'none' }}
+                  variant='link'
+                  p={2}
+                  py={1}
                 >
                   Get coins
                 </Button>

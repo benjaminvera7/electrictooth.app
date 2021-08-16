@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Box, Flex, Text, Image, Heading, Stack, IconButton } from '@chakra-ui/react';
+import { Box, Flex, Text, Image, Heading, Stack, IconButton, Icon } from '@chakra-ui/react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import requireAuth from 'components/AuthHOC/requireAuth';
 import * as userActions from 'redux/modules/user';
-import { PlaylistAdd, Download as DownloadIcon } from 'components/Icons';
+import { Download as DownloadIcon } from 'components/Icons';
 import { bindActionCreators } from 'redux';
 import toast from 'util/toast';
 import theme from 'theme.js';
@@ -12,10 +12,17 @@ import Helmet from 'react-helmet';
 
 //http://localhost:3000/download/611995458051981df4f3fc9a bonito
 
+const PlaylistAdd = () => (
+  <Icon w='50%' h='auto'>
+    <svg width="21" height="26" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12.8713 4.95786H0.677734V6.99011H12.8713V4.95786ZM12.8713 0.893341H0.677734V2.9256H12.8713V0.893341ZM16.9358 9.02237V4.95786H14.9035V9.02237H10.839V11.0546H14.9035V15.1191H16.9358V11.0546H21.0003V9.02237H16.9358ZM0.677734 11.0546H8.80677V9.02237H0.677734V11.0546Z" fill="#89DBFF" />
+    </svg>
+  </Icon>
+)
 
 class Download extends Component {
   state = {
-    downloads: {},
+    downloads: [],
     shippingAddress: {}
   };
 
@@ -160,16 +167,15 @@ class Download extends Component {
     return (
       <Flex key={coin.id} backgroundColor={`${theme.colors.etBlack}`}>
         <Box width="48px" height="48px" overflow='hidden' position='relative' >
-          <Image src='./coins.png' h='100%' w='100%' objectFit='cover' />
+          <Image src='/uploads/coins.png' h='100%' w='100%' objectFit='cover' />
         </Box>
 
-        <Flex pl={4} flexDirection="column" flexBasis='60%' justifyContent='center'>
-          {parseInt(coin.amount)} stream coins have been added to your account!
+        <Flex pl={4} flexDirection="column" flexBasis='60%' justifyContent='center' style={{ fontFamily: 'Spotify-Bold' }}>
+          {parseInt(coin.amount)} coins
         </Flex>
       </Flex>
     )
   }
-
 
 
 
@@ -186,12 +192,12 @@ class Download extends Component {
               Download
             </Heading>
 
-            <Text px={4} fontSize='sm' mb={4} color='white'>
+            <Text px={4} fontSize='sm' mb={4} color='white' fontFamily='Spotify-Light'>
               Downloads are available anytime in your Libary!
             </Text>
 
             <Flex justify='center' pt={2} pb={6} px={4}>
-              <Heading fontSize={{ sm: '30px', md: '40px' }} color={`${theme.colors.etViolet}`}>
+              <Heading fontSize={{ sm: '30px', md: '40px' }} color={`${theme.colors.etViolet}`} fontFamily='Spotify-Bold'>
                 Thank you for supporting art!
               </Heading>
             </Flex>

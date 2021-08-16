@@ -57,10 +57,10 @@ const MobilePlayer = ({
 
         <Flex direction='column' pb="18px">
           <Text fontSize='24px' style={{ fontFamily: 'Spotify-Bold' }} color='white'>
-            {track.length > 0 ? `${track[0].artist_name}` : `~`}
+            {track.length > 0 ? `${track[0].track_name}` : undefined}
           </Text>
           <Text fontSize='18px' style={{ fontFamily: 'Spotify-Light' }} color='white'>
-            {track.length > 0 ? `${track[0].track_name}` : undefined}
+            {track.length > 0 ? `${track[0].artist_name}` : `~`}
           </Text>
         </Flex>
 
