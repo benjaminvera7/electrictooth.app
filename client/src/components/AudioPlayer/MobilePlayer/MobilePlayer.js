@@ -28,9 +28,9 @@ const MobilePlayer = ({
 }) => {
   return (
     <Panel>
-      <Stack pt={2} width='345px'>
+      <Stack pt={2} width='300px'>
 
-        <Box ml="-12px" w='345px'>
+        <Box ml="-12px" w='300px'>
           <Button
             variant='link'
             onClick={() => setPlayerVisibility(!playerVisible)}
@@ -44,14 +44,14 @@ const MobilePlayer = ({
           {track.length > 0
             ? <Image
               src={`/uploads/${track[0].art_name}`}
-              h='345px'
-              w='345px'
+              h='300px'
+              w='300px'
               border="2px solid #89DBFF"
               borderRadius="20px"
               backgroundColor={`${theme.colors.etBlack}`}
               boxShadow='8px 8px 0 #89DBFF'
             />
-            : <Box h='345px' w='345px' backgroundColor={`${theme.colors.etGreen}`} />
+            : <Box h='300px' w='300px' backgroundColor={`${theme.colors.etGreen}`} />
           }
         </Flex>
 

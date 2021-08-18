@@ -92,7 +92,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
             </Heading>
 
             <Heading py={5} as='h2' size='md' color={`${theme.colors.etBlue}`}>
-              <Flex align='center'>
+              <Flex align='center' fontFamily='Spotify-Light'>
                 <Box pr={2}>
                   <Toll height='26px' width='26px' />
                 </Box>
