@@ -181,13 +181,13 @@ class Download extends Component {
 
   render() {
     return (
-      <>
+      <Box backgroundColor={`${theme.colors.etBlack}`} px={4}>
         <Helmet>
           <title>Electric Tooth - download</title>
           <meta name='description' content='amazing' />
         </Helmet>
-        <Flex justify='center' mt='40px' backgroundColor={`${theme.colors.etBlack}`}>
-          <Box color='white' maxW='768px' flex='1'>
+        <Flex justify='center' mt='64px'>
+          <Box color='white' maxW='900px' flex='1' px={{ xs: 2, lg: 2 }}>
             <Heading px={4} py={2} as='h2' size='2xl' color='white' fontFamily='Spotify-Bold'>
               Download
             </Heading>
@@ -207,7 +207,7 @@ class Download extends Component {
             </Stack>
           </Box>
         </Flex>
-      </>
+      </Box>
     );
   }
 }

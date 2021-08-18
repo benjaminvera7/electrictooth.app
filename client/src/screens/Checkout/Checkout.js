@@ -14,6 +14,10 @@ const CheckoutItems = styled(Flex)`
     ${FADE_IN}
 `;
 
+const CartItem = styled(Flex)`
+  background: linear-gradient(90deg, #1D1D1D 0%, #342D54 100%);
+`
+
 class Checkout extends Component {
   constructor() {
     super();
@@ -29,9 +33,9 @@ class Checkout extends Component {
   }
 
   componentWillMount() {
-    const { Web3Actions } = this.props;
-    Web3Actions.fetchWeb3();
-    Web3Actions.fetchEthereum();
+    //const { Web3Actions } = this.props;
+    //Web3Actions.fetchWeb3();
+    //Web3Actions.fetchEthereum();
   }
 
   initConnect = async () => {
@@ -169,94 +173,194 @@ class Checkout extends Component {
     }
   };
 
+  renderLineItems = (item) => {
+    switch (item.type) {
+      case 'album':
+        return this.renderAlbumItem(item)
+      case 'track':
+        return this.renderTrackItem(item)
+      case 'coin':
+        return this.renderCoinItem(item)
+      default:
+        return null
+    }
+  }
+
+  renderAlbumItem = (album) => {
+    return (
+      <Flex>
+        <CartItem
+          flex='2'
+          alignItems='center'
+          px={4}
+          boxShadow='8px 8px 0 #89DBFF'
+          border="2px solid #89DBFF"
+          borderRadius="18px"
+          mb='18px'
+          justifyContent='space-between'
+          alignItems='center'
+          mx={4}
+          minWidth='320px'
+        >
+          <Box width="72px" height="72px" overflow='hidden' position='relative' ml='-16px' borderRadius='16px 0 0 16px'>
+            <Image src={`/uploads/${album.art_name}`} h='100%' w='100%' objectFit='cover' />
+          </Box>
+          <Flex direction='column' paddingLeft={4} flex='2'>
+            <Text fontSize='sm' style={{ fontFamily: 'Spotify-Bold' }} color='white'>
+              {album.album_name}
+            </Text>
+            <Text fontSize='sm' style={{ fontFamily: 'Spotify-Light' }} color='white'>
+              {album.artist_name}
+            </Text>
+          </Flex>
+          <Flex p={2} direction='column' justify='center' align='center'>
+            <Text px={2} color='white'>
+              {`$${album.download_price}.00`}
+            </Text>
+          </Flex>
+        </CartItem>
+      </Flex>
+    )
+  }
+
+  renderTrackItem = (track) => {
+    return (
+      <Flex>
+        <CartItem
+          flex='2'
+          alignItems='center'
+          px={4}
+          boxShadow='8px 8px 0 #89DBFF'
+          border="2px solid #89DBFF"
+          borderRadius="18px"
+          mb='18px'
+          justifyContent='space-between'
+          alignItems='center'
+          mx={4}
+          minWidth='320px'
+        >
+          <Box width="72px" height="72px" overflow='hidden' position='relative' ml='-16px' borderRadius='16px 0 0 16px'>
+            <Image src={`/uploads/${track.art_name}`} h='100%' w='100%' objectFit='cover' />
+          </Box>
+          <Flex direction='column' paddingLeft={4} flex='2'>
+            <Text fontSize='sm' style={{ fontFamily: 'Spotify-Bold' }} color='white'>
+              {track.track_name} (MP3)
+            </Text>
+            <Text fontSize='sm' style={{ fontFamily: 'Spotify-Light' }} color='white'>
+              {track.artist_name}
+            </Text>
+          </Flex>
+          <Flex p={2} direction='column' justify='center' align='center'>
+            <Text px={2} color='white'>
+              {`$${track.download_price}.00`}
+            </Text>
+          </Flex>
+        </CartItem>
+      </Flex>
+    )
+  }
+
+  renderCoinItem = (coin) => {
+    return (
+      <Flex>
+        <CartItem
+          flex='2'
+          alignItems='center'
+          px={4}
+          boxShadow='8px 8px 0 #89DBFF'
+          border="2px solid #89DBFF"
+          borderRadius="18px"
+          mb='18px'
+          justifyContent='space-between'
+          alignItems='center'
+          mx={4}
+          minWidth='320px'
+          height="72px"
+        >
+          <Flex overflow='hidden' position='relative' justifyContent='center' alignItems='center' pr='16px'>
+            <Image src={`${coin.price}coin.png`} w='40px' h='48px' />
+          </Flex>
+          <Flex direction='column' paddingLeft={4} flex='2'>
+            <Text fontSize='sm' style={{ fontFamily: 'Spotify-Bold' }} color='white'>
+              {coin.amount} Stream Coins
+            </Text>
+            <Text fontSize='sm' style={{ fontFamily: 'Spotify-Light' }} color='white'>
+              @ $0.01
+            </Text>
+          </Flex>
+          <Flex p={2} direction='column' justify='center' align='center'>
+            <Text px={2} color='white'>
+              {`$${coin.price}.00`}
+            </Text>
+          </Flex>
+        </CartItem>
+      </Flex>
+    )
+  }
+
   render() {
     const { user } = this.props;
 
     return (
-      <>
+      <Box backgroundColor={`${theme.colors.etBlack}`} px={4}>
         <Helmet>
           <title>Electric Tooth - checkout</title>
           <meta name='description' content='amazing' />
         </Helmet>
 
-        <CheckoutItems justify='center' mt='40px' px={{ sm: '8px', md: '0px' }}>
+        <CheckoutItems justify='center' mt='64px' px={{ sm: '8px', md: '0px' }}>
           <Box color='white' maxW='900px' flex='1'>
-            <Heading pt={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
-              payment
+            <Heading pt={2} as='h4' size='md' color='white' fontFamily='Spotify-Bold' px={4}>
+              Checkout
             </Heading>
 
-            <Text fontSize='sm' mb={4} color='grey'>
-              Electric Tooth currently only accepts PayPal & Ethereum payments
+            <Text fontSize='md' mb={4} color='white' px={4} fontFamily='Spotify-Light'>
+              Review your order
             </Text>
 
+            {/* <Text fontSize='md' mb={4} color='white' fontFamily='Spotify-Light'>
+              Electric Tooth currently only accepts PayPal & Ethereum payments
+            </Text> */}
+
             <Flex justify='center' py={4} px={4}>
-              <Heading as='h3' fontSize={['lg', 'xl']} color={`${theme.colors.etGreen}`}>
+              <Heading as='h3' fontSize={['lg', 'xl']} color={`${theme.colors.etViolet}`}>
                 100% of this purchase goes to the artist
               </Heading>
             </Flex>
 
             <Stack>
               {user.cart.items?.length > 0 ? (
-                user.cart.items.map(
-                  ({ id, artist_name, track_name, album_name, art_name, download_price, type, amount, price, product_name, size }) => (
-                    <Flex borderWidth='1px' key={id} bg='white' borderRadius="20px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'>
-                      <Box>
-                        <Image src={`/uploads/${art_name}`} width="100px" borderRadius="20px 0 0 20px" />
-                      </Box>
-
-                      <Box p={2}>
-                        <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600'>
-                          {type === 'coin' && `${amount} stream coins`}
-                          {type === 'album' && album_name}
-                          {type === 'track' && `${track_name} (MP3)`}
-                          {type === 'merch' && `${product_name} (${size})`}
-                        </Heading>
-                        <Text fontSize={['xs', 'sm', 'md', 'lg']} mb={4} color='gray.500'>
-                          {artist_name ? artist_name : `@ $0.01`}
-                        </Text>
-                      </Box>
-
-                      <Box mx='auto' />
-
-                      <Flex p={2} direction='column' justify='center' align='center'>
-                        <Text px={2} color='#222'>
-                          {type === 'coin' && `$${price}.00`}
-                          {type === 'album' && `$${download_price}.00`}
-                          {type === 'track' && `$${download_price}.00`}
-                          {type === 'merch' && `$${price}.00`}
-                        </Text>
-                      </Flex>
-                    </Flex>
-                  ),
-                )
+                user.cart.items.map((item) => this.renderLineItems(item))
               ) : (
                 undefined
               )}
             </Stack>
 
             <Flex justify='flex-end' py={2} px={2} mt={4}>
-              <Box px={2} color='black'>
+              <Box px={2} color='white' fontFamily='Spotify-Light'>
                 Subtotal ({`${user.cart.items.length}`} items):
               </Box>
-              <Box color='black'>${`${user.cart.total}`}.00</Box>
+              <Box color='white'>${`${user.cart.total}`}.00</Box>
             </Flex>
 
-            <Flex justify='flex-end' pb={2} pt={0} px={2} color='black'>
-              <Box color='black' px={2}>
+            <Flex justify='flex-end' pb={2} pt={0} px={2}>
+              <Box color='white' px={2} fontFamily='Spotify-Light'>
                 Total:
               </Box>
-              <Box>
+              <Box color='white' fontFamily='Spotify-Bold'>
                 <b>${`${user.cart.total}`}.00</b>
               </Box>
             </Flex>
 
-            <Flex direction="column" alignItems="flex-end" pt={4}>
+            <Flex direction="column" alignItems="flex-end" pt={2}>
               <Box>
                 <form id='paypalForm' method='post' action={`/api/v1/paypal/request`}>
                   {/* <input type='hidden' name='userId' value={user.userId} /> */}
                   <input type="hidden" name="auth" value={this.props.auth} />
-                  <Button rounded='md' bg='#ffc439' color='black' px={4} h={8} my={2} type='submit' w='200px'>
-                    Checkout with PayPal
+                  <Button rounded='md' bg='#fec339' color='black' px={4} h={8} my={2} type='submit' w='200px' style={{
+                    background: '#fec339',
+                  }}>
+                    <Image src='/paypal.png' />
                   </Button>
                 </form>
               </Box>
@@ -279,22 +383,23 @@ class Checkout extends Component {
                   Checkout with MetaMask
                 </Button>
               ) : (
-                <Button
-                  rounded='md'
-                  style={{
-                    background: '#f08d1d',
-                  }}
-                  color='black'
-                  px={4}
-                  h={8}
-                  my={2}
-                  type='submit'
-                  w='200px'
-                  onClick={this.initConnect}
-                  disabled={this.props.error}
-                >
-                  Connect to MetaMask
-                </Button>
+                undefined
+                // <Button
+                //   rounded='md'
+                //   style={{
+                //     background: '#f08d1d',
+                //   }}
+                //   color='black'
+                //   px={4}
+                //   h={8}
+                //   my={2}
+                //   type='submit'
+                //   w='200px'
+                //   onClick={this.initConnect}
+                //   disabled={this.props.error}
+                // >
+                //   Connect to MetaMask
+                // </Button>
               )}
             </Flex>
 
@@ -311,7 +416,7 @@ class Checkout extends Component {
             </Box>
           </Box>
         </CheckoutItems>
-      </>
+      </Box>
     );
   }
 }

@@ -78,13 +78,13 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
 
   //http://localhost:3000/download/6118a5599811a50c786bb2e4
   return (
-    <>
+    <Box backgroundColor={`${theme.colors.etBlack}`} px={4}>
       <Helmet>
         <title>Electric Tooth - profile</title>
         <meta name='description' content='amazing' />
       </Helmet>
 
-      <Flex justify='center' mt='48px' backgroundColor={`${theme.colors.etBlack}`}>
+      <Flex justify='center' mt='48px'>
         <ProfileCard color='white' maxW='900px' flex='1' mb={4} px={4}>
           <Flex justify='space-between'>
             <Heading py={2} as='h2' size='2xl' color='white' fontFamily='Spotify-Bold'>
@@ -109,7 +109,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
             </TabList>
             <TabPanels>
               <TabPanel>
-                <Stack px={{ xs: 2, xl: 0 }}>
+                <Stack>
                   {library.length > 0 ? (
                     library.map((album, i) => (
                       <Flex alignItems='center'>
@@ -118,7 +118,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
                             <Image src={`/uploads/${album.art_name}`} h='100%' w='100%' objectFit='cover' />
                           </Link>
                         </Box>
-                        <Flex pl={4} flexDirection="column" flexBasis='60%' justifyContent='center'>
+                        <Flex pl={4} flexDirection="column" flex='2' justifyContent='center'>
                           <Text fontSize='xs' style={{ fontFamily: 'Spotify-Bold' }} color='white'>
                             {album.track_name
                               ? `${album.track_name} (MP3)`
@@ -187,7 +187,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
           </Tabs>
         </ProfileCard>
       </Flex>
-    </>
+    </Box>
   );
 };
 

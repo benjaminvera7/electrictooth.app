@@ -93,7 +93,7 @@ const Navigation = ({ auth, cart, username }) => {
                 </svg>
               </Flex>
               :
-              <Flex direction='column' justifyContent='center' ml="8px" onClick={() => history.goBack()}>
+              <Flex direction='column' justifyContent='center' ml="-8px" onClick={() => history.goBack()} style={{ 'cursor': 'pointer' }}>
                 <svg width="75" height="48" viewBox="0 0 75 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect width="75" height="48" fill="#1D1D1D" />
                   <path d="M30 24H52" stroke="white" stroke-linecap="round" stroke-linejoin="round" />

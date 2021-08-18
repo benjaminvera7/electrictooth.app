@@ -61,78 +61,84 @@ class Album extends Component {
     }
 
     return (
-      <Box mt="64px" color='white' backgroundColor={`${theme.colors.etBlack}`}>
+      <Flex justify='center' mt='64px' backgroundColor={`${theme.colors.etBlack}`}>
+        <Box color='white' maxW='900px' flex='1' px={{ xs: 2, lg: 2 }}>
 
-        <Flex justifyContent='center' mb='24px'>
-          <Image
-            src={`/uploads/${currentAlbum.art_name}`}
-            maxWidth='264px'
-            maxHeight='264px'
-            borderRadius="16px"
-            border="2px solid #89DBFF"
-            boxShadow='8px 8px 0 #89DBFF'
-          />
-        </Flex>
+          <Flex display={{ md: "flex" }}>
+            <Flex justifyContent='center' mb='24px'>
+              <Image
+                src={`/uploads/${currentAlbum.art_name}`}
+                maxWidth='264px'
+                maxHeight='264px'
+                borderRadius="16px"
+                border="2px solid #89DBFF"
+                boxShadow='8px 8px 0 #89DBFF'
+              />
+            </Flex>
 
-        <Flex flexDirection='column' px="24px">
+            <Flex flexDirection='column' px="24px">
 
-          <Flex justifyContent='space-between' pb="8px">
-            <Box>
-              {currentAlbum.tags.map((tag, i) => (
-                <Badge mr='8px' px={2} bg={`${theme.colors.etBlue}`} key={i} height="18px" style={{ fontFamily: 'Spotify-Light' }}>
-                  {tag}
-                </Badge>
-              ))}
-            </Box>
+              <Flex justifyContent='space-between' pb="8px">
+                <Box>
+                  {currentAlbum.tags.map((tag, i) => (
+                    <Badge mr='8px' px={2} bg={`${theme.colors.etBlue}`} key={i} height="18px" style={{ fontFamily: 'Spotify-Light' }}>
+                      {tag}
+                    </Badge>
+                  ))}
+                </Box>
 
-            <Box>
-              ${currentAlbum.download_price}.00
-            </Box>
-          </Flex>
-
-          <Box fontWeight='semibold' fontSize="18px" lineHeight='tight' isTruncated color='white' pb="8px" style={{ fontFamily: 'Spotify-Bold' }}>
-            {currentAlbum.album_name}
-          </Box>
-
-          <Flex color='white' fontSize="18px" style={{ fontFamily: 'Spotify-Light' }} pb="8px" alignItems='center'>
-            <Link to={`/artist/${currentAlbum.artist_name}`}>
-              <Image src={`/uploads/${currentArtist.artist_img}`} width='32px' height='32px' borderRadius="50%" boxShadow='1px 1px 0 #89DBFF' objectFit='cover' />
-            </Link>
-            <Box pl='16px'>
-              {currentAlbum.artist_name}
-            </Box>
-          </Flex>
-          <Box>
-            {currentAlbum.type && 'LP - 2021'}
-          </Box>
-        </Flex>
-
-        <Stack spacing={6} pt="32px" px="24px">
-          {currentAlbum.tracks.map((track, i) => (
-            <Flex alignItems='center' justifyContent='center'>
-              <Box flex='1' fontFamily='Spotify-Bold'>{track.track_name}</Box>
-              <Flex flex='1' fontFamily='Spotify-Bold' justifyContent='flex-end' alignItems='center'>
-                <Box fontFamily='Spotify-Light' pr='16px'>${track.download_price}.00</Box>
-                <Box mt="4px">
-                  <IconButton
-                    variant='unstyled'
-                    aria-label='Download album'
-                    icon={<CartAdd />}
-                    onClick={() => this.addToCart(track._id, track.type)}
-                  />
-                  <IconButton
-                    variant='unstyled'
-                    variantColor='teal'
-                    aria-label='Add to playlist'
-                    icon={<PlaylistAdd />}
-                    onClick={() => this.addToPlaylist(track._id, track.type)}
-                  />
+                <Box>
+                  ${currentAlbum.download_price}.00
                 </Box>
               </Flex>
+
+              <Box fontWeight='semibold' fontSize="18px" lineHeight='tight' isTruncated color='white' pb="8px" style={{ fontFamily: 'Spotify-Bold' }}>
+                {currentAlbum.album_name}
+              </Box>
+
+              <Flex color='white' fontSize="18px" style={{ fontFamily: 'Spotify-Light' }} pb="8px" alignItems='center'>
+                <Link to={`/artist/${currentAlbum.artist_name}`}>
+                  <Image src={`/uploads/${currentArtist.artist_img}`} width='32px' height='32px' borderRadius="50%" boxShadow='1px 1px 0 #89DBFF' objectFit='cover' />
+                </Link>
+                <Box pl='16px'>
+                  {currentAlbum.artist_name}
+                </Box>
+              </Flex>
+              <Box>
+                {currentAlbum.type && 'LP - 2021'}
+              </Box>
             </Flex>
-          ))}
-        </Stack>
-      </Box >
+
+
+          </Flex>
+
+          <Stack spacing={3} pt="32px" px="24px">
+            {currentAlbum.tracks.map((track, i) => (
+              <Flex alignItems='center' justifyContent='center'>
+                <Box flex='1' fontFamily='Spotify-Bold'>{track.track_name}</Box>
+                <Flex flex='1' fontFamily='Spotify-Bold' justifyContent='flex-end' alignItems='center'>
+                  <Box fontFamily='Spotify-Light' pr='16px'>${track.download_price}.00</Box>
+                  <Box mt="4px">
+                    <IconButton
+                      variant='unstyled'
+                      aria-label='Download album'
+                      icon={<CartAdd />}
+                      onClick={() => this.addToCart(track._id, track.type)}
+                    />
+                    <IconButton
+                      variant='unstyled'
+                      variantColor='teal'
+                      aria-label='Add to playlist'
+                      icon={<PlaylistAdd />}
+                      onClick={() => this.addToPlaylist(track._id, track.type)}
+                    />
+                  </Box>
+                </Flex>
+              </Flex>
+            ))}
+          </Stack>
+        </Box>
+      </Flex>
     );
   }
 }

@@ -37,70 +37,71 @@ const Coins = ({ UserActions, auth, coins }) => {
   }
 
   return (
-    <Box backgroundColor={`${theme.colors.etBlack}`}>
+    <Box backgroundColor={`${theme.colors.etBlack}`} px={4}>
       <Helmet>
         <title>Electric Tooth - coins</title>
         <meta name='description' content='amazing' />
       </Helmet>
 
-      <Flex maxWidth='900px' m='auto' pb={4} mt='80px' flexDirection='column' justifyContent='center' alignItems='center'>
+      <Flex justify='center' mt='64px'>
+        <Box color='white' maxW='900px' flex='1' px={{ xs: 2, lg: 2 }}>
 
-        <Flex justifyContent='center' alignItems='center' px={4} pb={2}>
-          <Box justifyContent='center'>
-            <Image src='/3coins.png' />
-          </Box>
-
-          <Flex flexDirection='column' color="white" justifyContent='center' px={4}>
-            <Heading fontFamily='Spotify-Bold'>Coins</Heading>
-            <Box fontFamily='Spotify-Light'>Sustainably listen to your favorite artists.</Box>
-          </Flex>
-        </Flex>
-
-        <Flex justifyContent='center' alignItems='center' color={`${theme.colors.etViolet}`} fontFamily='Spotify-Bold' py={4} fontSize='12px'>
-          $0.01 USD = 1 coin = 1 stream. 100% goes to the artists!
-        </Flex>
-
-        {coins.map(({ _id, art_name, price, amount, type }) => (
-          <CoinContainer
-            color='white'
-            px={4}
-            boxShadow='8px 8px 0 #89DBFF'
-            border="2px solid #89DBFF"
-            borderRadius="20px"
-            h='100px'
-            mb='24px'
-            justifyContent='space-between'
-            alignItems='center'
-            mx={4}
-            minWidth='320px'
-          >
-
-            <Box>
-              <Image src={`/${art_name}`} />
+          <Flex justifyContent='center' alignItems='center' px={4} pb={2}>
+            <Box justifyContent='center'>
+              <Image src='/3coins.png' />
             </Box>
 
-            <Box fontFamily='Spotify-Light'>{amount} Coins</Box>
+            <Flex flexDirection='column' color="white" justifyContent='center' px={4}>
+              <Heading fontFamily='Spotify-Bold'>Coins</Heading>
+              <Box fontFamily='Spotify-Light'>Sustainably listen to your favorite artists.</Box>
+            </Flex>
+          </Flex>
 
-            <Button
-              bg={`${theme.colors.etBlue}`}
-              color='black'
-              onClick={() => addToCart(_id, type)}
-              _hover={{
-                bg: `${theme.colors.etBlue}`,
-              }}
-              h='29px'
-              w='80px'
-              fontSize='12px'
+          <Flex justifyContent='center' alignItems='center' color={`${theme.colors.etViolet}`} fontFamily='Spotify-Bold' py={4} fontSize='12px'>
+            $0.01 USD = 1 coin = 1 stream. 100% goes to the artists!
+          </Flex>
+
+          {coins.map(({ _id, art_name, price, amount, type }) => (
+            <CoinContainer
+              color='white'
+              px={4}
+              boxShadow='8px 8px 0 #89DBFF'
+              border="2px solid #89DBFF"
+              borderRadius="20px"
+              h='100px'
+              mb='24px'
+              justifyContent='space-between'
+              alignItems='center'
+              mx={4}
+              minWidth='320px'
             >
-              ${price}.00
-            </Button>
+
+              <Box>
+                <Image src={`/${art_name}`} />
+              </Box>
+
+              <Box fontFamily='Spotify-Light'>{amount} Coins</Box>
+
+              <Button
+                bg={`${theme.colors.etBlue}`}
+                color='black'
+                onClick={() => addToCart(_id, type)}
+                _hover={{
+                  bg: `${theme.colors.etBlue}`,
+                }}
+                h='29px'
+                w='80px'
+                fontSize='12px'
+              >
+                ${price}.00
+              </Button>
 
 
-          </CoinContainer>
-        ))}
+            </CoinContainer>
+          ))}
 
 
-
+        </Box>
       </Flex>
     </Box>
   );
