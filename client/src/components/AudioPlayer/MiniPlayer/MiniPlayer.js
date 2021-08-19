@@ -90,7 +90,7 @@ const MiniPlayer = ({
         />
 
         <Flex direction='column' onClick={() => setPlayerVisibility(!playerVisible)} w='100%' paddingLeft={4}>
-          <Text fontSize='sm' style={{ fontFamily: 'Spotify-Bold' }} color='white'>
+          <Text fontSize='sm' style={{ fontFamily: 'Spotify-Bold' }} color='white' maxWidth='180px' isTruncated>
             {track.length > 0 ? `${track[0].track_name}` : undefined}
           </Text>
           <Text fontSize='sm' style={{ fontFamily: 'Spotify-Light' }} color='white'>

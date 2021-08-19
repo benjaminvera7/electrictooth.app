@@ -56,7 +56,7 @@ const MobilePlayer = ({
         </Flex>
 
         <Flex direction='column' pb="18px">
-          <Text fontSize='24px' style={{ fontFamily: 'Spotify-Bold' }} color='white'>
+          <Text fontSize='24px' style={{ fontFamily: 'Spotify-Bold' }} color='white' maxWidth='180px' isTruncated>
             {track.length > 0 ? `${track[0].track_name}` : undefined}
           </Text>
           <Text fontSize='18px' style={{ fontFamily: 'Spotify-Light' }} color='white'>

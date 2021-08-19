@@ -46,7 +46,7 @@ const MobilePlaylistPanel = (props) => {
                   </Box>
 
                   <Flex direction='column' justify='center'>
-                    <Text color='white' fontSize='sm' fontFamily='Spotify-Bold'>
+                    <Text color='white' fontSize='sm' fontFamily='Spotify-Bold' maxWidth='180px' isTruncated>
                       {track.track_name}
                     </Text>
                     <Text color='white' fontSize='sm' fontFamily='Spotify-Light'>
