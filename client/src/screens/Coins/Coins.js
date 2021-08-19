@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Box, Flex, Text, Heading, Image, Button, Icon } from '@chakra-ui/react';
+import { Box, Flex, Text, Heading, Image, Button, Icon, useToast } from '@chakra-ui/react';
 import { Toll } from 'components/Icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -7,7 +7,6 @@ import * as userActions from 'redux/modules/user';
 import useRouter from 'hooks/useRouter';
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
-import toast from 'util/toast';
 import theme from 'theme.js';
 import Helmet from 'react-helmet';
 
@@ -22,11 +21,17 @@ const CoinContainer = styled(Flex)`
 
 const Coins = ({ UserActions, auth, coins }) => {
   const router = useRouter();
+  const toast = useToast()
 
   const addToCart = (id, type) => {
     if (auth) {
       UserActions.addToCart(id, type);
-      toast(`Added to your Cart`);
+      toast({
+        title: "Added to your Cart",
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      })
     } else {
       router.push('/signup');
     }

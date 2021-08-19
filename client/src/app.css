@@ -330,3 +330,13 @@
 .zoom:hover {
   transform: scale(0.95);
 }
+
+.chakra-alert {
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px !important;
+  bottom: 100px;
+  background-color: var(--et-violet) !important;
+}

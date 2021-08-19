@@ -11,7 +11,7 @@ const PlaylistCard = styled(Flex)`
 `;
 
 const Panel = styled(Box)`
-  background: linear-gradient(180deg, #324148 0%, #000000 50%)
+  background: linear-gradient(180deg, #324148 50%, #000000 100%)
 `;
 
 const Remove = () => (
@@ -57,7 +57,7 @@ const DesktopPlaylistPanel = ({
   user,
 }) => {
   return (
-    <Panel minHeight='100vh' px={8}>
+    <Panel minHeight='500px' px={8}>
 
       <Flex h='100px' alignItems='center'>
 

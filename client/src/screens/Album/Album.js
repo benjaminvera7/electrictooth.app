@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Box, Flex, Text, Image, Heading, Stack, Badge, IconButton, Icon } from '@chakra-ui/react';
+import { Box, Flex, Text, Image, Heading, Stack, Badge, IconButton, useToast } from '@chakra-ui/react';
 //import { PlaylistAdd, CartAdd } from 'components/Icons';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -29,125 +29,129 @@ const PlaylistAdd = () => (
   </Flex>
 );
 
-class Album extends Component {
-  addToCart = (id, type) => {
-    if (this.props.auth) {
-      this.props.UserActions.addToCart(id, type);
-      toast(`Added to your Cart`);
+const Album = ({ pending, match, albums, artists, UserActions, history, auth }) => {
+  const toast = useToast()
+
+  let albumName = match.params.name.replaceAll('-', ' ');
+  let currentAlbum = albums.filter((a) => a.album_name === albumName)[0];
+  let currentArtist = artists.filter((a) => a._id === currentAlbum.artist)[0];
+  let artistAlbums = albums.filter((a) => a.artist_name === currentArtist.artist_name);
+
+  const addToCart = (id, type) => {
+    if (auth) {
+      UserActions.addToCart(id, type);
+      toast({
+        title: "Added to your Cart",
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      })
     } else {
-      this.props.history.push('/signup');
+      history.push('/signup');
     }
   };
 
-  addToPlaylist = (id, type) => {
-    if (this.props.auth) {
-      this.props.UserActions.addToPlaylist(id, type);
-      toast(`Saved to your Playlist`);
+  const addToPlaylist = (id, type) => {
+    if (auth) {
+      UserActions.addToPlaylist(id, type);
+      toast({
+        title: "Saved to your Playlist",
+        duration: 3000,
+        status: 'success',
+        isClosable: true,
+      })
     } else {
-      this.props.history.push('/signup');
+      history.push('/signup');
     }
   };
 
-  render() {
-    let { pending, match, albums, artists } = this.props;
+  if (pending || pending === undefined) {
+    return <div>loading</div>;
+  }
 
-    let albumName = match.params.name.replaceAll('-', ' ');
-    let currentAlbum = albums.filter((a) => a.album_name === albumName)[0];
-    let currentArtist = artists.filter((a) => a._id === currentAlbum.artist)[0];
-    let artistAlbums = albums.filter((a) => a.artist_name === currentArtist.artist_name);
+  return (
+    <Flex justify='center' mt='64px' backgroundColor={`${theme.colors.etBlack}`}>
+      <Box color='white' maxW='900px' flex='1' px={{ xs: 2, lg: 2 }}>
 
-    if (pending || pending === undefined) {
-      return <div>loading</div>;
-    }
+        <Flex display={{ md: "flex" }}>
 
-    return (
-      <Flex justify='center' mt='64px' backgroundColor={`${theme.colors.etBlack}`}>
-        <Box color='white' maxW='900px' flex='1' px={{ xs: 2, lg: 2 }}>
-
-          <Flex display={{ md: "flex" }}>
-
-            <Flex justifyContent='center' mb='24px'>
-              <Image
-                src={`/uploads/${currentAlbum.art_name}`}
-                maxWidth='264px'
-                maxHeight='264px'
-                borderRadius="16px"
-                border="2px solid #89DBFF"
-                boxShadow='8px 8px 0 #89DBFF'
-              />
-            </Flex>
-
-            <Flex flexDirection='column' px="24px" width='100%'>
-
-              <Flex>
-                <Box flex='2'>
-                  {currentAlbum.tags.map((tag, i) => (
-                    <Badge mr='8px' px={2} bg={`${theme.colors.etBlue}`} key={i} height="18px" style={{ fontFamily: 'Spotify-Light' }}>
-                      {tag}
-                    </Badge>
-                  ))}
-                </Box>
-                <Box>
-                  ${currentAlbum.download_price}.00
-                </Box>
-              </Flex>
-
-
-
-              {/* title */}
-              <Box fontWeight='semibold' fontSize="18px" lineHeight='tight' isTruncated color='white' pb="8px" style={{ fontFamily: 'Spotify-Bold' }}>
-                {currentAlbum.album_name}
-              </Box>
-
-              {/* img */}
-              <Flex color='white' fontSize="18px" style={{ fontFamily: 'Spotify-Light' }} pb="8px" alignItems='center'>
-                <Link to={`/artist/${currentAlbum.artist_name}`}>
-                  <Image src={`/uploads/${currentArtist.artist_img}`} width='32px' height='32px' borderRadius="50%" boxShadow='1px 1px 0 #89DBFF' objectFit='cover' />
-                </Link>
-                <Box pl='16px'>
-                  {currentAlbum.artist_name}
-                </Box>
-              </Flex>
-
-              {/* type */}
-              <Box>
-                {currentAlbum.type && 'LP - 2021'}
-              </Box>
-
-            </Flex>
+          <Flex justifyContent='center' mb='24px'>
+            <Image
+              src={`/uploads/${currentAlbum.art_name}`}
+              maxWidth='264px'
+              maxHeight='264px'
+              borderRadius="16px"
+              border="2px solid #89DBFF"
+              boxShadow='8px 8px 0 #89DBFF'
+            />
           </Flex>
 
-          <Stack spacing={3} pt="32px" px="24px">
-            {currentAlbum.tracks.map((track, i) => (
-              <Flex alignItems='center' justifyContent='center' height='48px' alignItems='center'>
-                <Flex flex='2' fontFamily='Spotify-Bold'>{track.track_name}</Flex>
-                <Flex fontFamily='Spotify-Light' pr='16px'>
-                  ${track.download_price}.00
-                </Flex>
-                <Flex w='48px' justifyContent='center' alignItems='center'>
-                  <IconButton
-                    variant='unstyled'
-                    aria-label='Download album'
-                    icon={<CartAdd />}
-                    onClick={() => this.addToCart(track._id, track.type)}
-                  />
-                </Flex>
-                <Flex w='48px' justifyContent='center' alignItems='center'>
-                  <IconButton
-                    variant='unstyled'
-                    variantColor='teal'
-                    aria-label='Add to playlist'
-                    icon={<PlaylistAdd />}
-                    onClick={() => this.addToPlaylist(track._id, track.type)}
-                  />
-                </Flex>
+          <Flex flexDirection='column' px="24px" width='100%'>
+
+            <Flex>
+              <Box flex='2'>
+                {currentAlbum.tags.map((tag, i) => (
+                  <Badge mr='8px' px={2} bg={`${theme.colors.etBlue}`} key={i} height="18px" style={{ fontFamily: 'Spotify-Light' }}>
+                    {tag}
+                  </Badge>
+                ))}
+              </Box>
+              <Box>
+                ${currentAlbum.download_price}.00
+              </Box>
+            </Flex>
+
+            <Box fontWeight='semibold' fontSize="18px" lineHeight='tight' isTruncated color='white' pb="8px" style={{ fontFamily: 'Spotify-Bold' }}>
+              {currentAlbum.album_name}
+            </Box>
+
+            <Flex color='white' fontSize="18px" style={{ fontFamily: 'Spotify-Light' }} pb="8px" alignItems='center'>
+              <Link to={`/artist/${currentAlbum.artist_name}`}>
+                <Image src={`/uploads/${currentArtist.artist_img}`} width='32px' height='32px' borderRadius="50%" boxShadow='1px 1px 0 #89DBFF' objectFit='cover' />
+              </Link>
+              <Box pl='16px'>
+                {currentAlbum.artist_name}
+              </Box>
+            </Flex>
+
+            <Box>
+              {currentAlbum.type && 'LP - 2021'}
+            </Box>
+
+          </Flex>
+        </Flex>
+
+        <Stack spacing={3} pt="32px" px="24px">
+          {currentAlbum.tracks.map((track, i) => (
+            <Flex alignItems='center' justifyContent='center' height='48px' alignItems='center'>
+              <Flex flex='2' fontFamily='Spotify-Bold'>{track.track_name}</Flex>
+              <Flex fontFamily='Spotify-Light' pr='16px'>
+                ${track.download_price}.00
               </Flex>
-            ))}
-          </Stack>
-        </Box>
-      </Flex>
-    );
-  }
+              <Flex w='48px' justifyContent='center' alignItems='center'>
+                <IconButton
+                  variant='unstyled'
+                  aria-label='Download album'
+                  icon={<CartAdd />}
+                  onClick={() => addToCart(track._id, track.type)}
+                />
+              </Flex>
+              <Flex w='48px' justifyContent='center' alignItems='center'>
+                <IconButton
+                  variant='unstyled'
+                  variantColor='teal'
+                  aria-label='Add to playlist'
+                  icon={<PlaylistAdd />}
+                  onClick={() => addToPlaylist(track._id, track.type)}
+                />
+              </Flex>
+            </Flex>
+          ))}
+        </Stack>
+      </Box>
+    </Flex>
+  );
+
 }
 
 export default connect(
@@ -165,46 +169,3 @@ export default connect(
     UserActions: bindActionCreators(userActions, dispatch),
   }),
 )(Album);
-
-/*
-
-          <Flex justifyContent='space-between' pb="8px">
-                <Flex>
-                  <Box>
-                    {currentAlbum.tags.map((tag, i) => (
-                      <Badge mr='8px' px={2} bg={`${theme.colors.etBlue}`} key={i} height="18px" style={{ fontFamily: 'Spotify-Light' }}>
-                        {tag}
-                      </Badge>
-                    ))}
-                  </Box>
-
-
-                  <Box>
-                    ${currentAlbum.download_price}.00
-                  </Box>
-                </Flex>
-              </Flex>
-
-
-              <Flex alignItems='center' justifyContent='center'>
-                <Box flex='1' fontFamily='Spotify-Bold'>{track.track_name}</Box>
-                <Flex flex='1' fontFamily='Spotify-Bold' justifyContent='flex-end' alignItems='center'>
-
-                  <Box mt="4px">
-                    <IconButton
-                      variant='unstyled'
-                      aria-label='Download album'
-                      icon={<CartAdd />}
-                      onClick={() => this.addToCart(track._id, track.type)}
-                    />
-                    <IconButton
-                      variant='unstyled'
-                      variantColor='teal'
-                      aria-label='Add to playlist'
-                      icon={<PlaylistAdd />}
-                      onClick={() => this.addToPlaylist(track._id, track.type)}
-                    />
-                  </Box>
-                </Flex>
-              </Flex>
-*/

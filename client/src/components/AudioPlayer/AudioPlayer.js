@@ -12,7 +12,8 @@ import MobileNavigation from 'components/MobileNavigation';
 import MobilePlaylistPanel from './MobilePlaylistPanel';
 import useWindowSize from 'hooks/useWindowSize';
 import useEventListener from 'hooks/useEventListener';
-import toast from 'util/toast';
+import { useToast } from '@chakra-ui/react';
+
 import debounce from 'util/debounce';
 import theme from 'theme.js';
 
@@ -46,6 +47,7 @@ const PlaylistPanel = slideHOC(Panel);
 const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   const [playlistVisible, setPlaylistVisibility] = useState(false);
   const [loading, setPending] = useState(false);
+  const toast = useToast()
 
   const isMobile = useWindowSize();
   const audio = useRef(null);
@@ -210,7 +212,13 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
     } catch (e) {
       setPending(false);
       setPlaying(false);
-      toast('Not enough coins');
+
+      toast({
+        title: "Not enough coins",
+        status: 'warning',
+        duration: 3000,
+        isClosable: true,
+      })
       console.log('something went wrong', e);
     }
   };

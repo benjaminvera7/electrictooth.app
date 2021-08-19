@@ -14,6 +14,7 @@ import {
   Image,
   Icon,
   IconButton,
+  useToast
 } from '@chakra-ui/react';
 import { Toll } from 'components/Icons';
 import { Link } from 'react-router-dom';
@@ -22,7 +23,6 @@ import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
 import requireAuth from 'components/AuthHOC/requireAuth';
 import axios from 'axios';
-import toast from 'util/toast';
 import theme from 'theme.js';
 import Helmet from 'react-helmet';
 
@@ -53,16 +53,30 @@ const Download = () => (
 )
 
 const Profile = ({ UserActions, user, auth, history, library }) => {
+  const toast = useToast()
+
   const addToPlaylist = (id, type) => {
     if (auth) {
       UserActions.addToPlaylist(id, type);
-      toast(`Saved to your Playlist`);
+      toast({
+        title: "Saved to your Playlist",
+        duration: 3000,
+        status: 'success',
+        isClosable: true,
+      })
     } else {
       console.warn('something went wrong');
     }
   };
 
   const handleSubmit = (e, id, type, album_name, track_name) => {
+    toast({
+      title: "Starting download...",
+      duration: 3000,
+      status: 'success',
+      isClosable: true,
+    })
+
     e.preventDefault();
     axios({
       url: `/api/v1/download/${id}`,
