@@ -85,21 +85,6 @@
   padding: 0 16px 0 16px;
 }
 
-.mini-player {
-  position: fixed;
-  display: flex;
-  bottom: 50px;
-  z-index: 3;
-  background-color: var(--et-gray);
-  color: var(--color-50);
-  height: 50px;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 0 8px 0 0px;
-  border-bottom: 1px solid var(--et-black);
-}
-
 .panel {
   position: fixed;
   display: flex;
