@@ -261,9 +261,9 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
 
   useEventListener('keydown', debounce(handlePlay, 500, false))
 
-  if (isMobile && isSafari()) {
-    bindSafariAutoPlayEvents();
-  }
+  // if (isMobile && isSafari()) {
+  //   bindSafariAutoPlayEvents();
+  // }
 
 
   return (
