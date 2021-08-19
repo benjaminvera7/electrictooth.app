@@ -15,7 +15,7 @@ import {
   Icon,
   IconButton,
 } from '@chakra-ui/react';
-import { Toll, Download } from 'components/Icons';
+import { Toll } from 'components/Icons';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -35,12 +35,22 @@ const ProfileCard = styled(Box)`
 
 
 const PlaylistAdd = () => (
-  <Icon>
-    <svg width="24" height="30" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M16.8571 5.61905H0V8.42857H16.8571V5.61905ZM16.8571 0H0V2.80952H16.8571V0ZM22.4762 11.2381V5.61905H19.6667V11.2381H14.0476V14.0476H19.6667V19.6667H22.4762V14.0476H28.0952V11.2381H22.4762ZM0 14.0476H11.2381V11.2381H0V14.0476Z" fill="#89DBFF" />
+  <Flex h='48px' alignItems='center'>
+    <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12.8713 4.95783H0.677734V6.99008H12.8713V4.95783ZM12.8713 0.893311H0.677734V2.92557H12.8713V0.893311ZM16.9358 9.02234V4.95783H14.9035V9.02234H10.839V11.0546H14.9035V15.1191H16.9358V11.0546H21.0003V9.02234H16.9358ZM0.677734 11.0546H8.80677V9.02234H0.677734V11.0546Z" fill="#89DBFF" />
     </svg>
-  </Icon>
+  </Flex>
 );
+
+const Download = () => (
+  <Flex h='48px' alignItems='center'>
+    <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M9 0.5V12.125" stroke="#89DBFF" stroke-width="2" stroke-miterlimit="10" />
+      <path d="M4.5 7.625L9 12.125L13.5 7.625" stroke="#89DBFF" stroke-width="2" stroke-miterlimit="10" stroke-linecap="square" />
+      <path d="M1.125 15.5H16.875" stroke="#89DBFF" stroke-width="2" stroke-miterlimit="10" stroke-linecap="square" />
+    </svg>
+  </Flex>
+)
 
 const Profile = ({ UserActions, user, auth, history, library }) => {
   const addToPlaylist = (id, type) => {
@@ -76,6 +86,88 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
     });
   };
 
+  const renderLineItems = (item) => {
+    switch (item.type) {
+      case 'album':
+        return renderAlbumItem(item)
+      case 'track':
+        return renderTrackItem(item)
+      default:
+        return null
+    }
+  }
+
+  const renderAlbumItem = (album) => {
+    return (
+      <Flex alignItems='center'>
+        <Box width="48px" height="48px" overflow='hidden' position='relative' >
+          <Link to={`/music/${album.album_name.replaceAll('-', ' ')}`}>
+            <Image src={`/uploads/${album.art_name}`} h='100%' w='100%' objectFit='cover' />
+          </Link>
+        </Box>
+        <Flex pl={4} flexDirection="column" justifyContent='center' flex='2'>
+          <Text fontSize='xs' style={{ fontFamily: 'Spotify-Bold' }} color='white' maxWidth='180px' isTruncated>
+            {`${album.album_name} (EP)`}
+          </Text>
+          <Text fontSize='xs' style={{ fontFamily: 'Spotify-Light' }} color='white'>
+            {album.artist_name}
+          </Text>
+        </Flex>
+        <Flex w='48px' justifyContent='center' alignItems='center'>
+          <IconButton
+            variant='link'
+            aria-label='Download album'
+            icon={<Download />}
+            onClick={(e) => handleSubmit(e, album._id, album.type, album.album_name, album.track_name)}
+          />
+        </Flex>
+        <Flex w='48px' justifyContent='center' alignItems='center'>
+          <IconButton
+            variant='link'
+            aria-label='Add to playlist'
+            icon={<PlaylistAdd />}
+            onClick={() => addToPlaylist(album._id, album.type)}
+          />
+        </Flex>
+      </Flex>
+    )
+  }
+  const renderTrackItem = (track) => {
+    return (
+      <Flex alignItems='center'>
+        <Box width="48px" height="48px" overflow='hidden' position='relative' >
+          <Link to={`/music/${track.album_name.replaceAll('-', ' ')}`}>
+            <Image src={`/uploads/${track.art_name}`} h='100%' w='100%' objectFit='cover' />
+          </Link>
+        </Box>
+        <Flex pl={4} flexDirection="column" justifyContent='center' flex='2'>
+          <Text fontSize='xs' style={{ fontFamily: 'Spotify-Bold' }} color='white' maxWidth='180px' isTruncated>
+            {`${track.track_name} (MP3)`}
+          </Text>
+          <Text fontSize='xs' style={{ fontFamily: 'Spotify-Light' }} color='white'>
+            {track.artist_name}
+          </Text>
+        </Flex>
+        <Flex w='48px' justifyContent='center' alignItems='center'>
+          <IconButton
+            variant='link'
+            aria-label='Download track'
+            icon={<Download />}
+            onClick={(e) => handleSubmit(e, track._id, track.type, track.album_name, track.track_name)}
+          />
+        </Flex>
+        <Flex w='48px' justifyContent='center' alignItems='center'>
+          <IconButton
+            variant='link'
+            aria-label='Add to playlist'
+            icon={<PlaylistAdd />}
+            onClick={() => addToPlaylist(track._id, track.type)}
+          />
+        </Flex>
+      </Flex>
+    )
+  }
+
   //http://localhost:3000/download/6118a5599811a50c786bb2e4
   return (
     <Box backgroundColor={`${theme.colors.etBlack}`} px={4}>
@@ -108,11 +200,56 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
               <Tab><Text fontSize="14px" fontFamily='Spotify-Bold'>Settings</Text></Tab>
             </TabList>
             <TabPanels>
-              <TabPanel>
+              <TabPanel px={0}>
                 <Stack>
-                  {library.length > 0 ? (
-                    library.map((album, i) => (
-                      <Flex alignItems='center'>
+                  {library.length > 0
+                    ? library.map((item, i) => renderLineItems(item))
+                    : (
+                      <Flex justify='center' color='grey'>
+                        <Box fontSize='sm' py={2} color='grey'>
+                          <span>
+                            your collection is empty.{' '}
+                            <Link onClick={() => history.push('/')} style={{ color: '#00a3c4' }}>
+                              check out our catalog!
+                            </Link>
+                          </span>
+                        </Box>
+                      </Flex>
+                    )}
+                </Stack>
+              </TabPanel>
+              <TabPanel>
+                order history
+              </TabPanel>
+              <TabPanel>
+                <Flex justify='flex-end'>
+                  <Button
+                    isFullWidth={true}
+                    variant='solid'
+                    bg={`${theme.colors.etBlue}`}
+                    color='black'
+                    fontFamily='Spotify-Light'
+                    onClick={() => {
+                      UserActions.signOut();
+                      history.push('/signin');
+                    }}
+                  >
+                    Log out
+                  </Button>
+                </Flex>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </ProfileCard>
+      </Flex>
+    </Box>
+  );
+};
+
+/**
+ * 
+ * 
+ * <Flex alignItems='center'>
                         <Box width="48px" height="48px" overflow='hidden' position='relative' >
                           <Link to={`/music/${album.album_name.replaceAll('-', ' ')}`}>
                             <Image src={`/uploads/${album.art_name}`} h='100%' w='100%' objectFit='cover' />
@@ -148,102 +285,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
                         />
 
                       </Flex>
-                    ))
-                  ) : (
-                    <Flex justify='center' color='grey'>
-                      <Box fontSize='sm' py={2} color='grey'>
-                        <span>
-                          your collection is empty.{' '}
-                          <Link onClick={() => history.push('/')} style={{ color: '#00a3c4' }}>
-                            check out our catalog!
-                          </Link>
-                        </span>
-                      </Box>
-                    </Flex>
-                  )}
-                </Stack>
-              </TabPanel>
-              <TabPanel>
-                order history
-              </TabPanel>
-              <TabPanel>
-                <Flex justify='flex-end'>
-                  <Button
-                    isFullWidth={true}
-                    variant='solid'
-                    bg={`${theme.colors.etBlue}`}
-                    color='black'
-                    fontFamily='Spotify-Light'
-                    onClick={() => {
-                      UserActions.signOut();
-                      history.push('/signin');
-                    }}
-                  >
-                    Log out
-                  </Button>
-                </Flex>
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
-        </ProfileCard>
-      </Flex>
-    </Box>
-  );
-};
-
-/*
-                      <Flex borderWidth='1px' key={i} bg='white' borderRadius="20px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'>
-                        <Box>
-                          <Link to={`/music/${album.album_name.replaceAll('-', ' ')}`}>
-                            <Image src={`/uploads/${album.art_name}`} maxWidth='100px' borderRadius="20px 0 0 20px" />
-                          </Link>
-                        </Box>
-                        <Box p={2}>
-                          <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600'>
-                            {album.album_name && album.album_name}
-                            {album.track_name && `${album.track_name} (MP3)`}
-                          </Heading>
-                          <Text fontSize={['xs', 'sm', 'md', 'lg']} mb={4} color='gray.500'>
-                            {album.artist_name}
-                          </Text>
-                        </Box>
-                        <Box mx='auto' />
-                        <Flex direction='column'>
-                          <IconButton
-                            flex='1'
-                            variant='ghost'
-                            variantColor='teal'
-                            aria-label='Download album'
-                            fontSize='20px'
-                            style={{
-                              borderLeft: '1px',
-                              borderBottom: '1px',
-                              borderStyle: 'solid',
-                              borderColor: 'rgba(5, 174, 165, 0.3)',
-                            }}
-                            rounded='0px'
-                            icon={() => <Download color={`${theme.colors.etGreen}`} />}
-                            onClick={(e) => handleSubmit(e, album._id, album.type, album.album_name, album.track_name)}
-                          />
-                          <IconButton
-                            flex='1'
-                            variant='ghost'
-                            variantColor='teal'
-                            aria-label='Add to playlist'
-                            fontSize='20px'
-                            rounded='0px'
-                            style={{
-                              borderLeft: '1px',
-                              borderStyle: 'solid',
-                              borderColor: 'rgba(5, 174, 165, 0.3)',
-                            }}
-                            icon={() => <PlaylistAdd color={`${theme.colors.etGreen}`} />}
-                            onClick={() => addToPlaylist(album._id, album.type)}
-                          />
-                        </Flex>
-                      </Flex>
-
-*/
+ */
 
 export default connect(
   (state) => ({

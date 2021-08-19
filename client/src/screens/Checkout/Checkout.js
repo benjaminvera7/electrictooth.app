@@ -229,14 +229,12 @@ class Checkout extends Component {
         <CartItem
           flex='2'
           alignItems='center'
-          px={4}
           boxShadow='8px 8px 0 #89DBFF'
           border="2px solid #89DBFF"
           borderRadius="18px"
           mb='18px'
           justifyContent='space-between'
           alignItems='center'
-          mx={4}
           minWidth='320px'
         >
           <Box width="72px" height="72px" overflow='hidden' position='relative' ml='-16px' borderRadius='16px 0 0 16px'>
@@ -308,13 +306,13 @@ class Checkout extends Component {
           <meta name='description' content='amazing' />
         </Helmet>
 
-        <CheckoutItems justify='center' mt='64px' px={{ sm: '8px', md: '0px' }}>
+        <CheckoutItems justify='center' mt='64px'>
           <Box color='white' maxW='900px' flex='1'>
-            <Heading pt={2} as='h4' size='md' color='white' fontFamily='Spotify-Bold' px={4}>
+            <Heading pt={2} as='h4' size='md' color='white' fontFamily='Spotify-Bold' px='10px'>
               Checkout
             </Heading>
 
-            <Text fontSize='md' mb={4} color='white' px={4} fontFamily='Spotify-Light'>
+            <Text fontSize='md' mb={4} color='white' fontFamily='Spotify-Light' px='10px'>
               Review your order
             </Text>
 
@@ -322,7 +320,7 @@ class Checkout extends Component {
               Electric Tooth currently only accepts PayPal & Ethereum payments
             </Text> */}
 
-            <Flex justify='center' py={4} px={4}>
+            <Flex justify='center' py={4}>
               <Heading as='h3' fontSize={['lg', 'xl']} color={`${theme.colors.etViolet}`}>
                 100% of this purchase goes to the artist
               </Heading>

@@ -184,7 +184,7 @@ const Cart = ({ UserActions, auth, cart }) => {
           </Heading>
 
           <Text fontSize='md' mb={4} color='white' px={4} fontFamily='Spotify-Light'>
-            {cart.items?.length && `(${cart.items.length} items)`}
+            {cart.items?.length ? `(${cart.items.length} items)` : `(0 items)`}
           </Text>
 
           <Stack>
