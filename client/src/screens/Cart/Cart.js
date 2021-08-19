@@ -197,7 +197,7 @@ const Cart = ({ UserActions, auth, cart }) => {
             }
 
             {cart.items?.length > 0 ? (
-              <>
+              <Box px={2}>
                 <Flex justify='flex-end' pt={4}>
                   <Box px={2} color='white' fontFamily='Spotify-Light'>
                     Subtotal ({cart.items !== undefined ? cart.items.length : 0}):
@@ -214,7 +214,7 @@ const Cart = ({ UserActions, auth, cart }) => {
                     </Box>
                   </Link>
                 </Flex>
-              </>
+              </Box>
             ) : undefined}
           </Stack>
         </Box>

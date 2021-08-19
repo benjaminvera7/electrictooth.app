@@ -336,14 +336,14 @@ class Checkout extends Component {
               )}
             </Stack>
 
-            <Flex justify='flex-end' py={2} px={2} mt={4}>
+            <Flex justify='flex-end' py={2} mt={4}>
               <Box px={2} color='white' fontFamily='Spotify-Light'>
                 Subtotal ({`${user.cart.items.length}`} items):
               </Box>
               <Box color='white'>${`${user.cart.total}`}.00</Box>
             </Flex>
 
-            <Flex justify='flex-end' pb={2} pt={0} px={2}>
+            <Flex justify='flex-end' pb={2} pt={0}>
               <Box color='white' px={2} fontFamily='Spotify-Light'>
                 Total:
               </Box>
