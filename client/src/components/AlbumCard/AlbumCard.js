@@ -42,7 +42,7 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
 
       toast({
         title: "Saved to your Playlist",
-        duration: 3000,
+        duration: 2000,
         status: 'success',
         isClosable: true,
       })
@@ -58,7 +58,7 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
       toast({
         title: "Added to your Cart",
         status: 'success',
-        duration: 3000,
+        duration: 2000,
         isClosable: true,
       })
     } else {
@@ -143,6 +143,8 @@ export default connect(
     auth: state.user.authenticated,
     collection: state.user.albumCollection,
     playlist: state.user.playlist,
+    updatedAt: state.music.updatedAt,
+    updatedUserAt: state.user.updatedAt,
   }),
   (dispatch) => ({
     UserActions: bindActionCreators(userActions, dispatch),

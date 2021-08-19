@@ -60,7 +60,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
       UserActions.addToPlaylist(id, type);
       toast({
         title: "Saved to your Playlist",
-        duration: 3000,
+        duration: 2000,
         status: 'success',
         isClosable: true,
       })
@@ -72,7 +72,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
   const handleSubmit = (e, id, type, album_name, track_name) => {
     toast({
       title: "Starting download...",
-      duration: 3000,
+      duration: 2000,
       status: 'success',
       isClosable: true,
     })
@@ -260,52 +260,13 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
   );
 };
 
-/**
- * 
- * 
- * <Flex alignItems='center'>
-                        <Box width="48px" height="48px" overflow='hidden' position='relative' >
-                          <Link to={`/music/${album.album_name.replaceAll('-', ' ')}`}>
-                            <Image src={`/uploads/${album.art_name}`} h='100%' w='100%' objectFit='cover' />
-                          </Link>
-                        </Box>
-                        <Flex pl={4} flexDirection="column" flex='2' justifyContent='center'>
-                          <Text fontSize='xs' style={{ fontFamily: 'Spotify-Bold' }} color='white'>
-                            {album.track_name
-                              ? `${album.track_name} (MP3)`
-                              : `${album.album_name} (EP)`
-                            }
-                          </Text>
-                          <Text fontSize='xs' style={{ fontFamily: 'Spotify-Light' }} color='white'>
-                            {album.artist_name}
-                          </Text>
-                        </Flex>
-
-                        <IconButton
-                          mr={2}
-                          variant='link'
-                          height='32px'
-                          aria-label='Download album'
-                          icon={<Download />}
-                          onClick={(e) => handleSubmit(e, album._id, album.type, album.album_name, album.track_name)}
-                        />
-
-                        <IconButton
-                          variant='link'
-                          height='32px'
-                          aria-label='Add to playlist'
-                          icon={<PlaylistAdd />}
-                          onClick={() => addToPlaylist(album._id, album.type)}
-                        />
-
-                      </Flex>
- */
-
 export default connect(
   (state) => ({
     user: state.user,
     auth: state.user.authenticated,
     library: state.user.library,
+    updatedAt: state.music.updatedAt,
+    updatedUserAt: state.user.updatedAt,
   }),
   (dispatch) => ({
     UserActions: bindActionCreators(userActions, dispatch),

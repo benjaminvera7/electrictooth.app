@@ -216,7 +216,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
       toast({
         title: "Not enough coins",
         status: 'warning',
-        duration: 3000,
+        duration: 2000,
         isClosable: true,
       })
       console.log('something went wrong', e);
@@ -330,6 +330,8 @@ export default connect(
     auth: state.user.authenticated,
     playlist: state.user.playlist,
     coins: state.user.coins,
+    updatedAt: state.music.updatedAt,
+    updatedUserAt: state.user.updatedAt,
   }),
   (dispatch) => ({
     UserActions: bindActionCreators(userActions, dispatch),

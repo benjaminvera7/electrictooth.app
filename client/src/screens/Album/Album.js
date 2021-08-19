@@ -43,7 +43,7 @@ const Album = ({ pending, match, albums, artists, UserActions, history, auth }) 
       toast({
         title: "Added to your Cart",
         status: 'success',
-        duration: 3000,
+        duration: 2000,
         isClosable: true,
       })
     } else {
@@ -56,7 +56,7 @@ const Album = ({ pending, match, albums, artists, UserActions, history, auth }) 
       UserActions.addToPlaylist(id, type);
       toast({
         title: "Saved to your Playlist",
-        duration: 3000,
+        duration: 2000,
         status: 'success',
         isClosable: true,
       })
