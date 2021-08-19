@@ -233,6 +233,8 @@ class Checkout extends Component {
           border="2px solid #89DBFF"
           borderRadius="18px"
           mb='18px'
+          px={4}
+          mx={4}
           justifyContent='space-between'
           alignItems='center'
           minWidth='320px'

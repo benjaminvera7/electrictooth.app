@@ -72,7 +72,8 @@ const DesktopPlayer = ({
               <Box
                 h='74px'
                 w='74px'
-                backgroundColor={`${theme.colors.etGreen}`}
+                backgroundColor={`${theme.colors.etViolet}`}
+                opacity="0.2"
               />
             }
 

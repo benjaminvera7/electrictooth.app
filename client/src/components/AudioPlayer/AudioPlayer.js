@@ -262,7 +262,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
     <Fragment>
       <audio key='audio' ref={audio} type='audio/mpeg' />
 
-      {isMobile ? (
+      {(isMobile && playlist.length > 0) && (
         <>
           <MiniPlayer
             playing={playing}
@@ -279,10 +279,12 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
             setPlaylistVisibility={setPlaylistVisibility}
             loading={loading}
           />
-
-          <MobileNavigation playlistVisible={playlistVisible} setPaylistVisibility={setPlaylistVisibility} />
         </>
-      ) : (
+      )}
+
+      {isMobile && <MobileNavigation playlistVisible={playlistVisible} setPaylistVisibility={setPlaylistVisibility} />}
+
+      {!isMobile && (
         <DesktopPlayer
           playing={playing}
           handlePlay={play}

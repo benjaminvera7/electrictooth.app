@@ -21,7 +21,7 @@ const MobilePlaylistPanel = (props) => {
       <Box minHeight='100vh'>
         <Stack pt={2}>
 
-          <Box px={2}>
+          <Flex h='48px' alignItems='center' p={2}>
             <Button
               variant='link'
               onClick={() => props.setPlaylistVisibility(!props.playlistVisible)}
@@ -29,7 +29,7 @@ const MobilePlaylistPanel = (props) => {
             >
               <ChevronDown />
             </Button>
-          </Box>
+          </Flex>
 
           <Box px={4} color='white' fontFamily='Spotify-Bold' fontSize='24px' pb={2}>Playlist</Box>
 
@@ -59,15 +59,21 @@ const MobilePlaylistPanel = (props) => {
                   <Flex align='center' minWidth='100px' justify='space-evenly'>
                     {props.currentlyPlaying === track._id ? (
                       <Button variant='link' onClick={props.handlePlay} isLoading={props.loading}>
-                        {props.playing ? <Pause /> : <Play />}
+                        <Flex h='48px' alignItems='center' justifyContent='center'>
+                          {props.playing ? <Pause /> : <Play />}
+                        </Flex>
                       </Button>
                     ) : (
                       <Button variant='link' onClick={() => props.fetch(track._id)}>
-                        <Play />
+                        <Flex h='48px' alignItems='center' justifyContent='center'>
+                          <Play />
+                        </Flex>
                       </Button>
                     )}
                     <Button variant='link' onClick={() => props.remove(track._id)}>
-                      <Remove />
+                      <Flex h='48px' alignItems='center' justifyContent='center'>
+                        <Remove />
+                      </Flex>
                     </Button>
                   </Flex>
                 </PlaylistCard>

@@ -70,31 +70,35 @@ const Coins = ({ UserActions, auth, coins }) => {
               borderRadius="20px"
               h='100px'
               mb='24px'
-              justifyContent='space-between'
               alignItems='center'
               mx={4}
               minWidth='320px'
+              justifyContent='space-between'
             >
 
-              <Box>
+              <Box w="71px">
                 <Image src={`/${art_name}`} />
               </Box>
 
-              <Box fontFamily='Spotify-Light'>{amount} Coins</Box>
+              <Flex fontFamily='Spotify-Light'>
+                <Box>{amount} Coins</Box>
+              </Flex>
 
-              <Button
-                bg={`${theme.colors.etBlue}`}
-                color='black'
-                onClick={() => addToCart(_id, type)}
-                _hover={{
-                  bg: `${theme.colors.etBlue}`,
-                }}
-                h='29px'
-                w='80px'
-                fontSize='12px'
-              >
-                ${price}.00
-              </Button>
+              <Flex>
+                <Button
+                  bg={`${theme.colors.etBlue}`}
+                  color='black'
+                  onClick={() => addToCart(_id, type)}
+                  _hover={{
+                    bg: `${theme.colors.etBlue}`,
+                  }}
+                  h='29px'
+                  w='80px'
+                  fontSize='12px'
+                >
+                  ${price}.00
+                </Button>
+              </Flex>
 
 
             </CoinContainer>
@@ -102,8 +106,8 @@ const Coins = ({ UserActions, auth, coins }) => {
 
 
         </Box>
-      </Flex>
-    </Box>
+      </Flex >
+    </Box >
   );
 };
 export default connect(
@@ -122,70 +126,25 @@ export default connect(
 /*
 
 
-       <Heading pt={2} as='h2' size='2xl' color={`${theme.colors.etGreen}`}>
-          coins
-        </Heading>
+              <Box>
+                <Image src={`/${art_name}`} />
+              </Box>
 
-        <Text fontSize='sm' mb={4} color='grey'>
-          $0.01 USD = 1 coin = 1 stream. 100% goes to the artists!
-        </Text>
+              <Box fontFamily='Spotify-Light'>{amount} Coins</Box>
 
-{
-  coins.map(({ _id, art_name, price, amount, type }) => (
-    <Box
-      key={`${_id}`}
-      maxWidth='768px'
-      m='auto'
-      align='center'
-      style={{ textAlign: 'center' }}
-      borderWidth='1px'
-      mb={4}
-      mt={8}
-      bg='white'
-      display={{ md: 'flex' }}
-      borderRadius="20px"
-    >
-      <Box>
-        <Image src={`/uploads/${art_name}`} width='100%' borderRadius={{ sm: '20px 20px 0 0', md: "20px 0 0 20px" }} />
-      </Box>
-
-      <Box display={{ md: 'flex' }} width='100%' px={2}>
-        <Flex align='center' justify='center'>
-          <Box px={{ xs: 0, sm: 2 }}>
-            <Toll width='40px' height='40px' />
-          </Box>
-
-          <Box width={{ md: '100%' }}>
-            <Box fontSize='40px' color={`${theme.colors.etGreen}`}>
-              {amount}
-            </Box>
-            <Box style={{ margin: '-10px 0 0 -30px', fontWeight: 'bold' }} fontSize='13px'>
-              COINS
-            </Box>
-          </Box>
-        </Flex>
-
-        <Flex align='center' justify='center' width='100%'>
-          <Box p={1} px={8}>
-            Sustainability listen to your favorite artist.
-          </Box>
-        </Flex>
-
-        <Flex align='center' justify='center' width='100%' mb={2}>
-          <Button
-            width='80%'
-            bg={`${theme.colors.etGreen}`}
-            color='white'
-            onClick={() => addToCart(_id, type)}
-            _hover={{
-              bg: `${theme.colors.etGreen}`,
-            }}
-          >
-            ${price}.00
-          </Button>
-        </Flex>
-      </Box>
-    </Box>
-  ))
-}
-*/
+              <Box>
+                <Button
+                  bg={`${theme.colors.etBlue}`}
+                  color='black'
+                  onClick={() => addToCart(_id, type)}
+                  _hover={{
+                    bg: `${theme.colors.etBlue}`,
+                  }}
+                  h='29px'
+                  w='80px'
+                  fontSize='12px'
+                >
+                  ${price}.00
+                </Button>
+              </Box>
+              */
