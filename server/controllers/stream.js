@@ -7,7 +7,12 @@ async function userOwnsProduct(user, trackId) {
   const libary = user.library;
 
   for (const album of libary) {
-    tracks.push(...album.tracks);
+    if (album.type === 'album') {
+      tracks.push(...album.tracks);
+    }
+    if (album.type === 'track') {
+      tracks.push(album._id)
+    }
   }
 
   const trackExists = tracks.some((l) => l._id.toString() === trackId.toString());
