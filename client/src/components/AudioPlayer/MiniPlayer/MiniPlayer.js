@@ -6,7 +6,13 @@ import MobilePlayer from '../MobilePlayer';
 import styled from '@emotion/styled';
 import theme from 'theme.js';
 
-
+const MiniProgressBarContainer = styled(Box)`
+  height: 2px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #9480FF;
+`;
 
 const slideHOC = (InputComponent) => {
   return (props) => (
@@ -51,14 +57,7 @@ const transProps = {
   classNames: 'panel',
 };
 
-const MiniProgressBar = styled(Box)`
-  height: 2px;
-  position: absolute;
-  width: 40%;
-  top: 0;
-  left: 0;
-  background-color: #9480FF;
-`;
+
 
 const MiniPlayerContainer = styled(Box)`
     position: fixed;
@@ -88,6 +87,7 @@ const MiniPlayer = ({
   playlistVisible,
   setPlaylistVisibility,
   loading,
+  miniProgressBar
 }) => {
   const [playerVisible, setPlayerVisibility] = useState(false);
 
@@ -95,9 +95,9 @@ const MiniPlayer = ({
     <Fragment>
 
 
-      {/* <MiniProgressBar /> */}
-
       <MiniPlayerContainer>
+
+        {miniProgressBar}
 
         <Box width="48px" height="48px" overflow='hidden' position='relative' onClick={() => setPlayerVisibility(!playerVisible)} >
           <Image src={track.length > 0 ? `/uploads/${track[0].art_name}` : null} h='100%' w='100%' objectFit='cover' />

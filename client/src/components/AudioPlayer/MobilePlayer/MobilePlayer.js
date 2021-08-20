@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import styled from '@emotion/styled';
 import theme from 'theme.js';
 
+
 const Panel = styled(Flex)`
   background: linear-gradient(180deg, #324148 50%, #000000 100%);
   min-height: 100vh;

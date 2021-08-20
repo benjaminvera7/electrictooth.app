@@ -242,28 +242,6 @@
   }
 }
 
-#snackbar {
-  visibility: hidden;
-  min-width: 250px;
-  margin-left: -125px;
-  background-color: var(--et-violet);
-  color: white;
-  text-align: center;
-  border-radius: 2px;
-  padding: 8px;
-  position: fixed;
-  z-index: 1;
-  left: 50%;
-  bottom: 100px;
-  font-size: 17px;
-}
-
-#snackbar.show {
-  visibility: visible;
-  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
-
 @-webkit-keyframes fadein {
   from {
     bottom: 0;
@@ -318,10 +296,18 @@
 
 .chakra-alert {
   position: fixed;
-  z-index: 0;
   left: 50%;
   transform: translateX(-50%);
   width: 300px !important;
   bottom: 100px;
   background-color: var(--et-violet) !important;
+}
+
+.mini-progress-bar {
+  height: 6px;
+  position: absolute;
+  width: 100%;
+  margin-top: -6px;
+  top: 0;
+  left: 0;
 }

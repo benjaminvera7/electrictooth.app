@@ -13,7 +13,6 @@ import MobilePlaylistPanel from './MobilePlaylistPanel';
 import useWindowSize from 'hooks/useWindowSize';
 import useEventListener from 'hooks/useEventListener';
 import { useToast } from '@chakra-ui/react';
-
 import debounce from 'util/debounce';
 import theme from 'theme.js';
 
@@ -69,30 +68,30 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
 
   const timeUpdate = () => {
     let playPercent = 100 * (audio.current.currentTime / audio.current.duration);
-
     setTimelineDot(playPercent);
   };
-  const bindSafariAutoPlayEvents = () => {
-    document.addEventListener(
-      'click',
-      () => {
-        mockAutoPlayForMobile();
-      },
-      { once: true },
-    );
-  };
 
-  const mockAutoPlayForMobile = () => {
-    if (!playing) {
-      audio.current.load();
-      audio.current.pause();
-      audio.current.play();
-    }
-  };
+  // const bindSafariAutoPlayEvents = () => {
+  //   document.addEventListener(
+  //     'click',
+  //     () => {
+  //       mockAutoPlayForMobile();
+  //     },
+  //     { once: true },
+  //   );
+  // };
 
-  const isSafari = () => {
-    return /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
-  };
+  // const mockAutoPlayForMobile = () => {
+  //   if (!playing) {
+  //     audio.current.load();
+  //     audio.current.pause();
+  //     audio.current.play();
+  //   }
+  // };
+
+  // const isSafari = () => {
+  //   return /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
+  // };
 
   const onHandleProgress = (value) => {
     audio.current.currentTime = value;
@@ -118,6 +117,29 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
       />
     </div>
   );
+
+  const MiniProgressBar = (
+    <div class="mini-progress-bar">
+      <Slider
+        style={{ padding: '2px 0' }}
+        max={playing ? Math.ceil(audio.current.duration) : 0}
+        defaultValue={0}
+        value={playing ? Math.ceil(audio.current.currentTime) : 0}
+        railStyle={{
+          backgroundColor: 'black',
+          opacity: '0.5',
+          borderRadius: '0'
+        }}
+        trackStyle={{
+          backgroundColor: `${theme.colors.etViolet}`,
+          borderRadius: '0'
+        }}
+        handleStyle={{
+          display: 'none'
+        }}
+      />
+    </div>
+  )
 
   const next = (e) => {
     //document.getElementsByName('play')[0].focus();
@@ -286,6 +308,7 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
             playlistVisible={playlistVisible}
             setPlaylistVisibility={setPlaylistVisibility}
             loading={loading}
+            miniProgressBar={MiniProgressBar}
           />
         </>
       )}
