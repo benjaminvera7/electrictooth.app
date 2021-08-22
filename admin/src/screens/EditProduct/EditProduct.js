@@ -54,7 +54,7 @@ const EditProduct = () => {
         formData.append('quantity', JSON.stringify(product.quantity));
 
         axios
-            .post('http://localhost:3090/api/v1/upload/edit_product', formData, {
+            .post(`${process.env.REACT_APP_API_URL}/api/v1/upload/edit_product`, formData, {
                 headers: {
                     'content-type': 'multipart/form-data',
                     'authorization': localStorage.getItem('admin_token')

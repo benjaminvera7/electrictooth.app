@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const dbConnection = require('../services/database');
 
 async function userOwnsProduct(user, trackId) {
@@ -50,8 +51,10 @@ async function stream(req, res) {
 
   await dbConnection.addTrackPlay(track_id);
 
-  const stat = fs.statSync(track.stream_url);
-  const readStream = fs.createReadStream(track.stream_url);
+  const streamPath = path.join(__dirname, `../music/${track.stream_url}`);
+
+  const stat = fs.statSync(streamPath);
+  const readStream = fs.createReadStream(streamPath);
 
   res.status(206).set({
     'Content-Type': 'audio/mpeg',

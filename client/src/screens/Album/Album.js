@@ -107,7 +107,7 @@ const Album = ({ pending, match, albums, artists, UserActions, history, auth }) 
 
             <Flex color='white' fontSize="18px" style={{ fontFamily: 'Spotify-Light' }} pb="8px" alignItems='center'>
               <Link to={`/artist/${currentAlbum.artist_name}`}>
-                <Image src={`/uploads/${currentArtist.artist_img}`} width='32px' height='32px' borderRadius="50%" boxShadow='1px 1px 0 #89DBFF' objectFit='cover' />
+                <Image src={`/uploads/${currentArtist.artist_img}`} width='32px' height='32px' borderRadius="50%" boxShadow='1px 1px 0 #89DBFF' objectFit='cover' fallbackSrc="https://via.placeholder.com/32" />
               </Link>
               <Box pl='16px'>
                 {currentAlbum.artist_name}

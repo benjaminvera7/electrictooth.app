@@ -31,7 +31,7 @@ const Home = ({ albums, products, pending }) => {
       </Helmet>
 
       <HomeContainer justify='center' mt='64px' backgroundColor={`${theme.colors.etBlack}`}>
-        <Box color='white' maxW='768px' flex='1'>
+        <Box color='white' maxW='1024px' flex='1'>
           {/* <Flex justifyContent="center">
             <Image src='./water.gif' w='300px' borderRadius="16px" mb='32px' />
           </Flex> */}

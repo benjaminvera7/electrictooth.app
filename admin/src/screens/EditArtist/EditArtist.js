@@ -14,7 +14,7 @@ const EditArtist = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get('http://localhost:3090/api/v1/music/artists');
+      const result = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/music/artists`);
       setData(result.data);
     };
 
@@ -42,7 +42,7 @@ const EditArtist = () => {
     formData.append('artist_img', artist.artist_img);
 
     axios
-      .post('http://localhost:3090/api/v1/upload/edit_artist', formData, {
+      .post(`${process.env.REACT_APP_API_URL}/api/v1/upload/edit_artist`, formData, {
         headers: {
           'content-type': 'multipart/form-data',
           'authorization': localStorage.getItem('admin_token')
@@ -55,7 +55,7 @@ const EditArtist = () => {
 
   const artistSelect = async (e) => {
     const [artist] = data.filter((a) => a.artist_name === e.target.value);
-    const resp = await axios.get(`http://localhost:3090/api/v1/music/artist?id=${artist._id}`);
+    const resp = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/music/artist?id=${artist._id}`);
 
     clearFile();
 

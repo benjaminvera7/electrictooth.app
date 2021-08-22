@@ -53,7 +53,7 @@ async function editAlbum(req, res) {
     artist_name: artist.artist_name,
     album_name: fields.album_name,
     description: fields.description,
-    art_url: newCoverArtPath,
+    art_url: files.cover_art.name,
     art_name: files.cover_art.name,
     download_price: fields.download_price,
     tags: tags,
@@ -81,7 +81,7 @@ async function editAlbum(req, res) {
       position: 0,
       art_url: newCoverArtPath,
       art_name: files.cover_art.name,
-      stream_url: newTrackPath,
+      stream_url: uploaded_file_name,
     });
 
     tracks.push(newTrack._id);
@@ -149,7 +149,7 @@ async function editTrack(req, res) {
       position: 0,
       art_url: newCoverArtPath,
       art_name: files.cover_art.name,
-      stream_url: newTrackPath,
+      stream_url: uploaded_file_name,
     });
 
     tracks.push(newTrack._id);
@@ -179,7 +179,7 @@ async function editArtist(req, res) {
     await dbConnection.createArtist({
       artist_name: fields.artist_name,
       artist_bio: fields.artist_bio,
-      artist_img: newCoverArtPath,
+      artist_img: files.artist_img.name,
       albums: [],
     });
     res.end();

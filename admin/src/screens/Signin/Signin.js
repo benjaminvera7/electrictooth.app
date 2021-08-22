@@ -25,7 +25,7 @@ const Signin = ({ history }) => {
         formData.append('password', admin.password);
 
         axios
-            .post('http://localhost:3090/api/v1/admin/signin', formData, {
+            .post(`${process.env.REACT_APP_API_URL}/api/v1/admin/signin`, formData, {
                 headers: {
                     'content-type': 'multipart/form-data',
                 },
@@ -40,6 +40,12 @@ const Signin = ({ history }) => {
 
     return (
         <section style={{ marginTop: '16px' }}>
+            <header style={{ padding: '16px' }}>
+                ENVIRONMENT: {process.env.REACT_APP_API_URL === 'https://electrictooth.app'
+                    ? <span style={{ color: 'red', fontStyle: 'bold' }}>PRODUCTION</span>
+                    : <span style={{ color: 'red', fontStyle: 'bold' }}>DEVELOPMENT</span>
+                }
+            </header>
             <form id='admin' onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
                 <label>username</label>
                 <input

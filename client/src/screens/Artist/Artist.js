@@ -23,7 +23,7 @@ const Artist = ({ artists, pending, match }) => {
 
         <Flex color='black' width='100%' p='8px' justifyContent='center'>
           <Box borderRadius="50%" width="256px" height="256px" overflow='hidden' position='relative' boxShadow='8px 8px 0 #89DBFF' border="2px solid #89DBFF">
-            <Image src={`/uploads/${currentArtist.artist_img}`} h='100%' w='100%' objectFit='cover' />
+            <Image src={`/uploads/${currentArtist.artist_img}`} h='100%' w='100%' objectFit='cover' width="256px" height="256px" fallbackSrc="https://via.placeholder.com/256" />
           </Box>
         </Flex>
         <Flex width='100%' justifyContent='center'>

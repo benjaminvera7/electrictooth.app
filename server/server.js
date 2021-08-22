@@ -104,3 +104,5 @@ admin.get('/admin', (req, res) => {
 admin.listen(5000);
 
 console.log(`ET3-Admin is listening on http://localhost:5000`);
+
+console.log(`SERVER RUNNING IN: ${process.env.NODE_ENV}`)

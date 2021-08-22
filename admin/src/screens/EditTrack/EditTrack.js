@@ -35,7 +35,7 @@ const EditTrack = () => {
     formData.append('description', track.description);
 
     axios
-      .post('https://electrictooth.app/api/v1/upload/edit_track', formData, {
+      .post(`${process.env.REACT_APP_API_URL}/api/v1/upload/edit_track`, formData, {
         headers: {
           'content-type': 'multipart/form-data',
           'authorization': localStorage.getItem('admin_token')
