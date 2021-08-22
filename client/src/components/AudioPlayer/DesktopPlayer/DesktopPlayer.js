@@ -1,52 +1,42 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Box, Text, Flex, Image, Button } from '@chakra-ui/react';
 import { Playlist, Previous, Next, Play, Pause, Toll } from 'components/Icons';
-import { CSSTransition } from 'react-transition-group';
 import DesktopPlaylistPanel from '../DesktopPlaylistPanel';
 import { connect } from 'react-redux';
 import theme from 'theme.js';
+import styled from '@emotion/styled';
 
-const slideHOC = (InputComponent) => {
-  return (props) => (
-    <CSSTransition {...props}>
-      <InputComponent className='panel3' />
-    </CSSTransition>
-  );
-};
+const DesktopPlayerContainer = styled(Flex)`
+  position: fixed;
+  display: flex;
+  bottom: 0px;
+  z-index: 2;
+  background-color: var(--et-gray);
+  color: var(--et-gray);
+  height: 90px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0 16px 0 16px;
+  transform: ${props => props.isLoading ? 'translateY(160px)' : 'translateY(0)'};
+  transition-delay: ${props => props.isLoading ? '0ms' : '350ms'};
+  transition: transform 200ms ease-out;
+`;
 
-const Panel = (props) => (
-  <div {...props}>
-    <DesktopPlaylistPanel
-      toggle={props.toggle}
-      playing={props.playing}
-      remove={props.remove}
-      fetch={props.fetch}
-      currentlyPlaying={props.currentlyplaying}
-      handlePlay={props.handleplay}
-      loading={props.loading}
-    />
-  </div>
-);
-
-const PlaylistPanel = slideHOC(Panel);
-
-const transProps = {
-  appear: true,
-  mountOnEnter: true,
-  unmountOnExit: true,
-  timeout: {
-    enter: 250,
-    exit: 200,
-  },
-  classNames: 'panel3',
-};
+const NotificationDot = styled(Box)`
+  position: absolute;
+  color: var(--et-violet);  
+  top: -24px;
+  right: -9px;
+  font-size: 26px;
+  font-weight: bold;
+`;
 
 const DesktopPlayer = ({
   handlePlay,
   handleNext,
   handlePrevious,
   playing,
-  track,
   progressBar,
   remove,
   fetch,
@@ -56,40 +46,39 @@ const DesktopPlayer = ({
   loading,
 }) => {
   const [visible, setVisibility] = useState(false);
+  const [isLoading, setLoader] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => setLoader(false), 250);
+  }, []);
+
+  console.log();
+  console.log(currentlyPlaying?.art_name)
 
   return (
-    <Fragment>
-      <div className='large-player'>
+    <>
+      <DesktopPlayerContainer isLoading={isLoading}>
         <Flex maxW='1100px' flex='1' height='60px'>
-          <Flex flex='1' align='center' minWidth='275px'>
 
-            {track.length > 0 ?
-              <Image
-                src={`/uploads/${track[0].art_name}`}
-                h='74px'
-                w='74px'
-              /> :
-              <Box
-                h='74px'
-                w='74px'
-                backgroundColor={`${theme.colors.etViolet}`}
-                opacity="0.2"
-              />
-            }
+          <Flex flex='1' align='center' minWidth='275px'>
+            <Image
+              src={`/uploads/${currentlyPlaying?.art_name}`}
+              h='74px'
+              w='74px'
+              fallbackSrc="/sand.gif"
+            />
 
             <Flex direction='column' pl={4}>
-              {track.length > 0 ? (
-                <>
-                  <Text color='gray.600' fontSize='sm' color='white' style={{ fontFamily: 'Spotify-Bold' }}>
-                    {track[0].artist_name}
-                  </Text>
-                  <Text color='gray.500' fontSize='sm' color='white'  >
-                    {track[0].track_name}
-                  </Text>
-                </>
-              ) : undefined}
+              <Text color='gray.600' fontSize='sm' color='white' style={{ fontFamily: 'Spotify-Bold' }}>
+                {currentlyPlaying.artist_name}
+              </Text>
+              <Text color='gray.500' fontSize='sm' color='white'  >
+                {currentlyPlaying.track_name}
+              </Text>
             </Flex>
           </Flex>
+
+
           <Flex flex='2' direction='column' justify='center' align='center'>
             <Box pb={3}>
               <Button variant='link' onClick={handlePrevious}>
@@ -115,30 +104,22 @@ const DesktopPlayer = ({
               </Box>
             </Flex>
 
-            <Button variant='link' onClick={() => setVisibility(!visible)}>
+            <Button variant='link' onClick={() => {
+              setVisibility(!visible)
+            }}>
               <Box style={{ position: 'relative' }}>
                 <Playlist active={visible} />
-                <Box
-                  style={{
-                    position: 'absolute',
-                    color: `${theme.colors.etGreen}`,
-                    top: '-9px',
-                    right: '-6px',
-                    fontSize: '14px',
-                    fontWeight: 'bold',
-                  }}
-                >
+                <NotificationDot>
                   {playlist?.length === 0 ? '' : '•'}
-                </Box>
+                </NotificationDot>
               </Box>
             </Button>
           </Flex>
         </Flex>
-      </div>
+      </DesktopPlayerContainer>
 
-      <PlaylistPanel
-        in={visible}
-        {...transProps}
+      <DesktopPlaylistPanel
+        isVisible={visible}
         toggle={setVisibility}
         playing={playing}
         remove={remove}
@@ -146,12 +127,10 @@ const DesktopPlayer = ({
         currentlyplaying={currentlyPlaying}
         handleplay={handlePlay}
         loading={loading}
+        playlist={playlist}
       />
-    </Fragment>
+    </>
   );
 };
 
-export default connect((state) => ({
-  playlist: state.user.playlist,
-  updatedAt: state.user.updatedAt,
-}))(DesktopPlayer);
+export default DesktopPlayer;

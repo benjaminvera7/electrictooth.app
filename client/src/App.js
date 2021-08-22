@@ -26,7 +26,7 @@ import { bindActionCreators } from 'redux';
 import * as musicActions from 'redux/modules/music';
 import * as userActions from 'redux/modules/user';
 
-function App({ MusicActions, UserActions, auth, playlist }) {
+function App({ MusicActions, UserActions, auth }) {
   //def need to refactor into hook or something
   useEffect(() => {
     MusicActions.getAlbums();
@@ -65,11 +65,7 @@ function App({ MusicActions, UserActions, auth, playlist }) {
 
 export default connect(
   (state) => ({
-    albums: state.music.albums,
-    auth: state.user.authenticated,
-    playlist: state.user.playlist,
-    updatedAt: state.music.updatedAt,
-    error: state.pender.failure['music/GET_ALBUMS'],
+    auth: state.user.authenticated
   }),
   (dispatch) => ({
     MusicActions: bindActionCreators(musicActions, dispatch),

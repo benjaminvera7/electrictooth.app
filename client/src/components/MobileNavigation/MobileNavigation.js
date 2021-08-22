@@ -5,6 +5,20 @@ import { Flex, Box, Button } from '@chakra-ui/react';
 import useRouter from 'hooks/useRouter';
 import { connect } from 'react-redux';
 import theme from 'theme.js';
+import styled from '@emotion/styled';
+
+const MobileNavigationContainer = styled(Flex)`
+  position: fixed;
+  display: flex;
+  bottom: 0px;
+  z-index: 2;
+  background-color: var(--et-gray);
+  color: var(--color-50);
+  height: 50px;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+`;
 
 const MobileNavigation = ({
   playlistVisible,
@@ -15,7 +29,7 @@ const MobileNavigation = ({
   const router = useRouter();
 
   return (
-    <div className='mobile-navigation'>
+    <MobileNavigationContainer>
       <Link to='/'>
         <Box px={2}>
           <Button variant='link' style={{ minHeight: '44px' }}>
@@ -54,7 +68,7 @@ const MobileNavigation = ({
           </Box> */}
         </Button>
       </Box>
-    </div>
+    </MobileNavigationContainer>
   );
 };
 export default connect((state) => ({

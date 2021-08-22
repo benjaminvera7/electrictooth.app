@@ -6,12 +6,21 @@ import theme from 'theme.js';
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
 
-const PlaylistCard = styled(Flex)`
-  ${FADE_IN}
-`;
 
-const Panel = styled(Box)`
-  background: linear-gradient(180deg, #324148 50%, #000000 100%)
+const DesktopPlaylistPanelContainer = styled(Box)`
+  background: linear-gradient(180deg, #324148 50%, #000000 100%);
+  transform: ${props => props.isVisible ? 'translateY(0)' : 'translateY(100vh)'};
+  transition: transform 200ms ease-out;
+  padding: 0 32px;
+  min-height: 500px;
+  position: fixed;
+  display: flex;
+  height: 500px;
+  width: 500px;
+  right: 8px;
+  bottom: 88px;
+  flex-direction: column;
+  overflow-y: scroll;
 `;
 
 const Remove = () => (
@@ -54,13 +63,12 @@ const DesktopPlaylistPanel = ({
   handlePlay,
   fetch,
   loading,
-  user,
+  isVisible,
 }) => {
   return (
-    <Panel minHeight='500px' px={8}>
+    <DesktopPlaylistPanelContainer isVisible={isVisible}>
 
       <Flex h='100px' alignItems='center'>
-
         <Flex h='100px' alignItems='center' flex='2' w='48px' >
           <Button onClick={() => toggle(false)} variant='link'>
             <ChevronDown />
@@ -88,7 +96,7 @@ const DesktopPlaylistPanel = ({
                 </Text>
               </Flex>
               <Flex w='48px' h='48px' justifyContent='center' alignItems='center'>
-                {currentlyPlaying === track._id ? (
+                {currentlyPlaying?._id === track._id ? (
                   <Button variant='link' onClick={handlePlay} isLoading={loading}>
                     {playing ? <Pause /> : <Play />}
                   </Button>
@@ -108,94 +116,8 @@ const DesktopPlaylistPanel = ({
           : undefined
         }
       </Stack>
-    </Panel>
+    </DesktopPlaylistPanelContainer>
   );
 };
 
-export default connect((state) => ({
-  playlist: state.user.playlist,
-  user: state.user,
-  updatedAt: state.user.updatedAt,
-}))(DesktopPlaylistPanel);
-
-/*
-<Flex
-        p={2}
-        bg='#fff'
-        style={{
-          position: 'fixed',
-          borderBottom: `1px solid ${theme.colors.etGreen}`,
-        }}
-        w='500px'
-        align='center'
-        h='40px'
-      >
-        <Box onClick={() => toggle(false)} px={2}>
-          <ChevronDown />
-        </Box>
-
-        <Heading
-          px={2}
-          as='h2'
-          size='sm'
-          color={`${theme.colors.etGreen}`}
-          style={{
-            position: 'absolute',
-            right: '8px',
-            opacity: '0.5',
-          }}
-        >
-          playlist
-        </Heading>
-      </Flex>
-
-
-            <Box mt='48px' mb='16px'>
-        <Stack spacing={2}>
-          {playlist.length > 0 ? (
-            <Fragment>
-              {playlist.map((track) => (
-                <PlaylistCard w='100%' key={track._id} p={2}>
-                  <Box px={2}>
-                    <Image
-                      src={`/uploads/${track.art_name}`}
-                      h='48px'
-                      w='48px'
-                      borderRadius='50%'
-                      border='1px'
-                      borderColor={`${theme.colors.etGreen}`}
-                    />
-                  </Box>
-
-                  <Flex direction='column' pl={2} justify='center'>
-                    <Text color='gray.600' fontSize='sm'>
-                      {track.artist_name}
-                    </Text>
-                    <Text color='gray.500' fontSize='sm'>
-                      {track.track_name}
-                    </Text>
-                  </Flex>
-
-                  <Box mx='auto' />
-
-                  <Flex align='center' minWidth='100px' justify='space-evenly'>
-                    {currentlyPlaying === track._id ? (
-                      <Button variant='link' onClick={handlePlay} isLoading={loading}>
-                        {playing ? <Pause /> : <Play />}
-                      </Button>
-                    ) : (
-                      <Button variant='link' onClick={() => fetch(track._id)}>
-                        <Play />
-                      </Button>
-                    )}
-                    <Button variant='link' onClick={() => remove(track._id)}>
-                      <Remove />
-                    </Button>
-                  </Flex>
-                </PlaylistCard>
-              ))}
-            </Fragment>
-          ) : undefined}
-        </Stack>
-      </Box>
-*/
+export default DesktopPlaylistPanel;

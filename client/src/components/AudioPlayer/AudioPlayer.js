@@ -2,12 +2,11 @@ import React, { Fragment, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
-import MiniPlayer from './MiniPlayer';
 import DesktopPlayer from './DesktopPlayer';
 import axios from 'axios';
 import Slider from 'rc-slider/lib/Slider';
 import 'rc-slider/assets/index.css';
-import { CSSTransition } from 'react-transition-group';
+import MiniPlayer from './MiniPlayer';
 import MobileNavigation from 'components/MobileNavigation';
 import MobilePlaylistPanel from './MobilePlaylistPanel';
 import useWindowSize from 'hooks/useWindowSize';
@@ -16,34 +15,102 @@ import { useToast } from '@chakra-ui/react';
 import debounce from 'util/debounce';
 import theme from 'theme.js';
 
-const slideHOC = (InputComponent) => {
-  return (props) => (
-    <CSSTransition {...props}>
-      <InputComponent className='panel2' />
-    </CSSTransition>
+
+const AudioPlayer = ({ UserActions, user, pending }) => {
+  const [playing, setPlaying] = useState(false);
+  const [loading, setPending] = useState(false);
+  const audio = useRef(null);
+  const isMobile = useWindowSize();
+
+  const [currentlyPlaying, setCurrentlyPlaying] = useState({})
+
+  const fetch = async (id) => {
+
+    try {
+      const response = await axios({
+        url: `/api/v1/stream/${id}`,
+        method: 'GET',
+        responseType: 'blob',
+        headers: { Authorization: user.auth },
+      });
+
+      const blob = new Blob([response.data], { type: 'audio/mpeg' });
+      const url = window.webkitURL.createObjectURL(blob);
+
+      audio.current.src = url;
+
+      audio.current.play();
+
+    } catch (error) {
+
+    }
+
+  }
+
+  const onHandleProgress = (value) => {
+    audio.current.currentTime = value;
+  };
+
+  const ProgressBar = (
+    <div className='progress-bar' style={isMobile ? { width: '96%' } : { width: '505px' }}>
+      <Slider
+        max={playing ? Math.ceil(audio.current.duration) : 0}
+        defaultValue={0}
+        value={playing ? Math.ceil(audio.current.currentTime) : 0}
+        onChange={onHandleProgress}
+        railStyle={{
+          backgroundColor: '#5b676d'
+        }}
+        trackStyle={{
+          backgroundColor: `${theme.colors.etViolet}`
+        }}
+        handleStyle={{
+          borderColor: `${theme.colors.etViolet}`,
+          backgroundColor: `${theme.colors.etViolet}`
+        }}
+      />
+    </div>
+  );
+
+  const remove = (id) => {
+    UserActions.removeFromPlaylist(id);
+  };
+
+  return (
+    <Fragment>
+      <audio key='audio' ref={audio} type='audio/mpeg' />
+
+      {!isMobile && (
+        <DesktopPlayer
+          playing={playing}
+          handlePlay={() => { return }}
+          handleNext={() => { return }}
+          handlePrevious={() => { return }}
+          currentlyPlaying={currentlyPlaying}
+          progressBar={ProgressBar}
+          remove={remove}
+          fetch={fetch}
+          coins={user?.coins}
+          loading={loading}
+          playlist={user?.playlist}
+        />)
+      }
+
+    </Fragment>
   );
 };
 
-const Panel = (props) => (
-  <div {...props}>
-    <MobilePlaylistPanel {...props} />
-  </div>
-);
+export default connect(
+  (state) => ({
+    user: state.user,
+    pending: state.pender.pending['user/GET_USER'],
+  }),
+  (dispatch) => ({
+    UserActions: bindActionCreators(userActions, dispatch),
+  }),
+)(AudioPlayer);
 
-const transProps = {
-  appear: true,
-  mountOnEnter: true,
-  unmountOnExit: true,
-  timeout: {
-    enter: 250,
-    exit: 250,
-  },
-  classNames: 'panel2',
-};
-
-const PlaylistPanel = slideHOC(Panel);
-
-const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
+/*
   const [playlistVisible, setPlaylistVisibility] = useState(false);
   const [loading, setPending] = useState(false);
   const toast = useToast()
@@ -70,28 +137,6 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
     let playPercent = 100 * (audio.current.currentTime / audio.current.duration);
     setTimelineDot(playPercent);
   };
-
-  // const bindSafariAutoPlayEvents = () => {
-  //   document.addEventListener(
-  //     'click',
-  //     () => {
-  //       mockAutoPlayForMobile();
-  //     },
-  //     { once: true },
-  //   );
-  // };
-
-  // const mockAutoPlayForMobile = () => {
-  //   if (!playing) {
-  //     audio.current.load();
-  //     audio.current.pause();
-  //     audio.current.play();
-  //   }
-  // };
-
-  // const isSafari = () => {
-  //   return /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
-  // };
 
   const onHandleProgress = (value) => {
     audio.current.currentTime = value;
@@ -272,27 +317,16 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
   const handlePlay = e => {
     if (e.code === 'Space') {
       //document.getElementsByName('play')[0].focus();
-
-
       play();
     }
   }
 
   useEventListener('ended', next, audio.current);
   useEventListener('timeupdate', timeUpdate, audio.current);
-
   useEventListener('keydown', debounce(handlePlay, 500, false))
+*/
 
-  // if (isMobile && isSafari()) {
-  //   bindSafariAutoPlayEvents();
-  // }
-
-
-  return (
-    <Fragment>
-      <audio key='audio' ref={audio} type='audio/mpeg' />
-
-      {(isMobile && playlist.length > 0) && (
+{/* {isMobile && (
         <>
           <MiniPlayer
             playing={playing}
@@ -310,53 +344,19 @@ const AudioPlayer = ({ playlist, UserActions, auth, coins }) => {
             loading={loading}
             miniProgressBar={MiniProgressBar}
           />
-        </>
-      )}
 
-      {isMobile && <MobileNavigation playlistVisible={playlistVisible} setPaylistVisibility={setPlaylistVisibility} />}
+          <MobilePlaylistPanel
+            playlistVisible={playlistVisible}
+            setPlaylistVisibility={setPlaylistVisibility}
+            playlist={playlist}
+            currentlyPlaying={currentTrackId}
+            handlePlay={play}
+            playing={playing}
+            fetch={fetch}
+            remove={remove}
+            loading={loading}
+          />
 
-      {!isMobile && (
-        <DesktopPlayer
-          playing={playing}
-          handlePlay={play}
-          handleNext={next}
-          handlePrevious={previous}
-          track={track}
-          progressBar={ProgressBar}
-          remove={remove}
-          fetch={fetch}
-          currentlyPlaying={currentTrackId}
-          coins={coins}
-          loading={loading}
-        />
-      )}
-
-      <PlaylistPanel
-        in={playlistVisible}
-        {...transProps}
-        playlistVisible={playlistVisible}
-        setPlaylistVisibility={setPlaylistVisibility}
-        playlist={playlist}
-        currentlyPlaying={currentTrackId}
-        handlePlay={play}
-        playing={playing}
-        fetch={fetch}
-        remove={remove}
-        loading={loading}
-      />
-    </Fragment>
-  );
-};
-
-export default connect(
-  (state) => ({
-    auth: state.user.authenticated,
-    playlist: state.user.playlist,
-    coins: state.user.coins,
-    updatedAt: state.music.updatedAt,
-    updatedUserAt: state.user.updatedAt,
-  }),
-  (dispatch) => ({
-    UserActions: bindActionCreators(userActions, dispatch),
-  }),
-)(AudioPlayer);
+          {isMobile && <MobileNavigation playlistVisible={playlistVisible} setPaylistVisibility={setPlaylistVisibility} />}
+          </>
+        )} */}

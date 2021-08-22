@@ -5,6 +5,12 @@ import AlbumCard from 'components/AlbumCard';
 import ProductCard from 'components/ProductCard';
 import Helmet from 'react-helmet';
 import theme from 'theme.js';
+import { FADE_IN } from 'style/animations';
+import styled from '@emotion/styled';
+
+const HomeContainer = styled(Flex)`
+  ${FADE_IN}
+`;
 
 const Home = ({ albums, products, pending }) => {
   if (pending || pending === undefined) {
@@ -24,7 +30,7 @@ const Home = ({ albums, products, pending }) => {
         <meta name='description' content='amazing' />
       </Helmet>
 
-      <Flex justify='center' mt='64px' backgroundColor={`${theme.colors.etBlack}`}>
+      <HomeContainer justify='center' mt='64px' backgroundColor={`${theme.colors.etBlack}`}>
         <Box color='white' maxW='768px' flex='1'>
           {/* <Flex justifyContent="center">
             <Image src='./water.gif' w='300px' borderRadius="16px" mb='32px' />
@@ -39,7 +45,7 @@ const Home = ({ albums, products, pending }) => {
             ))} */}
           </Flex>
         </Box>
-      </Flex>
+      </HomeContainer>
     </>
   );
 };

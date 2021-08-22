@@ -24,15 +24,15 @@ const HoverCard = ({ productId, img, name }) => {
   const url = name.replaceAll(' ', '-');
 
   return (
-    <HoverCardContainer width='100%' position='relative' isMobile={isMobile}>
+    <HoverCardContainer width='100%' position='relative' isMobile={isMobile} minWidth="300px" minHeight="300px">
       <Link to={`/music/${url}`}>
-        <Image src={`/uploads/${img}`} width='100%' objectFit='fill' maxHeight='288px' />
+        <Image src={`/uploads/${img}`} width='100%' objectFit='fill' maxHeight='288px' fallbackSrc="/sand.gif" />
       </Link>
     </HoverCardContainer>
   );
 };
 
-const AlbumCard = ({ auth, album, UserActions, collection }) => {
+const AlbumCard = ({ auth, album, UserActions }) => {
   const router = useRouter();
   const toast = useToast()
 
@@ -141,7 +141,6 @@ const AlbumCard = ({ auth, album, UserActions, collection }) => {
 export default connect(
   (state) => ({
     auth: state.user.authenticated,
-    collection: state.user.albumCollection,
     playlist: state.user.playlist,
     updatedAt: state.music.updatedAt,
     updatedUserAt: state.user.updatedAt,
