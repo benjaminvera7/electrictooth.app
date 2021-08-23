@@ -38,7 +38,7 @@ const ProductCard = ({ auth, product, UserActions }) => {
 
     const addToPlaylist = (id, type) => {
         if (auth) {
-            UserActions.addToPlaylist(id, type);
+            UserActions.addToPlaylist(id, type, auth);
 
             toast(`Saved to your Playlist`);
         } else {
@@ -48,7 +48,7 @@ const ProductCard = ({ auth, product, UserActions }) => {
 
     const addToCart = (id, type) => {
         if (auth) {
-            UserActions.addToCart(id, type);
+            UserActions.addToCart(id, type, null, auth);
 
             toast(`Added to your Cart`);
         } else {

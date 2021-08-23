@@ -39,7 +39,7 @@ class Merch extends Component {
         }
 
         if (this.props.auth) {
-            this.props.UserActions.addToCart(id, type, size.value);
+            this.props.UserActions.addToCart(id, type, size.value, this.props.auth);
             toast(`Added to your Cart`);
         } else {
             this.props.history.push('/signup');

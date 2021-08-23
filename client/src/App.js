@@ -30,7 +30,7 @@ function App({ MusicActions, UserActions, auth }) {
   //def need to refactor into hook or something
   useEffect(() => {
     MusicActions.getAlbums();
-    auth && UserActions.getUser();
+    auth && UserActions.getUser(auth);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

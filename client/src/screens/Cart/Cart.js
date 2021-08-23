@@ -75,7 +75,7 @@ const Cart = ({ UserActions, auth, cart }) => {
         </CartItem>
 
         <Flex justifyContent='center'>
-          <Button onClick={() => UserActions.removeFromCart(album.id, album.type, album.size)} color='black' variant='link'>
+          <Button onClick={() => UserActions.removeFromCart(album.id, album.type, album.size, auth)} color='black' variant='link'>
             <Remove />
           </Button>
         </Flex>
@@ -118,7 +118,7 @@ const Cart = ({ UserActions, auth, cart }) => {
         </CartItem>
 
         <Flex justifyContent='center'>
-          <Button onClick={() => UserActions.removeFromCart(track.id, track.type, track.size)} color='black' variant='link'>
+          <Button onClick={() => UserActions.removeFromCart(track.id, track.type, track.size, auth)} color='black' variant='link'>
             <Remove />
           </Button>
         </Flex>
@@ -162,7 +162,7 @@ const Cart = ({ UserActions, auth, cart }) => {
         </CartItem>
 
         <Flex justifyContent='center'>
-          <Button onClick={() => UserActions.removeFromCart(coin.id, coin.type, coin.size)} color='black' variant='link'>
+          <Button onClick={() => UserActions.removeFromCart(coin.id, coin.type, coin.size, auth)} color='black' variant='link'>
             <Remove />
           </Button>
         </Flex>

@@ -2,14 +2,13 @@ import axios from 'axios';
 import { pender } from 'redux-pender';
 import { createAction, handleActions } from 'redux-actions';
 
-var token = localStorage.getItem('token');
 
 function getDate() {
   let utcDate = new Date(Date.now());
   return utcDate.toUTCString();
 }
 
-const _getUser = () => {
+const _getUser = (token) => {
   return axios({
     url: '/api/v1/user',
     method: 'GET',
@@ -25,7 +24,7 @@ const _signin = (credentials) => {
   return axios.post('/api/v1/auth/signin', credentials);
 };
 
-const _addToCart = (id, type, size) => {
+const _addToCart = (id, type, size, token) => {
   return axios({
     url: `/api/v1/user/cart/${id}`,
     method: 'POST',
@@ -38,7 +37,7 @@ const _addToCart = (id, type, size) => {
   });
 };
 
-const _removeFromCart = (id, type, size) => {
+const _removeFromCart = (id, type, size, token) => {
   return axios({
     url: `/api/v1/user/cart/${id}`,
     method: 'DELETE',
@@ -51,7 +50,7 @@ const _removeFromCart = (id, type, size) => {
   });
 };
 
-const _getCoins = () => {
+const _getCoins = (token) => {
   return axios({
     url: `/api/v1/user/coins`,
     method: 'GET',
@@ -59,7 +58,7 @@ const _getCoins = () => {
   });
 };
 
-const _addToPlaylist = (id, type) => {
+const _addToPlaylist = (id, type, token) => {
   return axios({
     url: `/api/v1/user/playlist/${id}`,
     data: {
@@ -71,7 +70,7 @@ const _addToPlaylist = (id, type) => {
   });
 };
 
-const _removeFromPlaylist = (id) => {
+const _removeFromPlaylist = (id, token) => {
   return axios({
     url: `/api/v1/user/playlist/${id}`,
     method: 'DELETE',

@@ -57,7 +57,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
 
   const addToPlaylist = (id, type) => {
     if (auth) {
-      UserActions.addToPlaylist(id, type);
+      UserActions.addToPlaylist(id, type, auth);
       toast({
         title: "Saved to your Playlist",
         duration: 2000,

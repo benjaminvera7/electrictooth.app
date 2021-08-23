@@ -61,7 +61,7 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
       const blob = new Blob([response.data], { type: 'audio/mpeg' });
       const url = window.webkitURL.createObjectURL(blob);
 
-      UserActions.getCoins();
+      UserActions.getCoins(auth);
 
       setPlaying(true);
       setLoading(false);
@@ -188,7 +188,7 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
   )
 
   const remove = (id) => {
-    UserActions.removeFromPlaylist(id);
+    UserActions.removeFromPlaylist(id, auth);
   };
 
 

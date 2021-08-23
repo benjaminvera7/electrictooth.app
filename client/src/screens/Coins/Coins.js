@@ -25,7 +25,7 @@ const Coins = ({ UserActions, auth, coins }) => {
 
   const addToCart = (id, type) => {
     if (auth) {
-      UserActions.addToCart(id, type);
+      UserActions.addToCart(id, type, null, auth);
       toast({
         title: "Added to your Cart",
         status: 'success',
