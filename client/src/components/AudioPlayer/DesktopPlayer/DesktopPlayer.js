@@ -1,10 +1,11 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Box, Text, Flex, Image, Button } from '@chakra-ui/react';
 import { Playlist, Previous, Next, Play, Pause, Toll } from 'components/Icons';
 import DesktopPlaylistPanel from '../DesktopPlaylistPanel';
-import { connect } from 'react-redux';
 import theme from 'theme.js';
 import styled from '@emotion/styled';
+//import useEventListener from 'hooks/useEventListener';
+
 
 const DesktopPlayerContainer = styled(Flex)`
   position: fixed;
@@ -46,14 +47,25 @@ const DesktopPlayer = ({
   loading,
 }) => {
   const [visible, setVisibility] = useState(false);
+  const playButton = useRef(null);
   const [isLoading, setLoader] = useState(true)
 
   useEffect(() => {
     setTimeout(() => setLoader(false), 250);
   }, []);
 
-  console.log();
-  console.log(currentlyPlaying?.art_name)
+  // const handlePlaySpace = e => {
+  //   playButton.current.focus();
+  //   if (e.keyCode == 32 && !playing) {
+
+  //     handlePlay();
+  //   } else {
+  //     handlePlay();
+  //   }
+  // }
+
+  // useEventListener('keydown', handlePlaySpace)
+
 
   return (
     <>
@@ -62,10 +74,10 @@ const DesktopPlayer = ({
 
           <Flex flex='1' align='center' minWidth='275px'>
             <Image
-              src={`/uploads/${currentlyPlaying?.art_name}`}
+              src={`/uploads/${currentlyPlaying.art_name}`}
               h='74px'
               w='74px'
-              fallbackSrc="/sand.gif"
+              fallbackSrc="/sonic.gif"
             />
 
             <Flex direction='column' pl={4}>
@@ -84,7 +96,7 @@ const DesktopPlayer = ({
               <Button variant='link' onClick={handlePrevious}>
                 <Previous />
               </Button>
-              <Button variant='link' onClick={handlePlay} isLoading={loading} name="play">
+              <Button variant='link' onClick={handlePlay} isLoading={loading} name="play" ref={playButton}>
                 {playing ? <Pause /> : <Play />}
               </Button>
               <Button variant='link' onClick={handleNext}>
@@ -124,8 +136,8 @@ const DesktopPlayer = ({
         playing={playing}
         remove={remove}
         fetch={fetch}
-        currentlyplaying={currentlyPlaying}
-        handleplay={handlePlay}
+        currentlyPlaying={currentlyPlaying}
+        handlePlay={handlePlay}
         loading={loading}
         playlist={playlist}
       />

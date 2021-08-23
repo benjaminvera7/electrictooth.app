@@ -11,13 +11,27 @@ const PlaylistCard = styled(Flex)`
   ${FADE_IN}
 `;
 
-const Panel = styled(Box)`
-  background: linear-gradient(180deg, #324148 50%, #000000 100%)
+const MobilePlaylistPanelContainer = styled(Flex)`
+  background: linear-gradient(180deg, #324148 50%, #000000 100%);
+  transform: ${props => props.isVisible ? 'translateY(0)' : 'translateY(100vh)'};
+  transition: transform 200ms ease-out;
+  position: fixed;
+  z-index: 5;
+  background-color: #fff;
+  height: 100vh;
+  width: 100%;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  flex-direction: column;
+  overflow-y: scroll;
+  padding-bottom: 55px;
 `;
 
 const MobilePlaylistPanel = (props) => {
   return (
-    <Panel>
+    <MobilePlaylistPanelContainer isVisible={props.playlistVisible}>
       <Box minHeight='100vh'>
         <Stack pt={2}>
 
@@ -57,7 +71,7 @@ const MobilePlaylistPanel = (props) => {
                   <Box mx='auto' />
 
                   <Flex align='center' minWidth='100px' justify='space-evenly'>
-                    {props.currentlyPlaying === track._id ? (
+                    {props.currentlyPlaying._id === track._id ? (
                       <Button variant='link' onClick={props.handlePlay} isLoading={props.loading}>
                         <Flex h='48px' alignItems='center' justifyContent='center'>
                           {props.playing ? <Pause /> : <Play />}
@@ -82,7 +96,7 @@ const MobilePlaylistPanel = (props) => {
           ) : undefined}
         </Stack>
       </Box>
-    </Panel>
+    </MobilePlaylistPanelContainer>
   );
 };
 

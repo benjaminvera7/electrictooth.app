@@ -1,11 +1,6 @@
-import React, { Fragment } from 'react';
-import { Box, Image, Flex, Text, Stack, Heading, Button } from '@chakra-ui/react';
-import { Pause } from 'components/Icons';
-import { connect } from 'react-redux';
-import theme from 'theme.js';
-import { FADE_IN } from 'style/animations';
+import React from 'react';
+import { Box, Image, Flex, Text, Stack, Button } from '@chakra-ui/react';
 import styled from '@emotion/styled';
-
 
 const DesktopPlaylistPanelContainer = styled(Box)`
   background: linear-gradient(180deg, #324148 50%, #000000 100%);
@@ -46,6 +41,20 @@ const Play = () => (
   </Flex>
 )
 
+const Pause = () => (
+  <Flex h='48px' alignItems='center'>
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='24'
+      height='24'
+      fill='white'
+      viewBox='0 0 24 24'
+    >
+      <path d='M6 19h4V5H6v14zm8-14v14h4V5h-4z' />
+    </svg>
+  </Flex>
+)
+
 const ChevronDown = () => (
   <Flex h='48px' alignItems='center'>
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -56,7 +65,6 @@ const ChevronDown = () => (
 
 const DesktopPlaylistPanel = ({
   toggle,
-  playlist,
   playing,
   remove,
   currentlyPlaying,
@@ -64,7 +72,11 @@ const DesktopPlaylistPanel = ({
   fetch,
   loading,
   isVisible,
+  playlist = []
 }) => {
+
+  console.log()
+
   return (
     <DesktopPlaylistPanelContainer isVisible={isVisible}>
 
@@ -81,39 +93,39 @@ const DesktopPlaylistPanel = ({
       </Flex>
 
       <Stack>
-        {playlist.length > 0
-          ? playlist.map((track) => (
-            <Flex alignItems='center'>
-              <Box width="48px" height="48px" overflow='hidden' position='relative' >
-                <Image src={`/uploads/${track.art_name}`} h='100%' w='100%' objectFit='cover' />
-              </Box>
-              <Flex pl={4} flexDirection="column" justifyContent='center' flex='2'>
-                <Text fontSize='xs' style={{ fontFamily: 'Spotify-Bold' }} color='white' maxWidth='180px' isTruncated>
-                  {`${track.track_name} (MP3)`}
-                </Text>
-                <Text fontSize='xs' style={{ fontFamily: 'Spotify-Light' }} color='white'>
-                  {track.artist_name}
-                </Text>
-              </Flex>
-              <Flex w='48px' h='48px' justifyContent='center' alignItems='center'>
-                {currentlyPlaying?._id === track._id ? (
-                  <Button variant='link' onClick={handlePlay} isLoading={loading}>
-                    {playing ? <Pause /> : <Play />}
-                  </Button>
-                ) : (
-                  <Button variant='link' onClick={() => fetch(track._id)}>
-                    <Play />
-                  </Button>
-                )}
-              </Flex>
-              <Flex w='48px' h='48px' justifyContent='center' alignItems='center'>
-                <Button variant='link' onClick={() => remove(track._id)}>
-                  <Remove />
-                </Button>
-              </Flex>
+        {playlist.map((track) => (
+          <Flex alignItems='center' key={track._id}>
+            <Box width="48px" height="48px" overflow='hidden' position='relative' >
+              <Image src={`/uploads/${track.art_name}`} h='100%' w='100%' objectFit='cover' alt={`${track.track_name} artwork`} />
+            </Box>
+            <Flex pl={4} flexDirection="column" justifyContent='center' flex='2'>
+              <Text fontSize='xs' style={{ fontFamily: 'Spotify-Bold' }} color='white' maxWidth='180px' isTruncated>
+                {`${track.track_name}`}
+              </Text>
+              <Text fontSize='xs' style={{ fontFamily: 'Spotify-Light' }} color='white'>
+                {track.artist_name}
+              </Text>
             </Flex>
-          ))
-          : undefined
+            <Flex w='48px' h='48px' justifyContent='center' alignItems='center'>
+
+
+              {currentlyPlaying._id === track._id ? (
+                <Button variant='link' onClick={handlePlay} isLoading={loading}>
+                  {playing ? <Pause /> : <Play />}
+                </Button>
+              ) : (
+                <Button variant='link' onClick={() => fetch(track._id)}>
+                  <Play />
+                </Button>
+              )}
+            </Flex>
+            <Flex w='48px' h='48px' justifyContent='center' alignItems='center'>
+              <Button variant='link' onClick={() => remove(track._id)}>
+                <Remove />
+              </Button>
+            </Flex>
+          </Flex>
+        ))
         }
       </Stack>
     </DesktopPlaylistPanelContainer>

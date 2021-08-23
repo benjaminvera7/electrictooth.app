@@ -24,6 +24,10 @@ async function userOwnsProduct(user, trackId) {
 async function stream(req, res) {
   const { user, params } = req;
 
+  if (user.coins === 0) {
+    return res.status(422).send({ error: 'Not enough coins' });
+  }
+
   const track_id = params.id;
   const track = await dbConnection.getTrackById(track_id);
   const owns = await userOwnsProduct(user, track._id);

@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useRef } from 'react';
+import React, { Fragment, useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
@@ -12,40 +12,139 @@ import MobilePlaylistPanel from './MobilePlaylistPanel';
 import useWindowSize from 'hooks/useWindowSize';
 import useEventListener from 'hooks/useEventListener';
 import { useToast } from '@chakra-ui/react';
-import debounce from 'util/debounce';
 import theme from 'theme.js';
 
 
-const AudioPlayer = ({ UserActions, user, pending }) => {
+const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
+  const [playlistVisible, setPlaylistVisibility] = useState(false);
   const [playing, setPlaying] = useState(false);
-  const [loading, setPending] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [firstLoad, setFirstLoad] = useState(true);
+  const toast = useToast();
   const audio = useRef(null);
   const isMobile = useWindowSize();
 
+  const [timelineDot, setTimelineDot] = useState(0);
   const [currentlyPlaying, setCurrentlyPlaying] = useState({})
 
+  useEffect(() => {
+    if (playlist.length > 0 && !currentlyPlaying._id) {
+      setCurrentlyPlaying(playlist[0])
+    }
+  }, [playlist, currentlyPlaying._id])
+
+  const timeUpdate = () => {
+    const playPercent = 100 * (audio.current.currentTime / audio.current.duration);
+    setTimelineDot(playPercent);
+    return timelineDot;
+  };
+
+
   const fetch = async (id) => {
+
+
+    setLoading(true);
 
     try {
       const response = await axios({
         url: `/api/v1/stream/${id}`,
         method: 'GET',
         responseType: 'blob',
-        headers: { Authorization: user.auth },
+        headers: { Authorization: auth },
       });
 
       const blob = new Blob([response.data], { type: 'audio/mpeg' });
       const url = window.webkitURL.createObjectURL(blob);
 
-      audio.current.src = url;
+      const [track] = playlist.filter((track) => track._id === id);
 
+
+      UserActions.getCoins();
+
+      if (currentlyPlaying._id !== id) {
+        setCurrentlyPlaying(track);
+      }
+
+      setPlaying(true);
+      setLoading(false);
+
+      audio.current.src = url;
       audio.current.play();
 
-    } catch (error) {
 
+    } catch (error) {
+      setPlaying(false);
+      setLoading(false);
+
+      toast({
+        title: "Come back when you get some money, buddy!",
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+      })
+      console.log('something went wrong', error);
     }
 
   }
+
+
+  const next = () => {
+    const [track] = playlist.filter((track) => track._id === currentlyPlaying._id);
+    if (track === undefined && playlist.length >= 1) {
+      return fetch(playlist[0]._id)
+    }
+    if (playlist.length > 0) {
+      const current = playlist.indexOf(track);
+      const newIndex = (current + 1) % playlist.length;
+      return fetch(playlist[newIndex]._id)
+    }
+  };
+
+  const previous = () => {
+    const [track] = playlist.filter((track) => track._id === currentlyPlaying._id);
+
+    if (track === undefined && playlist.length >= 1) {
+      return fetch(playlist[0]._id)
+    }
+
+    if (playlist.length > 1 && track) {
+      let current = playlist.indexOf(track);
+      if (current === 0) {
+        let last = playlist.length - 1;
+        return fetch(playlist[last]._id);
+      } else {
+        let prev = current - 1;
+        return fetch(playlist[prev]._id);
+      }
+    }
+  };
+
+  const play = () => {
+
+
+    if (firstLoad && currentlyPlaying._id && playlist.length === 0) {
+      setFirstLoad(false);
+      return fetch(currentlyPlaying._id);
+    }
+
+    if (firstLoad) {
+      setFirstLoad(false);
+      return fetch(playlist[0]._id);
+    }
+
+    if (playing) {
+      setPlaying(false);
+      return audio.current.pause();
+    }
+
+    if (currentlyPlaying._id && !playing) {
+      setPlaying(true);
+      return audio.current.play();
+    }
+
+
+  };
+
 
   const onHandleProgress = (value) => {
     audio.current.currentTime = value;
@@ -72,27 +171,91 @@ const AudioPlayer = ({ UserActions, user, pending }) => {
     </div>
   );
 
+  const MiniProgressBar = (
+    <div class="mini-progress-bar">
+      <Slider
+        style={{ padding: '2px 0' }}
+        max={playing ? Math.ceil(audio.current.duration) : 0}
+        defaultValue={0}
+        value={playing ? Math.ceil(audio.current.currentTime) : 0}
+        railStyle={{
+          backgroundColor: 'black',
+          opacity: '0.5',
+          borderRadius: '0'
+        }}
+        trackStyle={{
+          backgroundColor: `${theme.colors.etViolet}`,
+          borderRadius: '0'
+        }}
+        handleStyle={{
+          display: 'none'
+        }}
+      />
+    </div>
+  )
+
   const remove = (id) => {
     UserActions.removeFromPlaylist(id);
   };
+
+
+  useEventListener('ended', next, audio.current);
+  useEventListener('timeupdate', timeUpdate, audio.current);
 
   return (
     <Fragment>
       <audio key='audio' ref={audio} type='audio/mpeg' />
 
+      {isMobile && (
+        <>
+          <MiniPlayer
+            playing={playing}
+            handlePlay={play}
+            handleNext={next}
+            handlePrevious={previous}
+            progressBar={ProgressBar}
+            remove={remove}
+            fetch={fetch}
+            currentlyPlaying={currentlyPlaying}
+            coins={coins}
+            playlistVisible={playlistVisible}
+            setPlaylistVisibility={setPlaylistVisibility}
+            loading={loading}
+            miniProgressBar={MiniProgressBar}
+          />
+
+          <MobilePlaylistPanel
+            playlistVisible={playlistVisible}
+            setPlaylistVisibility={setPlaylistVisibility}
+            playlist={playlist}
+            currentlyPlaying={currentlyPlaying}
+            handlePlay={play}
+            playing={playing}
+            fetch={fetch}
+            remove={remove}
+            loading={loading}
+          />
+
+          <MobileNavigation
+            playlistVisible={playlistVisible}
+            setPaylistVisibility={setPlaylistVisibility}
+          />
+        </>
+      )}
+
       {!isMobile && (
         <DesktopPlayer
           playing={playing}
-          handlePlay={() => { return }}
-          handleNext={() => { return }}
-          handlePrevious={() => { return }}
+          handlePlay={play}
+          handleNext={next}
+          handlePrevious={previous}
           currentlyPlaying={currentlyPlaying}
           progressBar={ProgressBar}
           remove={remove}
           fetch={fetch}
-          coins={user?.coins}
+          coins={coins}
           loading={loading}
-          playlist={user?.playlist}
+          playlist={playlist}
         />)
       }
 
@@ -102,8 +265,9 @@ const AudioPlayer = ({ UserActions, user, pending }) => {
 
 export default connect(
   (state) => ({
-    user: state.user,
-    pending: state.pender.pending['user/GET_USER'],
+    auth: state.user.authenticated,
+    playlist: state.user.playlist,
+    coins: state.user.coins
   }),
   (dispatch) => ({
     UserActions: bindActionCreators(userActions, dispatch),
