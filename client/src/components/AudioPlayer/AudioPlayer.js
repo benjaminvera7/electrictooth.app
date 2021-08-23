@@ -42,6 +42,11 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
 
   const fetch = async (id) => {
 
+    const [track] = playlist.filter((track) => track._id === id);
+
+    if (currentlyPlaying._id !== id) {
+      setCurrentlyPlaying(track);
+    }
 
     setLoading(true);
 
@@ -56,14 +61,7 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
       const blob = new Blob([response.data], { type: 'audio/mpeg' });
       const url = window.webkitURL.createObjectURL(blob);
 
-      const [track] = playlist.filter((track) => track._id === id);
-
-
       UserActions.getCoins();
-
-      if (currentlyPlaying._id !== id) {
-        setCurrentlyPlaying(track);
-      }
 
       setPlaying(true);
       setLoading(false);
@@ -122,19 +120,14 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
   const play = () => {
 
 
-    if (firstLoad && currentlyPlaying._id && playlist.length === 0) {
-      setFirstLoad(false);
-      return fetch(currentlyPlaying._id);
-    }
-
-    if (firstLoad) {
-      setFirstLoad(false);
-      return fetch(playlist[0]._id);
-    }
-
     if (playing) {
       setPlaying(false);
       return audio.current.pause();
+    }
+
+    if (!playing && firstLoad) {
+      setFirstLoad(false);
+      return fetch(currentlyPlaying._id);
     }
 
     if (currentlyPlaying._id && !playing) {
