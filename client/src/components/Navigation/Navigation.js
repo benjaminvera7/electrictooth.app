@@ -47,122 +47,65 @@ const Navigation = ({ auth, cart, username }) => {
 
   return (
     <NavigationContainer>
-      <Flex maxW='900px' flex='1' alignItems="center" justifyContent="center">
-        {/* {(!isMobile || !auth) && (
-          <Fragment>
-            <Link to='/'>
-              <Box>
-                <Button variant='link' mx={4}>
-                  <Home active={router.pathname === '/'} />
-                </Button>
+      <Flex maxW='1024px' flex='1' alignItems="center" justifyContent="space-between" h='48px'>
+        <Flex direction='column' justifyContent='center' flex='1'>
+          {history.location.pathname === '/'
+            ? (
+              <Box w='48px' h='48px' py={2} pl={{ base: 5, sm: 4 }}>
+                <Link to='/'>
+                  <Logo />
+                </Link>
               </Box>
-            </Link>
-          </Fragment>
-        )} */}
-
-        {/* <Link to='/help'>
-          <Box>
-            <Button variant='link'>
-              <Help active={router.pathname === '/help'} />
-            </Button>
-          </Box>
-        </Link> */}
-
-        {!auth ? (
-          <>
-            <Box px={4}>
-              <Link to='/'>
-                <Logo />
-              </Link>
-            </Box>
-            <Box mx='auto' />
-            <Link to='/coins' >
-              <Button
-                bg={`${theme.colors.etBlack}`}
-                size='xs'
-                color='white'
-                border='1px solid white'
-                style={{ fontFamily: 'Spotify-Light', textDecoration: 'none' }}
-                variant='link'
-                p={2}
-                py={1}
-              >
-                Get coins
-              </Button>
-            </Link>
-            <Link to='/signup' >
-              <Button
-                bg={`${theme.colors.etBlack}`}
-                border='1px solid white'
-                size='xs'
-                color='white'
-                mx={4}
-                mt='1px'
-                variant='link'
-                p={2}
-                py={1}
-              >
-                sign up
-              </Button>
-            </Link>
-          </>
-        ) : (
-          <>
-            {' '}
-
-            {history.location.pathname === "/"
-              ?
-              <Flex direction='column' justifyContent='center' ml="8px" pl="16px">
-                <Logo />
-              </Flex>
-              :
-              <Flex direction='column' justifyContent='center' ml="-8px" onClick={() => history.goBack()} style={{ 'cursor': 'pointer' }}>
+            )
+            : (
+              <Flex direction='column' justifyContent='center' onClick={() => history.goBack()} style={{ 'cursor': 'pointer' }} w='48px' h='48px'>
                 <svg width="75" height="48" viewBox="0 0 75 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect width="75" height="48" fill="#1D1D1D" />
                   <path d="M30 24H52" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
                   <path d="M38 32L30 24L38 16" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
               </Flex>
-            }
+            )
+          }
+        </Flex>
+        <Flex justifyContent="space-evenly" alignItems="center" width="200px">
+          <Link to='/coins'>
+            <Button
+              bg={`${theme.colors.etBlack}`}
+              size='xs'
+              color='white'
+              border='1px solid white'
+              style={{ fontFamily: 'Spotify-Light', textDecoration: 'none' }}
+              variant='link'
+              p={2}
+              py={1}
+            >
+              Get coins
+            </Button>
+          </Link>
 
-            <Box mx='auto' />
-            <Flex alignItems="center">
-              <Link to='/coins' >
-                <Button
-                  bg={`${theme.colors.etBlack}`}
-                  size='xs'
-                  color='white'
-                  border='1px solid white'
-                  style={{ fontFamily: 'Spotify-Light', textDecoration: 'none' }}
-                  variant='link'
-                  p={2}
-                  py={1}
-                >
-                  Get coins
+          {auth
+            ? <>
+              <Link to='/profile'>
+                <Button variant='link'>
+                  {auth ? (
+                    <Account active={router.pathname === '/profile'} />
+                  ) : (
+                    <Account />
+                  )}
                 </Button>
               </Link>
-              <Box mt='8px' ml='10px'>
-                <Link to='/profile'>
-                  <Button variant='link'>
-                    {auth ? (
-                      <Account active={router.pathname === '/profile'} />
-                    ) : (
-                      <Account />
-                    )}
-                  </Button>
-                </Link>
-              </Box>
               <Link to='/cart'>
                 <Box style={{ position: 'relative' }}>
-                  <Button variant='link' mt='4px' mr="8px">
+                  <Button variant='link' ml='-13px'>
                     <Cart active={router.pathname === '/cart'} />
                   </Button>
                   <Box
                     style={{
                       position: 'absolute',
                       color: `${theme.colors.etBlue}`,
-                      top: '-2px',
-                      right: '21px',
+                      top: '6px',
+                      right: '14px',
                       fontSize: '14px',
                       fontWeight: 'bold',
                     }}
@@ -171,11 +114,30 @@ const Navigation = ({ auth, cart, username }) => {
                   </Box>
                 </Box>
               </Link>
-            </Flex>
+            </>
+            : <>
+              <Link to='/signup' >
+                <Button
+                  bg={`${theme.colors.etBlack}`}
+                  border='1px solid white'
+                  size='xs'
+                  color='white'
+                  variant='link'
+                  p={2}
+                  py={1}
+                  style={{ fontFamily: 'Spotify-Light', textDecoration: 'none' }}
+                >
+                  Sign up
+                </Button>
+              </Link>
+            </>
+          }
 
-          </>
-        )}
+
+        </Flex>
+
       </Flex>
+
     </NavigationContainer >
   );
 };
@@ -193,3 +155,135 @@ export default connect(
     UserActions: bindActionCreators(userActions, dispatch),
   }),
 )(Navigation);
+
+/*
+        {/* {(!isMobile || !auth) && (
+          <Fragment>
+            <Link to='/'>
+              <Box>
+                <Button variant='link' mx={4}>
+                  <Home active={router.pathname === '/'} />
+                </Button>
+              </Box>
+            </Link>
+          </Fragment>
+        )}
+
+ <Link to='/help'>
+          <Box>
+            <Button variant='link'>
+              <Help active={router.pathname === '/help'} />
+            </Button>
+          </Box>
+        </Link>
+
+
+
+    <>
+      <Box px={4}>
+        <Link to='/'>
+          <Logo />
+        </Link>
+      </Box>
+      <Box mx='auto' />
+      <Link to='/coins' >
+        <Button
+          bg={`${theme.colors.etBlack}`}
+          size='xs'
+          color='white'
+          border='1px solid white'
+          style={{ fontFamily: 'Spotify-Light', textDecoration: 'none' }}
+          variant='link'
+          p={2}
+          py={1}
+        >
+          Get coins
+        </Button>
+      </Link>
+      <Link to='/signup' >
+        <Button
+          bg={`${theme.colors.etBlack}`}
+          border='1px solid white'
+          size='xs'
+          color='white'
+          mx={4}
+          mt='1px'
+          variant='link'
+          p={2}
+          py={1}
+        >
+          sign up
+        </Button>
+      </Link>
+    </>
+  ) : (
+  <>
+    {' '}
+
+    {history.location.pathname === "/"
+      ?
+      <Flex direction='column' justifyContent='center' ml="8px" pl="16px">
+        <Logo />
+      </Flex>
+      :
+      <Flex direction='column' justifyContent='center' ml="-8px" onClick={() => history.goBack()} style={{ 'cursor': 'pointer' }}>
+        <svg width="75" height="48" viewBox="0 0 75 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="75" height="48" fill="#1D1D1D" />
+          <path d="M30 24H52" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M38 32L30 24L38 16" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </Flex>
+    }
+
+    <Box mx='auto' />
+    <Flex alignItems="center">
+      <Link to='/coins' >
+        <Button
+          bg={`${theme.colors.etBlack}`}
+          size='xs'
+          color='white'
+          border='1px solid white'
+          style={{ fontFamily: 'Spotify-Light', textDecoration: 'none' }}
+          variant='link'
+          p={2}
+          py={1}
+        >
+          Get coins
+        </Button>
+      </Link>
+      <Box mt='8px' ml='10px'>
+        <Link to='/profile'>
+          <Button variant='link'>
+            {auth ? (
+              <Account active={router.pathname === '/profile'} />
+            ) : (
+              <Account />
+            )}
+          </Button>
+        </Link>
+      </Box>
+      <Link to='/cart'>
+        <Box style={{ position: 'relative' }}>
+          <Button variant='link' mt='4px' mr="8px">
+            <Cart active={router.pathname === '/cart'} />
+          </Button>
+          <Box
+            style={{
+              position: 'absolute',
+              color: `${theme.colors.etBlue}`,
+              top: '-2px',
+              right: '21px',
+              fontSize: '14px',
+              fontWeight: 'bold',
+            }}
+          >
+            {cart.items?.length === 0 ? 0 : cart.items?.length}
+          </Box>
+        </Box>
+      </Link>
+    </Flex>
+
+  </>
+)
+}
+*/

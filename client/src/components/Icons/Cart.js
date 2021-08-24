@@ -1,6 +1,7 @@
 import React from 'react';
-import Icon from '../Icon';
 import theme from 'theme.js';
+import { Flex } from '@chakra-ui/react';
+
 
 // const Cart = (props) => (
 //   <Icon {...props}>
@@ -16,13 +17,15 @@ import theme from 'theme.js';
 //   </Icon>
 // );
 const Cart = (props) => (
-  <Icon {...props}>
+
+  <Flex h='48px' alignItems='center' {...props}>
     <svg width="24" height="27" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M1 4H5.4V17.2H20.0667L23 6.93333" stroke={props.active ? theme.colors.etBlue : "white"} stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
       <path d="M6.13332 26C7.34835 26 8.33332 25.015 8.33332 23.8C8.33332 22.5849 7.34835 21.6 6.13332 21.6C4.91829 21.6 3.93332 22.5849 3.93332 23.8C3.93332 25.015 4.91829 26 6.13332 26Z" stroke={props.active ? theme.colors.etBlue : "white"} stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
       <path d="M19.3333 26C20.5484 26 21.5333 25.015 21.5333 23.8C21.5333 22.5849 20.5484 21.6 19.3333 21.6C18.1183 21.6 17.1333 22.5849 17.1333 23.8C17.1333 25.015 18.1183 26 19.3333 26Z" stroke={props.active ? theme.colors.etBlue : "white"} stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
     </svg>
-  </Icon>
+  </Flex>
+
 );
 
 export default Cart;

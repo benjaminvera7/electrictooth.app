@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Image, Stack, Badge, IconButton, useToast } from '@chakra-ui/react';
+import { Box, Flex, Image, Stack, Badge, IconButton, useToast, Text } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -119,10 +119,10 @@ const Album = ({ pending, match, albums, artists, UserActions, history, auth }) 
           </Flex>
         </Flex>
 
-        <Stack spacing={3} pt="32px" px="24px">
+        <Stack spacing={3} py="32px" px="24px">
           {currentAlbum.tracks.map((track, i) => (
             <Flex alignItems='center' justifyContent='center' height='48px'>
-              <Flex flex='2' fontFamily='Spotify-Bold' fontSize={{ sm: "12px", md: "14px", lg: "16px" }}>{track.track_name}</Flex>
+              <Flex flex='2'><Text fontSize={{ base: '10px', sm: "12px", md: "14px", lg: "16px" }} fontFamily='Spotify-Bold'>{track.track_name}</Text></Flex>
               <Flex fontFamily='Spotify-Light' pr='16px'>
                 ${track.download_price}.00
               </Flex>
