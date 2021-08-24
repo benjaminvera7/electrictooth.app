@@ -1,3 +1,4 @@
+/*
 import React from 'react';
 import { Box, Flex, Image, Badge, IconButton } from '@chakra-ui/react';
 import { PlaylistAdd, CartAdd } from 'components/Icons';
@@ -87,7 +88,7 @@ const ProductCard = ({ auth, product, UserActions }) => {
                         {product.artist_name}
                     </Box>
 
-                    {/* 
+                   
                     <Flex style={{ position: 'absolute', bottom: 0, left: 0 }} width='100%'>
                         <IconButton
                             flex='1'
@@ -121,7 +122,7 @@ const ProductCard = ({ auth, product, UserActions }) => {
                             onClick={() => addToPlaylist(album._id, album.type)}
                         />
                     </Flex>
-                    */}
+                    
                 </Box>
             </Box>
         </CardContainer>
@@ -136,3 +137,8 @@ export default connect(
         UserActions: bindActionCreators(userActions, dispatch),
     }),
 )(ProductCard);
+*/
+
+const ProductCard = () => { return }
+
+export default ProductCard

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Text, Button, Flex, Box, Image } from '@chakra-ui/react';
-import { Play, Pause, ArrowUp } from 'components/Icons';
+import { Play, Pause } from 'components/Icons';
 import MobilePlayer from '../MobilePlayer';
 import styled from '@emotion/styled';
-import theme from 'theme.js';
 
 
 const MiniPlayerContainer = styled(Box)`

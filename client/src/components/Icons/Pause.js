@@ -1,6 +1,6 @@
 import React from 'react';
 import Icon from '../Icon';
-import theme from 'theme.js';
+//import theme from 'theme.js';
 
 // const Pause = (props) => (
 //   <Icon {...props}>

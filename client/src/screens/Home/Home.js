@@ -1,8 +1,8 @@
 import React from 'react';
-import { Box, Flex, Image, Spinner } from '@chakra-ui/react';
+import { Box, Flex, Spinner } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import AlbumCard from 'components/AlbumCard';
-import ProductCard from 'components/ProductCard';
+//import ProductCard from 'components/ProductCard';
 import Helmet from 'react-helmet';
 import theme from 'theme.js';
 import { FADE_IN } from 'style/animations';

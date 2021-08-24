@@ -1,13 +1,11 @@
-import React, { Component, Fragment } from 'react';
-import { Box, Flex, Text, Image, Heading, Stack, Badge, IconButton, useToast } from '@chakra-ui/react';
-//import { PlaylistAdd, CartAdd } from 'components/Icons';
+import React from 'react';
+import { Box, Flex, Image, Stack, Badge, IconButton, useToast } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
-import toast from 'util/toast';
-import styled from '@emotion/styled';
-import Helmet from 'react-helmet';
+
+//import Helmet from 'react-helmet';
 import theme from 'theme.js';
 
 const CartAdd = () => (
@@ -35,7 +33,7 @@ const Album = ({ pending, match, albums, artists, UserActions, history, auth }) 
   let albumName = match.params.name.replaceAll('-', ' ');
   let currentAlbum = albums.filter((a) => a.album_name === albumName)[0];
   let currentArtist = artists.filter((a) => a._id === currentAlbum.artist)[0];
-  let artistAlbums = albums.filter((a) => a.artist_name === currentArtist.artist_name);
+  //let artistAlbums = albums.filter((a) => a.artist_name === currentArtist.artist_name);
 
   const addToCart = (id, type) => {
     if (auth) {
@@ -123,8 +121,8 @@ const Album = ({ pending, match, albums, artists, UserActions, history, auth }) 
 
         <Stack spacing={3} pt="32px" px="24px">
           {currentAlbum.tracks.map((track, i) => (
-            <Flex alignItems='center' justifyContent='center' height='48px' alignItems='center'>
-              <Flex flex='2' fontFamily='Spotify-Bold'>{track.track_name}</Flex>
+            <Flex alignItems='center' justifyContent='center' height='48px'>
+              <Flex flex='2' fontFamily='Spotify-Bold' fontSize={{ sm: "12px", md: "14px", lg: "16px" }}>{track.track_name}</Flex>
               <Flex fontFamily='Spotify-Light' pr='16px'>
                 ${track.download_price}.00
               </Flex>

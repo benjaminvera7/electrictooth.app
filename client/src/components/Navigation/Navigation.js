@@ -1,16 +1,16 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
-import { Account, Cart, Home, Toll } from 'components/Icons';
-import { Box, Button, Flex, Image } from '@chakra-ui/react';
+import { Account, Cart } from 'components/Icons';
+import { Box, Button, Flex } from '@chakra-ui/react';
 import { Link, useHistory } from 'react-router-dom';
-import useWindowSize from 'hooks/useWindowSize';
+//import useWindowSize from 'hooks/useWindowSize';
 import useRouter from 'hooks/useRouter';
 import theme from 'theme.js';
 import styled from '@emotion/styled';
 
-const NavigationContainer = styled(Flex)`
+const NavigationContainer = styled.nav`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,7 +41,7 @@ const Logo = () => (
 )
 
 const Navigation = ({ auth, cart, username }) => {
-  const isMobile = useWindowSize();
+  //const isMobile = useWindowSize();
   const router = useRouter();
   const history = useHistory();
 

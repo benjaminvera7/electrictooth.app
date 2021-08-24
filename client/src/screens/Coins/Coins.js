@@ -1,23 +1,17 @@
-import React, { Fragment } from 'react';
-import { Box, Flex, Text, Heading, Image, Button, Icon, useToast } from '@chakra-ui/react';
-import { Toll } from 'components/Icons';
+import React from 'react';
+import { Box, Flex, Heading, Image, Button, useToast } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
 import useRouter from 'hooks/useRouter';
-import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
 import theme from 'theme.js';
 import Helmet from 'react-helmet';
 
-// const CoinContainer = styled(Box)`
-//   ${FADE_IN}
-// `;
 
 const CoinContainer = styled(Flex)`
   background: linear-gradient(90deg, #1D1D1D 0%, #342D54 100%);
 `
-
 
 const Coins = ({ UserActions, auth, coins }) => {
   const router = useRouter();

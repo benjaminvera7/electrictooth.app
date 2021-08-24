@@ -1,3 +1,5 @@
+
+/*
 import React, { Component, Fragment } from 'react';
 import { Box, Flex, Text, Image, Heading, Stack, Badge, IconButton, Select } from '@chakra-ui/react';
 import { PlaylistAdd, CartAdd } from 'components/Icons';
@@ -206,3 +208,6 @@ export default connect(
         UserActions: bindActionCreators(userActions, dispatch),
     }),
 )(Merch);
+*/
+
+export default () => { }

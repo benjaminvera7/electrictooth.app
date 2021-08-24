@@ -1,13 +1,7 @@
 import React from 'react';
 import { Box, Text, Image, Flex } from '@chakra-ui/react';
 import { connect } from 'react-redux';
-import { FADE_IN } from 'style/animations';
-import styled from '@emotion/styled';
 import theme from 'theme.js';
-
-const ArtistContainer = styled(Box)`
-  ${FADE_IN}
-`;
 
 const Artist = ({ artists, pending, match }) => {
   let artistName = match.params.name.replaceAll('-', ' ');
@@ -31,7 +25,7 @@ const Artist = ({ artists, pending, match }) => {
             <Text fontFamily='Spotify-Bold' color='white'>
               <b>{currentArtist.artist_name}</b>
             </Text>
-            <Box color='black' width='100%' fontFamily='Spotify-Light' color='white'>
+            <Box width='100%' fontFamily='Spotify-Light' color='white'>
               {currentArtist.artist_bio}
             </Box>
           </Box>

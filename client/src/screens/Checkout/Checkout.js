@@ -198,7 +198,6 @@ class Checkout extends Component {
           borderRadius="18px"
           mb='18px'
           justifyContent='space-between'
-          alignItems='center'
           mx={4}
           minWidth='320px'
         >
@@ -236,7 +235,6 @@ class Checkout extends Component {
           px={4}
           mx={4}
           justifyContent='space-between'
-          alignItems='center'
           minWidth='320px'
         >
           <Box width="72px" height="72px" overflow='hidden' position='relative' ml='-16px' borderRadius='16px 0 0 16px'>
@@ -272,7 +270,6 @@ class Checkout extends Component {
           borderRadius="18px"
           mb='18px'
           justifyContent='space-between'
-          alignItems='center'
           mx={4}
           minWidth='320px'
           height="72px"

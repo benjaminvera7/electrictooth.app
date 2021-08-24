@@ -12,7 +12,6 @@ import {
   Button,
   Stack,
   Image,
-  Icon,
   IconButton,
   useToast
 } from '@chakra-ui/react';

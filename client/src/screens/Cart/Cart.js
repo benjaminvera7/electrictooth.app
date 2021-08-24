@@ -1,27 +1,17 @@
 import React from 'react';
 import { Box, Flex, Heading, Image, Text, Stack, Button } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-// import { Remove } from 'components/Icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
 import theme from 'theme.js';
 import { Remove } from 'components/Icons';
 import Helmet from 'react-helmet';
-import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
-
-// const CartItem = styled(Flex)`
-//   ${FADE_IN}
-// `;
-
-// const getAmount = (product_id) => parseInt(product_id.substring(4, 7), 10);
-
 
 const CartItem = styled(Flex)`
   background: linear-gradient(90deg, #1D1D1D 0%, #342D54 100%);
 `
-
 
 const Cart = ({ UserActions, auth, cart }) => {
 
@@ -50,7 +40,6 @@ const Cart = ({ UserActions, auth, cart }) => {
           borderRadius="18px"
           mb='18px'
           justifyContent='space-between'
-          alignItems='center'
           mx={4}
           minWidth='320px'
         >
@@ -95,7 +84,6 @@ const Cart = ({ UserActions, auth, cart }) => {
           borderRadius="18px"
           mb='18px'
           justifyContent='space-between'
-          alignItems='center'
           mx={4}
           minWidth='320px'
         >
@@ -138,7 +126,6 @@ const Cart = ({ UserActions, auth, cart }) => {
           borderRadius="18px"
           mb='18px'
           justifyContent='space-between'
-          alignItems='center'
           mx={4}
           minWidth='320px'
           height="72px"
@@ -233,44 +220,3 @@ export default connect(
     UserActions: bindActionCreators(userActions, dispatch),
   }),
 )(Cart);
-
-
-/*
-<Flex borderWidth='1px' key={id} bg='white' borderRadius="20px" boxShadow='0 2px 4px 0 rgba(0,0,0,.25)'>
-                    <Box>
-                      <Image src={`/uploads/${art_name}`} width="100px" borderRadius="20px 0 0 20px" />
-                    </Box>
-
-                    <Box p={2}>
-                      <Heading as='h6' fontSize={['sm', 'md', 'lg', 'xl']} color='gray.600'>
-                        {type === 'coin' && `${amount} stream coins`}
-                        {type === 'album' && album_name}
-                        {type === 'track' && `${track_name} (MP3)`}
-                        {type === 'merch' && `${product_name} (${size})`}
-                      </Heading>
-                      <Text fontSize={['xs', 'sm', 'md', 'lg']} mb={4} color='gray.500'>
-                        {artist_name ? artist_name : `@ $0.01`}
-                      </Text>
-                    </Box>
-
-                    <Box mx='auto' />
-
-                    <Flex p={2} direction='column' justify='center' align='center'>
-                      <Text px={2} color='#222'>
-                        {type === 'coin' && `$${price}.00`}
-                        {type === 'album' && `$${download_price}.00`}
-                        {type === 'track' && `$${download_price}.00`}
-                        {type === 'merch' && `$${price}.00`}
-                      </Text>
-                    </Flex>
-
-                    <Flex p={2}>
-                      <Button onClick={() => UserActions.removeFromCart(id, type, size)} color='black' variant='link'>
-                        <Remove />
-                      </Button>
-                    </Flex>
-                  </Flex>
-
-
-
-*/

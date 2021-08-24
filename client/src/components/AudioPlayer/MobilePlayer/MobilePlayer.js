@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { Playlist, ArrowDown, Next, Previous, Play, Pause, Toll, ChevronDown } from 'components/Icons';
+import React from 'react';
+import { Next, Previous, Play, Pause, ChevronDown } from 'components/Icons';
 import { Box, Flex, Image, Text, Button, Stack } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import styled from '@emotion/styled';

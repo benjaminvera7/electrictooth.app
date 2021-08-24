@@ -81,10 +81,10 @@ const DesktopPlayer = ({
             />
 
             <Flex direction='column' pl={4}>
-              <Text color='gray.600' fontSize='sm' color='white' style={{ fontFamily: 'Spotify-Bold' }}>
+              <Text fontSize='sm' color='white' style={{ fontFamily: 'Spotify-Bold' }}>
                 {currentlyPlaying.artist_name}
               </Text>
-              <Text color='gray.500' fontSize='sm' color='white'  >
+              <Text fontSize='sm' color='white'  >
                 {currentlyPlaying.track_name}
               </Text>
             </Flex>

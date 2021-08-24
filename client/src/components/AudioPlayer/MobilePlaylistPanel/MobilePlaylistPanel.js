@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react';
-import { Box, Image, Flex, Text, Button, Stack, Heading } from '@chakra-ui/react';
+import React from 'react';
+import { Box, Image, Flex, Text, Button, Stack } from '@chakra-ui/react';
 import { Play, ChevronDown, Remove, Pause } from 'components/Icons';
 import { connect } from 'react-redux';
-import theme from 'theme.js';
 
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';

@@ -483,7 +483,7 @@ export default connect(
   useEventListener('keydown', debounce(handlePlay, 500, false))
 */
 
-{/* {isMobile && (
+/* {isMobile && (
         <>
           <MiniPlayer
             playing={playing}
@@ -516,4 +516,4 @@ export default connect(
 
           {isMobile && <MobileNavigation playlistVisible={playlistVisible} setPaylistVisibility={setPlaylistVisibility} />}
           </>
-        )} */}
+        )} */
