@@ -173,7 +173,7 @@ class Download extends Component {
     return (
       <Flex key={coin.id} backgroundColor={`${theme.colors.etBlack}`}>
         <Box width="48px" height="48px" overflow='hidden' position='relative' >
-          <Image src='/uploads/coins.png' h='100%' w='100%' objectFit='cover' />
+          <Image src='/coins.png' h='100%' w='100%' objectFit='cover' />
         </Box>
 
         <Flex pl={4} flexDirection="column" flexBasis='60%' justifyContent='center' style={{ fontFamily: 'Spotify-Bold' }}>
