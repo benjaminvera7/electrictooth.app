@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Box, Flex, Text, Image, Heading, Stack, IconButton } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import { Box, Flex, Text, Image, Heading, Stack, IconButton, useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import requireAuth from 'components/AuthHOC/requireAuth';
@@ -30,38 +30,45 @@ const DownloadIcon = () => (
   </Flex>
 )
 
-class Download extends Component {
-  state = {
-    downloads: [],
-    shippingAddress: {}
-  };
+const Download = ({ UserActions, auth, match }) => {
 
-  loadOrder = () => {
+  const [orderDetails, setOrderDetails] = useState({ downloads: [], shippingAddress: {} })
+  const toast = useToast();
+
+  useEffect(() => {
+    loadOrder();
+    auth && UserActions.getUser(auth);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const loadOrder = () => {
     axios({
-      url: `/api/v1/order/${this.props.match.params.orderId}`,
+      url: `/api/v1/order/${match.params.orderId}`,
       method: 'GET',
-      headers: { Authorization: this.props.auth },
+      headers: { Authorization: auth },
     }).then(({ data }) => {
-      console.log(data.cart.items)
-      this.setState({
+      setOrderDetails({
         downloads: data.cart.items,
         shippingAddress: data.shippingAddress
       });
     });
   };
 
-  componentDidMount() {
-    this.loadOrder();
-    this.props.auth && this.props.UserActions.getUser(this.props.auth);
-  }
+  const handleSubmit = (e, id, type, album_name, track_name) => {
+    toast({
+      title: "Starting download...",
+      duration: 6000,
+      status: 'success',
+      isClosable: true,
+    })
 
-  handleSubmit = (e, id, type, album_name, track_name) => {
     e.preventDefault();
+
     axios({
-      url: `/api/v1/download/order/${this.props.match.params.orderId}/${id}`,
+      url: `/api/v1/download/order/${match.params.orderId}/${id}`,
       method: 'GET',
       responseType: 'blob',
-      headers: { Authorization: this.props.auth },
+      headers: { Authorization: auth },
     }).then((response) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
@@ -79,29 +86,34 @@ class Download extends Component {
     });
   };
 
-  addToPlaylist = (id, type) => {
-    if (this.props.auth) {
-      this.props.UserActions.addToPlaylist(id, type, this.props.auth);
-      //toast(`Saved to your Playlist`);
+  const addToPlaylist = (id, type) => {
+    if (auth) {
+      UserActions.addToPlaylist(id, type, auth);
+      toast({
+        title: "Saved to your Playlist",
+        duration: 2000,
+        status: 'success',
+        isClosable: true,
+      })
     } else {
       console.warn('something went wrong');
     }
   };
 
-  renderLineItems = (item) => {
+  const renderLineItems = (item) => {
     switch (item.type) {
       case 'album':
-        return this.renderAlbumItem(item)
+        return renderAlbumItem(item)
       case 'track':
-        return this.renderTrackItem(item)
+        return renderTrackItem(item)
       case 'coin':
-        return this.renderCoinItem(item)
+        return renderCoinItem(item)
       default:
         return null
     }
   }
 
-  renderAlbumItem = (album) => {
+  const renderAlbumItem = (album) => {
     return (
       <Flex alignItems='center'>
         <Box width="48px" height="48px" overflow='hidden' position='relative' >
@@ -109,7 +121,7 @@ class Download extends Component {
         </Box>
         <Flex pl={4} flexDirection="column" justifyContent='center' flex='2'>
           <Text fontSize='xs' style={{ fontFamily: 'Spotify-Bold' }} color='white' maxWidth='180px' isTruncated>
-            {`${album.album_name} (EP)`}
+            {`${album.album_name}`}
           </Text>
           <Text fontSize='xs' style={{ fontFamily: 'Spotify-Light' }} color='white'>
             {album.artist_name}
@@ -120,7 +132,7 @@ class Download extends Component {
             variant='link'
             aria-label='Download album'
             icon={<DownloadIcon />}
-            onClick={(e) => this.handleSubmit(e, album.id, album.type, album.album_name, album.track_name)}
+            onClick={(e) => handleSubmit(e, album.id, album.type, album.album_name, album.track_name)}
           />
         </Flex>
         <Flex w='48px' justifyContent='center' alignItems='center'>
@@ -128,14 +140,14 @@ class Download extends Component {
             variant='link'
             aria-label='Add to playlist'
             icon={<PlaylistAdd />}
-            onClick={(e) => this.addToPlaylist(album.id, album.type)}
+            onClick={(e) => addToPlaylist(album.id, album.type)}
           />
         </Flex>
       </Flex>
     )
   }
 
-  renderTrackItem = (track) => {
+  const renderTrackItem = (track) => {
     return (
       <Flex alignItems='center'>
         <Box width="48px" height="48px" overflow='hidden' position='relative' >
@@ -143,7 +155,7 @@ class Download extends Component {
         </Box>
         <Flex pl={4} flexDirection="column" justifyContent='center' flex='2'>
           <Text fontSize='xs' style={{ fontFamily: 'Spotify-Bold' }} color='white' maxWidth='180px' isTruncated>
-            {`${track.track_name} (MP3)`}
+            {`${track.track_name}`}
           </Text>
           <Text fontSize='xs' style={{ fontFamily: 'Spotify-Light' }} color='white'>
             {track.artist_name}
@@ -154,7 +166,7 @@ class Download extends Component {
             variant='link'
             aria-label='Download track'
             icon={<DownloadIcon />}
-            onClick={(e) => this.handleSubmit(e, track.id, track.type, track.album_name, track.track_name)}
+            onClick={(e) => handleSubmit(e, track.id, track.type, track.album_name, track.track_name)}
           />
         </Flex>
         <Flex w='48px' justifyContent='center' alignItems='center'>
@@ -162,14 +174,14 @@ class Download extends Component {
             variant='link'
             aria-label='Add to playlist'
             icon={<PlaylistAdd />}
-            onClick={(e) => this.addToPlaylist(track.id, track.type)}
+            onClick={(e) => addToPlaylist(track.id, track.type)}
           />
         </Flex>
       </Flex>
     )
   }
 
-  renderCoinItem = (coin) => {
+  const renderCoinItem = (coin) => {
     return (
       <Flex key={coin.id} backgroundColor={`${theme.colors.etBlack}`}>
         <Box width="48px" height="48px" overflow='hidden' position='relative' >
@@ -183,39 +195,36 @@ class Download extends Component {
     )
   }
 
+  return (
+    <Box backgroundColor={`${theme.colors.etBlack}`} px={4}>
+      <Helmet>
+        <title>Electric Tooth - download</title>
+        <meta name='description' content='amazing' />
+      </Helmet>
+      <Flex justify='center' mt='64px'>
+        <Box color='white' maxW='900px' flex='1' px={{ xs: 2, lg: 2 }}>
+          <Heading px={4} py={2} as='h2' size='2xl' color='white' fontFamily='Spotify-Bold'>
+            Download
+          </Heading>
 
+          <Text px={4} fontSize='sm' mb={4} color='white' fontFamily='Spotify-Light'>
+            Downloads are available anytime in your Libary!
+          </Text>
 
-  render() {
-    return (
-      <Box backgroundColor={`${theme.colors.etBlack}`} px={4}>
-        <Helmet>
-          <title>Electric Tooth - download</title>
-          <meta name='description' content='amazing' />
-        </Helmet>
-        <Flex justify='center' mt='64px'>
-          <Box color='white' maxW='900px' flex='1' px={{ xs: 2, lg: 2 }}>
-            <Heading px={4} py={2} as='h2' size='2xl' color='white' fontFamily='Spotify-Bold'>
-              Download
+          <Flex justify='center' pt={2} pb={6} px={4}>
+            <Heading fontSize={{ sm: '30px', md: '40px' }} color={`${theme.colors.etViolet}`} fontFamily='Spotify-Bold'>
+              Thank you for supporting art!
             </Heading>
+          </Flex>
 
-            <Text px={4} fontSize='sm' mb={4} color='white' fontFamily='Spotify-Light'>
-              Downloads are available anytime in your Libary!
-            </Text>
+          <Stack px={4}>
+            {orderDetails.downloads.length > 0 && orderDetails.downloads.map((item) => renderLineItems(item))}
+          </Stack>
+        </Box>
+      </Flex>
+    </Box>
+  );
 
-            <Flex justify='center' pt={2} pb={6} px={4}>
-              <Heading fontSize={{ sm: '30px', md: '40px' }} color={`${theme.colors.etViolet}`} fontFamily='Spotify-Bold'>
-                Thank you for supporting art!
-              </Heading>
-            </Flex>
-
-            <Stack px={4}>
-              {this.state.downloads.length > 0 && this.state.downloads.map((item) => this.renderLineItems(item))}
-            </Stack>
-          </Box>
-        </Flex>
-      </Box>
-    );
-  }
 }
 
 export default connect(

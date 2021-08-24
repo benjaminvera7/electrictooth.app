@@ -71,12 +71,13 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
   const handleSubmit = (e, id, type, album_name, track_name) => {
     toast({
       title: "Starting download...",
-      duration: 2000,
+      duration: 6000,
       status: 'success',
       isClosable: true,
     })
 
     e.preventDefault();
+
     axios({
       url: `/api/v1/download/${id}`,
       method: 'GET',
@@ -181,7 +182,6 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
     )
   }
 
-  //http://localhost:3000/download/6118a5599811a50c786bb2e4
   return (
     <Box backgroundColor={`${theme.colors.etBlack}`} px={4}>
       <Helmet>
