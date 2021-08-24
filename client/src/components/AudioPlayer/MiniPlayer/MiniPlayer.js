@@ -48,9 +48,9 @@ const MiniPlayer = ({
 
         {miniProgressBar}
 
-        <Box width="48px" height="48px" overflow='hidden' position='relative' onClick={() => setPlayerVisibility(!playerVisible)} >
-          <Image src={`/uploads/${currentlyPlaying.art_name}`} h='100%' w='100%' objectFit='cover' fallbackSrc="/sonic.gif" />
-        </Box>
+        <Flex h='50px' w='50px' onClick={() => setPlayerVisibility(!playerVisible)} justifyContent='center'>
+          <Image src={`/uploads/${currentlyPlaying.art_name}`} objectFit='cover' fallbackSrc="/sonic.gif" />
+        </Flex>
 
         <Flex pl={4} flexDirection="column" justifyContent='center' flex='2' onClick={() => setPlayerVisibility(!playerVisible)} >
           <Text fontSize='xs' style={{ fontFamily: 'Spotify-Bold' }} color='white' maxWidth='275px' isTruncated>
