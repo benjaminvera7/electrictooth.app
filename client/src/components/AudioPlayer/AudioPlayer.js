@@ -119,6 +119,15 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
 
   const play = () => {
 
+    if (currentlyPlaying._id === undefined) {
+      toast({
+        title: "Add music to your playlist",
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      })
+      return
+    }
 
     if (playing) {
       setPlaying(false);

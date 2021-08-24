@@ -27,9 +27,9 @@ const DesktopPlayerContainer = styled(Flex)`
 const NotificationDot = styled(Box)`
   position: absolute;
   color: var(--et-violet);  
-  top: -24px;
+  top: -28px;
   right: -9px;
-  font-size: 26px;
+  font-size: 32px;
   font-weight: bold;
 `;
 

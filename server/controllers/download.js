@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const AdmZip = require('adm-zip');
 const fileExists = require('../util/fileExists');
 const dbConnection = require('../services/database');
@@ -50,11 +51,13 @@ async function downloadFromOrder(req, res) {
 
     const { fileName, downloadPath, contentType } = await getDownloadDetails(itemToDownload);
 
-    const exists = await fileExists(downloadPath);
+    const streamPath = path.join(__dirname, `../music/${downloadPath}`);
+
+    const exists = await fileExists(streamPath);
 
     if (exists) {
       res.writeHead(200, {
-        'Content-Type': 'application/zip',
+        'Content-Type': contentType,
         'Content-Disposition': 'attachment; filename=' + fileName,
       });
     } else {
@@ -62,7 +65,7 @@ async function downloadFromOrder(req, res) {
       res.end('ERROR File does not exist');
     }
 
-    fs.createReadStream(downloadPath).pipe(res);
+    fs.createReadStream(streamPath).pipe(res);
   }
 
   if (item.type === 'album') {
@@ -71,7 +74,8 @@ async function downloadFromOrder(req, res) {
     let zip = new AdmZip();
 
     itemToDownload.tracks.forEach((track) => {
-      zip.addLocalFile(track.stream_url);
+      const streamPath = path.join(__dirname, `../music/${track.stream_url}`);
+      zip.addLocalFile(streamPath);
     });
 
     let data = zip.toBuffer();
@@ -100,7 +104,9 @@ async function downloadFromProfile(req, res) {
 
     const { fileName, downloadPath, contentType } = await getDownloadDetails(itemToDownload);
 
-    const exists = await fileExists(downloadPath);
+    const streamPath = path.join(__dirname, `../music/${downloadPath}`);
+
+    const exists = await fileExists(streamPath);
 
     if (exists) {
       res.writeHead(200, {
@@ -112,7 +118,7 @@ async function downloadFromProfile(req, res) {
       res.end('ERROR File does not exist');
     }
 
-    fs.createReadStream(downloadPath).pipe(res);
+    fs.createReadStream(streamPath).pipe(res);
   }
 
   if (item.type === 'album') {
@@ -121,7 +127,8 @@ async function downloadFromProfile(req, res) {
     let zip = new AdmZip();
 
     itemToDownload.tracks.forEach((track) => {
-      zip.addLocalFile(track.stream_url);
+      const streamPath = path.join(__dirname, `../music/${track.stream_url}`);
+      zip.addLocalFile(streamPath);
     });
 
     let data = zip.toBuffer();

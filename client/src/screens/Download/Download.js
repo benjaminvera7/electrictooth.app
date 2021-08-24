@@ -1,23 +1,33 @@
 import React, { Component } from 'react';
-import { Box, Flex, Text, Image, Heading, Stack, IconButton, Icon } from '@chakra-ui/react';
+import { Box, Flex, Text, Image, Heading, Stack, IconButton } from '@chakra-ui/react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import requireAuth from 'components/AuthHOC/requireAuth';
 import * as userActions from 'redux/modules/user';
-import { Download as DownloadIcon } from 'components/Icons';
+//import { Download as DownloadIcon } from 'components/Icons';
 import { bindActionCreators } from 'redux';
-import toast from 'util/toast';
+//import toast from 'util/toast';
 import theme from 'theme.js';
 import Helmet from 'react-helmet';
 
 //http://localhost:3000/download/611995458051981df4f3fc9a bonito
 
 const PlaylistAdd = () => (
-  <Icon w='50%' h='auto'>
-    <svg width="21" height="26" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12.8713 4.95786H0.677734V6.99011H12.8713V4.95786ZM12.8713 0.893341H0.677734V2.9256H12.8713V0.893341ZM16.9358 9.02237V4.95786H14.9035V9.02237H10.839V11.0546H14.9035V15.1191H16.9358V11.0546H21.0003V9.02237H16.9358ZM0.677734 11.0546H8.80677V9.02237H0.677734V11.0546Z" fill="#89DBFF" />
+  <Flex h='48px' alignItems='center'>
+    <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12.8713 4.95783H0.677734V6.99008H12.8713V4.95783ZM12.8713 0.893311H0.677734V2.92557H12.8713V0.893311ZM16.9358 9.02234V4.95783H14.9035V9.02234H10.839V11.0546H14.9035V15.1191H16.9358V11.0546H21.0003V9.02234H16.9358ZM0.677734 11.0546H8.80677V9.02234H0.677734V11.0546Z" fill="#89DBFF" />
     </svg>
-  </Icon>
+  </Flex>
+);
+
+const DownloadIcon = () => (
+  <Flex h='48px' alignItems='center'>
+    <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M9 0.5V12.125" stroke="#89DBFF" stroke-width="2" stroke-miterlimit="10" />
+      <path d="M4.5 7.625L9 12.125L13.5 7.625" stroke="#89DBFF" stroke-width="2" stroke-miterlimit="10" stroke-linecap="square" />
+      <path d="M1.125 15.5H16.875" stroke="#89DBFF" stroke-width="2" stroke-miterlimit="10" stroke-linecap="square" />
+    </svg>
+  </Flex>
 )
 
 class Download extends Component {
@@ -72,7 +82,7 @@ class Download extends Component {
   addToPlaylist = (id, type) => {
     if (this.props.auth) {
       this.props.UserActions.addToPlaylist(id, type, this.props.auth);
-      toast(`Saved to your Playlist`);
+      //toast(`Saved to your Playlist`);
     } else {
       console.warn('something went wrong');
     }
@@ -93,72 +103,68 @@ class Download extends Component {
 
   renderAlbumItem = (album) => {
     return (
-      <Flex key={album.id} backgroundColor={`${theme.colors.etBlack}`}>
+      <Flex alignItems='center'>
         <Box width="48px" height="48px" overflow='hidden' position='relative' >
           <Image src={`/uploads/${album.art_name}`} h='100%' w='100%' objectFit='cover' />
         </Box>
-
-        <Flex pl={4} flexDirection="column" flexBasis='60%' justifyContent='center'>
-          <Text fontSize='xs' style={{ fontFamily: 'Spotify-Bold' }} color='white'>
-            {album.album_name}
+        <Flex pl={4} flexDirection="column" justifyContent='center' flex='2'>
+          <Text fontSize='xs' style={{ fontFamily: 'Spotify-Bold' }} color='white' maxWidth='180px' isTruncated>
+            {`${album.album_name} (EP)`}
           </Text>
           <Text fontSize='xs' style={{ fontFamily: 'Spotify-Light' }} color='white'>
             {album.artist_name}
           </Text>
         </Flex>
-
-        <IconButton
-          mr={2}
-          flex='1'
-          variant='link'
-          aria-label='Download album'
-          icon={<DownloadIcon />}
-          onClick={(e) => this.handleSubmit(e, album.id, album.type, album.album_name, album.track_name)}
-        />
-
-        <IconButton
-          flex='1'
-          variant='link'
-          aria-label='Add to playlist'
-          icon={<PlaylistAdd />}
-          onClick={(e) => this.addToPlaylist(album.id, album.type)}
-        />
+        <Flex w='48px' justifyContent='center' alignItems='center'>
+          <IconButton
+            variant='link'
+            aria-label='Download album'
+            icon={<DownloadIcon />}
+            onClick={(e) => this.handleSubmit(e, album.id, album.type, album.album_name, album.track_name)}
+          />
+        </Flex>
+        <Flex w='48px' justifyContent='center' alignItems='center'>
+          <IconButton
+            variant='link'
+            aria-label='Add to playlist'
+            icon={<PlaylistAdd />}
+            onClick={(e) => this.addToPlaylist(album.id, album.type)}
+          />
+        </Flex>
       </Flex>
     )
   }
 
   renderTrackItem = (track) => {
     return (
-      <Flex key={track.id} backgroundColor={`${theme.colors.etBlack}`}>
+      <Flex alignItems='center'>
         <Box width="48px" height="48px" overflow='hidden' position='relative' >
           <Image src={`/uploads/${track.art_name}`} h='100%' w='100%' objectFit='cover' />
         </Box>
-
-        <Flex pl={4} flexDirection="column" flexBasis='60%' justifyContent='center'>
-          <Text fontSize='xs' style={{ fontFamily: 'Spotify-Bold' }} color='white'>
+        <Flex pl={4} flexDirection="column" justifyContent='center' flex='2'>
+          <Text fontSize='xs' style={{ fontFamily: 'Spotify-Bold' }} color='white' maxWidth='180px' isTruncated>
             {`${track.track_name} (MP3)`}
           </Text>
           <Text fontSize='xs' style={{ fontFamily: 'Spotify-Light' }} color='white'>
             {track.artist_name}
           </Text>
         </Flex>
-
-        <IconButton
-          mr={2}
-          flex='1'
-          variant='link'
-          aria-label='Download album'
-          icon={<DownloadIcon />}
-          onClick={(e) => this.handleSubmit(e, track.id, track.type, track.album_name, track.track_name)}
-        />
-
-        <IconButton
-          flex='1'
-          variant='link'
-          aria-label='Add to playlist'
-          icon={<PlaylistAdd />}
-          onClick={(e) => this.addToPlaylist(track.id, track.type)}
-        />
+        <Flex w='48px' justifyContent='center' alignItems='center'>
+          <IconButton
+            variant='link'
+            aria-label='Download track'
+            icon={<DownloadIcon />}
+            onClick={(e) => this.handleSubmit(e, track.id, track.type, track.album_name, track.track_name)}
+          />
+        </Flex>
+        <Flex w='48px' justifyContent='center' alignItems='center'>
+          <IconButton
+            variant='link'
+            aria-label='Add to playlist'
+            icon={<PlaylistAdd />}
+            onClick={(e) => this.addToPlaylist(track.id, track.type)}
+          />
+        </Flex>
       </Flex>
     )
   }
