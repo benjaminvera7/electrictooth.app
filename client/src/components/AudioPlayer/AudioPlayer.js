@@ -160,10 +160,10 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
         value={playing ? Math.ceil(audio.current.currentTime) : 0}
         onChange={onHandleProgress}
         railStyle={{
-          backgroundColor: '#5b676d'
+          backgroundColor: '#5b676d',
         }}
         trackStyle={{
-          backgroundColor: `${theme.colors.etViolet}`
+          backgroundColor: `${theme.colors.etViolet}`,
         }}
         handleStyle={{
           borderColor: `${theme.colors.etViolet}`,
@@ -183,11 +183,13 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
         railStyle={{
           backgroundColor: 'black',
           opacity: '0.5',
-          borderRadius: '0'
+          borderRadius: '0',
+          height: 2
         }}
         trackStyle={{
           backgroundColor: `${theme.colors.etViolet}`,
-          borderRadius: '0'
+          borderRadius: '0',
+          height: 2,
         }}
         handleStyle={{
           display: 'none'
