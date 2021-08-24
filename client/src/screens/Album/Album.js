@@ -76,11 +76,12 @@ const Album = ({ pending, match, albums, artists, UserActions, history, auth }) 
           <Flex justifyContent='center' mb='24px'>
             <Image
               src={`/uploads/${currentAlbum.art_name}`}
-              maxWidth='264px'
-              maxHeight='264px'
+              maxWidth='300px'
+              maxHeight='300px'
               borderRadius="16px"
               border="2px solid #89DBFF"
               boxShadow='8px 8px 0 #89DBFF'
+              fallbackSrc="/sand.gif"
             />
           </Flex>
 
