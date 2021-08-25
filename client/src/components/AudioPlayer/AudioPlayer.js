@@ -202,9 +202,17 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
     UserActions.removeFromPlaylist(id, auth);
   };
 
+  const handlePlay = e => {
+    e.preventDefault();
+    if (e.code === 'Space') {
+      play();
+    }
+  }
+
 
   useEventListener('ended', next, audio.current);
   useEventListener('timeupdate', timeUpdate, audio.current);
+  useEventListener('keydown', handlePlay)
 
   return (
     <Fragment>
