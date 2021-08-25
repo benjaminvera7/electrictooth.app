@@ -15,7 +15,7 @@ class MailerService {
       secure: true,
       auth: {
         type: 'OAuth2',
-        user: 'info@electrictooth.io',
+        user: 'info@electrictooth.com',
         serviceClient: key.client_id,
         privateKey: key.private_key,
       },
@@ -26,7 +26,7 @@ class MailerService {
     await this.transporter.verify();
 
     await this.transporter.sendMail({
-      from: 'info@electrictooth.io',
+      from: 'info@electrictooth.com',
       //to: user.email,
       to: 'vera.benjamin88@gmail.com',
       subject: `ET MUSIC: Thank you for your purchase - ${order._id}`,
@@ -42,7 +42,7 @@ class MailerService {
     await this.transporter.verify();
 
     await this.transporter.sendMail({
-      from: 'info@electrictooth.io',
+      from: 'info@electrictooth.com',
       to: user.email,
       subject: 'Reset your account password',
       html:
