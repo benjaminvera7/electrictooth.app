@@ -49,7 +49,7 @@ const Navigation = ({ auth, cart, username }) => {
     <NavigationContainer>
       <Flex maxW='1024px' flex='1' alignItems="center" justifyContent="space-between" h='48px'>
         <Flex direction='column' justifyContent='center' flex='1'>
-          {history.location.pathname === '/'
+          {(history.location.pathname === '/' || '/download')
             ? (
               <Box w='48px' h='48px' py={2} pl={{ base: 5, sm: 4 }}>
                 <Link to='/'>

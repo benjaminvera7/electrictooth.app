@@ -54,7 +54,7 @@ metadata.set(
   {
     title: "Lambda Edits",
     description: 'Play this in your DJ sets',
-    img: "https://www.electrictooth.app/uploads/lambda.png"
+    img: "https://www.electrictooth.com/uploads/lambda.png"
   });
 
 

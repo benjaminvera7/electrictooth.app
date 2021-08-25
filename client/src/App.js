@@ -58,7 +58,7 @@ function App({ MusicActions, UserActions, auth }) {
         </Switch>
       </Box>
 
-      {auth && <AudioPlayer />}
+      <AudioPlayer />
     </>
   );
 }

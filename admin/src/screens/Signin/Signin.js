@@ -41,7 +41,7 @@ const Signin = ({ history }) => {
     return (
         <section style={{ marginTop: '16px' }}>
             <header style={{ padding: '16px' }}>
-                ENVIRONMENT: {process.env.REACT_APP_API_URL === 'https://electrictooth.app'
+                ENVIRONMENT: {process.env.REACT_APP_API_URL === 'https://electrictooth.com'
                     ? <span style={{ color: 'red', fontStyle: 'bold' }}>PRODUCTION</span>
                     : <span style={{ color: 'red', fontStyle: 'bold' }}>DEVELOPMENT</span>
                 }
