@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Box, Image, Flex, Text, Stack, Button } from '@chakra-ui/react';
 import styled from '@emotion/styled';
+import useOnClickOutside from 'hooks/useOnClickOutside';
 
 const DesktopPlaylistPanelContainer = styled(Box)`
   background: linear-gradient(180deg, #324148 50%, #000000 100%);
@@ -63,6 +64,9 @@ const ChevronDown = () => (
   </Flex>
 )
 
+
+
+
 const DesktopPlaylistPanel = ({
   toggle,
   playing,
@@ -72,13 +76,15 @@ const DesktopPlaylistPanel = ({
   fetch,
   loading,
   isVisible,
-  playlist = []
+  playlist = [],
 }) => {
 
-  console.log()
+  const playlistPanel = useRef();
+
+  useOnClickOutside(playlistPanel, () => toggle(false));
 
   return (
-    <DesktopPlaylistPanelContainer isVisible={isVisible}>
+    <DesktopPlaylistPanelContainer isVisible={isVisible} ref={playlistPanel}>
 
       <Flex h='100px' alignItems='center'>
         <Flex h='100px' alignItems='center' flex='2' w='48px' >

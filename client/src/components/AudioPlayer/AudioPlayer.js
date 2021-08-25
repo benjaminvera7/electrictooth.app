@@ -234,6 +234,7 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
             setPlaylistVisibility={setPlaylistVisibility}
             loading={loading}
             miniProgressBar={MiniProgressBar}
+            playlist={playlist}
           />
 
           <MobilePlaylistPanel

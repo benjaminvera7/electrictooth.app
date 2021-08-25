@@ -41,9 +41,9 @@ class ForgotPassword extends Component {
     return (
       <ForgotContainer w='100%' p={4} justify='center' mt="48px" backgroundColor={`${theme.colors.etBlack}`}>
         <Box w='300px'>
-          <Flex direction='column' align='center'>
+          {/* <Flex direction='column' align='center'>
             <Image src='./favicon.ico' w='36px' />
-          </Flex>
+          </Flex> */}
 
           <Stack spacing={4} my={4}>
             <Text color={`${theme.colors.etBlue}`}>
