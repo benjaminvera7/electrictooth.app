@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Box, Flex, Image, Stack, Input, Button, Text } from '@chakra-ui/react';
+import { Box, Flex, Stack, Input, Button, Text } from '@chakra-ui/react';
 
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';

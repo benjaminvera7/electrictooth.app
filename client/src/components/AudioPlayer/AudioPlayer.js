@@ -203,8 +203,8 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
   };
 
   const handlePlay = e => {
-    e.preventDefault();
     if (e.code === 'Space') {
+      e.preventDefault();
       play();
     }
   }

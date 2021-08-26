@@ -5,7 +5,6 @@ import * as userActions from 'redux/modules/user';
 import {
   Box,
   Flex,
-  Image,
   Stack,
   Input,
   Button,
