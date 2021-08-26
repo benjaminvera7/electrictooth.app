@@ -5,7 +5,6 @@ import {
   Stack,
   Input,
   Button,
-  Image,
   Link,
   Text,
 } from '@chakra-ui/react';
@@ -26,9 +25,9 @@ const Signup = ({ UserActions, history, error, message }) => {
   return (
     <SignupContainer w='100%' justify='center' mt="64px" backgroundColor={`${theme.colors.etBlack}`}>
       <Box w='300px'>
-        <Flex direction='column' align='center'>
+        {/* <Flex direction='column' align='center'>
           <Image src='./favicon.ico' w='36px' />
-        </Flex>
+        </Flex> */}
 
         <form
           ref={(r) => (form = r)}
