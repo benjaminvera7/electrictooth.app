@@ -89,7 +89,7 @@ const Album = ({ pending, match, albums, artists, UserActions, history, auth }) 
 
             <Flex>
               <Box flex='2'>
-                <Badge mr='8px' px={2} bg='white' variantColor='white' height="18px" style={{ fontFamily: 'Spotify-Light' }}>
+                <Badge mr='8px' px={2} bg={`${theme.colors.etViolet}`} color='white' height="18px" style={{ fontFamily: 'Spotify-Light' }}>
                   {currentAlbum.type}
                 </Badge>
                 {currentAlbum.tags.map((tag, i) => (
@@ -98,7 +98,7 @@ const Album = ({ pending, match, albums, artists, UserActions, history, auth }) 
                   </Badge>
                 ))}
               </Box>
-              <Box>
+              <Box style={{ cursor: 'default' }}>
                 ${currentAlbum.download_price}.00
               </Box>
             </Flex>
@@ -111,12 +111,12 @@ const Album = ({ pending, match, albums, artists, UserActions, history, auth }) 
               <Link to={`/artist/${currentAlbum.artist_name}`}>
                 <Image src={`/uploads/${currentArtist.artist_img}`} width='32px' height='32px' borderRadius="50%" boxShadow='1px 1px 0 #89DBFF' objectFit='cover' fallbackSrc="https://via.placeholder.com/32" />
               </Link>
-              <Box pl='16px'>
+              <Box pl='16px' style={{ cursor: 'default' }}>
                 {currentAlbum.artist_name}
               </Box>
             </Flex>
 
-            <Box>
+            <Box style={{ cursor: 'default' }}>
               {currentAlbum.type && 'LP - 2021'}
             </Box>
 
@@ -126,8 +126,8 @@ const Album = ({ pending, match, albums, artists, UserActions, history, auth }) 
         <Stack spacing={3} py="32px" px="24px">
           {currentAlbum.tracks.map((track, i) => (
             <Flex alignItems='center' justifyContent='center' height='48px'>
-              <Flex flex='2'><Text fontSize={{ base: '12px', sm: "14px", md: "16px", lg: "16px" }} fontFamily='Spotify-Bold'>{track.track_name}</Text></Flex>
-              <Flex fontFamily='Spotify-Light' pr='16px'>
+              <Flex flex='2'><Text fontSize={{ base: '12px', sm: "14px", md: "16px", lg: "16px" }} style={{ cursor: 'default' }} fontFamily='Spotify-Bold'>{track.track_name}</Text></Flex>
+              <Flex fontFamily='Spotify-Light' pr='16px' style={{ cursor: 'default' }}>
                 ${track.download_price}.00
               </Flex>
               <Flex w='48px' justifyContent='center' alignItems='center'>

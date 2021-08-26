@@ -10,6 +10,7 @@
   --et-gray: #324148;
   --et-violet: #9480FF;
   background-color: var(--et-black);
+  cursor: default;
 }
 
 @font-face {
