@@ -84,6 +84,9 @@ const AlbumCard = ({ auth, album, UserActions }) => {
 
         <Flex minHeight='118px' direction="column" justifyContent='center' px='16px'>
           <Box d='flex' alignItems='baseline' pb="10px">
+            <Badge mr='8px' px={2} bg='white' variantColor='white' height="18px" style={{ fontFamily: 'Spotify-Light' }}>
+              {album.type}
+            </Badge>
             {album.tags.map((tag, i) => (
               <Badge mr='8px' px={2} bg={`${theme.colors.etBlue}`} variantColor='white' key={i} height="18px" style={{ fontFamily: 'Spotify-Light' }}>
                 {tag}

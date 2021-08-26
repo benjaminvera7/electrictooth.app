@@ -89,6 +89,9 @@ const Album = ({ pending, match, albums, artists, UserActions, history, auth }) 
 
             <Flex>
               <Box flex='2'>
+                <Badge mr='8px' px={2} bg='white' variantColor='white' height="18px" style={{ fontFamily: 'Spotify-Light' }}>
+                  {currentAlbum.type}
+                </Badge>
                 {currentAlbum.tags.map((tag, i) => (
                   <Badge mr='8px' px={2} bg={`${theme.colors.etBlue}`} key={i} height="18px" style={{ fontFamily: 'Spotify-Light' }}>
                     {tag}
