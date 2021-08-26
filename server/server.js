@@ -74,7 +74,7 @@ const getMetadata = async () => {
     const key = `/artist/${artist.artist_name.replace(/\s+/g, '-')}`;
     const title = `${artist.artist_name}`;
     const description = artist.artist_bio !== "" ? artist.artist_bio : `Stream ${artist.artist_name}'s music on Electric Tooth' `;
-    const img = artist.artist_img !== "" ? artist.artist_img : "https://www.electrictooth.com/uploads/et.png";
+    const img = artist.artist_img !== "" ? `https://www.electrictooth.com/uploads/${artist.artist_img}` : "https://www.electrictooth.com/uploads/et.png";
 
     metadata.set(key, {
       title,
