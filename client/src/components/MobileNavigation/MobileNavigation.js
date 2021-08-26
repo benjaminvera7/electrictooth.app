@@ -7,6 +7,9 @@ import { connect } from 'react-redux';
 import theme from 'theme.js';
 import styled from '@emotion/styled';
 
+//var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+// padding - bottom: ${ isIOS ? 'calc(.5rem + env(safe-area-inset-bottom))' : '0px' };
+// padding - top: ${ isIOS ? 'calc(.5rem + env(safe-area-inset-top))' : '0px' };
 
 const MobileNavigationContainer = styled(Flex)`
   position: fixed;
