@@ -52,22 +52,29 @@ app.use('/api/v1/eth', checkCustomerAuth, ethRoutes);
 
 var metadata = new Map();
 
-metadata.set('/',
-  {
-    title: "Electic Tooth",
-    description: 'Pay-Per-Play streaming and Digital Downloads. 100% goes to the artist!',
-    img: "https://www.electrictooth.com/uploads/et.png"
-  });
-
-
 const getMetadata = async () => {
-  const albumMetadata = await dbConnection.getAllAlbumsMetaData(); s
+  const albumMetadata = await dbConnection.getAllAlbumsMetaData();
 
   albumMetadata.forEach(album => {
-    const key = `/music/${album.artist_name.replace(/\s+/g, '-')}`;
+    const key = `/music/${album.album_name.replace(/\s+/g, '-')}`;
     const title = `${album.album_name}`;
-    const description = `Listen to album "${album.album_name}" by ${album.artist_name} on Electric Tooth`;
+    const description = `Listen to album ${album.album_name} by ${album.artist_name} on Electric Tooth`;
     const img = `https://www.electrictooth.com/uploads/${album.art_name}`
+
+    metadata.set(key, {
+      title,
+      description,
+      img
+    })
+  })
+
+  const artistMetadata = await dbConnection.getAllArtistsMetadata();
+
+  artistMetadata.forEach(artist => {
+    const key = `/artist/${artist.artist_name.replace(/\s+/g, '-')}`;
+    const title = `${artist.artist_name}`;
+    const description = artist.artist_bio !== "" ? artist.artist_bio : `Stream ${artist.artist_name}'s music on Electric Tooth' `;
+    const img = artist.artist_img !== "" ? artist.artist_img : "https://www.electrictooth.com/uploads/et.png";
 
     metadata.set(key, {
       title,
@@ -86,11 +93,14 @@ app.get('/*', (req, res) => {
   let meta = metadata.get(req.url);
 
   fs.readFile(filePath, 'utf8', (err, data) => {
-    data = data.replace(/\$OG_TITLE/g, meta.title);
-    data = data.replace(/\$OG_DESCRIPTION/g, meta.description);
-    data = data.replace(/\$OG_IMAGE/g, meta.img);
+    if (meta) {
+      data = data.replace(/\Electric Tooth/g, meta.title);
+      data = data.replace(/\Pay-Per-Play streaming and Digital Downloads. 100% goes to the artist!/g, meta.description);
+      data = data.replace(/\https:\/\/www.electrictooth.com\/uploads\/et.png/g, meta.img);
+    }
     res.send(data);
   });
+
 });
 
 app.use((error, req, res, next) => {

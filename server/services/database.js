@@ -209,6 +209,11 @@ class DatabaseService {
     return albumsMetadata;
   }
 
+  async getAllArtistsMetadata() {
+    const artistsMetadata = await Artists.find({}, '_id artist_name artist_bio artist_img');
+    return artistsMetadata;
+  }
+
   async getFullAlbumById(id) {
     const album = await Albums.findById({ _id: id }).populate({ path: 'tracks' }).exec();
     return album;
