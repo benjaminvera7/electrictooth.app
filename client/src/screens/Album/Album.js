@@ -123,7 +123,7 @@ const Album = ({ pending, match, albums, artists, UserActions, history, auth }) 
         <Stack spacing={3} py="32px" px="24px">
           {currentAlbum.tracks.map((track, i) => (
             <Flex alignItems='center' justifyContent='center' height='48px'>
-              <Flex flex='2'><Text fontSize={{ base: '10px', sm: "12px", md: "14px", lg: "16px" }} fontFamily='Spotify-Bold'>{track.track_name}</Text></Flex>
+              <Flex flex='2'><Text fontSize={{ base: '12px', sm: "14px", md: "16px", lg: "16px" }} fontFamily='Spotify-Bold'>{track.track_name}</Text></Flex>
               <Flex fontFamily='Spotify-Light' pr='16px'>
                 ${track.download_price}.00
               </Flex>
