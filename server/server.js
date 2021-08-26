@@ -7,6 +7,9 @@ const cors = require('cors');
 const config = require('./config');
 const fs = require('fs');
 
+const dbConnection = require('./services/database');
+
+
 const checkCustomerAuth = require('./util/checkCustomerAuth');
 const checkAdminAuth = require('./util/checkAdminAuth');
 
@@ -49,14 +52,32 @@ app.use('/api/v1/eth', checkCustomerAuth, ethRoutes);
 
 var metadata = new Map();
 
-metadata.set(
-  '/music/Lambda-Edits',
+metadata.set('/',
   {
-    title: "Lambda Edits",
-    description: 'Play this in your DJ sets',
-    img: "https://www.electrictooth.com/uploads/lambda.png"
+    title: "Electic Tooth",
+    description: 'Pay-Per-Play streaming and Digital Downloads. 100% goes to the artist!',
+    img: "https://www.electrictooth.com/uploads/et.png"
   });
 
+
+const getMetadata = async () => {
+  const albumMetadata = await dbConnection.getAllAlbumsMetaData(); s
+
+  albumMetadata.forEach(album => {
+    const key = `/music/${album.artist_name.replace(/\s+/g, '-')}`;
+    const title = `${album.album_name}`;
+    const description = `Listen to album "${album.album_name}" by ${album.artist_name} on Electric Tooth`;
+    const img = `https://www.electrictooth.com/uploads/${album.art_name}`
+
+    metadata.set(key, {
+      title,
+      description,
+      img
+    })
+  })
+}
+
+getMetadata();
 
 app.get('/*', (req, res) => {
 
@@ -65,11 +86,9 @@ app.get('/*', (req, res) => {
   let meta = metadata.get(req.url);
 
   fs.readFile(filePath, 'utf8', (err, data) => {
-    if (req.url === '/music/Lambda-Edits') {
-      data = data.replace(/\$OG_TITLE/g, meta.title);
-      data = data.replace(/\$OG_DESCRIPTION/g, meta.description);
-      data = data.replace(/\$OG_IMAGE/g, meta.img);
-    }
+    data = data.replace(/\$OG_TITLE/g, meta.title);
+    data = data.replace(/\$OG_DESCRIPTION/g, meta.description);
+    data = data.replace(/\$OG_IMAGE/g, meta.img);
     res.send(data);
   });
 });
