@@ -18,10 +18,13 @@ const MobileNavigationContainer = styled(Flex)`
   z-index: 2;
   background-color: var(--et-gray);
   color: var(--color-50);
-  height: 50px;
   align-items: center;
   justify-content: space-evenly;
   width: 100%;
+  min-height: 50px
+  padding-top: env(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+  border-top: 1px solid black;
 `;
 
 const MobileNavigation = ({

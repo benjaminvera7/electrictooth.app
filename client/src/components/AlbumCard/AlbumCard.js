@@ -41,7 +41,7 @@ const AlbumCard = ({ auth, album, UserActions }) => {
       UserActions.addToPlaylist(id, type, auth);
 
       toast({
-        title: "Saved to your Playlist",
+        title: "Added to playlist",
         duration: 2000,
         status: 'success',
         isClosable: true,

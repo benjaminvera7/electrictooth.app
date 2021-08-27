@@ -6,11 +6,11 @@ import styled from '@emotion/styled';
 import theme from 'theme.js';
 
 
-
 const MiniPlayerContainer = styled(Box)`
     position: fixed;
     display: flex;
     bottom: 50px;
+    bottom: calc(env(safe-area-inset-bottom) + 43px);
     background-color: var(--et-gray);
     color: var(--color-50);
     height: 50px;

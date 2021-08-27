@@ -41,7 +41,7 @@ const ProductCard = ({ auth, product, UserActions }) => {
         if (auth) {
             UserActions.addToPlaylist(id, type, auth);
 
-            toast(`Saved to your Playlist`);
+            toast(`Added to playlist`);
         } else {
             router.push('/signup');
         }

@@ -58,7 +58,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
     if (auth) {
       UserActions.addToPlaylist(id, type, auth);
       toast({
-        title: "Saved to your Playlist",
+        title: "Added to playlist",
         duration: 2000,
         status: 'success',
         isClosable: true,

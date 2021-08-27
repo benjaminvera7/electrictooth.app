@@ -53,7 +53,7 @@ const Album = ({ pending, match, albums, artists, UserActions, history, auth }) 
     if (auth) {
       UserActions.addToPlaylist(id, type, auth);
       toast({
-        title: "Saved to your Playlist",
+        title: "Added to playlist",
         duration: 2000,
         status: 'success',
         isClosable: true,
