@@ -39,7 +39,7 @@ const Album = ({ pending, match, albums, artists, UserActions, history, auth }) 
     if (auth) {
       UserActions.addToCart(id, type, null, auth);
       toast({
-        title: "Added to your Cart",
+        title: "Added to cart",
         status: 'success',
         duration: 2000,
         isClosable: true,

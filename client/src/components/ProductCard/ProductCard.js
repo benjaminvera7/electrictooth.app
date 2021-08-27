@@ -51,7 +51,7 @@ const ProductCard = ({ auth, product, UserActions }) => {
         if (auth) {
             UserActions.addToCart(id, type, null, auth);
 
-            toast(`Added to your Cart`);
+            toast(`Added to cart`);
         } else {
             router.push('/signup');
         }

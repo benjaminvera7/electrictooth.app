@@ -39,7 +39,6 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
     return timelineDot;
   };
 
-
   const fetch = async (id) => {
 
     const [track] = playlist.filter((track) => track._id === id);
@@ -67,7 +66,18 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
       setLoading(false);
 
       audio.current.src = url;
-      audio.current.play();
+      audio.current.play().then(_ => {
+        document.title = `${track.track_name} by ${track.artist_name}`;
+        if ("mediaSession" in navigator) {
+          navigator.mediaSession.metadata = new window.MediaMetadata({
+            title: `${track.track_name}`,
+            artist: `${track.artist_name}`,
+            album: `${track.album_name}`,
+            artwork: [{ src: `/uploads/${track.art_name}` }]
+          });
+        }
+      }).catch(error => console.log(error));;
+
 
 
     } catch (error) {
@@ -213,6 +223,14 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
   useEventListener('ended', next, audio.current);
   useEventListener('timeupdate', timeUpdate, audio.current);
   useEventListener('keydown', handlePlay)
+
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.setActionHandler('previoustrack', previous);
+    navigator.mediaSession.setActionHandler('nexttrack', next)
+    navigator.mediaSession.setActionHandler("seekto", (details) => {
+      audio.current.currentTime = details.seekTime;
+    });
+  }
 
   return (
     <Fragment>
