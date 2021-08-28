@@ -22,6 +22,7 @@ const MiniPlayerContainer = styled(Box)`
     transform: ${props => props.isLoading ? 'translateY(160px)' : 'translateY(0)'};
     transition-delay: ${props => props.isLoading ? '0ms' : '350ms'};
     transition: transform 200ms ease-out;
+    touch-action: none;
 `;
 
 const MiniPlayer = ({

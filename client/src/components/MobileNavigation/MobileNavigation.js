@@ -25,6 +25,7 @@ const MobileNavigationContainer = styled(Flex)`
   padding-top: env(safe-area-inset-bottom);
   padding-bottom: env(safe-area-inset-bottom);
   border-top: 1px solid black;
+  touch-action: none;
 `;
 
 const MobileNavigation = ({
