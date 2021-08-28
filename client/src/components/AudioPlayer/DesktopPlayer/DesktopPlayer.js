@@ -114,12 +114,12 @@ const DesktopPlayer = ({
               </Box>
             </Flex>
 
-            <Button variant='link' onClick={() => {
+            <Button variant='link' id="playlistIconButton" onClick={() => {
               setVisibility(!visible)
             }}>
               <Box style={{ position: 'relative' }}>
                 <Playlist active={visible} />
-                <NotificationDot>
+                <NotificationDot id='notificationDot'>
                   {playlist?.length === 0 ? '' : '•'}
                 </NotificationDot>
               </Box>

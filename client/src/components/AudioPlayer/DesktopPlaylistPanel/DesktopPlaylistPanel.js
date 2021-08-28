@@ -81,7 +81,12 @@ const DesktopPlaylistPanel = ({
 
   const playlistPanel = useRef();
 
-  useOnClickOutside(playlistPanel, () => toggle(false));
+  useOnClickOutside(playlistPanel, (event) => {
+    if (event.target.id === 'playlistIcon' || event.target.id === 'playlistIconButton' || event.target.id === 'notificationDot') {
+      return
+    }
+    toggle(false)
+  });
 
   return (
     <DesktopPlaylistPanelContainer isVisible={isVisible} ref={playlistPanel}>
