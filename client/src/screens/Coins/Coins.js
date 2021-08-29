@@ -56,7 +56,7 @@ const Coins = ({ UserActions, auth, coins }) => {
             </Flex>
           </Flex>
 
-          <Flex justifyContent='center' alignItems='center' color={`${theme.colors.etViolet}`} fontFamily='Spotify-Bold' py={4} fontSize='12px'>
+          <Flex justifyContent='center' alignItems='center' color={`${theme.colors.etViolet}`} fontFamily='Spotify-Bold' py={4} fontSize={{ base: '12px', sm: '14px', lg: '18px' }}>
             $0.01 USD = 1 coin = 1 stream. 100% goes to the artists!
           </Flex>
 

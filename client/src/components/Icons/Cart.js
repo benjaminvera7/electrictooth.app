@@ -18,7 +18,7 @@ import { Flex } from '@chakra-ui/react';
 // );
 const Cart = (props) => (
 
-  <Flex h='48px' alignItems='center' {...props}>
+  <Flex h='40px' alignItems='center' {...props}>
     <svg width="24" height="27" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M1 4H5.4V17.2H20.0667L23 6.93333" stroke={props.active ? theme.colors.etBlue : "white"} stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
       <path d="M6.13332 26C7.34835 26 8.33332 25.015 8.33332 23.8C8.33332 22.5849 7.34835 21.6 6.13332 21.6C4.91829 21.6 3.93332 22.5849 3.93332 23.8C3.93332 25.015 4.91829 26 6.13332 26Z" stroke={props.active ? theme.colors.etBlue : "white"} stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />

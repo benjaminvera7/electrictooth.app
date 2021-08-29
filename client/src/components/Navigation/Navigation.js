@@ -49,24 +49,12 @@ const Navigation = ({ auth, cart, username }) => {
     <NavigationContainer>
       <Flex maxW='1024px' flex='1' alignItems="center" justifyContent="space-between" h='48px'>
         <Flex direction='column' justifyContent='center' flex='1'>
-          {(history.location.pathname === '/' || '/download')
-            ? (
-              <Box w='48px' h='48px' py={2} pl={{ base: 5, sm: 4 }}>
-                <Link to='/'>
-                  <Logo />
-                </Link>
-              </Box>
-            )
-            : (
-              <Flex direction='column' justifyContent='center' onClick={() => history.goBack()} style={{ 'cursor': 'pointer' }} w='48px' h='48px'>
-                <svg width="75" height="48" viewBox="0 0 75 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect width="75" height="48" fill="#1D1D1D" />
-                  <path d="M30 24H52" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M38 32L30 24L38 16" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </Flex>
-            )
-          }
+          <Box w='48px' h='48px' py={2} pl={{ base: 5, sm: 4 }}>
+            <Link to='/'>
+              <Logo />
+            </Link>
+          </Box>
+
         </Flex>
         <Flex justifyContent="space-evenly" alignItems="center" width="200px">
           <Link to='/coins'>
@@ -104,7 +92,7 @@ const Navigation = ({ auth, cart, username }) => {
                     style={{
                       position: 'absolute',
                       color: `${theme.colors.etBlue}`,
-                      top: '6px',
+                      top: '3px',
                       right: '14px',
                       fontSize: '14px',
                       fontWeight: 'bold',
@@ -157,6 +145,26 @@ export default connect(
 )(Navigation);
 
 /*
+
+           {(history.location.pathname === '/' || '/download')
+            ? (
+              <Box w='48px' h='48px' py={2} pl={{ base: 5, sm: 4 }}>
+                <Link to='/'>
+                  <Logo />
+                </Link>
+              </Box>
+            )
+            : (
+              <Flex direction='column' justifyContent='center' onClick={() => history.goBack()} style={{ 'cursor': 'pointer' }} w='48px' h='48px'>
+                <svg width="75" height="48" viewBox="0 0 75 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="75" height="48" fill="#1D1D1D" />
+                  <path d="M30 24H52" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M38 32L30 24L38 16" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </Flex>
+            )
+          }
+
         {/* {(!isMobile || !auth) && (
           <Fragment>
             <Link to='/'>
