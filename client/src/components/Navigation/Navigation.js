@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
 import { Account, Cart } from 'components/Icons';
 import { Box, Button, Flex } from '@chakra-ui/react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 //import useWindowSize from 'hooks/useWindowSize';
 import useRouter from 'hooks/useRouter';
 import theme from 'theme.js';
@@ -40,22 +40,44 @@ const Logo = () => (
   </svg>
 )
 
+const Help = (props) => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    width='24'
+    height='24'
+    fill={props.active ? theme.colors.etBlue : '#b3b3b3'}
+    viewBox='0 0 24 24'
+    id='help'
+  >
+    <path d='M11,18 L13,18 L13,16 L11,16 L11,18 L11,18 Z M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 L12,2 Z M12,20 C7.59,20 4,16.41 4,12 C4,7.59 7.59,4 12,4 C16.41,4 20,7.59 20,12 C20,16.41 16.41,20 12,20 L12,20 Z M12,6 C9.79,6 8,7.79 8,10 L10,10 C10,8.9 10.9,8 12,8 C13.1,8 14,8.9 14,10 C14,12 11,11.75 11,15 L13,15 C13,12.75 16,12.5 16,10 C16,7.79 14.21,6 12,6 L12,6 Z'></path>
+  </svg>
+)
+
 const Navigation = ({ auth, cart, username }) => {
   //const isMobile = useWindowSize();
   const router = useRouter();
-  const history = useHistory();
+  //const history = useHistory();
 
   return (
     <NavigationContainer>
       <Flex maxW='1024px' flex='1' alignItems="center" justifyContent="space-between" h='48px'>
-        <Flex direction='column' justifyContent='center' flex='1'>
-          <Box w='48px' h='48px' py={2} pl={{ base: 5, sm: 4 }}>
+
+        <Flex flex='1' alignItems='center'>
+          <Box w='80px' h='48px' py={2} pl={{ base: 5, sm: 4 }}>
             <Link to='/'>
               <Logo />
             </Link>
           </Box>
 
+          <Box flex='1' style={{ cursor: 'pointer' }}>
+            <Link to='/help'>
+              <Help active={router.pathname === '/help'} />
+            </Link>
+          </Box>
         </Flex>
+
+
+
         <Flex justifyContent="space-evenly" alignItems="center" width="200px">
           <Link to='/coins'>
             <Button

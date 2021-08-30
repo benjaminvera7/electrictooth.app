@@ -70,11 +70,11 @@ const AlbumCard = ({ auth, album, UserActions }) => {
     <CardContainer
       maxWidth="300px"
       minHeight="474px"
-      boxShadow='8px 8px 0 #89DBFF'
+      boxShadow={`8px 8px 0 ${theme.colors.etBlue}`}
       overflow='hidden'
       mb='32px'
       style={{ position: 'relative' }}
-      border="2px solid #89DBFF"
+      border={`2px solid ${theme.colors.etBlue}`}
       borderRadius="20px"
       backgroundColor={`${theme.colors.etBlack}`}
       mr={{ md: '32px' }}
@@ -113,7 +113,7 @@ const AlbumCard = ({ auth, album, UserActions }) => {
                 borderTop: '2px',
                 borderRight: '2px',
                 borderStyle: 'solid',
-                borderColor: '#89DBFF',
+                borderColor: `${theme.colors.etBlue}`
               }}
               height='64px'
               rounded='0px'
@@ -128,7 +128,7 @@ const AlbumCard = ({ auth, album, UserActions }) => {
               style={{
                 borderTop: '2px',
                 borderStyle: 'solid',
-                borderColor: '#89DBFF',
+                borderColor: `${theme.colors.etBlue}`,
               }}
               rounded='0px'
               icon={<PlaylistAdd />}
