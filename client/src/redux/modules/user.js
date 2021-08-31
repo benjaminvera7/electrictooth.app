@@ -60,7 +60,7 @@ const _getCoins = (token) => {
 
 const _getOrders = (token) => {
   return axios({
-    url: `/api/v1/order/orders`,
+    url: `/api/v1/user/orders`,
     method: 'GET',
     headers: { Authorization: token },
   });
