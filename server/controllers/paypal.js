@@ -13,7 +13,7 @@ async function requestPayment(req, res) {
 
     const payment = createPaymentObject(order);
 
-    const { response } = await paypal.createPayment(payment);
+    let { response } = await paypal.createPayment(payment);
 
     res.redirect(response.redirectUrl);
 
