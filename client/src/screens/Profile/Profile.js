@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Tabs,
   TabList,
@@ -13,7 +13,13 @@ import {
   Stack,
   Image,
   IconButton,
-  useToast
+  useToast,
+  Table,
+  Thead,
+  Tr,
+  Td,
+  Th,
+  Tbody
 } from '@chakra-ui/react';
 import { Toll } from 'components/Icons';
 import { Link } from 'react-router-dom';
@@ -51,8 +57,12 @@ const Download = () => (
   </Flex>
 )
 
-const Profile = ({ UserActions, user, auth, history, library }) => {
-  const toast = useToast()
+const Profile = ({ UserActions, user, auth, history, library, orders }) => {
+  const toast = useToast();
+
+  useEffect(() => {
+    auth && UserActions.getOrders(auth);
+  }, [auth, UserActions]);
 
   const addToPlaylist = (id, type) => {
     if (auth) {
@@ -182,6 +192,23 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
     )
   }
 
+  const renderDate = (date) => {
+    return new Date(date).toISOString().substring(0, 10);
+  }
+
+  const renderOrderLineItem = (item) => {
+    switch (item.type) {
+      case 'album':
+        return <Box color='white'>{item.artist_name} - {item.album_name}</Box>
+      case 'track':
+        return <div></div>
+      case 'coin':
+        return <Box color='white'>{item.amount} coins</Box>
+      default:
+        return null
+    }
+  }
+
   return (
     <Box backgroundColor={`${theme.colors.etBlack}`} px={4}>
       <Helmet>
@@ -206,7 +233,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
             </Heading>
           </Flex>
 
-          <Tabs isFitted colorScheme='cyan' >
+          <Tabs isFitted colorScheme='cyan'>
             <TabList mb='1em'>
               <Tab><Text fontSize="14px" fontFamily='Spotify-Bold'>Library</Text></Tab>
               <Tab><Text fontSize="14px" fontFamily='Spotify-Bold'>Order History</Text></Tab>
@@ -231,8 +258,28 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
                     )}
                 </Stack>
               </TabPanel>
-              <TabPanel>
-                order history
+              <TabPanel px={0}>
+                <Table size="sm">
+                  <Thead>
+                    <Tr>
+                      <Th color='white'>Order #</Th>
+                      <Th color='white'>Items</Th>
+                      <Th color='white' isNumeric>Order Date</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {orders.length > 0
+                      && orders.map((order, i) =>
+                        <Tr key={i}>
+                          <Td>{order._id.substring(0, 7)}</Td>
+                          <Td>
+                            {order.cart.items.map(item => renderOrderLineItem(item))}
+                          </Td>
+                          <Td isNumeric>{renderDate(order.updated_at)}</Td>
+                        </Tr>
+                      )}
+                  </Tbody>
+                </Table>
               </TabPanel>
               <TabPanel>
                 <Flex justify='flex-end'>
@@ -262,6 +309,7 @@ const Profile = ({ UserActions, user, auth, history, library }) => {
 export default connect(
   (state) => ({
     user: state.user,
+    orders: state.user.orders,
     auth: state.user.authenticated,
     library: state.user.library,
     updatedAt: state.music.updatedAt,

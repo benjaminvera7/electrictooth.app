@@ -58,6 +58,14 @@ const _getCoins = (token) => {
   });
 };
 
+const _getOrders = (token) => {
+  return axios({
+    url: `/api/v1/order/orders`,
+    method: 'GET',
+    headers: { Authorization: token },
+  });
+};
+
 const _addToPlaylist = (id, type, token) => {
   return axios({
     url: `/api/v1/user/playlist/${id}`,
@@ -87,6 +95,9 @@ export const addToPlaylist = createAction(ADD_TO_PLAYLIST, _addToPlaylist);
 export const GET_COINS = 'user/GET_COINS';
 export const getCoins = createAction(GET_COINS, _getCoins);
 
+export const GET_ORDERS = 'user/GET_ORDERS';
+export const getOrders = createAction(GET_ORDERS, _getOrders);
+
 export const GET_USER = 'user/GET_USER';
 export const getUser = createAction(GET_USER, _getUser);
 
@@ -111,6 +122,7 @@ const initialState = {
   username: localStorage.getItem('username'),
   library: [],
   playlist: [],
+  orders: [],
   cart: {
     items: [],
     total: 0,
@@ -256,6 +268,17 @@ export default handleActions(
       onSuccess: (state, { payload }) => {
         const newState = { ...state, updatedAt: getDate(), error: null };
         newState.coins = payload.data;
+        return newState;
+      },
+      onFailure: (state, { payload }) => {
+        return { ...state, error: 'err' };
+      },
+    }),
+    ...pender({
+      type: GET_ORDERS,
+      onSuccess: (state, { payload }) => {
+        const newState = { ...state, updatedAt: getDate(), error: null };
+        newState.orders = payload.data;
         return newState;
       },
       onFailure: (state, { payload }) => {

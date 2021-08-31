@@ -343,6 +343,11 @@ class DatabaseService {
     return order;
   }
 
+  async getUserOrders(id) {
+    const orders = await Orders.find({ user_id: id, status: 'SUCCESSFUL' });
+    return orders;
+  }
+
   async addTrackIncome(track_id) {
     return await Tracks.findOneAndUpdate({ _id: track_id }, { $inc: { income: 1 } }, { new: true });
   }
