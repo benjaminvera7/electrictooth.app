@@ -3,56 +3,55 @@ const key = require('../key');
 const config = require('../config');
 
 class MailerService {
-  constructor() {
-    this.transporter = null;
-    this.initMailerService();
-  }
+    constructor() {
+        this.transporter = null;
+        this.initMailerService();
+    }
 
-  initMailerService() {
-    this.transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
-      auth: {
-        type: 'OAuth2',
-        user: 'info@electrictooth.com',
-        serviceClient: key.client_id,
-        privateKey: key.private_key,
-      },
-    });
-  }
+    initMailerService() {
+        this.transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
+            auth: {
+                type: 'OAuth2',
+                user: 'info@electrictooth.com',
+                serviceClient: key.client_id,
+                privateKey: key.private_key,
+            },
+        });
+    }
 
-  renderLineItems(item) {
-    switch (item.type) {
-      case 'album':
-        return `<tr>
+    renderLineItems(item) {
+        switch (item.type) {
+            case 'album':
+                return `<tr>
           <td align="left" width="75%" style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">${item.artist_name} - ${item.album_name}</td>
           <td align="left" width="25%" style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">$${item.download_price}.00</td>
         </tr>`
-      case 'track':
-        return `<tr>
+            case 'track':
+                return `<tr>
           <td align="left" width="75%" style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">${item.artist_name} - ${item.track_name} (MP3)</td>
           <td align="left" width="25%" style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">$${item.download_price}.00</td>
         </tr>`
-      case 'coin':
-        return `<tr>
+            case 'coin':
+                return `<tr>
           <td align="left" width="75%" style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">${item.amount} Coins</td>
           <td align="left" width="25%" style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">$${item.price}.00</td>
         </tr>`
-      default:
-        return ""
+            default:
+                return ""
+        }
     }
-  }
 
-  async sendOrderSummaryMail(user, order) {
-    await this.transporter.verify();
+    async sendOrderSummaryMail(user, order) {
+        await this.transporter.verify();
 
-    await this.transporter.sendMail({
-      from: 'info@electrictooth.com',
-      //to: user.email,
-      to: 'vera.benjamin88@gmail.com',
-      subject: `Electric Tooth: Thank you for your purchase - #${order._id.toString().substring(0, 7)}`,
-      html: `<!DOCTYPE html>
+        await this.transporter.sendMail({
+            from: 'info@electrictooth.com',
+            to: user.email,
+            subject: `Electric Tooth: Thank you for your purchase - #${order._id.toString().substring(0, 7)}`,
+            html: `<!DOCTYPE html>
 <html>
 
 <head>
@@ -313,17 +312,17 @@ class MailerService {
 </body>
 
 </html>`
-    });
-  }
+        });
+    }
 
-  async sendResetPasswordMail(user, resetToken) {
-    await this.transporter.verify();
+    async sendResetPasswordMail(user, resetToken) {
+        await this.transporter.verify();
 
-    await this.transporter.sendMail({
-      from: 'info@electrictooth.com',
-      to: user.email,
-      subject: 'Electric Tooth: Reset your account password',
-      html: `
+        await this.transporter.sendMail({
+            from: 'info@electrictooth.com',
+            to: user.email,
+            subject: 'Electric Tooth: Reset your account password',
+            html: `
         <!DOCTYPE html>
 <html>
 
@@ -597,8 +596,8 @@ class MailerService {
 
 </html>
       `
-    });
-  }
+        });
+    }
 }
 
 const mailer = new MailerService();
