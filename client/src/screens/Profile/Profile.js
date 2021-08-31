@@ -201,7 +201,7 @@ const Profile = ({ UserActions, user, auth, history, library, orders }) => {
       case 'album':
         return <Box color='white'>{item.artist_name} - {item.album_name}</Box>
       case 'track':
-        return <div></div>
+        return <Box color='white'>{item.artist_name} - {item.track_name}</Box>
       case 'coin':
         return <Box color='white'>{item.amount} coins</Box>
       default:
