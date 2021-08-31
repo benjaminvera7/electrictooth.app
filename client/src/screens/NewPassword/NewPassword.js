@@ -4,6 +4,8 @@ import { Box, Flex, Image, Stack, Input, Button } from '@chakra-ui/react';
 import { FADE_IN } from 'style/animations';
 import styled from '@emotion/styled';
 import axios from 'axios';
+import theme from 'theme.js';
+
 
 const ForgotContainer = styled(Flex)`
   ${FADE_IN}
@@ -42,19 +44,20 @@ class NewPassword extends Component {
 
     let { data } = await this.reset(password, passwordConfirm, userId, token);
     let { message, error } = data;
-    this.setState({
-      error: error,
-      message: message,
-    });
+    console.log(data)
+
 
     if (!this.state.error) {
-      history.push('/signin');
+      this.setState({
+        error: error,
+        message: message,
+      });
     }
   };
 
   render() {
     return (
-      <ForgotContainer w='100%' p={4} justify='center' mt='40px'>
+      <ForgotContainer w='100%' p={4} justify='center' mt='40px' backgroundColor={theme.colors.etBlack}>
         <Box w='300px'>
           <Flex direction='column' align='center'>
             <Image src='./favicon.ico' w='36px' />
@@ -62,6 +65,7 @@ class NewPassword extends Component {
 
           <Stack spacing={4} my={4}>
             <Input
+              color='white'
               placeholder='New Password'
               size='lg'
               name='password'
@@ -77,6 +81,7 @@ class NewPassword extends Component {
 
             <Input
               placeholder='Confirm Password'
+              color='white'
               size='lg'
               name='passwordConfirm'
               type='password'
@@ -89,13 +94,15 @@ class NewPassword extends Component {
               }}
             />
 
-            <Button bg='#28a745' variant='solid' w='100%' type='submit' onClick={this.submit}>
+            <Button bg={theme.colors.etBlue} variant='solid' w='100%' type='submit' onClick={this.submit} color="black">
               Reset Password
             </Button>
 
-            <Flex justify='center'>
-              <Box color='#DC143C'>{this.state.message}</Box>
+            <Flex justify='center' flexDirection='column' alignItems='center'>
+              <Box color={this.state.error ? 'red' : 'green'}>{this.state.message}</Box>
+              {(!this.state.error && this.state.message !== '') && <Box color='white'>Please sign in <a href='https://electrictooth.com/signin' style={{ color: theme.colors.etBlue }}>here</a></Box>}
             </Flex>
+
           </Stack>
         </Box>
       </ForgotContainer>
