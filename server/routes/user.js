@@ -11,5 +11,6 @@ router.post('/playlist/:id', userController.addToPlaylist);
 router.delete('/playlist/:id', userController.removeTrackFromPlaylist);
 
 router.get('/coins', userController.getCoins);
+router.get('/orders', userController.getUserOrders);
 
 module.exports = router;
