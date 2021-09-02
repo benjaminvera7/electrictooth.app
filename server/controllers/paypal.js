@@ -109,11 +109,11 @@ function createPaymentObject(order) {
   payment.transactions[0].invoice_number = order._id.toString();
   payment.transactions[0].amount.total = order.cart.total;
 
-  const items = payment.transactions[0].item_list.items;
+  payment.transactions[0].item_list.items = [];
 
   order.cart.items.forEach((item) => {
     if (item.type === 'track') {
-      items.push({
+      payment.transactions[0].item_list.items.push({
         name: `${item.artist_name} - ${item.track_name}`,
         description: `${item.artist_name} - ${item.track_name} (MP3)`,
         quantity: 1,
@@ -121,10 +121,11 @@ function createPaymentObject(order) {
         sku: item.id.toString(),
         currency: order.currency,
       });
+      return
     }
 
     if (item.type === 'coin') {
-      items.push({
+      payment.transactions[0].item_list.items.push({
         name: `${item.amount} stream coins`,
         description: 'Coins for sustainable streaming',
         quantity: 1,
@@ -132,10 +133,11 @@ function createPaymentObject(order) {
         sku: item.id.toString(),
         currency: order.currency,
       });
+      return
     }
 
     if (item.type === 'album') {
-      items.push({
+      payment.transactions[0].item_list.items.push({
         name: `${item.artist_name} - ${item.album_name}`,
         description: `${item.artist_name} - ${item.album_name} (ZIP)`,
         quantity: 1,
@@ -143,10 +145,11 @@ function createPaymentObject(order) {
         sku: item.id.toString(),
         currency: order.currency,
       });
+      return
     }
 
     if (item.type === 'merch') {
-      items.push({
+      payment.transactions[0].item_list.items.push({
         name: `${item.product_name}`,
         description: `${item.product_name} (${item.size})`,
         quantity: 1,
@@ -154,6 +157,7 @@ function createPaymentObject(order) {
         sku: item.id.toString(),
         currency: order.currency,
       });
+      return
     }
   });
 

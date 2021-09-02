@@ -32,7 +32,7 @@ class NewPassword extends Component {
 
   submit = async () => {
     const { password, passwordConfirm } = this.state;
-    const { match, history } = this.props;
+    const { match } = this.props;
 
     if (password !== passwordConfirm || password === '') {
       this.setState({ error: true, message: 'Passwords do not match' });
