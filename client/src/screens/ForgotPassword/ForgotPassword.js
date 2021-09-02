@@ -19,6 +19,10 @@ class ForgotPassword extends Component {
   };
 
   reset = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('username');
+
     return axios.post(
       '/api/v1/reset',
       {
