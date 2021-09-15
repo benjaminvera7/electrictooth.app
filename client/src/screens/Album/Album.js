@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Image, Stack, Badge, IconButton, useToast, Text } from '@chakra-ui/react';
+import { Box, Flex, Image, Stack, Badge, IconButton, useToast, Text, Button } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -123,7 +123,20 @@ const Album = ({ pending, match, albums, artists, UserActions, history, auth }) 
           </Flex>
         </Flex>
 
-        <Stack spacing={3} py="32px" px="24px">
+        <Flex width='100%' my='16px'>
+          <Box flex='1' textAlign="center"  >
+            <Button onClick={() => addToCart(currentAlbum._id, currentAlbum.type)} p={2} size="md" variant="link" style={{ fontFamily: 'Spotify-Bold', cursor: 'pointer', color: theme.colors.etViolet, textDecoration: 'underline' }}>
+              Add to Cart
+            </Button>
+          </Box>
+          <Box flex='1' textAlign="center">
+            <Button onClick={() => addToPlaylist(currentAlbum._id, currentAlbum.type)} p={2} size="md" variant="link" style={{ fontFamily: 'Spotify-Bold', cursor: 'pointer', color: theme.colors.etViolet, textDecoration: 'underline' }}>
+              Add to Playlist
+            </Button>
+          </Box>
+        </Flex>
+
+        <Stack spacing={3} pb="32px" px="24px">
           {currentAlbum.tracks.map((track, i) => (
             <Flex alignItems='center' justifyContent='center' height='48px'>
               <Flex flex='2'><Text fontSize={{ base: '12px', sm: "14px", md: "16px", lg: "16px" }} style={{ cursor: 'default' }} fontFamily='Spotify-Bold'>{track.track_name}</Text></Flex>

@@ -1,6 +1,6 @@
-/* * {
+ /* * {
   border: 1px solid red !important;
-} */
+}  */
 
 :root {
   --et-green: #05aea5;
@@ -99,9 +99,10 @@
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  width: 300px !important;
+  width: 235px !important;
   bottom: 100px;
   background-color: var(--et-violet) !important;
+  text-align: center;
 }
 
 .mini-progress-bar {

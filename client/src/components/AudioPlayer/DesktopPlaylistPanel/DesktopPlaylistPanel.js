@@ -92,7 +92,7 @@ const DesktopPlaylistPanel = ({
     <DesktopPlaylistPanelContainer isVisible={isVisible} ref={playlistPanel}>
 
       <Flex h='100px' alignItems='center'>
-        <Flex h='100px' alignItems='center' flex='2' w='48px' >
+        <Flex h='100px' alignItems='center' flex='2' w='48px'>
           <Button onClick={() => toggle(false)} variant='link'>
             <ChevronDown />
           </Button>
@@ -103,7 +103,7 @@ const DesktopPlaylistPanel = ({
         </Box>
       </Flex>
 
-      <Stack>
+      <Stack pb='32px'>
         {playlist.map((track) => (
           <Flex alignItems='center' key={track._id}>
             <Box width="48px" height="48px" overflow='hidden' position='relative' >
