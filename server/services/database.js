@@ -151,7 +151,7 @@ class DatabaseService {
   async getData() {
     const artists = await Artists.find().populate({ path: 'albums', select: '_id art_name album_name' });
 
-    const albums = await Albums.find().populate('tracks');
+    const albums = await Albums.find().sort({ 'created_at': -1 }).populate('tracks');
 
     const coins = await Coins.find();
 

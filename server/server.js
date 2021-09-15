@@ -115,23 +115,27 @@ app.listen(config.port);
 
 console.log(`ET3-Server is listening on http://localhost:${config.port}`);
 
-const admin = express();
 
-admin.use(morgan('dev'));
-admin.use(bodyParser.json());
-admin.use(bodyParser.urlencoded({ extended: false }));
-admin.use(cookieParser());
-admin.use(cors());
+if (process.env.NODE_ENV === 'production') {
+  const admin = express();
 
-admin.use(express.static(path.join(__dirname, '../admin/build')));
+  admin.use(morgan('dev'));
+  admin.use(bodyParser.json());
+  admin.use(bodyParser.urlencoded({ extended: false }));
+  admin.use(cookieParser());
+  admin.use(cors());
 
-admin.get('/admin', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../admin/build', 'index.html'));
-});
+  admin.use(express.static(path.join(__dirname, '../admin/build')));
+
+  admin.get('/admin', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../admin/build', 'index.html'));
+  });
 
 
-admin.listen(5000);
+  admin.listen(5000);
 
-console.log(`ET3-Admin is listening on http://localhost:5000`);
+  console.log(`ET3-Admin is listening on http://localhost:5000`);
+}
+
 
 console.log(`SERVER RUNNING IN: ${process.env.NODE_ENV}`)
