@@ -7,7 +7,7 @@ const OrdersSchema = new Schema({
   status: String,
   currency: String,
   hash: String,
-  updated_at: String,
+  updated_at: Date,
   shippingAddress: Object
 });
 

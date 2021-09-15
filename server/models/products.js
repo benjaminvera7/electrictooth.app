@@ -11,6 +11,7 @@ const ProductsSchema = new Schema({
     type: String,
     quantity: Object,
     artist_name: String,
+    created_at: Date,
     artist: { type: Schema.Types.ObjectId, ref: 'Artists' },
 });
 

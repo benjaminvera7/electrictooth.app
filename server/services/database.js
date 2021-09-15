@@ -55,6 +55,7 @@ class DatabaseService {
       artist_bio: properties.artist_bio,
       artist_img: properties.artist_img,
       albums: properties.albums,
+      created_at: new Date()
     });
 
     return newArtist.save();
@@ -81,7 +82,8 @@ class DatabaseService {
       type: 'merch',
       artist_name: properties.artist_name,
       artist: properties.artist,
-      quantity: properties.quantity
+      quantity: properties.quantity,
+      created_at: new Date()
     });
 
     return newProduct.save();
@@ -104,6 +106,7 @@ class DatabaseService {
       tags: properties.tags,
       type: 'album',
       artist: properties.artist,
+      created_at: new Date()
     });
 
     return newAlbum.save();
@@ -125,6 +128,7 @@ class DatabaseService {
       plays: 0,
       income: 0,
       type: 'track',
+      created_at: new Date()
     });
 
     return newTrack.save();
@@ -311,7 +315,7 @@ class DatabaseService {
       status: 'PENDING',
       cart: cart,
       currency: currency,
-      updated_at: this.getDate(),
+      updated_at: new Date(),
     });
 
     return await order.save();

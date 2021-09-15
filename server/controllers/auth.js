@@ -64,6 +64,7 @@ async function signup(req, res) {
     stream: [],
     coins: 100,
     reset_token: '',
+    created_at: new Date()
   });
 
   const newCart = await dbConnection.createUserCart();

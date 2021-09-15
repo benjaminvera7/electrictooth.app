@@ -15,6 +15,7 @@ const TracksSchema = new Schema({
   plays: Number,
   income: Number,
   type: String,
+  created_at: Date,
 });
 
 const Tracks = mongoose.model('Tracks', TracksSchema);

@@ -13,6 +13,7 @@ const UsersSchema = new Schema({
   reset_token: String,
   library: Array,
   stream: Array,
+  created_at: Date,
   cart: { type: Schema.Types.ObjectId, ref: 'Carts' },
   playlist: { type: Schema.Types.ObjectId, ref: 'Playlists' },
   orders: [{ type: Schema.Types.ObjectId, ref: 'Orders' }],
