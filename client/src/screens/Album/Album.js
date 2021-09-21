@@ -68,7 +68,7 @@ const Album = ({ pending, match, albums, artists, UserActions, history, auth }) 
   }
 
   return (
-    <Flex justify='center' mt='64px' backgroundColor={`${theme.colors.etBlack}`}>
+    <Flex justify='center' mt='64px' mb="100px" backgroundColor={`${theme.colors.etBlack}`}>
       <Box color='white' maxW='900px' flex='1' px={{ xs: 2, lg: 2 }}>
 
         <Flex display={{ md: "flex" }}>
