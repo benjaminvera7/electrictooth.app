@@ -13,6 +13,11 @@
   cursor: default;
 }
 
+html {
+  overflow-y: scroll;
+  overscroll-behavior-y: none;
+}
+
 @font-face {
   font-family: 'Spotify-Bold';
   src: url('./fonts/Spotify-Bold.woff2') format('woff2');

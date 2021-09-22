@@ -24,14 +24,14 @@ const Home = ({ albums, products, pending }) => {
   }
 
   return (
-    <>
+    <Box>
       <Helmet>
         <title>Electric Tooth - home</title>
         <meta name='description' content='amazing' />
       </Helmet>
 
       <HomeContainer justify='center' mt='64px' backgroundColor={`${theme.colors.etBlack}`}>
-        <Box color='white' maxW='1024px' flex='1' height="160vh">
+        <Box color='white' maxW='1024px' flex='1'>
           {/* <Flex justifyContent="center">
             <Image src='./water.gif' w='300px' borderRadius="16px" mb='32px' />
           </Flex> */}
@@ -46,7 +46,7 @@ const Home = ({ albums, products, pending }) => {
           </Flex>
         </Box>
       </HomeContainer>
-    </>
+    </Box>
   );
 };
 
