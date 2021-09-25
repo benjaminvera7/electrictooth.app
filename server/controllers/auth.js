@@ -62,7 +62,7 @@ async function signup(req, res) {
     password: password,
     library: [],
     stream: [],
-    coins: 100,
+    coins: 10,
     reset_token: '',
     created_at: new Date()
   });
@@ -87,7 +87,7 @@ async function signup(req, res) {
     library: [],
     stream: [],
     playlist: playlist,
-    coins: 100,
+    coins: 10,
   });
 }
 
