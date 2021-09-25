@@ -90,7 +90,7 @@ const Album = ({ pending, match, albums, artists, UserActions, history, auth }) 
             <Flex>
               <Box flex='2'>
                 <Badge mr='8px' px={2} bg={`${theme.colors.etViolet}`} color='white' height="18px" style={{ fontFamily: 'Spotify-Light' }}>
-                  {currentAlbum.type}
+                  {currentAlbum.tracks.length === 1 ? 'SINGLE' : 'ALBUM'}
                 </Badge>
                 {currentAlbum.tags.map((tag, i) => (
                   <Badge mr='8px' px={2} bg={`${theme.colors.etBlue}`} key={i} height="18px" style={{ fontFamily: 'Spotify-Light' }}>
@@ -125,12 +125,24 @@ const Album = ({ pending, match, albums, artists, UserActions, history, auth }) 
 
         <Flex width='100%' my='16px'>
           <Box flex='1' textAlign="center"  >
-            <Button onClick={() => addToCart(currentAlbum._id, currentAlbum.type)} p={2} size="md" variant="link" style={{ fontFamily: 'Spotify-Bold', cursor: 'pointer', color: theme.colors.etViolet, textDecoration: 'underline' }}>
+            <Button onClick={() => {
+              if (currentAlbum.tracks.length === 1) {
+                addToCart(currentAlbum.tracks[0]._id, currentAlbum.tracks[0].type)
+              } else {
+                addToCart(currentAlbum._id, currentAlbum.type)
+              }
+            }} p={2} size="md" variant="link" style={{ fontFamily: 'Spotify-Bold', cursor: 'pointer', color: theme.colors.etViolet, textDecoration: 'underline' }}>
               Add to Cart
             </Button>
           </Box>
           <Box flex='1' textAlign="center">
-            <Button onClick={() => addToPlaylist(currentAlbum._id, currentAlbum.type)} p={2} size="md" variant="link" style={{ fontFamily: 'Spotify-Bold', cursor: 'pointer', color: theme.colors.etViolet, textDecoration: 'underline' }}>
+            <Button onClick={() => {
+              if (currentAlbum.tracks.length === 1) {
+                addToPlaylist(currentAlbum.tracks[0]._id, currentAlbum.tracks[0].type)
+              } else {
+                addToPlaylist(currentAlbum._id, currentAlbum.type)
+              }
+            }} p={2} size="md" variant="link" style={{ fontFamily: 'Spotify-Bold', cursor: 'pointer', color: theme.colors.etViolet, textDecoration: 'underline' }}>
               Add to Playlist
             </Button>
           </Box>

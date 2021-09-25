@@ -118,7 +118,13 @@ const AlbumCard = ({ auth, album, UserActions }) => {
               height='64px'
               rounded='0px'
               icon={<CartAdd />}
-              onClick={() => addToCart(album._id, album.type)}
+              onClick={() => {
+                if (album.tracks.length === 1) {
+                  addToCart(album.tracks[0]._id, album.tracks[0].type)
+                } else {
+                  addToCart(album._id, album.type)
+                }
+              }}
             />
             <IconButton
               flex='1'
@@ -132,7 +138,13 @@ const AlbumCard = ({ auth, album, UserActions }) => {
               }}
               rounded='0px'
               icon={<PlaylistAdd />}
-              onClick={() => addToPlaylist(album._id, album.type)}
+              onClick={() => {
+                if (album.tracks.length === 1) {
+                  addToPlaylist(album.tracks[0]._id, album.tracks[0].type)
+                } else {
+                  addToPlaylist(album._id, album.type)
+                }
+              }}
             />
           </Flex>
         </Box>
