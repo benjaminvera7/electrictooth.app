@@ -38,7 +38,9 @@ const Signin = ({ UserActions, history, error, message }) => {
             UserActions.signIn({
               email: form.email.value,
               password: form.password.value,
-            }).then(() => history.push('/profile'));
+            }).then(() => {
+              history.push('/');
+            });
           }}
         >
           <Stack spacing={4} my={4}>
