@@ -131,7 +131,7 @@ const Profile = ({ UserActions, user, auth, history, library, orders }) => {
         </Box>
         <Flex pl={4} flexDirection="column" justifyContent='center' flex='2'>
           <Text fontSize='xs' style={{ fontFamily: 'Spotify-Bold' }} color='white' maxWidth='180px' isTruncated>
-            {`${album.album_name} (EP)`}
+            {`${album.album_name}`}
           </Text>
           <Text fontSize='xs' style={{ fontFamily: 'Spotify-Light' }} color='white'>
             {album.artist_name}

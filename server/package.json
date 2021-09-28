@@ -6,6 +6,7 @@
   "scripts": {
     "seed": "concurrently --kill-others-on-fail \"node createAdmin.js\" \"node coinSeed.js\"",
     "start": "NODE_ENV=production nodemon server.js",
+    "start-prod": "NODE_ENV=production pm2 start server.js",
     "dev-server": "NODE_ENV=development nodemon server.js",
     "build": "cd ../client && yarn build",
     "dev": "concurrently --kill-others-on-fail \"NODE_ENV=development npm run dev-server\" \"cd ../client && yarn start\"  \"cd ../admin && yarn start\"",
