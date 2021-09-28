@@ -106,25 +106,24 @@ const Album = ({ pending, match, albums, artists, UserActions, history, auth }) 
             <Box fontWeight='semibold' fontSize="18px" lineHeight='tight' isTruncated color='white' pb="8px" style={{ fontFamily: 'Spotify-Bold' }}>
               {currentAlbum.album_name}
             </Box>
-
-            <Flex color='white' fontSize="18px" style={{ fontFamily: 'Spotify-Light' }} pb="8px" alignItems='center'>
-              <Link to={`/artist/${currentAlbum.artist_name.replaceAll(' ', '-')}`}>
+            <Link to={`/artist/${currentAlbum.artist_name.replaceAll(' ', '-')}`}>
+              <Flex color='white' fontSize="18px" style={{ fontFamily: 'Spotify-Light' }} pb="8px" alignItems='center' id="cover">
                 <Image src={`/uploads/${currentArtist.artist_img}`} width='32px' height='32px' borderRadius="50%" boxShadow='1px 1px 0 #89DBFF' objectFit='cover' fallbackSrc="https://via.placeholder.com/32" />
-              </Link>
-              <Box pl='16px' style={{ cursor: 'default' }}>
-                {currentAlbum.artist_name}
-              </Box>
-            </Flex>
+                <Box pl='16px' style={{ cursor: 'pointer' }}>
+                  {currentAlbum.artist_name}
+                </Box>
+              </Flex>
+            </Link>
 
             <Box style={{ cursor: 'default' }}>
-              {currentAlbum.type && 'LP - 2021'}
+              {currentAlbum.description}
             </Box>
 
           </Flex>
         </Flex>
 
         <Flex width='100%' my='16px'>
-          <Box flex='1' textAlign="center"  >
+          <Box flex='1' textAlign="center" id="cover">
             <Button onClick={() => {
               if (currentAlbum.tracks.length === 1) {
                 addToCart(currentAlbum.tracks[0]._id, currentAlbum.tracks[0].type)
@@ -135,7 +134,7 @@ const Album = ({ pending, match, albums, artists, UserActions, history, auth }) 
               Add to Cart
             </Button>
           </Box>
-          <Box flex='1' textAlign="center">
+          <Box flex='1' textAlign="center" id="cover">
             <Button onClick={() => {
               if (currentAlbum.tracks.length === 1) {
                 addToPlaylist(currentAlbum.tracks[0]._id, currentAlbum.tracks[0].type)

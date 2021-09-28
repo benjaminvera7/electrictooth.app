@@ -130,3 +130,12 @@ html {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+
+.button {
+  transition-duration: 0.3s;
+}
+
+button:hover, #cover:hover {
+    opacity: 0.5;
+}

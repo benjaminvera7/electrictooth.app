@@ -24,7 +24,7 @@ const HoverCard = ({ productId, img, name }) => {
   const url = name.replaceAll(' ', '-');
 
   return (
-    <HoverCardContainer width='100%' position='relative' isMobile={isMobile} minWidth="300px" minHeight="300px">
+    <HoverCardContainer width='100%' position='relative' isMobile={isMobile} minWidth="300px" minHeight="300px" id="cover">
       <Link to={`/music/${url}`}>
         <Image src={`/uploads/${img}`} width='100%' objectFit='fill' maxHeight='288px' fallbackSrc="/sand.gif" />
       </Link>
