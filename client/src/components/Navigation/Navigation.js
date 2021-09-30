@@ -54,9 +54,7 @@ const Help = (props) => (
 )
 
 const Navigation = ({ auth, cart, username }) => {
-  //const isMobile = useWindowSize();
   const router = useRouter();
-  //const history = useHistory();
 
   return (
     <NavigationContainer>
@@ -69,11 +67,11 @@ const Navigation = ({ auth, cart, username }) => {
             </Link>
           </Box>
 
-          <Box style={{ cursor: 'pointer' }} pr={{ base: 5, sm: 4 }}>
+          {/* <Box style={{ cursor: 'pointer' }} pr={{ base: 5, sm: 4 }}>
             <Link to='/help'>
               <Help active={router.pathname === '/help'} />
             </Link>
-          </Box>
+          </Box> */}
 
           <Box flex='1'>
             <Popover placement="bottom-start"  >
@@ -128,6 +126,11 @@ const Navigation = ({ auth, cart, username }) => {
                     </svg>
                     <span style={{ paddingLeft: '4px' }}></span>
                     and enjoy the music!
+                  </Text>
+
+                  <br />
+                  <Text>
+                    For more details visit <Link to='/help'><span style={{ 'color': `${theme.colors.etBlue}` }}>Help</span></Link>
                   </Text>
                 </PopoverBody>
               </PopoverContent>
