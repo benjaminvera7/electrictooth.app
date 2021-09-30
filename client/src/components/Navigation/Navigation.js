@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'redux/modules/user';
 import { Account, Cart } from 'components/Icons';
-import { Box, Button, Flex } from '@chakra-ui/react';
+import { Box, Button, Flex, Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverArrow, PopoverBody, PopoverCloseButton, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 //import useWindowSize from 'hooks/useWindowSize';
 import useRouter from 'hooks/useRouter';
@@ -69,14 +69,71 @@ const Navigation = ({ auth, cart, username }) => {
             </Link>
           </Box>
 
-          <Box flex='1' style={{ cursor: 'pointer' }}>
+          <Box style={{ cursor: 'pointer' }} pr={{ base: 5, sm: 4 }}>
             <Link to='/help'>
               <Help active={router.pathname === '/help'} />
             </Link>
           </Box>
+
+          <Box flex='1'>
+            <Popover placement="bottom-start"  >
+              <PopoverTrigger>
+                <Button
+                  bg={`${theme.colors.etBlack}`}
+                  size='xs'
+                  color='white'
+                  border='1px solid white'
+                  style={{ fontFamily: 'Spotify-Light', textDecoration: 'none' }}
+                  variant='link'
+                  p={2}
+                  py={1}
+                >Help</Button>
+              </PopoverTrigger>
+              <PopoverContent bg={`${theme.colors.etGray}`} color="white">
+                <PopoverHeader fontWeight="semibold">Welcome to Electric Tooth! <span role="img" aria-labelledby="Lightning Bolt">⚡</span></PopoverHeader>
+                <PopoverArrow />
+                <PopoverCloseButton />
+                <PopoverBody style={{ fontFamily: 'Spotify-Light', textDecoration: 'none' }}>
+                  Electric Tooth is a Pay-Per-Play streaming service where artist get 100%.
+                  <br /> <br />
+                  <Text>
+                    To get started <Link to='/signup'><span style={{ 'color': `${theme.colors.etBlue}` }}>Sign Up.</span></Link> You'll receive 10 free coins to stream music.
+                  </Text>
+                  <br />
+
+                  <Text>
+                    In order to listen to music, you must first add music to your playlist by clicking <span style={{ paddingRight: '4px' }}></span>
+                    <svg style={{ 'display': 'inline-block' }} width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12.8713 4.95783H0.677734V6.99008H12.8713V4.95783ZM12.8713 0.893311H0.677734V2.92557H12.8713V0.893311ZM16.9358 9.02234V4.95783H14.9035V9.02234H10.839V11.0546H14.9035V15.1191H16.9358V11.0546H21.0003V9.02234H16.9358ZM0.677734 11.0546H8.80677V9.02234H0.677734V11.0546Z" fill="#89DBFF" />
+                    </svg>
+                  </Text>
+                  <br />
+                  <Text>
+                    Your playlist is on the bottom right of your screen. <span style={{ paddingRight: '4px' }}></span>
+                    <svg style={{ 'display': 'inline-block' }} width="25" height="20" viewBox="0 0 29 20" fill="none" xmlns="http://www.w3.org/2000/svg" id="playlistIcon">
+                      <path d="M24 7.3102H0.928577V8.45306H24V7.3102ZM24.0001 0.689819H0.928633V1.81599H24.0001V0.689819ZM0.928528 15.1043H18.5714V13.9776H0.928528V15.1043ZM21.2857 11.1674V19.3102L28.0714 15.2388L21.2857 11.1674Z" fill="#89DBFF" />
+                    </svg>
+                  </Text>
+                  <br />
+                  <Text>
+                    Hit play <svg
+                      style={{ 'display': 'inline-block' }}
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='24'
+                      height='24'
+                      fill='white'
+                      viewBox='0 0 24 24'
+                    >
+                      <path d='M8 5v14l11-7z' />
+                    </svg>
+                    <span style={{ paddingLeft: '4px' }}></span>
+                    and enjoy the music!
+                  </Text>
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
+          </Box>
         </Flex>
-
-
 
         <Flex justifyContent="space-evenly" alignItems="center" width="200px">
           <Link to='/coins'>
@@ -165,155 +222,3 @@ export default connect(
     UserActions: bindActionCreators(userActions, dispatch),
   }),
 )(Navigation);
-
-/*
-
-           {(history.location.pathname === '/' || '/download')
-            ? (
-              <Box w='48px' h='48px' py={2} pl={{ base: 5, sm: 4 }}>
-                <Link to='/'>
-                  <Logo />
-                </Link>
-              </Box>
-            )
-            : (
-              <Flex direction='column' justifyContent='center' onClick={() => history.goBack()} style={{ 'cursor': 'pointer' }} w='48px' h='48px'>
-                <svg width="75" height="48" viewBox="0 0 75 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect width="75" height="48" fill="#1D1D1D" />
-                  <path d="M30 24H52" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M38 32L30 24L38 16" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </Flex>
-            )
-          }
-
-        {/* {(!isMobile || !auth) && (
-          <Fragment>
-            <Link to='/'>
-              <Box>
-                <Button variant='link' mx={4}>
-                  <Home active={router.pathname === '/'} />
-                </Button>
-              </Box>
-            </Link>
-          </Fragment>
-        )}
-
- <Link to='/help'>
-          <Box>
-            <Button variant='link'>
-              <Help active={router.pathname === '/help'} />
-            </Button>
-          </Box>
-        </Link>
-
-
-
-    <>
-      <Box px={4}>
-        <Link to='/'>
-          <Logo />
-        </Link>
-      </Box>
-      <Box mx='auto' />
-      <Link to='/coins' >
-        <Button
-          bg={`${theme.colors.etBlack}`}
-          size='xs'
-          color='white'
-          border='1px solid white'
-          style={{ fontFamily: 'Spotify-Light', textDecoration: 'none' }}
-          variant='link'
-          p={2}
-          py={1}
-        >
-          Get coins
-        </Button>
-      </Link>
-      <Link to='/signup' >
-        <Button
-          bg={`${theme.colors.etBlack}`}
-          border='1px solid white'
-          size='xs'
-          color='white'
-          mx={4}
-          mt='1px'
-          variant='link'
-          p={2}
-          py={1}
-        >
-          sign up
-        </Button>
-      </Link>
-    </>
-  ) : (
-  <>
-    {' '}
-
-    {history.location.pathname === "/"
-      ?
-      <Flex direction='column' justifyContent='center' ml="8px" pl="16px">
-        <Logo />
-      </Flex>
-      :
-      <Flex direction='column' justifyContent='center' ml="-8px" onClick={() => history.goBack()} style={{ 'cursor': 'pointer' }}>
-        <svg width="75" height="48" viewBox="0 0 75 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="75" height="48" fill="#1D1D1D" />
-          <path d="M30 24H52" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-          <path d="M38 32L30 24L38 16" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </Flex>
-    }
-
-    <Box mx='auto' />
-    <Flex alignItems="center">
-      <Link to='/coins' >
-        <Button
-          bg={`${theme.colors.etBlack}`}
-          size='xs'
-          color='white'
-          border='1px solid white'
-          style={{ fontFamily: 'Spotify-Light', textDecoration: 'none' }}
-          variant='link'
-          p={2}
-          py={1}
-        >
-          Get coins
-        </Button>
-      </Link>
-      <Box mt='8px' ml='10px'>
-        <Link to='/profile'>
-          <Button variant='link'>
-            {auth ? (
-              <Account active={router.pathname === '/profile'} />
-            ) : (
-              <Account />
-            )}
-          </Button>
-        </Link>
-      </Box>
-      <Link to='/cart'>
-        <Box style={{ position: 'relative' }}>
-          <Button variant='link' mt='4px' mr="8px">
-            <Cart active={router.pathname === '/cart'} />
-          </Button>
-          <Box
-            style={{
-              position: 'absolute',
-              color: `${theme.colors.etBlue}`,
-              top: '-2px',
-              right: '21px',
-              fontSize: '14px',
-              fontWeight: 'bold',
-            }}
-          >
-            {cart.items?.length === 0 ? 0 : cart.items?.length}
-          </Box>
-        </Box>
-      </Link>
-    </Flex>
-
-  </>
-)
-}
-*/
