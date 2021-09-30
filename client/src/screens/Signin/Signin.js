@@ -44,7 +44,7 @@ const Signin = ({ UserActions, history, error, message }) => {
           }}
         >
           <Stack spacing={4} my={4}>
-            <Input height='41px' placeholder='Email' size='lg' name='email' type='text' backgroundColor="#2d2d2d" border="none" color="white" />
+            <Input height='41px' placeholder='Email' size='lg' name='email' type='email' backgroundColor="#2d2d2d" border="none" color="white" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
             <Input
               placeholder='Password'
               size='lg'

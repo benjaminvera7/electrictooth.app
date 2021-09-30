@@ -242,7 +242,7 @@ const Profile = ({ UserActions, user, auth, history, library, orders }) => {
             <TabPanels>
               <TabPanel px={0}>
                 <Stack>
-                  {library.length > 0
+                  {library?.length > 0
                     ? library.map((item, i) => renderLineItems(item))
                     : (
                       <Flex justify='center' color='grey'>
@@ -268,7 +268,7 @@ const Profile = ({ UserActions, user, auth, history, library, orders }) => {
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {orders.length > 0
+                    {orders?.length > 0
                       && orders.map((order, i) =>
                         <Tr key={i}>
                           <Td>{order._id.substring(0, 7)}</Td>

@@ -60,6 +60,7 @@ const Signup = ({ UserActions, history, error, message }) => {
               backgroundColor="#2d2d2d" border="none"
               height='41px'
               color="white"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
             />
             <Input
               placeholder='Password'
