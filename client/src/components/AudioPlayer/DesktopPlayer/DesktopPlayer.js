@@ -120,7 +120,7 @@ const DesktopPlayer = ({
                   <Toll height='26px' width='26px' />
                 </Box>
 
-                <Box minWidth='50px' px={2} color={`${theme.colors.etBlue}`}>
+                <Box px={2} color={`${theme.colors.etBlue}`}>
                   {coins}
                 </Box>
               </Flex>

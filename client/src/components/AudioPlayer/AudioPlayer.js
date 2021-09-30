@@ -35,9 +35,9 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
   useEffect(() => {
     if (playlist.length > 0 && !currentlyPlaying._id) {
 
-      let index = playlist?.findIndex((track) => getLastSongIndex(track, localStorage.getItem('lastSongPlayed')))
 
-      if (index) {
+      if (localStorage.getItem('lastSongPlayed')) {
+        let index = playlist?.findIndex((track) => getLastSongIndex(track, localStorage.getItem('lastSongPlayed')))
         setCurrentlyPlaying(playlist[index])
       } else {
         setCurrentlyPlaying(playlist[0])
