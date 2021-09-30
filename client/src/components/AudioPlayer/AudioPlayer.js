@@ -81,6 +81,7 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
       setLoading(false);
 
       audio.current.src = url;
+      audio.current.load();
       audio.current.play().then(_ => {
         document.title = `${track.track_name} by ${track.artist_name}`;
         if ("mediaSession" in navigator) {
@@ -170,7 +171,6 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
       setPlaying(true);
       return audio.current.play();
     }
-
 
   };
 
@@ -273,14 +273,15 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
   }
 
 
-  useEventListener('ended', next, audio.current);
-  useEventListener('timeupdate', timeUpdate, audio.current);
-  useEventListener('keydown', handlePlay)
+  useEventListener('ended', () => next(), audio.current);
+  useEventListener('timeupdate', () => timeUpdate(), audio.current);
+  useEventListener('keydown', () => handlePlay())
 
   if ('mediaSession' in navigator) {
     navigator.mediaSession.setActionHandler('previoustrack', () => previous());
     navigator.mediaSession.setActionHandler('nexttrack', () => next());
     navigator.mediaSession.setActionHandler('play', () => play());
+    navigator.mediaSession.setActionHandler('pause', () => play());
     navigator.mediaSession.setActionHandler("seekto", (details) => {
       audio.current.currentTime = details.seekTime;
     });
