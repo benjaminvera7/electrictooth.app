@@ -29,11 +29,20 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
   const isMobile = useWindowSize();
 
   const [timelineDot, setTimelineDot] = useState(0);
-  const [currentlyPlaying, setCurrentlyPlaying] = useState({})
+  const [currentlyPlaying, setCurrentlyPlaying] = useState({});
+
 
   useEffect(() => {
     if (playlist.length > 0 && !currentlyPlaying._id) {
-      setCurrentlyPlaying(playlist[0])
+
+      let index = playlist?.findIndex((track) => getLastSongIndex(track, localStorage.getItem('lastSongPlayed')))
+
+      if (index) {
+        setCurrentlyPlaying(playlist[index])
+      } else {
+        setCurrentlyPlaying(playlist[0])
+      }
+
     }
   }, [playlist, currentlyPlaying._id])
 
@@ -42,6 +51,8 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
     setTimelineDot(playPercent);
     return timelineDot;
   };
+
+  const getLastSongIndex = (track, id) => track._id === id;
 
   const fetch = async (id) => {
 
@@ -80,6 +91,8 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
             artwork: [{ src: `/uploads/${track.art_name}` }]
           });
         }
+
+        localStorage.setItem('lastSongPlayed', track._id);
       }).catch(error => console.log(error));;
 
 
@@ -265,8 +278,9 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
   useEventListener('keydown', handlePlay)
 
   if ('mediaSession' in navigator) {
-    navigator.mediaSession.setActionHandler('previoustrack', previous);
-    navigator.mediaSession.setActionHandler('nexttrack', next)
+    navigator.mediaSession.setActionHandler('previoustrack', () => previous());
+    navigator.mediaSession.setActionHandler('nexttrack', () => next());
+    navigator.mediaSession.setActionHandler('play', () => play());
     navigator.mediaSession.setActionHandler("seekto", (details) => {
       audio.current.currentTime = details.seekTime;
     });
