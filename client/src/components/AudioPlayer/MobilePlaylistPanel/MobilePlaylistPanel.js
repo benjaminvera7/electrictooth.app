@@ -14,6 +14,7 @@ const MobilePlaylistPanelContainer = styled(Flex)`
   background: linear-gradient(180deg, #324148 50%, #000000 100%);
   transform: ${props => props.isVisible ? 'translateY(0)' : 'translateY(100vh)'};
   transition: transform 200ms ease-out;
+  position: fixed;
   z-index: 5;
   background-color: #fff;
   height: 100vh;
