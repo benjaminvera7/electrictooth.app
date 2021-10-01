@@ -59,12 +59,15 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
     const [track] = playlist.filter((track) => track._id === id);
 
     if (currentlyPlaying._id !== id) {
+      console.log('setting current track', id)
       setCurrentlyPlaying(track);
     }
 
     setLoading(true);
 
+
     try {
+
       const response = await axios({
         url: `/api/v1/stream/${id}`,
         method: 'GET',
@@ -94,9 +97,7 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
         }
 
         localStorage.setItem('lastSongPlayed', track._id);
-      }).catch(error => console.log(error));;
-
-
+      }).catch(error => console.log(error));
 
     } catch (error) {
       setPlaying(false);
@@ -173,7 +174,6 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
     }
 
   };
-
 
   const onHandleProgress = (value) => {
     audio.current.currentTime = value;
@@ -272,19 +272,16 @@ const AudioPlayer = ({ UserActions, auth, coins, playlist }) => {
     }
   }
 
-
-  useEventListener('ended', () => next(), audio.current);
-  useEventListener('timeupdate', () => timeUpdate(), audio.current);
-  useEventListener('keydown', () => handlePlay())
+  useEventListener('ended', next, audio.current);
+  useEventListener('timeupdate', timeUpdate, audio.current);
+  useEventListener('keydown', handlePlay)
 
   if ('mediaSession' in navigator) {
-    navigator.mediaSession.setActionHandler('previoustrack', () => previous());
-    navigator.mediaSession.setActionHandler('nexttrack', () => next());
-    navigator.mediaSession.setActionHandler('play', () => play());
-    navigator.mediaSession.setActionHandler('pause', () => play());
-    navigator.mediaSession.setActionHandler("seekto", (details) => {
-      audio.current.currentTime = details.seekTime;
-    });
+    navigator.mediaSession.setActionHandler('previoustrack', previous);
+    navigator.mediaSession.setActionHandler('nexttrack', next);
+    navigator.mediaSession.setActionHandler('play', play);
+    navigator.mediaSession.setActionHandler('pause', play);
+    navigator.mediaSession.setActionHandler("seekto", (details) => audio.current.currentTime = details.seekTime);
   }
 
   return (

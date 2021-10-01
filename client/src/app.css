@@ -104,7 +104,7 @@ html {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  width: 235px !important;
+  width: 300px !important;
   bottom: 100px;
   background-color: var(--et-violet) !important;
   text-align: center;
