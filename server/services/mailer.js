@@ -183,7 +183,7 @@ class MailerService {
                     <tr>
                         <td align="center" valign="top" style="padding: 36px 24px;">
                             <a href="mailto:ben@electrictooth.com" target="_blank" style="display: inline-block;">
-                                <img src="http://electrictooth.com/uploads/et2.png" alt="Logo" border="0"
+                                <img src="http://electrictooth.com/uploads/et.png" alt="Logo" border="0"
                                     width="120"
                                     style="display: block; width: 120px; max-width: 120px; min-width: 120px;">
                             </a>
@@ -455,7 +455,7 @@ class MailerService {
                     <tr>
                         <td align="center" valign="top" style="padding: 36px 24px;">
                             <a href="mailto:ben@electrictooth.com" target="_blank" style="display: inline-block;">
-                                <img src="http://electrictooth.com/uploads/et2.png" alt="Logo" border="0" width="120"
+                                <img src="http://electrictooth.com/uploads/et.png" alt="Logo" border="0" width="120"
                                     style="display: block; width: 120px; max-width: 120px; min-width: 120px;">
                             </a>
                         </td>
