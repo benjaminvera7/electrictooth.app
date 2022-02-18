@@ -6,13 +6,31 @@
   "configurations": [
     {
       "type": "node",
+      "runtimeVersion": "16",
       "request": "launch",
-      "name": "Launch Program",
+      "name": "Debug ET Server",
       "env": {
         "NODE_ENV": "development"
       },
-      "skipFiles": ["<node_internals>/**"],
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
       "program": "${workspaceFolder}/server/server.js"
+    },
+    {
+      "name": "Debug Jest Tests",
+      "type": "node",
+      "request": "launch",
+      "runtimeArgs": [
+        "--inspect-brk",
+        "${workspaceRoot}/server/node_modules/.bin/jest",
+        "--runInBand",
+        "-c",
+        "${workspaceRoot}/server/jest.config.js",
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "port": 9229
     }
   ]
 }

@@ -31,9 +31,12 @@ async function stream(req, res) {
   const track_id = params.id;
   const track = await dbConnection.getTrackById(track_id);
   const owns = await userOwnsProduct(user, track._id);
+  const now = new Date().toISOString();
+
+  const filtered = user.stream.filter((s) => s.expire > now); //remove expired songs
 
   if (!owns) {
-    let [stream] = user.stream.filter((s) => s.id === track_id);
+    let [stream] = filtered.filter((s) => s.id === track_id);
 
     if (!stream) {
       stream = {
@@ -42,13 +45,22 @@ async function stream(req, res) {
       };
     }
 
-    if (Date.now() > stream.expire || stream.expire === null || stream.id !== track_id) {
+    if (now > stream.expire || stream.expire === null || stream.id !== track_id) {
       await dbConnection.subtractCoin(user);
       await dbConnection.addTrackIncome(track_id);
+
       stream.id = track_id;
-      stream.expire = Date.now() + 60000;
-      const filtered = user.stream.filter((s) => s.id !== track_id);
-      user.stream = [...filtered, stream];
+
+      const expiry = new Date();
+      expiry.setSeconds(expiry.getSeconds() + 300); //300 seconds = 5 minute song permission
+      stream.expire = expiry.toISOString();
+
+      if (filtered.length >= 1) {
+        user.stream = [...filtered, stream];
+      } else {
+        user.stream = [stream];
+      }
+
       user.save();
     }
   }
